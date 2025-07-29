@@ -1,0 +1,31 @@
+# === Backend (Java Spring Boot) ===
+/backend/target/
+/backend/.classpath
+/backend/.project
+/backend/.settings/
+/backend/.idea/
+/backend/.mvn/
+/backend/mvnw
+/backend/mvnw.cmd
+/backend/HELP.md
+/backend/*.iml
+/backend/hs_err_pid*
+
+# Ignore application config (see below)
+backend/src/main/resources/application.properties
+
+# === Frontend (Vue + Node) ===
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env
+/frontend/.env.local
+/frontend/.vitepress
+/frontend/.output
+
+# === General ===
+.DS_Store
+*.log
+*.tmp
+.env
+.idea/
+.vscode/

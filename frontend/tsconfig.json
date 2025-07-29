@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": [
+      "vite/client"
+    ],
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "moduleDetection": "force",
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": false,
+    "incremental": true,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitAny": true,
+    "outDir": ".output",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "strictBindCallApply": false,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": true,
+    "paths": {
+      "#/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "exclude": [
+    "build/**",
+    ".output/**",
+    "node_modules/**",
+    "public/**"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.js",
+    "**/*.vue",
+    "*.d.ts"
+  ]
+}
