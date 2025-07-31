@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.trialmaple.model.TrialMap;
+import com.trialmaple.model.entities.TrialMap;
 import com.trialmaple.repository.TrialMapRepository;
 
 @Service

@@ -1,10 +1,11 @@
-package com.trialmaple.model;
+package com.trialmaple.model.entities;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.trialmaple.jpa.converter.DurationStringConverter;
+import com.trialmaple.model.enums.DifficultyCategory;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -58,11 +59,14 @@ public class TrialMap {
     @Column(name = "accepted_answer", columnDefinition = "VARCHAR(255)")
     private List<String> acceptedAnswers;
 
+    @Column(name = "active", columnDefinition = "BOOLEAN")
+    private boolean active;
+
     public TrialMap() {
     }
 
     public TrialMap(String name, List<String> authors, int nbCheckpoints, DifficultyCategory difficulty,
-            int points, Duration worldRecord, int nbFinishers) {
+            int points, Duration worldRecord, int nbFinishers, boolean active) {
         this.name = name;
         this.authors = authors;
         this.nbCheckpoints = nbCheckpoints;
@@ -70,6 +74,7 @@ public class TrialMap {
         this.points = points;
         this.worldRecord = worldRecord;
         this.nbFinishers = nbFinishers;
+        this.active = active;
     }
 
     public Long getId() {
@@ -106,5 +111,9 @@ public class TrialMap {
 
     public List<String> getAcceptedAnswers() {
         return new ArrayList<>(acceptedAnswers);
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

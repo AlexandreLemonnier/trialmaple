@@ -7,35 +7,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trialmaple.model.TrialMap;
+import com.trialmaple.controller.mappers.TrialMapDtoMapper;
 import com.trialmaple.model.dto.TrialMapDto;
+import com.trialmaple.model.entities.TrialMap;
 import com.trialmaple.service.TrialMapService;
-import com.trialmaple.utils.TimeUtils;
 
 @RestController
 @RequestMapping("/api/maps")
 public class TrialMapController {
 
     private final TrialMapService service;
+    private final TrialMapDtoMapper trialMapDtoMapper;
 
-    public TrialMapController(TrialMapService service) {
+    public TrialMapController(TrialMapService service, TrialMapDtoMapper trialMapDtoMapper) {
         this.service = service;
+        this.trialMapDtoMapper = trialMapDtoMapper;
     }
 
     @GetMapping
     public List<TrialMapDto> getAllMaps() {
         List<TrialMap> maps = service.getAllMaps();
-        // TODO entity to DTO
         return maps.stream()
-                .map(m -> new TrialMapDto(
-                        m.getName(),
-                        m.getAuthors(),
-                        m.getNbCheckpoints(),
-                        m.getDifficulty().name(),
-                        m.getPoints(),
-                        m.getNbFinishers(),
-                        m.getAcceptedAnswers(),
-                        TimeUtils.formatDuration(m.getWorldRecord())))
+                .map(m -> trialMapDtoMapper.serviceToDto(m))
                 .collect(Collectors.toList());
     }
 

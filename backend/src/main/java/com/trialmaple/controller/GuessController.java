@@ -1,11 +1,8 @@
 package com.trialmaple.controller;
 
-import com.trialmaple.model.TrialMap;
-import com.trialmaple.service.DailyMapService;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")

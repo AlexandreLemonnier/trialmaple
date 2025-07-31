@@ -13,7 +13,6 @@ public class TrialMapDto {
     private List<String> acceptedAnswers;
     private String worldRecord; // formatted string
 
-    // Constructor
     public TrialMapDto(String name, List<String> authors, int nbCheckpoints, String difficulty, int points,
             int nbFinishers, List<String> acceptedAnswers, String worldRecord) {
         this.name = name;

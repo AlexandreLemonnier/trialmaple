@@ -1,4 +1,4 @@
-package com.trialmaple.model;
+package com.trialmaple.model.enums;
 
 public enum DifficultyCategory {
     CHALLENGING,
