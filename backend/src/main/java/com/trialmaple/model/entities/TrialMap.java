@@ -62,7 +62,7 @@ public class TrialMap {
     @Column(name = "active", columnDefinition = "BOOLEAN")
     private boolean active;
 
-    public TrialMap() {
+    protected TrialMap() {
     }
 
     public TrialMap(String name, List<String> authors, int nbCheckpoints, DifficultyCategory difficulty,
