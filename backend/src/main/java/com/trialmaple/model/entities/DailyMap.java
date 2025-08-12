@@ -24,7 +24,7 @@ public class DailyMap {
     @JoinColumn(name = "trial_map_id", nullable = false)
     private TrialMap map;
 
-    @Column(name = "day", nullable = false)
+    @Column(name = "day", columnDefinition = "DATE")
     private LocalDate day;
 
     protected DailyMap() {
