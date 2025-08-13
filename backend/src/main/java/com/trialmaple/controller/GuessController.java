@@ -1,44 +1,33 @@
 package com.trialmaple.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.trialmaple.model.dto.GuessDto;
+import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.service.DailyMapService;
+import com.trialmaple.service.GuessService;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class GuessController {
 
-    /*
     private final DailyMapService dailyMapService;
+    private final GuessService guessService;
 
-    public GuessController(DailyMapService dailyMapService) {
+    public GuessController(GuessService guessService, DailyMapService dailyMapService) {
+        this.guessService = guessService;
         this.dailyMapService = dailyMapService;
     }
 
-    
     @PostMapping("/guess")
-    public Map<String, Object> guess(@RequestParam String name) {
-        TrialMap today = dailyMapService.getTodayMap();
-        Map<String, Object> result = new HashMap<>();
-
-        boolean correct = today.getAcceptedAnswers().stream()
-            .anyMatch(ans -> ans.equalsIgnoreCase(name.trim()));
-
-        result.put("correct", correct);
-        result.put("feedback", Map.of(
-            "mapper", name.equalsIgnoreCase(today.getMapper()),
-            "checkpoints", today.getCheckpoints(),
-            "difficulty", today.getDifficulty()
-        ));
-
-        return result;
+    public GuessDto guess(@RequestParam String guess) {
+        // TODO Create and throw custom exception instead of IllegalStateException
+        DailyMap dailyMap = dailyMapService.getCurrentDailyMap();
+        return guessService.checkGuess(dailyMap.getMap(), guess);
     }
-
-    @GetMapping("/map/info")
-    public Map<String, Object> getTodayInfo() {
-        TrialMap today = dailyMapService.getTodayMap();
-        return Map.of("mapper", today.getMapper(), "checkpoints", today.getCheckpoints(), "difficulty", today.getDifficulty());
-    }
-        */
 }

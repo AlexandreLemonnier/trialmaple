@@ -1,6 +1,6 @@
 package com.trialmaple.model.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,13 +24,13 @@ public class DailyMap {
     @JoinColumn(name = "trial_map_id", nullable = false)
     private TrialMap map;
 
-    @Column(name = "day", columnDefinition = "DATE")
-    private LocalDate day;
+    @Column(name = "day", columnDefinition = "DATETIME")
+    private LocalDateTime day;
 
     protected DailyMap() {
     }
 
-    public DailyMap(TrialMap map, LocalDate day) {
+    public DailyMap(TrialMap map, LocalDateTime day) {
         this.map = map;
         this.day = day;
     }
@@ -39,7 +39,7 @@ public class DailyMap {
         return map;
     }
 
-    public LocalDate getDay() {
+    public LocalDateTime getDay() {
         return day;
     }
 }

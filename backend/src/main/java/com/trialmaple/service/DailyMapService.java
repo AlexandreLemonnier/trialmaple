@@ -1,6 +1,5 @@
 package com.trialmaple.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
@@ -26,29 +25,40 @@ public class DailyMapService {
         this.dailyMapRepository = dailyMapRepository;
     }
 
+    public DailyMap getCurrentDailyMap() {
+        LocalDateTime currentPeriodStart = getCurrentPeriodStart();
+        return dailyMapRepository.findByDay(currentPeriodStart)
+                .orElseThrow(() -> new IllegalStateException("No daily map found for current period"));
+    }
+
     public void chooseDailyMapIfMissing() {
-        LocalDate today = LocalDate.now();
+        LocalDateTime currentPeriodStart = getCurrentPeriodStart();
 
-        // Period is "from yesterday 12am to today 12am"
-        LocalDateTime start = today.atTime(12, 0).minusDays(1);
-        LocalDateTime end = today.atTime(12, 0);
-
-        boolean exists = dailyMapRepository.existsByDayBetween(start.toLocalDate(), end.toLocalDate());
+        boolean exists = dailyMapRepository.existsByDay(currentPeriodStart);
 
         if (!exists) {
             List<TrialMap> allMaps = trialMapRepository.findAll();
             if (allMaps.isEmpty()) {
-                throw new IllegalStateException("No trial maps available");
+                LOGGER.error("No trial maps available");
+                return;
             }
 
             TrialMap randomMap = allMaps.get(new Random().nextInt(allMaps.size()));
 
-            DailyMap dailyMap = new DailyMap(randomMap, today);
+            DailyMap dailyMap = new DailyMap(randomMap, currentPeriodStart);
 
             dailyMapRepository.save(dailyMap);
 
-            LOGGER.info("New daily map chosen: {}", randomMap.getName());
+            LOGGER.info("New daily map chosen for {}: {}", currentPeriodStart, randomMap.getName());
         }
+    }
+
+    // Period is "from yesterday 12am to today 12am"
+    private LocalDateTime getCurrentPeriodStart() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.getHour() < 12
+                ? now.minusDays(1).withHour(12).withMinute(0).withSecond(0).withNano(0)
+                : now.withHour(12).withMinute(0).withSecond(0).withNano(0);
     }
 
 }
