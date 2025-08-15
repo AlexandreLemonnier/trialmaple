@@ -25,9 +25,9 @@ public class GuessController {
     }
 
     @PostMapping("/guess")
-    public GuessDto guess(@RequestParam String guess) {
+    public GuessDto guess(@RequestParam String guess, @RequestParam int guessNumber) {
         // TODO Create and throw custom exception instead of IllegalStateException
         DailyMap dailyMap = dailyMapService.getCurrentDailyMap();
-        return guessService.checkGuess(dailyMap.getMap(), guess);
+        return guessService.checkGuess(dailyMap, guess, guessNumber);
     }
 }
