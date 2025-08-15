@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.trialmaple.exception.InvalidMapNameException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.Score;
@@ -26,12 +27,12 @@ public class GuessService {
     /**
      * Check if a guess is correct and give hints or correct elements
      */
-    public GuessDto checkGuess(DailyMap dailyMap, String guess, int guessNumber) {
+    public GuessDto checkGuess(DailyMap dailyMap, String guess, int guessNumber) throws InvalidMapNameException {
 
         TrialMap mapOfTheDay = dailyMap.getMap();
         TrialMap guessMap = trialMapRepository
                 .findByNameIgnoreCase(guess)
-                .orElseThrow(() -> new IllegalArgumentException("No map found for guess " + guess));
+                .orElseThrow(() -> new InvalidMapNameException(guess));
 
         boolean success = mapOfTheDay.getName().equalsIgnoreCase(guessMap.getName());
 

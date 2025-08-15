@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.trialmaple.exception.NoDailyMapFoundException;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.TrialMap;
 import com.trialmaple.repository.DailyMapRepository;
@@ -25,10 +26,10 @@ public class DailyMapService {
         this.dailyMapRepository = dailyMapRepository;
     }
 
-    public DailyMap getCurrentDailyMap() {
+    public DailyMap getCurrentDailyMap() throws NoDailyMapFoundException {
         LocalDateTime currentPeriodStart = getCurrentPeriodStart();
         return dailyMapRepository.findByDay(currentPeriodStart)
-                .orElseThrow(() -> new IllegalStateException("No daily map found for current period"));
+                .orElseThrow(() -> new NoDailyMapFoundException(currentPeriodStart));
     }
 
     public void chooseDailyMapIfMissing() {

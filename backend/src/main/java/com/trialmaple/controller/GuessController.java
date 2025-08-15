@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trialmaple.exception.InvalidMapNameException;
+import com.trialmaple.exception.NoDailyMapFoundException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.service.DailyMapService;
@@ -25,8 +27,8 @@ public class GuessController {
     }
 
     @PostMapping("/guess")
-    public GuessDto guess(@RequestParam String guess, @RequestParam int guessNumber) {
-        // TODO Create and throw custom exception instead of IllegalStateException
+    public GuessDto guess(@RequestParam String guess, @RequestParam int guessNumber)
+            throws NoDailyMapFoundException, InvalidMapNameException {
         DailyMap dailyMap = dailyMapService.getCurrentDailyMap();
         return guessService.checkGuess(dailyMap, guess, guessNumber);
     }
