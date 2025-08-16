@@ -13,7 +13,7 @@ import com.trialmaple.model.entities.TrialMap;
 import com.trialmaple.service.TrialMapService;
 
 @RestController
-@RequestMapping("/api/maps")
+@RequestMapping("/api")
 public class TrialMapController {
 
     private final TrialMapService service;
@@ -24,7 +24,7 @@ public class TrialMapController {
         this.trialMapDtoMapper = trialMapDtoMapper;
     }
 
-    @GetMapping
+    @GetMapping("/maps")
     public List<TrialMapDto> getAllMaps() {
         List<TrialMap> maps = service.getAllMaps();
         return maps.stream()

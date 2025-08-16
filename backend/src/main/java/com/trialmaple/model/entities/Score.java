@@ -37,7 +37,7 @@ public class Score {
         this.player = "Unknown";
     }
 
-    public int nbTries() {
+    public int getNbTries() {
         return nbTries;
     }
 
