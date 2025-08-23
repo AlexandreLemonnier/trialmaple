@@ -1,6 +1,6 @@
 package com.trialmaple.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -27,15 +27,15 @@ public class DailyMapService {
     }
 
     public DailyMap getCurrentDailyMap() throws NoDailyMapFoundException {
-        LocalDateTime currentPeriodStart = getCurrentPeriodStart();
-        return dailyMapRepository.findByDay(currentPeriodStart)
-                .orElseThrow(() -> new NoDailyMapFoundException(currentPeriodStart));
+        LocalDate today = LocalDate.now();
+        return dailyMapRepository.findByDay(today)
+                .orElseThrow(() -> new NoDailyMapFoundException(today));
     }
 
     public void chooseDailyMapIfMissing() {
-        LocalDateTime currentPeriodStart = getCurrentPeriodStart();
+        LocalDate today = LocalDate.now();
 
-        boolean exists = dailyMapRepository.existsByDay(currentPeriodStart);
+        boolean exists = dailyMapRepository.existsByDay(today);
 
         if (!exists) {
             List<TrialMap> allMaps = trialMapRepository.findAll();
@@ -46,20 +46,12 @@ public class DailyMapService {
 
             TrialMap randomMap = allMaps.get(new Random().nextInt(allMaps.size()));
 
-            DailyMap dailyMap = new DailyMap(randomMap, currentPeriodStart);
+            DailyMap dailyMap = new DailyMap(randomMap, today);
 
             dailyMapRepository.save(dailyMap);
 
-            LOGGER.info("New daily map chosen for {}: {}", currentPeriodStart, randomMap.getName());
+            LOGGER.info("New daily map chosen for {}: {}", today, randomMap.getName());
         }
-    }
-
-    // Period is "from yesterday 12am to today 12am"
-    private LocalDateTime getCurrentPeriodStart() {
-        LocalDateTime now = LocalDateTime.now();
-        return now.getHour() < 12
-                ? now.minusDays(1).withHour(12).withMinute(0).withSecond(0).withNano(0)
-                : now.withHour(12).withMinute(0).withSecond(0).withNano(0);
     }
 
 }

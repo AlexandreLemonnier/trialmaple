@@ -14,7 +14,7 @@ public class DailyMapScheduler {
         this.dailyMapService = dailyMapService;
     }
 
-    @Scheduled(cron = "0 0 12 * * *", zone = "Europe/Paris") // Everyday at 12am
+    @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Paris") // Everyday at midnight
     public void scheduledDailyMapSelection() {
         dailyMapService.chooseDailyMapIfMissing();
     }

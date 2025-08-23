@@ -1,6 +1,6 @@
 package com.trialmaple.repository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.trialmaple.model.entities.DailyMap;
 
 public interface DailyMapRepository extends JpaRepository<DailyMap, Long> {
-    boolean existsByDay(LocalDateTime day);
+    boolean existsByDay(LocalDate day);
 
-    Optional<DailyMap> findByDay(LocalDateTime day);
+    Optional<DailyMap> findByDay(LocalDate day);
 }
