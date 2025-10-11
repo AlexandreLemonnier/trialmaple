@@ -1,13 +1,13 @@
 package com.trialmaple.exception;
 
 public class InvalidMapNameException extends RuntimeException {
-    private final String code = "INVALID_MAP_NAME";
+    private final ErrorCode code = ErrorCode.INVALID_MAP_NAME;
 
     public InvalidMapNameException(String mapName) {
         super("Map name not found: " + mapName);
     }
 
-    public String getCode() {
+    public ErrorCode getCode() {
         return code;
     }
 }

@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponseDto(
                         Instant.now(),
-                        ex.getCode(),
+                        ex.getCode().name(),
                         ex.getMessage()));
     }
 
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseDto(
                         Instant.now(),
-                        ex.getCode(),
+                        ex.getCode().name(),
                         ex.getMessage()));
     }
 }
