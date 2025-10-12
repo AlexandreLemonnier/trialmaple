@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @import './base.css';
 
 #app {
@@ -7,12 +8,8 @@
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+@theme {
+  --width-sidebar: 25vw;
 }
 
 @media (hover: hover) {
@@ -34,6 +31,3 @@ a,
   }
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

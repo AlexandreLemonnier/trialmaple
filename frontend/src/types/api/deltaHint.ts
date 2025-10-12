@@ -1,0 +1,1 @@
+export type DeltaHint = 'LESS' | 'EQUAL' | 'MORE';
