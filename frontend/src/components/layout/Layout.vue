@@ -1,7 +1,7 @@
 <template>
     <div class="absolute top-0 left-0 flex min-h-screen w-screen">
         <Gutter />
-        <div class="flex flex-col w-3/5">
+        <div class="flex flex-col w-full lg:w-3/5">
           <Header />
           <main>
             <slot></slot>

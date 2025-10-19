@@ -1,8 +1,14 @@
 <template>
     <header class="sticky flex justify-between items-center px-5 w-full h-16 bg-header-background tracking-wide">
         <div class="flex items-center gap-2 select-none">
-            <img src="../../assets/TrackMania-Logo.svg" alt="TrialMaple logo" class="w-20" />
-            <h1 class="text-2xl font-bold"> TrialMaple</h1>
+            <img src="../../assets/TrackMania-Logo.svg" alt="TrialMaple logo" class="h-[clamp(2rem,4vw,4rem)]" />
+            <div class="flex">
+                <h1 class="text-[clamp(1.25rem,2.5vw,1.75rem)] font-bold">T</h1>
+                <h1 class="text-[clamp(1rem,2vw,1.5rem)] font-semibold">rial</h1>
+                <h1 class="text-[clamp(1.25rem,2.5vw,1.75rem)] font-bold">M</h1>
+                <h1 class="text-[clamp(1rem,2vw,1.5rem)] font-semibold">ap</h1>
+                <h1 class="text-[clamp(0.9rem,1.5vw,1.25rem)] font-semibold">le</h1>
+            </div>
         </div>
         <Icon name="circle-info" size="md" @click="open = true" />
 
