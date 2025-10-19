@@ -1,8 +1,11 @@
 <template>
     <div class="absolute top-0 left-0 flex min-h-screen w-screen">
         <Gutter />
-        <div class="w-3/5 lg:px-4">
-          <slot></slot>
+        <div class="flex flex-col w-3/5">
+          <Header />
+          <main>
+            <slot></slot>
+          </main>
         </div>
         <Gutter />
     </div>
@@ -10,4 +13,5 @@
 
 <script setup lang="ts">
 import Gutter from '#/components/layout/Gutter.vue';
+import Header from '#/components/layout/Header.vue';
 </script>

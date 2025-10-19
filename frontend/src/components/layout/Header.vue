@@ -1,0 +1,25 @@
+<template>
+    <header class="sticky flex justify-between items-center px-5 w-full h-16 bg-header-background tracking-wide">
+        <div class="flex items-center gap-2 select-none">
+            <img src="../../assets/TrackMania-Logo.svg" alt="TrialMaple logo" class="w-20" />
+            <h1 class="text-2xl font-bold"> TrialMaple</h1>
+        </div>
+        <Icon name="circle-info" size="md" @click="open = true" />
+
+        <div v-if="open" class="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-4" @click.self="open = false">
+            <div class="bg-neutral-900 text-neutral-100 rounded-2xl p-5 max-w-md w-full border border-white/10 shadow-xl">
+                <div class="flex items-start justify-between gap-4">
+                    <h2 class="text-lg font-black">About TrialMaple</h2>
+                    <Icon name="x" size="sm" @click="open = false"/>
+                </div>
+                <p class="mt-3 text-sm text-neutral-300">Guess today's Trackmania trial map. More actions coming soon in this header.</p>
+            </div>
+        </div>
+    </header>
+</template>
+
+<script setup lang="ts">
+import Icon from '#/components/Icon.vue';
+import { ref } from 'vue';
+const open = ref(false)
+</script>

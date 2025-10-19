@@ -10,6 +10,7 @@
 
 @theme {
   --width-sidebar: 25vw;
+  --color-header-background: #bebebe;
 }
 
 @media (hover: hover) {
