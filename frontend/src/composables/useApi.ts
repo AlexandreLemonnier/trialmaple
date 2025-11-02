@@ -25,14 +25,16 @@ async function handleJson<T>(res: Response): Promise<T> {
 
 
 export function useApi() {
-    const getMaps = () => {
-        fetch(`${API_BASE}/maps`).then(res => handleJson<TrialMap[]>(res))
+    async function getMaps() {
+        const res = await fetch(`${API_BASE}/maps`);
+        return await handleJson<TrialMap[]>(res);
     };
 
-    const postGuess = (guess: string, guessNumber = 1) => {
-        fetch(`${API_BASE}/guess?guess=${encodeURIComponent(guess)}&guessNumber=${guessNumber}`, {
+    async function postGuess(guess: string, guessNumber = 1) {
+        const res = await fetch(`${API_BASE}/guess?guess=${encodeURIComponent(guess)}&guessNumber=${guessNumber}`, {
             method: 'POST'
-        }).then(res => handleJson<Guess>(res))
+        });
+        return await handleJson<Guess>(res);
     };
 
     async function getDailyStats() {

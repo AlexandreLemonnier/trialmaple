@@ -3,7 +3,7 @@
         <Gutter />
         <div class="flex flex-col w-full lg:w-3/5">
           <Header />
-          <main>
+          <main class="mx-2">
             <slot></slot>
           </main>
         </div>
