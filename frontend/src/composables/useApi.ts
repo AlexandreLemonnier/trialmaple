@@ -35,9 +35,10 @@ export function useApi() {
         }).then(res => handleJson<Guess>(res))
     };
 
-    const getDailyStats = () => {
-        fetch(`${API_BASE}/stats`).then(res => handleJson<DailyStats>(res))
-    };
+    async function getDailyStats() {
+        const res = await fetch(`${API_BASE}/daily-stats`);
+        return await handleJson<DailyStats>(res);
+    }; 
 
     return { getMaps, postGuess, getDailyStats }
 }
