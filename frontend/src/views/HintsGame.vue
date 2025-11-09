@@ -19,7 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { useApi } from '#/composables/useApi';
+import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
+import { useMapsApi } from '#/composables/api/useMapsApi';
 import { DailyStats } from '#/types/api/dailyStats';
 import { TrialMap } from '#/types/api/trialMap';
 import { onMounted, ref } from 'vue';
@@ -27,7 +28,8 @@ import { onMounted, ref } from 'vue';
 const trialMaps = ref<TrialMap[]>([]);
 const todayNbPlayersFound = ref<number>();
 const todayAverageTries = ref<number>();
-const { getMaps, getDailyStats } = useApi();
+const mapsApi = useMapsApi();
+const dailyStatsApi = useDailyStatsApi();
 
 const selectedMap = ref('');
 
@@ -38,7 +40,7 @@ async function guess() {
 /** FETCH DATA */
 async function fetchMaps() {
     try {
-        trialMaps.value = await getMaps();
+        trialMaps.value = await mapsApi.getMaps();
         const firstTrialMap = trialMaps.value[0];
         if (firstTrialMap) {
             selectedMap.value = firstTrialMap.name;
@@ -50,7 +52,7 @@ async function fetchMaps() {
 
 async function fetchDailyStats() {
     try {
-        const dailyStats: DailyStats = await getDailyStats();
+        const dailyStats: DailyStats = await dailyStatsApi.getDailyStats();
         todayNbPlayersFound.value = dailyStats.nbWinners;
         todayAverageTries.value = dailyStats.averageTries;
     } catch (e) {

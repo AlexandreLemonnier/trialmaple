@@ -1,46 +1,70 @@
-import { DailyStats } from "#/types/api/dailyStats"
-import { ErrorResponse } from "#/types/api/errorResponse"
-import { Guess } from "#/types/api/guess"
-import { TrialMap } from "#/types/api/trialMap"
+import { RequestError } from '#/classes/RequestError';
+import { useEnv } from '#/composables/useEnv';
+import { promiseTimeout } from '@vueuse/core';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? '/api'
+function objectToURLSearchParams(obj: Record<string, string | number | boolean | string[] | undefined>) {
+    const entries: [string, string][] = [];
 
+    for (const key in obj) {
+        const value = obj[key];
 
-async function handleJson<T>(res: Response): Promise<T> {
-    if (!res.ok) {
-        let err: ErrorResponse | undefined
-        try {
-            err = await res.json()
-        } catch {
+        if (value === undefined) continue;
+
+        if (Array.isArray(value)) {
+            value.forEach((v) => {
+                entries.push([key, String(v)]);
+            });
+        } else {
+            entries.push([key, String(value)]);
         }
-        const msg = err?.message || res.statusText
-        const code = err?.error || `HTTP_${res.status}`
-        const e = new Error(msg) as Error & { code?: string; status?: number }
-        e.code = code
-        e.status = res.status
-        throw e
     }
-    return res.json() as Promise<T>
+
+    return new URLSearchParams(entries);
 }
 
+export function useApi(routePrefix: string) {
+    const env = useEnv();
 
-export function useApi() {
-    async function getMaps() {
-        const res = await fetch(`${API_BASE}/maps`);
-        return await handleJson<TrialMap[]>(res);
-    };
+    const waitMinimumTime = async (start: number) => {
+        const requestTimeout = 500;
+        if (performance.now() - start < requestTimeout) {
+            await promiseTimeout(requestTimeout);
+        }
+    }
 
-    async function postGuess(guess: string, guessNumber = 1) {
-        const res = await fetch(`${API_BASE}/guess?guess=${encodeURIComponent(guess)}&guessNumber=${guessNumber}`, {
-            method: 'POST'
-        });
-        return await handleJson<Guess>(res);
-    };
+    return {
+        async request<T>(url: string, options: Omit<RequestInit, 'body'> & { body?: Record<string, unknown> | unknown[]; query?: Record<string, string | number | boolean | string[] | undefined> } = {}): Promise<T> {
+            const start = performance.now();
 
-    async function getDailyStats() {
-        const res = await fetch(`${API_BASE}/daily-stats`);
-        return await handleJson<DailyStats>(res);
-    }; 
+            try {
+                const { query, body, ...baseOptions } = options;
+                const path = new URL(window.location.origin + env.PROXIED_API_URL_PREFIX + routePrefix + url);
 
-    return { getMaps, postGuess, getDailyStats }
+                if (query) {
+                    path.search = objectToURLSearchParams(query).toString();
+                }
+
+                const response = await fetch(path.href, {
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    ...baseOptions
+                });
+
+                const dataText = await response.text();
+                if (!dataText.length) return {} as T;
+                const data = JSON.parse(dataText);
+                if (response.status >= 400) throw new RequestError(data.message ?? 'unknown', response.status);
+                await waitMinimumTime(start);
+                return data as T;
+            } catch (error) {
+                await waitMinimumTime(start);
+                if (error instanceof RequestError) {
+                    throw error;
+                }
+                throw new RequestError('unknown', 500);
+            }
+        }
+    }
 }
