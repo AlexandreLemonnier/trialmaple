@@ -1,6 +1,5 @@
 import { RequestError } from '#/classes/RequestError';
 import { useEnv } from '#/composables/useEnv';
-import { promiseTimeout } from '@vueuse/core';
 
 function objectToURLSearchParams(obj: Record<string, string | number | boolean | string[] | undefined>) {
     const entries: [string, string][] = [];
@@ -25,16 +24,8 @@ function objectToURLSearchParams(obj: Record<string, string | number | boolean |
 export function useApi(routePrefix: string) {
     const env = useEnv();
 
-    const waitMinimumTime = async (start: number) => {
-        const requestTimeout = 500;
-        if (performance.now() - start < requestTimeout) {
-            await promiseTimeout(requestTimeout);
-        }
-    }
-
     return {
         async request<T>(url: string, options: Omit<RequestInit, 'body'> & { body?: Record<string, unknown> | unknown[]; query?: Record<string, string | number | boolean | string[] | undefined> } = {}): Promise<T> {
-            const start = performance.now();
 
             try {
                 const { query, body, ...baseOptions } = options;
@@ -56,10 +47,8 @@ export function useApi(routePrefix: string) {
                 if (!dataText.length) return {} as T;
                 const data = JSON.parse(dataText);
                 if (response.status >= 400) throw new RequestError(data.message ?? 'unknown', response.status);
-                await waitMinimumTime(start);
                 return data as T;
             } catch (error) {
-                await waitMinimumTime(start);
                 if (error instanceof RequestError) {
                     throw error;
                 }
