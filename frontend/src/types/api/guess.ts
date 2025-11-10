@@ -1,4 +1,4 @@
-import { DeltaHint } from "./deltaHint";
+import { DeltaHint } from "#/types/api/deltaHint";
 
 export type Guess = {
     success: boolean;

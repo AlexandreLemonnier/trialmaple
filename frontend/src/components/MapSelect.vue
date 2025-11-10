@@ -25,9 +25,9 @@
 </template>
 
 <script setup lang="ts">
+import Icon from '#/components/Icon.vue';
 import { TrialMap } from '#/types/api/trialMap';
 import { ref } from 'vue';
-import Icon from './Icon.vue';
 
 defineProps<{
     maps: TrialMap[];

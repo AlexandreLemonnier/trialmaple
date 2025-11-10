@@ -1,5 +1,5 @@
+import { useApi } from "#/composables/useApi";
 import { DailyStats } from "#/types/api/dailyStats";
-import { useApi } from "../useApi";
 
 export function useDailyStatsApi() {
     const { request } = useApi('/daily-stats');

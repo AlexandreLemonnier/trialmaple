@@ -1,5 +1,5 @@
+import { useApi } from "#/composables/useApi";
 import { Guess } from "#/types/api/guess";
-import { useApi } from "../useApi";
 
 export function useGuessApi() {
     const { request } = useApi('/guess');
