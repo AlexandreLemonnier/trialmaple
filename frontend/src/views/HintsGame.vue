@@ -1,19 +1,19 @@
 <template>
     <div class="flex flex-col items-center gap-4">
-        <div class="text-lg pt-4">
+        <div class="text-md lg:text-lg pt-4 text-center">
             <span v-if="todayNbPlayersFound !== undefined && todayAverageTries !== undefined">
                 <strong>{{ todayNbPlayersFound }} players </strong> have found today's trial map with an average of <strong>{{ todayAverageTries }} guesses</strong>
             </span>
         </div>
-        <div class="flex gap-4 w-full lg:w-2/5 text-2xl">
+        <div class="flex gap-4 w-full lg:w-2/5 text-lg lg:text-2xl">
             <select 
                 v-model="selectedMap" 
-                class="w-full rounded-full border py-2 px-4 outline-none ring-0"
+                class="w-full rounded-full border-2 py-2 px-4 outline-none ring-0"
                 :inert="!trialMaps.length"
             >
-                <option v-for="trialMap in trialMaps" :key="trialMap.name" :value="trialMap.name">{{ trialMap.name }}</option>
+                <option v-for="trialMap in trialMaps" class="text-sm" :key="trialMap.name" :value="trialMap.name">{{ trialMap.name }}</option>
             </select>
-            <button class="rounded-full border py-2 px-4 bg-orange-400 cursor-pointer" type="button" :inert="!trialMaps.length" @click="guess">Guess!</button>
+            <button class="rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer" type="button" :inert="!trialMaps.length" @click="guess">Guess!</button>
         </div>
     </div>
 </template>

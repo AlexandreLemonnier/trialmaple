@@ -6,6 +6,7 @@
 
   --width-sidebar: 25vw;
   --color-header-background: #bebebe;
+  --color-guess-button: #149e0f;
 }
 
 @layer base {
