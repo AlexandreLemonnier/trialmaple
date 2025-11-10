@@ -6,5 +6,5 @@ export type TrialMap = {
     points: number;
     nbFinishers: number;
     acceptedAnswers: string[];
-    worldRecord: string;
+    worldRecord: string | null;
 }

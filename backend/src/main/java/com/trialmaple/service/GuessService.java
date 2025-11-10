@@ -44,9 +44,15 @@ public class GuessService {
 
         DeltaHint pointsDelta = compareNumber(guessMap.getPoints(), mapOfTheDay.getPoints());
 
-        DeltaHint wrDelta = compareNumber(
-                guessMap.getWorldRecord().toMillis(),
-                mapOfTheDay.getWorldRecord().toMillis());
+        DeltaHint wrDelta = null;
+        if (guessMap.getWorldRecord() == null && mapOfTheDay.getWorldRecord() == null) {
+            wrDelta = DeltaHint.EQUAL;
+        } else if (guessMap.getWorldRecord() == null || mapOfTheDay.getWorldRecord() == null) {
+            // Can't compare a map without WR with a map with WR
+            wrDelta = DeltaHint.NON_APPLICABLE;
+        } else {
+            wrDelta = compareNumber(guessMap.getWorldRecord().toMillis(), mapOfTheDay.getWorldRecord().toMillis());
+        }
 
         DeltaHint finishersDelta = compareNumber(
                 guessMap.getNbFinishers(),

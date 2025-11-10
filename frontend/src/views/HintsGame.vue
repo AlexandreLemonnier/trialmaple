@@ -41,6 +41,7 @@ async function guess() {
 async function fetchMaps() {
     try {
         trialMaps.value = await mapsApi.getMaps();
+        trialMaps.value.sort((a, b) => a.name.localeCompare(b.name));
         const firstTrialMap = trialMaps.value[0];
         if (firstTrialMap) {
             selectedMap.value = firstTrialMap.name;

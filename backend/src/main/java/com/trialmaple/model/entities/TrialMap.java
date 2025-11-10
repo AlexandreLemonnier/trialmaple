@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trialmaple.jpa.converter.DurationStringConverter;
+import com.trialmaple.jpa.converter.DurationMillisConverter;
 import com.trialmaple.model.enums.DifficultyCategory;
 
 import jakarta.persistence.CollectionTable;
@@ -47,8 +47,8 @@ public class TrialMap {
     @Column(name = "points", columnDefinition = "INT")
     private int points;
 
-    @Column(name = "world_record", columnDefinition = "VARCHAR(50)")
-    @Convert(converter = DurationStringConverter.class)
+    @Column(name = "world_record", columnDefinition = "BIGINT")
+    @Convert(converter = DurationMillisConverter.class)
     private Duration worldRecord;
 
     @Column(name = "nb_finishers", columnDefinition = "INT")
