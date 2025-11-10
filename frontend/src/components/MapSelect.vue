@@ -10,7 +10,7 @@
 
     <ul
       v-if="isOpen"
-      class="absolute text-md lg:text-lg mt-2 w-full max-h-60 overflow-y-auto rounded-xl border shadow-lg"
+      class="absolute text-md lg:text-lg mt-2 w-full max-h-60 overflow-y-auto rounded-xl border shadow-lg scrollbar-hide"
     >
       <li
         v-for="map in maps"
