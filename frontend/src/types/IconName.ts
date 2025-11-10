@@ -1,4 +1,5 @@
 export type IconName = 
     'x'
     | 'circle-info'
-    | 'search'
+    | 'chevron-down'
+    | 'chevron-up'
