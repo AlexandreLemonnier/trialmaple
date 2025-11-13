@@ -9,6 +9,11 @@ export function useMapsApi() {
             return await request<TrialMap[]>('', {
                 method: 'GET'
             });
+        },
+        async getMapNames() {
+            return await request<string[]>('/list', {
+                method: 'GET'
+            });
         }
     }
 }

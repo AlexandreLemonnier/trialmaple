@@ -24,12 +24,25 @@ public class TrialMapController {
         this.trialMapDtoMapper = trialMapDtoMapper;
     }
 
+    /**
+     * Get all maps details
+     */
     @GetMapping("/maps")
     public List<TrialMapDto> getAllMaps() {
         List<TrialMap> maps = service.getAllMaps();
         return maps.stream()
                 .map(m -> trialMapDtoMapper.serviceToDto(m))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * List maps name
+     * 
+     * @return
+     */
+    @GetMapping("/maps/list")
+    public List<String> getAllMapNames() {
+        return service.getAllMapNames();
     }
 
 }

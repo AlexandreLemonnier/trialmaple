@@ -1,10 +1,16 @@
 import { DeltaHint } from "#/types/api/deltaHint";
 
-export type Guess = {
+export interface HintPair<K, V> {
+    value: K;
+    hint: V;
+}
+
+export interface Guess {
     success: boolean;
-    correctAuthors: string[];
-    correctDifficulty: boolean;
-    deltaPoints: DeltaHint;
-    deltaWR: DeltaHint;
-    deltaFinishers: DeltaHint;
+    difficulty: HintPair<string, boolean>;
+    points: HintPair<number, DeltaHint>;
+    checkpoints: HintPair<number, DeltaHint>;
+    nbFinishers: HintPair<number, DeltaHint>;
+    worldRecord: HintPair<string | null, DeltaHint>;
+    authors: HintPair<string, boolean>[];
 }

@@ -18,4 +18,8 @@ public class TrialMapService {
     public List<TrialMap> getAllMaps() {
         return repository.findAll();
     }
+
+    public List<String> getAllMapNames() {
+        return repository.findAllMapNames();
+    }
 }

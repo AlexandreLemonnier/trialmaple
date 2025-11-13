@@ -9,7 +9,7 @@ export function useGuessApi() {
             return await request<Guess>('', {
                 method: 'POST',
                 query: {
-                    guess: encodeURIComponent(guess),
+                    guess: guess,
                     guessNumber
                 }
             });

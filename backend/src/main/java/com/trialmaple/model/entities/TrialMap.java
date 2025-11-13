@@ -54,11 +54,6 @@ public class TrialMap {
     @Column(name = "nb_finishers", columnDefinition = "INT")
     private int nbFinishers;
 
-    @ElementCollection
-    @CollectionTable(name = "trial_map_accepted_answers", joinColumns = @JoinColumn(name = "trial_map_id"))
-    @Column(name = "accepted_answer", columnDefinition = "VARCHAR(255)")
-    private List<String> acceptedAnswers;
-
     @Column(name = "active", columnDefinition = "BOOLEAN")
     private boolean active;
 
@@ -107,10 +102,6 @@ public class TrialMap {
 
     public int getNbFinishers() {
         return nbFinishers;
-    }
-
-    public List<String> getAcceptedAnswers() {
-        return new ArrayList<>(acceptedAnswers);
     }
 
     public boolean isActive() {

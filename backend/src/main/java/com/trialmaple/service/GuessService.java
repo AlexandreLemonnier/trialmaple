@@ -1,15 +1,19 @@
 package com.trialmaple.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.trialmaple.controller.mappers.TrialMapDtoMapper;
 import com.trialmaple.exception.InvalidMapNameException;
 import com.trialmaple.model.dto.GuessDto;
+import com.trialmaple.model.dto.HintPairDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.Score;
 import com.trialmaple.model.entities.TrialMap;
 import com.trialmaple.model.enums.DeltaHint;
+import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TrialMapRepository;
 
@@ -18,10 +22,13 @@ public class GuessService {
 
     private final TrialMapRepository trialMapRepository;
     private final ScoreRepository scoreRepository;
+    private final TrialMapDtoMapper trialMapDtoMapper;
 
-    public GuessService(TrialMapRepository trialMapRepository, ScoreRepository scoreRepository) {
+    public GuessService(TrialMapRepository trialMapRepository, ScoreRepository scoreRepository,
+            TrialMapDtoMapper trialMapDtoMapper) {
         this.trialMapRepository = trialMapRepository;
         this.scoreRepository = scoreRepository;
+        this.trialMapDtoMapper = trialMapDtoMapper;
     }
 
     /**
@@ -36,13 +43,20 @@ public class GuessService {
 
         boolean success = mapOfTheDay.getName().equalsIgnoreCase(guessMap.getName());
 
-        List<String> correctAuthors = guessMap.getAuthors().stream()
-                .filter(a -> mapOfTheDay.getAuthors().contains(a))
-                .toList();
-
         boolean isCorrectDifficulty = mapOfTheDay.getDifficulty().equals(guessMap.getDifficulty());
+        HintPairDto<DifficultyCategory, Boolean> difficulty = new HintPairDto<DifficultyCategory, Boolean>(
+                guessMap.getDifficulty(), isCorrectDifficulty);
 
         DeltaHint pointsDelta = compareNumber(guessMap.getPoints(), mapOfTheDay.getPoints());
+        HintPairDto<Integer, DeltaHint> points = new HintPairDto<Integer, DeltaHint>(guessMap.getPoints(), pointsDelta);
+
+        DeltaHint checkpointsDelta = compareNumber(guessMap.getNbCheckpoints(), mapOfTheDay.getNbCheckpoints());
+        HintPairDto<Integer, DeltaHint> checkpoints = new HintPairDto<Integer, DeltaHint>(guessMap.getNbCheckpoints(),
+                checkpointsDelta);
+
+        DeltaHint nbFinishersDelta = compareNumber(guessMap.getNbFinishers(), mapOfTheDay.getNbFinishers());
+        HintPairDto<Integer, DeltaHint> nbFinishers = new HintPairDto<Integer, DeltaHint>(guessMap.getNbFinishers(),
+                nbFinishersDelta);
 
         DeltaHint wrDelta = null;
         if (guessMap.getWorldRecord() == null && mapOfTheDay.getWorldRecord() == null) {
@@ -53,10 +67,14 @@ public class GuessService {
         } else {
             wrDelta = compareNumber(guessMap.getWorldRecord().toMillis(), mapOfTheDay.getWorldRecord().toMillis());
         }
+        String formattedWR = trialMapDtoMapper.serviceToDto(guessMap).worldRecord();
+        HintPairDto<String, DeltaHint> worldRecord = new HintPairDto<String, DeltaHint>(formattedWR, wrDelta);
 
-        DeltaHint finishersDelta = compareNumber(
-                guessMap.getNbFinishers(),
-                mapOfTheDay.getNbFinishers());
+        List<HintPairDto<String, Boolean>> authors = new ArrayList<>();
+        guessMap.getAuthors().forEach((author) -> {
+            boolean isCorrect = mapOfTheDay.getAuthors().contains(author);
+            authors.add(new HintPairDto<String, Boolean>(author, isCorrect));
+        });
 
         // Save score if success
         if (success) {
@@ -64,7 +82,7 @@ public class GuessService {
             scoreRepository.save(score);
         }
 
-        return new GuessDto(success, correctAuthors, isCorrectDifficulty, pointsDelta, wrDelta, finishersDelta);
+        return new GuessDto(success, difficulty, points, checkpoints, nbFinishers, worldRecord, authors);
     }
 
     private DeltaHint compareNumber(long guessValue, long realValue) {
