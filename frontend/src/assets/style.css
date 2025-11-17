@@ -5,8 +5,11 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --width-sidebar: 25vw;
-  --color-header-background: #bebebe;
+  --color-header-background: #eeecec;
   --color-guess-button: #149e0f;
+  --color-card-background: #eeecec;
+  --color-success: #149e0f;
+  --color-error: #be1c1c;
 }
 
 @layer base {

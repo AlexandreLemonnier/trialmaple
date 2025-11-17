@@ -11,6 +11,6 @@ export interface Guess {
     points: HintPair<number, DeltaHint>;
     checkpoints: HintPair<number, DeltaHint>;
     nbFinishers: HintPair<number, DeltaHint>;
-    worldRecord: HintPair<string | null, DeltaHint>;
+    worldRecord: HintPair<string, DeltaHint>;
     authors: HintPair<string, boolean>[];
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute top-0 left-0 flex min-h-screen w-screen">
+    <div class="absolute top-0 left-0 flex min-h-screen overflow-x-hidden w-full">
         <Gutter />
         <div class="flex flex-col w-full lg:w-3/5">
           <Header />

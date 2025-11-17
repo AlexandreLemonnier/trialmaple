@@ -18,27 +18,31 @@
             <h2 class="text-xl font-semibold">Today's map</h2>
             <div class="border rounded-xl w-full h-10"></div>
         </div>
+        <div class="flex flex-col gap-5 mx-20">
+            <GuessCard v-for="([mapName, guess]) in reversedHistory" :key="mapName" :mapName :guess />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import GuessCard from '#/components/GuessCard.vue';
 import MapSelect from '#/components/MapSelect.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
 import { DailyStats } from '#/types/api/dailyStats';
 import { Guess } from '#/types/api/guess';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const mapNames = ref<string[]>([]);
 const todayNbPlayersFound = ref<number>();
 const todayAverageTries = ref<number>();
 
 const selectedMap = ref<string>();
-
-const mapsApi = useMapsApi();
-const dailyStatsApi = useDailyStatsApi();
-const guessApi = useGuessApi();
+const history = ref<Record<string, Guess>>({});
+const reversedHistory = computed(() =>
+    Object.entries(history.value).reverse()
+);
 
 const knownAuthors = ref<string[]>([]);
 const knownDifficulty = ref<string>();
@@ -48,6 +52,7 @@ const knownWR = ref<string | null>();
 const knownNbFinishers = ref<number>();
 
 function updateKnownData(guess: Guess) {
+    history.value[selectedMap.value!] = guess;
     if (guess.difficulty.hint) {
         knownDifficulty.value = guess.difficulty.value;
     }
@@ -65,6 +70,10 @@ function updateKnownData(guess: Guess) {
     }
     knownAuthors.value = [...knownAuthors.value, ...guess.authors.filter((authorHint) => authorHint.hint).map((authorHint) => authorHint.value)];
 }
+
+const mapsApi = useMapsApi();
+const dailyStatsApi = useDailyStatsApi();
+const guessApi = useGuessApi();
 
 async function guess() {
     if (!selectedMap.value) return;
