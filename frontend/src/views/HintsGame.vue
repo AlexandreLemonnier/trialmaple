@@ -17,6 +17,7 @@
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
+        <span v-if="hasWon" class="text-5xl lg:text-7xl">Congrats!!!</span>
         <div class="w-full lg:w-4/5">
             <h2 class="text-xl font-semibold">Today's map</h2>
             <div class="border rounded-xl w-full h-10"></div>
@@ -35,7 +36,8 @@ import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
 import { DailyStats } from '#/types/api/dailyStats';
 import { Guess } from '#/types/api/guess';
-import { computed, onMounted, ref } from 'vue';
+import confetti from "canvas-confetti";
+import { computed, onMounted, ref, watch } from 'vue';
 
 const mapNames = ref<string[]>([]);
 const todayNbPlayersFound = ref<number>();
@@ -47,6 +49,7 @@ const history = ref<Record<string, Guess>>({});
 const reversedHistory = computed(() =>
     Object.entries(history.value).reverse()
 );
+const hasWon = ref(false);
 
 const knownAuthors = ref<string[]>([]);
 const knownDifficulty = ref<string>();
@@ -55,8 +58,34 @@ const knownCheckpoints = ref<number>();
 const knownWR = ref<string | null>();
 const knownNbFinishers = ref<number>();
 
+function triggerConfetti() {
+    const duration = 2000;
+    const end = Date.now() + duration;
+    (function frame() {
+        confetti({
+            particleCount: 10,
+            spread: 70,
+            startVelocity: 30,
+            ticks: 60,
+            origin: {
+                x: Math.random(),
+                y: Math.random() - 0.2
+            }
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+    })();
+}
+
+watch(hasWon, () => {
+    if (hasWon.value) {
+        triggerConfetti();
+    }
+});
+
 function updateKnownData(guess: Guess) {
-    history.value[selectedMap.value!] = guess;
     if (guess.difficulty.hint) {
         knownDifficulty.value = guess.difficulty.value;
     }
@@ -84,15 +113,16 @@ function historyContainsMap(mapName: string) {
 }
 
 async function guess() {
-    if (!selectedMap.value) return;
+    if (!selectedMap.value || hasWon.value) return;
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
     if (mapAlreadyPicked.value) return;
     try {
         const guess: Guess = await guessApi.postGuess(selectedMap.value);
+        history.value[selectedMap.value!] = guess;
         updateKnownData(guess);
-        // TODO Add guess to history + localStorage + add card
+        // TODO Add guess to localStorage
         if (guess.success) {
-            // TODO Handle success
+            hasWon.value = true;
         }
     } catch (e) {
         console.error('Error while guessing trial maps', e);
