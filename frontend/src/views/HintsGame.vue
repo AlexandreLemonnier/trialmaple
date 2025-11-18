@@ -5,14 +5,17 @@
                 <strong>{{ todayNbPlayersFound }} players </strong> have found today's trial map with an average of <strong>{{ todayAverageTries }} guesses</strong>
             </span>
         </div>
-        <div class="flex gap-4 w-full lg:w-2/5">
-            <MapSelect :mapNames="mapNames" v-model="selectedMap" />
-            <button 
-                class="text-lg lg:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform" 
-                type="button" 
-                :inert="!mapNames.length || !selectedMap" 
-                @click="guess">Guess
-            </button>
+        <div class="flex flex-col gap-1 w-full lg:w-2/5">
+            <div class="flex gap-4 w-full">
+                <MapSelect :mapNames="mapNames" v-model="selectedMap" />
+                <button 
+                    class="text-lg lg:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform" 
+                    type="button" 
+                    :inert="!mapNames.length || !selectedMap" 
+                    @click="guess">Guess
+                </button>
+            </div>
+            <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
         <div class="w-full lg:w-4/5">
             <h2 class="text-xl font-semibold">Today's map</h2>
@@ -39,6 +42,7 @@ const todayNbPlayersFound = ref<number>();
 const todayAverageTries = ref<number>();
 
 const selectedMap = ref<string>();
+const mapAlreadyPicked = ref(false);
 const history = ref<Record<string, Guess>>({});
 const reversedHistory = computed(() =>
     Object.entries(history.value).reverse()
@@ -75,8 +79,14 @@ const mapsApi = useMapsApi();
 const dailyStatsApi = useDailyStatsApi();
 const guessApi = useGuessApi();
 
+function historyContainsMap(mapName: string) {
+    return Object.keys(history.value).some((mapFromHistory) => mapName === mapFromHistory);
+}
+
 async function guess() {
     if (!selectedMap.value) return;
+    mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
+    if (mapAlreadyPicked.value) return;
     try {
         const guess: Guess = await guessApi.postGuess(selectedMap.value);
         updateKnownData(guess);
