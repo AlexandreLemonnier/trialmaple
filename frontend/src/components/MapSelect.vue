@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full flex-1 min-w-0" @keydown="onKeyDown">
+  <div ref="dropdownRef" class="relative w-full flex-1 min-w-0" @keydown="onKeyDown">
     <button
       @click="isOpen = !isOpen"
       class="flex w-full justify-between items-center text-lg lg:text-2xl rounded-full border-2 py-2 px-4 cursor-pointer"
@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import Icon from '#/components/Icon.vue';
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 const { mapNames } = defineProps<{
     mapNames: string[];
@@ -35,6 +35,7 @@ const { mapNames } = defineProps<{
 
 const isOpen = ref(false);
 const selectedMap = defineModel<string>();
+const dropdownRef = ref<HTMLElement | null>(null);
 const itemRefs = ref<(HTMLElement | null)[]>([]);
 
 function select(mapName: string) {
@@ -53,6 +54,23 @@ function onKeyDown(e: KeyboardEvent) {
   if (index !== -1) {
     const el = itemRefs.value[index];
     el?.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
+/* Close select list when clicking outside */
+function handleClickOutside(event: MouseEvent) {
+  if (!dropdownRef.value) return;
+
+  if (!dropdownRef.value.contains(event.target as Node)) {
+    isOpen.value = false;
   }
 }
 
