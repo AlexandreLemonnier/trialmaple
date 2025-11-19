@@ -1,7 +1,7 @@
 <template>
     <header class="sticky flex justify-between items-center px-5 w-full h-16 bg-header-background tracking-wide">
         <div class="flex items-center gap-2 select-none">
-            <img src="../../assets/TrackMania-Logo.svg" alt="TrialMaple logo" class="h-[clamp(2rem,4vw,4rem)]" />
+            <img :src="TrackManiaLogo" alt="TrialMaple logo" class="h-[clamp(2rem,4vw,4rem)]" />
             <div class="flex">
                 <h1 class="text-[clamp(1.25rem,2.5vw,1.75rem)] font-bold">T</h1>
                 <h1 class="text-[clamp(1rem,2vw,1.5rem)] font-semibold">rial</h1>
@@ -25,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import TrackManiaLogo from "#/assets/TrackMania-Logo.svg";
 import Icon from '#/components/Icon.vue';
 import { ref } from 'vue';
 const open = ref(false)

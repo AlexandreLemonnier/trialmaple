@@ -5,7 +5,7 @@ export function useGuessApi() {
     const { request } = useApi('/guess');
 
     return {
-        async postGuess(guess: string, guessNumber = 1) {
+        async postGuess(guess: string, guessNumber: number) {
             return await request<Guess>('', {
                 method: 'POST',
                 query: {

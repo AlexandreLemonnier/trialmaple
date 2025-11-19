@@ -17,10 +17,10 @@
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
-        <span v-if="hasWon" class="text-5xl lg:text-7xl">Congrats!!!</span>
-        <div class="w-full lg:w-4/5">
-            <h2 class="text-xl font-semibold">Today's map</h2>
-            <div class="border rounded-xl w-full h-10"></div>
+        <div v-if="hasWon" class="flex gap-2 items-center text-5xl lg:text-7xl">
+            <span>Congrats!</span>
+            <img :src="smirkcat" alt="smirkcat" class="h-[1em]" />
+            <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
         </div>
         <div class="flex flex-col gap-5 mx-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory" :key="mapName" :mapName :guess />
@@ -29,6 +29,8 @@
 </template>
 
 <script setup lang="ts">
+import smirkcat from '#/assets/smirkcat.png';
+import thumbsup from '#/assets/thumbsup.png';
 import GuessCard from '#/components/GuessCard.vue';
 import MapSelect from '#/components/MapSelect.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
@@ -117,7 +119,8 @@ async function guess() {
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
     if (mapAlreadyPicked.value) return;
     try {
-        const guess: Guess = await guessApi.postGuess(selectedMap.value);
+        const nbTries = Object.keys(history.value).length + 1;
+        const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries);
         history.value[selectedMap.value!] = guess;
         updateKnownData(guess);
         // TODO Add guess to localStorage
