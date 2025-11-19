@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trialmaple.controller.mappers.TrialMapDtoMapper;
@@ -38,11 +39,13 @@ public class TrialMapController {
     /**
      * List maps name
      * 
+     * @param finished get only finished maps (worldRecord != null)
      * @return
      */
     @GetMapping("/maps/list")
-    public List<String> getAllMapNames() {
-        return service.getAllMapNames();
+    public List<String> getAllMapNames(
+            @RequestParam(name = "finished", required = false, defaultValue = "false") boolean finished) {
+        return service.getAllMapNames(finished);
     }
 
 }

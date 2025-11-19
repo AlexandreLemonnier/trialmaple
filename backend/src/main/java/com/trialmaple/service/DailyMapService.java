@@ -38,7 +38,7 @@ public class DailyMapService {
         boolean exists = dailyMapRepository.existsByDay(today);
 
         if (!exists) {
-            List<TrialMap> allMaps = trialMapRepository.findAll();
+            List<TrialMap> allMaps = trialMapRepository.findByWorldRecordIsNotNull();
             if (allMaps.isEmpty()) {
                 LOGGER.error("No trial maps available");
                 return;

@@ -10,9 +10,12 @@ export function useMapsApi() {
                 method: 'GET'
             });
         },
-        async getMapNames() {
+        async getMapNames(finished: boolean) {
             return await request<string[]>('/list', {
-                method: 'GET'
+                method: 'GET',
+                query: {
+                    finished
+                }
             });
         }
     }

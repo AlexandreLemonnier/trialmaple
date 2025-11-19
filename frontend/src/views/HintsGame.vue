@@ -135,7 +135,7 @@ async function guess() {
 /** FETCH DATA */
 async function fetchMaps() {
     try {
-        mapNames.value = await mapsApi.getMapNames();
+        mapNames.value = await mapsApi.getMapNames(true);
         mapNames.value.sort((a, b) => a.localeCompare(b));
     } catch (e) {
         console.error('Error while fetching trial maps', e);
