@@ -43,6 +43,18 @@ function select(mapName: string) {
   isOpen.value = false;
 }
 
+/* Scroll to list item */
+function scrollToItem(index: number) {
+  const ul = dropdownRef.value?.querySelector('ul');
+  const li = itemRefs.value[index];
+  if (!ul || !li) return;
+
+  // Relative position to the list
+  const offsetTop = li.offsetTop;
+  ul.scrollTop = offsetTop;
+}
+
+/* Find first map starting with pressed key + scroll */
 function onKeyDown(e: KeyboardEvent) {
   if (e.key.length !== 1 || !/[a-z]/i.test(e.key)) return;
 
@@ -52,8 +64,7 @@ function onKeyDown(e: KeyboardEvent) {
   );
 
   if (index !== -1) {
-    const el = itemRefs.value[index];
-    el?.scrollIntoView({ block: "start", behavior: "instant" });
+    scrollToItem(index);
   }
 }
 
