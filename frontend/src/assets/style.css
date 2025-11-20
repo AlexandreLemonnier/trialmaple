@@ -6,10 +6,10 @@
 
   --width-sidebar: 25vw;
   --color-header-background: #eeecec;
-  --color-guess-button: #149e0f;
+  --color-guess-button: #19c713;
   --color-card-background: #eeecec;
-  --color-success: #149e0f;
-  --color-error: #be1c1c;
+  --color-success: #19c713;
+  --color-error: #e02020;
 }
 
 @layer base {

@@ -11,7 +11,7 @@
                 <button 
                     class="text-lg lg:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform" 
                     type="button" 
-                    :inert="!mapNames.length || !selectedMap" 
+                    :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon" 
                     @click="guess">Guess
                 </button>
             </div>
@@ -23,7 +23,12 @@
             <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
         </div>
         <div class="flex flex-col w-full gap-5 px-20">
-            <GuessCard v-for="([mapName, guess]) in reversedHistory" :key="mapName" :mapName :guess />
+            <GuessCard 
+            v-for="([mapName, guess]) in reversedHistory" 
+            :key="mapName" 
+            :mapName 
+            :guess
+            @animation-finished="onGuessCardAnimationFinished" />
         </div>
     </div>
 </template>
@@ -41,10 +46,12 @@ import { Guess } from '#/types/api/guess';
 import confetti from "canvas-confetti";
 import { computed, onMounted, ref, watch } from 'vue';
 
+/* API data */
 const mapNames = ref<string[]>([]);
 const todayNbPlayersFound = ref<number>();
 const todayAverageTries = ref<number>();
 
+/* Game info */
 const selectedMap = ref<string>();
 const mapAlreadyPicked = ref(false);
 const history = ref<Record<string, Guess>>({});
@@ -53,6 +60,7 @@ const reversedHistory = computed(() =>
 );
 const hasWon = ref(false);
 
+/* Known data */
 const knownAuthors = ref<string[]>([]);
 const knownDifficulty = ref<string>();
 const knownPoints = ref<number>();
@@ -60,6 +68,11 @@ const knownCheckpoints = ref<number>();
 const knownWR = ref<string | null>();
 const knownNbFinishers = ref<number>();
 
+/* Other */
+const isGuessCardAnimating = ref(false);
+const pendingWin = ref(false);
+
+/** Animations */
 function triggerConfetti() {
     const duration = 2000;
     const end = Date.now() + duration;
@@ -87,6 +100,15 @@ watch(hasWon, () => {
     }
 });
 
+function onGuessCardAnimationFinished() {
+    if (pendingWin.value) {
+        hasWon.value = true;
+        pendingWin.value = false;
+    }
+    isGuessCardAnimating.value = false;
+}
+
+/** Game core */
 function updateKnownData(guess: Guess) {
     if (guess.difficulty.hint) {
         knownDifficulty.value = guess.difficulty.value;
@@ -115,20 +137,21 @@ function historyContainsMap(mapName: string) {
 }
 
 async function guess() {
-    if (!selectedMap.value || hasWon.value) return;
+    if (!selectedMap.value) return;
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
     if (mapAlreadyPicked.value) return;
     try {
+        isGuessCardAnimating.value = true;
         const nbTries = Object.keys(history.value).length + 1;
         const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries);
         history.value[selectedMap.value!] = guess;
         updateKnownData(guess);
-        // TODO Add guess to localStorage
         if (guess.success) {
-            hasWon.value = true;
+            pendingWin.value = true;
         }
     } catch (e) {
-        console.error('Error while guessing trial maps', e);
+        console.error('Error while guessing trial map', e);
+        isGuessCardAnimating.value = false;
     }
 }
 

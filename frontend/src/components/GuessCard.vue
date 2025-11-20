@@ -23,6 +23,10 @@ const props = defineProps<{
     guess: Guess;
 }>();
 
+const emit = defineEmits <{
+    (e: 'animation-finished'): void
+}>();
+
 const delay = 300;
 
 const elementsToDisplay = [
@@ -42,5 +46,6 @@ onMounted(async () => {
         displayedElements.value.push(element);
         await new Promise(resolve => setTimeout(resolve, delay));
     }
+    emit('animation-finished');
 });
 </script>
