@@ -1,5 +1,5 @@
 <template>
-    <svg class="select-none inline-flex shrink-0 cursor-pointer" :class="[sizeToClass(size)]" stroke-width="2">
+    <svg class="select-none inline-flex shrink-0" :class="[sizeToClass(size)]" stroke-width="2">
         <use :href="`#${name}`" />
     </svg>
 </template>

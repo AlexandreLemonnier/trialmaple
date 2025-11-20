@@ -22,7 +22,7 @@
             <img :src="smirkcat" alt="smirkcat" class="h-[1em]" />
             <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
         </div>
-        <div class="flex flex-col gap-5 mx-20">
+        <div class="flex flex-col w-full gap-5 px-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory" :key="mapName" :mapName :guess />
         </div>
     </div>

@@ -1,23 +1,46 @@
 <template>
     <div class="flex flex-col w-full gap-4 bg-card-background rounded-xl p-4">
         <span class="text-2xl font-semibold">{{ mapName }}</span>
-        <div class="flex flex-wrap gap-4">
-            <GuessElement label="Difficulty" :hints="[guess.difficulty]" />
-            <GuessElement label="Points" :hints="[guess.points]" />
-            <GuessElement label="Checkpoints" :hints="[guess.checkpoints]" />
-            <GuessElement label="Finishers" :hints="[guess.nbFinishers]" />
-            <GuessElement label="World Record" :hints="[guess.worldRecord]" />
-            <GuessElement label="Author(s)" :hints="guess.authors" />
-        </div>
+
+        <TransitionGroup name="fade" tag="div" class="flex flex-wrap gap-4">
+            <GuessElement
+                v-for="item in displayedElements"
+                :key="item.label"
+                :label="item.label"
+                :hints="item.hints"
+            />
+        </TransitionGroup>
     </div>
 </template>
 
 <script setup lang="ts">
 import GuessElement from '#/components/GuessElement.vue';
 import { Guess } from '#/types/api/guess';
+import { onMounted, ref } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     mapName: string;
     guess: Guess;
 }>();
+
+const delay = 300;
+
+const elementsToDisplay = [
+    { label: 'Difficulty', hints: [props.guess.difficulty] },
+    { label: 'Points', hints: [props.guess.points] },
+    { label: 'Checkpoints', hints: [props.guess.checkpoints] },
+    { label: 'Finishers', hints: [props.guess.nbFinishers] },
+    { label: 'World Record', hints: [props.guess.worldRecord] },
+    { label: 'Author(s)', hints: props.guess.authors }
+];
+
+const displayedElements = ref<typeof elementsToDisplay>([]);
+
+// Add elements progressively to make a sequential animation
+onMounted(async () => {
+    for (let element of elementsToDisplay) {
+        displayedElements.value.push(element);
+        await new Promise(resolve => setTimeout(resolve, delay));
+    }
+});
 </script>

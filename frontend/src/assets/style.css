@@ -25,3 +25,10 @@
   -ms-overflow-style: none;
   scrollbar-width: none; 
 }
+
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from {
+  opacity: 0;
+}
