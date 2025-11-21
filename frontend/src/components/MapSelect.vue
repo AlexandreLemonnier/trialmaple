@@ -10,7 +10,7 @@
 
     <ul
       v-if="isOpen"
-      class="absolute text-md lg:text-lg mt-2 w-full max-h-60 overflow-y-auto rounded-xl border shadow-lg bg-white scrollbar-hide"
+      class="absolute text-md lg:text-lg mt-2 w-full max-h-60 overflow-y-auto rounded-xl border shadow-lg bg-white scrollbar-hide z-20"
     >
     <li
       v-for="mapName in mapNames"

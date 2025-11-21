@@ -18,7 +18,7 @@
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
         <div v-if="hasWon" class="flex gap-2 items-center text-5xl lg:text-7xl">
-            <span>Congrats!</span>
+            <span>woho</span>
             <img :src="smirkcat" alt="smirkcat" class="h-[1em]" />
             <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
         </div>
