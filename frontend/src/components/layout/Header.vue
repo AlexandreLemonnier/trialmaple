@@ -11,17 +11,16 @@
             </div>
         </div>
         <Icon class="cursor-pointer" name="circle-info" size="md" @click="open = true" />
-
-        <div v-if="open" class="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-4" @click.self="open = false">
-            <div class="bg-neutral-900 text-neutral-100 rounded-2xl p-5 max-w-md w-full border border-white/10 shadow-xl">
-                <div class="flex items-start justify-between gap-4">
-                    <h2 class="text-lg font-black">About TrialMaple</h2>
-                    <Icon class="cursor-pointer" name="x" size="sm" @click="open = false"/>
-                </div>
-                <p class="mt-3 text-sm text-neutral-300">Guess today's Trackmania trial map. More actions coming soon in this header.</p>
-            </div>
-        </div>
     </header>
+    <div v-if="open" class="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-4" @click.self="open = false">
+        <div class="bg-neutral-900 text-neutral-100 rounded-2xl p-5 max-w-md w-full border border-white/10 shadow-xl">
+            <div class="flex items-start justify-between gap-4">
+                <h2 class="text-lg font-black">About TrialMaple</h2>
+                <Icon class="cursor-pointer" name="x" size="sm" @click="open = false"/>
+            </div>
+            <p class="mt-3 text-sm text-neutral-300">Guess today's Trackmania trial map. More actions coming soon in this header.</p>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
