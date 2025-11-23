@@ -17,11 +17,7 @@
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
-        <div v-if="hasWon" class="flex gap-2 items-center text-5xl lg:text-7xl">
-            <span>woho</span>
-            <img :src="smirkcat" alt="smirkcat" class="h-[1em]" />
-            <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
-        </div>
+        <WinScreen v-if="hasWon" />
         <div class="flex flex-col w-full gap-5 px-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory"
                        :key="mapName"
@@ -34,11 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import smirkcat from '#/assets/smirkcat.png';
-import thumbsup from '#/assets/thumbsup.png';
 import GuessCard from '#/components/GuessCard.vue';
 import MapSelect from '#/components/MapSelect.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
+import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
