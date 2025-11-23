@@ -1,7 +1,7 @@
-import { ErrorCode } from "#/types/api/errorCode";
+import type { ErrorCode } from '#/types/api/errorCode';
 
-export interface ErrorResponse {
+export type ErrorResponse = {
     timestamp: string;
     error: ErrorCode;
     message: string;
-}
+};

@@ -1,7 +1,7 @@
 <template>
-  <Layout>
-    <HintsGame />
-  </Layout>
+    <Layout>
+        <HintsGame />
+    </Layout>
 </template>
 
 <script setup lang="ts">

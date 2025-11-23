@@ -1,5 +1,5 @@
-import { useApi } from "#/composables/useApi";
-import { DailyStats } from "#/types/api/dailyStats";
+import { useApi } from '#/composables/useApi';
+import type { DailyStats } from '#/types/api/dailyStats';
 
 export function useDailyStatsApi() {
     const { request } = useApi('/daily-stats');
@@ -10,5 +10,5 @@ export function useDailyStatsApi() {
                 method: 'GET'
             });
         }
-    }
+    };
 }

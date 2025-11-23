@@ -16,7 +16,7 @@
         <div class="bg-neutral-900 text-neutral-100 rounded-2xl p-5 max-w-md w-full border border-white/10 shadow-xl">
             <div class="flex items-start justify-between gap-4">
                 <h2 class="text-lg font-black">About TrialMaple</h2>
-                <Icon class="cursor-pointer" name="x" size="sm" @click="open = false"/>
+                <Icon class="cursor-pointer" name="x" size="sm" @click="open = false" />
             </div>
             <p class="mt-3 text-sm text-neutral-300">Guess today's Trackmania trial map. More actions coming soon in this header.</p>
         </div>
@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import TrackManiaLogo from "#/assets/TrackMania-Logo.svg";
+import TrackManiaLogo from '#/assets/TrackMania-Logo.svg';
 import Icon from '#/components/Icon.vue';
 import { ref } from 'vue';
-const open = ref(false)
+const open = ref(false);
 </script>

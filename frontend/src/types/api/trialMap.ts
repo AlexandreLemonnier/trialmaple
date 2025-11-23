@@ -1,4 +1,4 @@
-export interface TrialMap {
+export type TrialMap = {
     name: string;
     authors: string[];
     nbCheckpoints: number;
@@ -6,4 +6,4 @@ export interface TrialMap {
     points: number;
     nbFinishers: number;
     worldRecord: string | null;
-}
+};

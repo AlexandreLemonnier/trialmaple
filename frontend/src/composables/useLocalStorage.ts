@@ -1,4 +1,4 @@
-import { Guess } from '#/types/api/guess';
+import type { Guess } from '#/types/api/guess';
 
 const localStorageTypeMap = {
     history: {} as Record<string, Guess>
@@ -12,7 +12,8 @@ function getLocalStorageData() {
         try {
             const value = JSON.parse(localStorage.getItem(keyName) ?? '');
             map.set(keyName, value);
-        } catch {
+        } catch (e) {
+            console.error(e);
         }
     }
 

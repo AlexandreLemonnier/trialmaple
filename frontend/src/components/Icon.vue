@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import spriteContent from '#/assets/icons.svg?raw';
 import type { IconName } from '#/types/IconName';
-import { Size } from '#/types/Size';
+import type { Size } from '#/types/Size';
 import { onMounted } from 'vue';
 
 defineProps<{

@@ -3,19 +3,17 @@
         <span class="text-2xl font-semibold">{{ mapName }}</span>
 
         <TransitionGroup name="fade" tag="div" class="flex flex-wrap gap-4">
-            <GuessElement
-                v-for="item in displayedElements"
-                :key="item.label"
-                :label="item.label"
-                :hints="item.hints"
-            />
+            <GuessElement v-for="item in displayedElements"
+                          :key="item.label"
+                          :label="item.label"
+                          :hints="item.hints" />
         </TransitionGroup>
     </div>
 </template>
 
 <script setup lang="ts">
 import GuessElement from '#/components/GuessElement.vue';
-import { Guess } from '#/types/api/guess';
+import type { Guess } from '#/types/api/guess';
 import { onMounted, ref } from 'vue';
 
 const { mapName, guess, ignoreAnimations } = defineProps<{
@@ -24,9 +22,7 @@ const { mapName, guess, ignoreAnimations } = defineProps<{
     ignoreAnimations?: boolean;
 }>();
 
-const emit = defineEmits <{
-    (e: 'animation-finished'): void
-}>();
+const emit = defineEmits <(e: 'animationFinished') => void>();
 
 const delay = 300;
 
@@ -46,11 +42,11 @@ onMounted(async () => {
     if (ignoreAnimations) {
         displayedElements.value = elementsToDisplay;
     } else {
-        for (let element of elementsToDisplay) {
+        for (const element of elementsToDisplay) {
             displayedElements.value.push(element);
-            await new Promise(resolve => setTimeout(resolve, delay));
+            await new Promise((resolve) => setTimeout(resolve, delay));
         }
     }
-    emit('animation-finished');
+    emit('animationFinished');
 });
 </script>

@@ -8,12 +8,11 @@
         </div>
         <div class="flex flex-col gap-1 w-full lg:w-2/5">
             <div class="flex gap-4 w-full">
-                <MapSelect :mapNames="mapNames" v-model="selectedMap" />
-                <button 
-                    class="text-lg lg:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform" 
-                    type="button" 
-                    :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon" 
-                    @click="guess">Guess
+                <MapSelect :map-names="mapNames" v-model="selectedMap" />
+                <button class="text-lg lg:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform"
+                        type="button"
+                        :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon"
+                        @click="handleGuess">Guess
                 </button>
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
@@ -24,13 +23,12 @@
             <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
         </div>
         <div class="flex flex-col w-full gap-5 px-20">
-            <GuessCard 
-            v-for="([mapName, guess]) in reversedHistory" 
-            :key="mapName" 
-            :mapName 
-            :guess
-            @animation-finished="onGuessCardAnimationFinished" 
-            :ignoreAnimations="ignoreCardsAnimations" />
+            <GuessCard v-for="([mapName, guess]) in reversedHistory"
+                       :key="mapName"
+                       :map-name
+                       :guess
+                       @animationFinished="onGuessCardAnimationFinished"
+                       :ignore-animations="ignoreCardsAnimations" />
         </div>
     </div>
 </template>
@@ -45,9 +43,9 @@ import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
 import { useLocalStorage } from '#/composables/useLocalStorage';
-import { DailyStats } from '#/types/api/dailyStats';
-import { Guess } from '#/types/api/guess';
-import confetti from "canvas-confetti";
+import type { DailyStats } from '#/types/api/dailyStats';
+import type { Guess } from '#/types/api/guess';
+import confetti from 'canvas-confetti';
 import { computed, onMounted, ref, watch } from 'vue';
 
 /* API data */
@@ -116,7 +114,7 @@ function historyContainsMap(mapName: string) {
     return Object.keys(history.value).some((mapFromHistory) => mapName === mapFromHistory);
 }
 
-async function guess() {
+async function handleGuess() {
     if (!selectedMap.value) return;
     ignoreCardsAnimations.value = false;
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
@@ -134,19 +132,19 @@ async function guess() {
 
 /** Local storage */
 watch(history, () => {
-    localStorage.set("history", history.value);
+    localStorage.set('history', history.value);
     if (Object.values(history.value).some((guess) => guess.success)) {
         pendingWin.value = true;
     }
 }, { deep: true });
 
 onMounted(() => {
-    const localHistory = localStorage.get("history");
+    const localHistory = localStorage.get('history');
     if (localHistory) {
         // TODO Check date, remove if needed
         history.value = localHistory;
     }
-})
+});
 
 /** FETCH DATA */
 async function fetchMaps() {
@@ -155,7 +153,7 @@ async function fetchMaps() {
         mapNames.value.sort((a, b) => a.localeCompare(b));
     } catch (e) {
         console.error('Error while fetching trial maps', e);
-    } 
+    }
 }
 
 async function fetchDailyStats() {
@@ -175,5 +173,5 @@ async function fetchData() {
 
 onMounted(async () => {
     fetchData();
-})
+});
 </script>

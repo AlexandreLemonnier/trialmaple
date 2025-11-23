@@ -1,5 +1,5 @@
-import { useApi } from "#/composables/useApi";
-import { TrialMap } from "#/types/api/trialMap";
+import { useApi } from '#/composables/useApi';
+import type { TrialMap } from '#/types/api/trialMap';
 
 export function useMapsApi() {
     const { request } = useApi('/maps');
@@ -18,5 +18,5 @@ export function useMapsApi() {
                 }
             });
         }
-    }
+    };
 }
