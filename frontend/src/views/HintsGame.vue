@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col items-center gap-4">
+        <ResetCountdown class="self-end" />
         <div class="text-md lg:text-lg pt-4 text-center">
             <span v-if="todayNbPlayersFound !== undefined && todayAverageTries !== undefined">
                 <strong>{{ todayNbPlayersFound }} players </strong> have found today's trial map with an average of <strong>{{ todayAverageTries }} guesses</strong>
@@ -38,6 +39,7 @@ import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
 import GuessCard from '#/components/GuessCard.vue';
 import MapSelect from '#/components/MapSelect.vue';
+import ResetCountdown from '#/components/ResetCountdown.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
