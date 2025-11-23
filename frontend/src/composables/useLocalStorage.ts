@@ -1,8 +1,7 @@
-import type { HistoriquesAlarmesCouleur } from '#/types/repositories/historiques';
+import { Guess } from '#/types/api/guess';
 
 const localStorageTypeMap = {
-    typeTelecom: {} as Record<string, string>,
-    historiquesAlarmesCouleurs: [] as HistoriquesAlarmesCouleur[]
+    history: {} as Record<string, Guess>
 };
 type LocalStorageData = typeof localStorageTypeMap;
 type LocalStorageKeys = keyof LocalStorageData;
@@ -14,7 +13,6 @@ function getLocalStorageData() {
             const value = JSON.parse(localStorage.getItem(keyName) ?? '');
             map.set(keyName, value);
         } catch {
-            /* */
         }
     }
 

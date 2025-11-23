@@ -29,7 +29,8 @@
             :key="mapName" 
             :mapName 
             :guess
-            @animation-finished="onGuessCardAnimationFinished" />
+            @animation-finished="onGuessCardAnimationFinished" 
+            :ignoreAnimations="ignoreCardsAnimations" />
         </div>
     </div>
 </template>
@@ -43,6 +44,7 @@ import ResetCountdown from '#/components/ResetCountdown.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
+import { useLocalStorage } from '#/composables/useLocalStorage';
 import { DailyStats } from '#/types/api/dailyStats';
 import { Guess } from '#/types/api/guess';
 import confetti from "canvas-confetti";
@@ -62,17 +64,11 @@ const reversedHistory = computed(() =>
 );
 const hasWon = ref(false);
 
-/* Known data */
-const knownAuthors = ref<string[]>([]);
-const knownDifficulty = ref<string>();
-const knownPoints = ref<number>();
-const knownCheckpoints = ref<number>();
-const knownWR = ref<string | null>();
-const knownNbFinishers = ref<number>();
-
 /* Other */
 const isGuessCardAnimating = ref(false);
 const pendingWin = ref(false);
+// To avoid animations when initializing history from local storage
+const ignoreCardsAnimations = ref(true);
 
 /** Animations */
 function triggerConfetti() {
@@ -111,28 +107,10 @@ function onGuessCardAnimationFinished() {
 }
 
 /** Game core */
-function updateKnownData(guess: Guess) {
-    if (guess.difficulty.hint) {
-        knownDifficulty.value = guess.difficulty.value;
-    }
-    if (guess.points.hint === 'EQUAL') {
-        knownPoints.value = guess.points.value;
-    }
-    if (guess.checkpoints.hint === 'EQUAL') {
-        knownCheckpoints.value = guess.checkpoints.value;
-    }
-    if (guess.worldRecord.hint === 'EQUAL') {
-        knownWR.value = guess.worldRecord.value;
-    }
-    if (guess.nbFinishers.hint === 'EQUAL') {
-        knownNbFinishers.value = guess.nbFinishers.value;
-    }
-    knownAuthors.value = [...knownAuthors.value, ...guess.authors.filter((authorHint) => authorHint.hint).map((authorHint) => authorHint.value)];
-}
-
 const mapsApi = useMapsApi();
 const dailyStatsApi = useDailyStatsApi();
 const guessApi = useGuessApi();
+const localStorage = useLocalStorage();
 
 function historyContainsMap(mapName: string) {
     return Object.keys(history.value).some((mapFromHistory) => mapName === mapFromHistory);
@@ -140,6 +118,7 @@ function historyContainsMap(mapName: string) {
 
 async function guess() {
     if (!selectedMap.value) return;
+    ignoreCardsAnimations.value = false;
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
     if (mapAlreadyPicked.value) return;
     try {
@@ -147,15 +126,27 @@ async function guess() {
         const nbTries = Object.keys(history.value).length + 1;
         const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries);
         history.value[selectedMap.value!] = guess;
-        updateKnownData(guess);
-        if (guess.success) {
-            pendingWin.value = true;
-        }
     } catch (e) {
         console.error('Error while guessing trial map', e);
         isGuessCardAnimating.value = false;
     }
 }
+
+/** Local storage */
+watch(history, () => {
+    localStorage.set("history", history.value);
+    if (Object.values(history.value).some((guess) => guess.success)) {
+        pendingWin.value = true;
+    }
+}, { deep: true });
+
+onMounted(() => {
+    const localHistory = localStorage.get("history");
+    if (localHistory) {
+        // TODO Check date, remove if needed
+        history.value = localHistory;
+    }
+})
 
 /** FETCH DATA */
 async function fetchMaps() {

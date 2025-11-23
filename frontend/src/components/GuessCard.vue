@@ -18,9 +18,10 @@ import GuessElement from '#/components/GuessElement.vue';
 import { Guess } from '#/types/api/guess';
 import { onMounted, ref } from 'vue';
 
-const props = defineProps<{
+const { mapName, guess, ignoreAnimations } = defineProps<{
     mapName: string;
     guess: Guess;
+    ignoreAnimations?: boolean;
 }>();
 
 const emit = defineEmits <{
@@ -30,21 +31,25 @@ const emit = defineEmits <{
 const delay = 300;
 
 const elementsToDisplay = [
-    { label: 'Difficulty', hints: [props.guess.difficulty] },
-    { label: 'Points', hints: [props.guess.points] },
-    { label: 'Checkpoints', hints: [props.guess.checkpoints] },
-    { label: 'Finishers', hints: [props.guess.nbFinishers] },
-    { label: 'World Record', hints: [props.guess.worldRecord] },
-    { label: 'Author(s)', hints: props.guess.authors }
+    { label: 'Difficulty', hints: [guess.difficulty] },
+    { label: 'Points', hints: [guess.points] },
+    { label: 'Checkpoints', hints: [guess.checkpoints] },
+    { label: 'Finishers', hints: [guess.nbFinishers] },
+    { label: 'World Record', hints: [guess.worldRecord] },
+    { label: 'Author(s)', hints: guess.authors }
 ];
 
 const displayedElements = ref<typeof elementsToDisplay>([]);
 
 // Add elements progressively to make a sequential animation
 onMounted(async () => {
-    for (let element of elementsToDisplay) {
-        displayedElements.value.push(element);
-        await new Promise(resolve => setTimeout(resolve, delay));
+    if (ignoreAnimations) {
+        displayedElements.value = elementsToDisplay;
+    } else {
+        for (let element of elementsToDisplay) {
+            displayedElements.value.push(element);
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
     }
     emit('animation-finished');
 });
