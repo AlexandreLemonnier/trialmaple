@@ -5,13 +5,19 @@ export function useGuessApi() {
     const { request } = useApi('/guess');
 
     return {
-        async postGuess(guess: string, guessNumber: number) {
+        async postGuess(guess: string, guessNumber: number, dailyMapUuid: string) {
             return await request<Guess>('', {
                 method: 'POST',
-                query: {
+                body: {
                     guess,
-                    guessNumber
+                    guessNumber,
+                    dailyMapUuid
                 }
+            });
+        },
+        async getDailyMapUuid() {
+            return await request<string>('/daily-map', {
+                method: 'GET'
             });
         }
     };

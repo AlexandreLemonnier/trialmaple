@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.trialmaple.controller.mappers.TrialMapDtoMapper;
 import com.trialmaple.exception.InvalidMapNameException;
 import com.trialmaple.model.dto.GuessDto;
+import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.dto.HintPairDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.Score;
@@ -34,12 +35,18 @@ public class GuessService {
     /**
      * Check if a guess is correct and give hints or correct elements
      */
-    public GuessDto checkGuess(DailyMap dailyMap, String guess, int guessNumber) throws InvalidMapNameException {
+    public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapNameException {
 
         TrialMap mapOfTheDay = dailyMap.getMap();
         TrialMap guessMap = trialMapRepository
-                .findByNameIgnoreCase(guess)
-                .orElseThrow(() -> new InvalidMapNameException(guess));
+                .findByNameIgnoreCase(request.guess())
+                .orElseThrow(() -> new InvalidMapNameException(request.guess()));
+
+        boolean isValidMap = dailyMap.getUuid().toString().equals(request.dailyMapUuid());
+        if (!isValidMap) {
+            // Client must refresh his page to play on new daily map
+            return new GuessDto(false);
+        }
 
         boolean success = mapOfTheDay.getName().equalsIgnoreCase(guessMap.getName());
 
@@ -78,11 +85,11 @@ public class GuessService {
 
         // Save score if success
         if (success) {
-            Score score = new Score(guessNumber, dailyMap);
+            Score score = new Score(request.guessNumber(), dailyMap);
             scoreRepository.save(score);
         }
 
-        return new GuessDto(success, difficulty, points, checkpoints, nbFinishers, worldRecord, authors);
+        return new GuessDto(true, success, difficulty, points, checkpoints, nbFinishers, worldRecord, authors);
     }
 
     private DeltaHint compareNumber(long guessValue, long realValue) {

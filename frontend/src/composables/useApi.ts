@@ -44,6 +44,15 @@ export function useApi(routePrefix: string) {
 
                 const dataText = await response.text();
                 if (!dataText.length) return {} as T;
+
+                const isJson = response.headers
+                    .get('content-type')
+                    ?.includes('application/json');
+
+                if (!isJson) {
+                    return dataText as T;
+                }
+
                 const data = JSON.parse(dataText);
                 if (response.status >= 400) throw new RequestError(data.message ?? 'unknown', response.status);
                 return data as T;

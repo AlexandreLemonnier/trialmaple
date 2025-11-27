@@ -6,6 +6,7 @@ export type HintPair<K, V> = {
 };
 
 export type Guess = {
+    isValidDay: boolean;
     success: boolean;
     difficulty: HintPair<string, boolean>;
     points: HintPair<number, DeltaHint>;

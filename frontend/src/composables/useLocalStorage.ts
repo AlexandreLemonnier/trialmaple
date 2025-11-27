@@ -1,7 +1,8 @@
 import type { Guess } from '#/types/api/guess';
 
 const localStorageTypeMap = {
-    history: {} as Record<string, Guess>
+    history: {} as Record<string, Guess>,
+    currentDailyMapUuid: ''
 };
 type LocalStorageData = typeof localStorageTypeMap;
 type LocalStorageKeys = keyof LocalStorageData;
@@ -10,7 +11,13 @@ function getLocalStorageData() {
     const map = new Map();
     for (const keyName of Object.keys(localStorageTypeMap)) {
         try {
-            const value = JSON.parse(localStorage.getItem(keyName) ?? '');
+            const rawValue = localStorage.getItem(keyName);
+            let value;
+            try {
+                value = JSON.parse(rawValue as string);
+            } catch (e) {
+                value = rawValue;
+            }
             map.set(keyName, value);
         } catch (e) {
             console.error(e);
@@ -36,5 +43,9 @@ export const useLocalStorage = () => {
         }
     };
 
-    return { get, set };
+    const remove = <T extends LocalStorageKeys>(keyName: T) => {
+        localStorage.removeItem(keyName);
+    };
+
+    return { get, set, remove };
 };

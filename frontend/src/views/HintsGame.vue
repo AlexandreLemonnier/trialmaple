@@ -47,6 +47,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 const mapNames = ref<string[]>([]);
 const todayNbPlayersFound = ref<number>();
 const todayAverageTries = ref<number>();
+const currentDailyMapUuid = ref<string>();
 
 /* Game info */
 const selectedMap = ref<string>();
@@ -110,15 +111,19 @@ function historyContainsMap(mapName: string) {
 }
 
 async function handleGuess() {
-    if (!selectedMap.value) return;
+    if (!selectedMap.value || !currentDailyMapUuid.value) return;
     ignoreCardsAnimations.value = false;
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
     if (mapAlreadyPicked.value) return;
     try {
         isGuessCardAnimating.value = true;
         const nbTries = Object.keys(history.value).length + 1;
-        const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries);
-        history.value[selectedMap.value!] = guess;
+        const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries, currentDailyMapUuid.value);
+        if (guess.isValidDay) {
+            history.value[selectedMap.value!] = guess;
+        } else {
+            window.location.reload();
+        }
     } catch (e) {
         console.error('Error while guessing trial map', e);
         isGuessCardAnimating.value = false;
@@ -132,14 +137,6 @@ watch(history, () => {
         pendingWin.value = true;
     }
 }, { deep: true });
-
-onMounted(() => {
-    const localHistory = localStorage.get('history');
-    if (localHistory) {
-        // TODO Check date, remove if needed
-        history.value = localHistory;
-    }
-});
 
 /** FETCH DATA */
 async function fetchMaps() {
@@ -161,12 +158,36 @@ async function fetchDailyStats() {
     }
 }
 
+async function fetchDailyMapUuid() {
+    try {
+        currentDailyMapUuid.value = await guessApi.getDailyMapUuid();
+    } catch (e) {
+        console.error('Error while fetching daily map uuid', e);
+    }
+}
+
 async function fetchData() {
-    await fetchMaps();
-    await fetchDailyStats();
+    await Promise.all([
+        fetchMaps(),
+        fetchDailyStats(),
+        fetchDailyMapUuid()
+    ]);
 }
 
 onMounted(async () => {
-    fetchData();
+    await fetchData();
+    const dailyMapUuid = localStorage.get('currentDailyMapUuid');
+    console.log('dailyMapUuid', dailyMapUuid);
+    console.log('currentDailyMapUuid', currentDailyMapUuid.value);
+    if (dailyMapUuid === currentDailyMapUuid.value) {
+        const localHistory = localStorage.get('history');
+        if (localHistory) {
+            history.value = localHistory;
+        }
+    } else {
+        // Delete local storage history if daily map has changed
+        localStorage.remove('history');
+        localStorage.set('currentDailyMapUuid', currentDailyMapUuid.value ?? '');
+    }
 });
 </script>

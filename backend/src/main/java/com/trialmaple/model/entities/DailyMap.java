@@ -1,6 +1,7 @@
 package com.trialmaple.model.entities;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +21,9 @@ public class DailyMap {
     @Column(name = "id", columnDefinition = "BIGINT")
     private Long id;
 
+    @Column(name = "uuid", unique = true, nullable = false, updatable = false)
+    private UUID uuid = UUID.randomUUID();
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trial_map_id", nullable = false)
     private TrialMap map;
@@ -33,6 +37,10 @@ public class DailyMap {
     public DailyMap(TrialMap map, LocalDate day) {
         this.map = map;
         this.day = day;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public TrialMap getMap() {
