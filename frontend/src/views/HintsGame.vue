@@ -37,9 +37,9 @@ import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
-import { useLocalStorage } from '#/composables/useLocalStorage';
 import type { DailyStats } from '#/types/api/dailyStats';
 import type { Guess } from '#/types/api/guess';
+import { useStorage } from '@vueuse/core';
 import confetti from 'canvas-confetti';
 import { computed, onMounted, ref, watch } from 'vue';
 
@@ -47,12 +47,12 @@ import { computed, onMounted, ref, watch } from 'vue';
 const mapNames = ref<string[]>([]);
 const todayNbPlayersFound = ref<number>();
 const todayAverageTries = ref<number>();
-const currentDailyMapUuid = ref<string>();
+const dailyMapUuid = useStorage<string>('dailyMapUuid', '');
 
 /* Game info */
 const selectedMap = ref<string>();
 const mapAlreadyPicked = ref(false);
-const history = ref<Record<string, Guess>>({});
+const history = useStorage<Record<string, Guess>>('history', {});
 const reversedHistory = computed(() =>
     Object.entries(history.value).reverse()
 );
@@ -104,21 +104,20 @@ function onGuessCardAnimationFinished() {
 const mapsApi = useMapsApi();
 const dailyStatsApi = useDailyStatsApi();
 const guessApi = useGuessApi();
-const localStorage = useLocalStorage();
 
 function historyContainsMap(mapName: string) {
     return Object.keys(history.value).some((mapFromHistory) => mapName === mapFromHistory);
 }
 
 async function handleGuess() {
-    if (!selectedMap.value || !currentDailyMapUuid.value) return;
+    if (!selectedMap.value || !dailyMapUuid.value) return;
     ignoreCardsAnimations.value = false;
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
     if (mapAlreadyPicked.value) return;
     try {
         isGuessCardAnimating.value = true;
         const nbTries = Object.keys(history.value).length + 1;
-        const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries, currentDailyMapUuid.value);
+        const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries, dailyMapUuid.value);
         if (guess.isValidDay) {
             history.value[selectedMap.value!] = guess;
         } else {
@@ -132,11 +131,10 @@ async function handleGuess() {
 
 /** Local storage */
 watch(history, () => {
-    localStorage.set('history', history.value);
     if (Object.values(history.value).some((guess) => guess.success)) {
         pendingWin.value = true;
     }
-}, { deep: true });
+}, { immediate: true, deep: true });
 
 /** FETCH DATA */
 async function fetchMaps() {
@@ -160,34 +158,27 @@ async function fetchDailyStats() {
 
 async function fetchDailyMapUuid() {
     try {
-        currentDailyMapUuid.value = await guessApi.getDailyMapUuid();
+        return await guessApi.getDailyMapUuid();
     } catch (e) {
         console.error('Error while fetching daily map uuid', e);
     }
+    return null;
 }
 
 async function fetchData() {
     await Promise.all([
         fetchMaps(),
-        fetchDailyStats(),
-        fetchDailyMapUuid()
+        fetchDailyStats()
     ]);
 }
 
 onMounted(async () => {
     await fetchData();
-    const dailyMapUuid = localStorage.get('currentDailyMapUuid');
-    console.log('dailyMapUuid', dailyMapUuid);
-    console.log('currentDailyMapUuid', currentDailyMapUuid.value);
-    if (dailyMapUuid === currentDailyMapUuid.value) {
-        const localHistory = localStorage.get('history');
-        if (localHistory) {
-            history.value = localHistory;
-        }
-    } else {
+    const serverDailyMapUuid = await fetchDailyMapUuid();
+    if (serverDailyMapUuid !== dailyMapUuid.value) {
         // Delete local storage history if daily map has changed
-        localStorage.remove('history');
-        localStorage.set('currentDailyMapUuid', currentDailyMapUuid.value ?? '');
+        history.value = null;
+        dailyMapUuid.value = serverDailyMapUuid;
     }
 });
 </script>
