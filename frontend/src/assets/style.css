@@ -10,6 +10,11 @@
   --color-card-background: #f8f4f4;
   --color-success: #19c713;
   --color-error: #e02020;
+
+  --breakpoint-sm: 500px;
+  --breakpoint-md: 800px;
+  --breakpoint-lg: 1000px;
+  --breakpoint-xl: 1500px;
 }
 
 @layer base {

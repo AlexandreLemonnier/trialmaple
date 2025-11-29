@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky flex justify-between items-center px-5 w-full h-16 bg-header-background tracking-wide">
+    <header class="sticky flex justify-between items-center px-5 w-full h-12 lg:h-16 bg-header-background tracking-wide">
         <div class="flex items-center gap-2 select-none">
             <img :src="TrackManiaLogo" alt="TrialMaple logo" class="h-[clamp(2rem,4vw,4rem)]" />
             <div class="flex">

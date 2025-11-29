@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center gap-2 lg:gap-4 font-semibold">
+    <div class="flex items-center gap-2 font-semibold text-sm md:text-base">
         <span>{{ label }}</span>
         <div v-for="hintElement in hints"
              :key="hintElement.value"

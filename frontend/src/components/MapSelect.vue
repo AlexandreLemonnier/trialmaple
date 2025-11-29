@@ -1,6 +1,6 @@
 <template>
     <div ref="dropdownRef" class="relative w-full flex-1 min-w-0" @keydown="onKeyDown">
-        <button class="flex w-full justify-between items-center text-lg lg:text-2xl rounded-full border-2 py-2 px-4 cursor-pointer"
+        <button class="flex w-full justify-between items-center text-lg lg:text-xl xl:text-2xl rounded-full border-2 py-2 px-4 cursor-pointer"
                 type="button"
                 @click="isOpen = !isOpen">
             <span class="truncate">{{ selectedMap || "Select a map..." }}</span>
@@ -8,7 +8,7 @@
         </button>
 
         <ul v-if="isOpen"
-            class="absolute text-md lg:text-lg mt-2 w-full max-h-60 overflow-y-auto rounded-xl border shadow-lg bg-white scrollbar-hide z-20">
+            class="absolute text-md lg:text-lg xl:text-xl mt-2 w-full max-h-60 overflow-y-auto rounded-xl border shadow-lg bg-white scrollbar-hide z-20">
             <li v-for="mapName in mapNames"
                 :key="mapName"
                 @click="select(mapName)"

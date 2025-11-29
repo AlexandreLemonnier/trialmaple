@@ -1,5 +1,5 @@
 <template>
-    <div v-if="imagesLoaded" class="flex gap-2 items-center text-5xl lg:text-7xl">
+    <div v-if="imagesLoaded" class="flex gap-2 items-center text-5xl lg:text-6xl xl:text-7xl">
         <span>woho</span>
         <img :src="smirkcat" alt="smirkcat" class="h-[1em]" />
         <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />

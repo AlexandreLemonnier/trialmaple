@@ -6,10 +6,10 @@
                 <strong>{{ todayNbPlayersFound }} players </strong> have found today's trial map with an average of <strong>{{ todayAverageTries }} guesses</strong>
             </span>
         </div>
-        <div class="flex flex-col gap-1 w-full lg:w-2/5">
+        <div class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex gap-4 w-full">
                 <MapSelect :map-names="mapNames" v-model="selectedMap" />
-                <button class="text-lg lg:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform"
+                <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform"
                         type="button"
                         :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon"
                         @click="handleGuess">Guess
@@ -18,7 +18,7 @@
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
         <WinScreen v-if="hasWon" />
-        <div class="flex flex-col w-full gap-5 px-20">
+        <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory"
                        :key="mapName"
                        :map-name
