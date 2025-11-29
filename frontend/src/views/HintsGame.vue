@@ -109,6 +109,10 @@ function historyContainsMap(mapName: string) {
     return Object.keys(history.value).some((mapFromHistory) => mapName === mapFromHistory);
 }
 
+function historyContainsSuccess() {
+    return Object.values(history.value).some((guess) => guess.success);
+}
+
 async function handleGuess() {
     if (!selectedMap.value || !dailyMapUuid.value) return;
     ignoreCardsAnimations.value = false;
@@ -131,10 +135,10 @@ async function handleGuess() {
 
 /** Local storage */
 watch(history, () => {
-    if (Object.values(history.value).some((guess) => guess.success)) {
+    if (historyContainsSuccess()) {
         pendingWin.value = true;
     }
-}, { immediate: true, deep: true });
+}, { deep: true });
 
 /** FETCH DATA */
 async function fetchMaps() {
@@ -179,6 +183,8 @@ onMounted(async () => {
         // Delete local storage history if daily map has changed
         history.value = null;
         dailyMapUuid.value = serverDailyMapUuid;
+    } else if (historyContainsSuccess()) {
+        hasWon.value = true;
     }
 });
 </script>
