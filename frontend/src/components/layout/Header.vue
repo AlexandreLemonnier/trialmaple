@@ -12,9 +12,7 @@
         </div>
         <Icon class="cursor-pointer" name="circle-info" size="md" @click="isInfoModalOpen = true" />
     </header>
-    <InfoModal v-model="isInfoModalOpen">
-        <p class="mt-3 text-sm text-neutral-300">Guess today's Trackmania trial map. More actions coming soon in this header.</p>
-    </InfoModal>
+    <InfoModal v-model="isInfoModalOpen" />
 </template>
 
 <script setup lang="ts">
