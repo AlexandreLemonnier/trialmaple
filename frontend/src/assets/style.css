@@ -7,12 +7,16 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --width-sidebar: 25vw;
+
+  --color-app-background: #ffffff;
+  --color-app-text: #000000;
+  --color-app-border: #000000;
   --color-header-background: #f8f4f4;
-  --color-guess-button: #19c713;
   --color-card-background: #f8f4f4;
+
+  --color-guess-button: #19c713;
   --color-success: #19c713;
   --color-error: #e02020;
-  --color-primary-white: #f3f3f3;
 
   --breakpoint-sm: 500px;
   --breakpoint-md: 800px;
@@ -26,9 +30,14 @@
   }
 
   .dark {
-    --color-header-background: #1e1e1e;
+    --color-app-background: #202020;
+    --color-app-text: #ebebeb;
+    --color-app-border: #999999;
+    --color-header-background: #2a2a2a;
     --color-card-background: #2a2a2a;
-    --color-guess-button: #4ade80;
+    --color-guess-button: #117c0d;
+    --color-success: #117c0d;
+    --color-error: #911313;
   }
 }
 

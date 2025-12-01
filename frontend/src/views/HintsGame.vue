@@ -9,7 +9,7 @@
         <div class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex gap-4 w-full">
                 <MapSelect :map-names="mapNames" v-model="selectedMap" />
-                <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 py-2 px-4 bg-guess-button/70 cursor-pointer hover:scale-105 transition-transform"
+                <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
                         type="button"
                         :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon"
                         @click="handleGuess">Guess

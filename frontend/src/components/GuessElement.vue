@@ -3,7 +3,7 @@
         <span>{{ label }}</span>
         <div v-for="hintElement in hints"
              :key="hintElement.value"
-             class="flex items-center gap-2 rounded-full border px-2.5 py-0.5"
+             class="flex items-center gap-2 rounded-full border border-app-border px-2.5 py-0.5"
              :class="{
                  'bg-error': hintElement.hint === 'LESS' || hintElement.hint === 'MORE' || hintElement.hint === false,
                  'bg-success': hintElement.hint === 'EQUAL' || hintElement.hint === true
