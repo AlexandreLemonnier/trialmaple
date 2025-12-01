@@ -179,7 +179,7 @@ async function fetchData() {
 onMounted(async () => {
     await fetchData();
     const serverDailyMapUuid = await fetchDailyMapUuid();
-    if (serverDailyMapUuid !== dailyMapUuid.value) {
+    if (serverDailyMapUuid && serverDailyMapUuid !== dailyMapUuid.value) {
         // Delete local storage history if daily map has changed
         history.value = null;
         dailyMapUuid.value = serverDailyMapUuid;
