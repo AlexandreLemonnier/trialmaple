@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig, loadEnv } from 'vite';
 import vueDevTools from 'vite-plugin-vue-devtools';
+import svgLoader from 'vite-svg-loader';
 
 export default ({ mode }: { mode: string }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -18,7 +19,8 @@ export default ({ mode }: { mode: string }) => {
         plugins: [
             vue(),
             vueDevTools(),
-            tailwindcss()
+            tailwindcss(),
+            svgLoader()
         ],
         resolve: {
             alias: {
