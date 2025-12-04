@@ -20,16 +20,18 @@ Your goal: guess which map it is using progressively more precise hints!
 
 ## Tech Stack
 
-### Frontend
-- **Vue 3**
-- **Vite**
-- **Tailwind CSS v4**
-
 ### Backend
 - **Java 25**
 - **Spring Boot 4**
 - **MariaDB**
 - REST API
+
+### Frontend
+- **Vue 3**
+- **Vite**
+- **Tailwind CSS v4**
+
+---
 
 ## Backend Setup
 
