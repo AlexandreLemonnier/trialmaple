@@ -6,7 +6,7 @@
             <hr class="opacity-20" />
             <p>Pick a map and click <strong>"Guess"</strong> to get hints: does today's map have more or fewer points? Which authors match? Repeat until you find it!</p>
             <hr class="opacity-20" />
-            <p>A new map becomes available every day at <strong>00:00 CEST</strong>.</p>
+            <p>A new map becomes available every day at <strong>00:00 CET/CEST</strong>.</p>
             <p>Maps data last updated on <strong>12 October 2025</strong>.</p>
         </div>
     </Modal>
