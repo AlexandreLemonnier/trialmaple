@@ -25,8 +25,8 @@ export default typescriptESLint.config(
             },
             parser: vueESLintParser,
             parserOptions: {
-                tsconfigRootDir: './',
-                project: 'tsconfig.json',
+                tsconfigRootDir: new URL('.', import.meta.url).pathname,
+                project: './tsconfig.json',
                 parser: tsParser,
                 extraFileExtensions: ['.vue']
             }
