@@ -3,10 +3,10 @@ import typescriptESLintPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import eslintPluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
-import typescriptESLint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
 import vueESLintParser from 'vue-eslint-parser';
 
-export default typescriptESLint.config(
+export default defineConfig(
     {
         ignores: [
             'dist/**',
