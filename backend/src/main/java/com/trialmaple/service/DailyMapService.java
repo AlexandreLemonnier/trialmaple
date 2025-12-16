@@ -16,10 +16,10 @@ import com.trialmaple.repository.TrialMapRepository;
 
 @Service
 public class DailyMapService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DailyMapService.class);
+
     private final TrialMapRepository trialMapRepository;
     private final DailyMapRepository dailyMapRepository;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(DailyMapService.class);
 
     public DailyMapService(TrialMapRepository trialMapRepository, DailyMapRepository dailyMapRepository) {
         this.trialMapRepository = trialMapRepository;

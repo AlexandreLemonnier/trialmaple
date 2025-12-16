@@ -3,6 +3,8 @@ package com.trialmaple.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.trialmaple.controller.mappers.TrialMapDtoMapper;
@@ -21,6 +23,8 @@ import com.trialmaple.repository.TrialMapRepository;
 @Service
 public class GuessService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(GuessService.class);
+
     private final TrialMapRepository trialMapRepository;
     private final ScoreRepository scoreRepository;
     private final TrialMapDtoMapper trialMapDtoMapper;
@@ -36,6 +40,8 @@ public class GuessService {
      * Check if a guess is correct and give hints or correct elements
      */
     public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapNameException {
+
+        LOGGER.info("New guess: " + request.guess());
 
         TrialMap mapOfTheDay = dailyMap.getMap();
         TrialMap guessMap = trialMapRepository
