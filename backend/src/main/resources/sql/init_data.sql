@@ -60,7 +60,7 @@ INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("New 'n Tasty",30,"HARDCORE",28,1844700,47,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("MONKETRIAL",30,"HARDCORE",12,506540,35,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Lost in the Forest",30,"HARDCORE",27,1902720,40,1);
-INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Haywire",30,"HARDCORE",1,319950,15,1);
+INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Haywire",30,"HARDCORE",1,219920,15,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Enantiomorph",30,"HARDCORE",26,3269920,20,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Crimson Realm",30,"HARDCORE",17,2727960,43,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("C e l e s t i a l .",30,"HARDCORE",18,1234040,45,1);
@@ -96,7 +96,7 @@ INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Psychosomatic Exhaustion 2",15,"EXPERT",43,2172180,97,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("PEZ",15,"EXPERT",13,1068110,108,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("octahedral",15,"EXPERT",15,1115160,73,1);
-INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Krakatindur",15,"EXPERT",11,847880,115,1);
+INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Krakatindur",15,"EXPERT",11,847880,116,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Feria Sevilla.",15,"EXPERT",11,520990,73,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Endless Sunrise",15,"EXPERT",17,815670,62,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Empyreum",15,"EXPERT",8,731770,53,1);
@@ -127,7 +127,7 @@ INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Field of currents",10,"CHALLENGING",8,106025,13,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Farewell Quest",10,"CHALLENGING",12,809680,53,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Dune",10,"CHALLENGING",20,799980,59,1);
-INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Curse of the Ancients",10,"CHALLENGING",20,388430,109,1);
+INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Curse of the Ancients",10,"CHALLENGING",20,388430,110,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Crocodile Dundee",10,"CHALLENGING",10,175060,95,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("croaking toad",10,"CHALLENGING",6,274250,115,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("complexity of road works",10,"CHALLENGING",35,1649080,92,1);
@@ -139,7 +139,7 @@ INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Threadbare",10,"CHALLENGING",17,1245700,31,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Roofs of Dubai",5,"CHALLENGING",31,1185360,145,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Respiration",5,"CHALLENGING",23,859150,119,1);
-INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Nyxorithal",5,"CHALLENGING",20,806640,138,1);
+INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Nyxorithal",5,"CHALLENGING",20,726780,138,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Natrialum",5,"CHALLENGING",34,882190,280,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Metavoid",5,"CHALLENGING",19,699900,157,1);
 INSERT INTO trial_map(name, points, difficulty, nb_checkpoints, world_record, nb_finishers, active) VALUES ("Metallic Solstice",5,"CHALLENGING",18,688650,106,1);
