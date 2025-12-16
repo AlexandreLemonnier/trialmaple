@@ -11,14 +11,14 @@
 	<groupId>com.trialmaple</groupId>
 	<artifactId>trialmaple</artifactId>
 	<version>1.0.0</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>trialmaple</name>
+	<description>Trialmaple backend project</description>
 	<url/>
 	<licenses>
-		<license/>
+	<license/>
 	</licenses>
 	<developers>
-		<developer/>
+	<developer/>
 	</developers>
 	<scm>
 		<connection/>
@@ -91,6 +91,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>trialmaple</finalName>
 	</build>
 
 </project>
