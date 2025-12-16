@@ -12,7 +12,11 @@
                 <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
                         type="button"
                         :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon"
-                        @click="handleGuess">Guess
+                        @click="handleGuess">
+                    <div class="flex gap-2 items-center justify-center">
+                        <span v-if="!isGuessLoading">Guess</span>
+                        <Loader v-if="isGuessLoading" />
+                    </div>
                 </button>
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
@@ -31,6 +35,7 @@
 
 <script setup lang="ts">
 import GuessCard from '#/components/GuessCard.vue';
+import Loader from '#/components/Loader.vue';
 import MapSelect from '#/components/MapSelect.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
 import WinScreen from '#/components/WinScreen.vue';
@@ -59,6 +64,7 @@ const reversedHistory = computed(() =>
 const hasWon = ref(false);
 
 /* Other */
+const isGuessLoading = ref(false);
 const isGuessCardAnimating = ref(false);
 const pendingWin = ref(false);
 // To avoid animations when initializing history from local storage
@@ -119,6 +125,7 @@ async function handleGuess() {
     mapAlreadyPicked.value = historyContainsMap(selectedMap.value);
     if (mapAlreadyPicked.value) return;
     try {
+        isGuessLoading.value = true;
         isGuessCardAnimating.value = true;
         const nbTries = Object.keys(history.value).length + 1;
         const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries, dailyMapUuid.value);
@@ -130,6 +137,8 @@ async function handleGuess() {
     } catch (e) {
         console.error('Error while guessing trial map', e);
         isGuessCardAnimating.value = false;
+    } finally {
+        isGuessLoading.value = false;
     }
 }
 
