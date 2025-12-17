@@ -11,10 +11,10 @@
                 <MapSelect :map-names="mapNames" v-model="selectedMap" />
                 <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
                         type="button"
-                        :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon"
+                        :inert="!mapNames.length || !selectedMap || isGuessCardAnimating"
                         @click="handleGuess">
                     <span v-if="!isGuessLoading">Guess</span>
-                    <Loader v-if="isGuessLoading" />
+                    <Loader v-else />
                 </button>
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
