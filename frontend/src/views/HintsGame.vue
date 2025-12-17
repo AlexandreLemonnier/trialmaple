@@ -13,10 +13,8 @@
                         type="button"
                         :inert="!mapNames.length || !selectedMap || isGuessCardAnimating || hasWon"
                         @click="handleGuess">
-                    <div class="flex gap-2 items-center justify-center">
-                        <span v-if="!isGuessLoading">Guess</span>
-                        <Loader v-if="isGuessLoading" />
-                    </div>
+                    <span v-if="!isGuessLoading">Guess</span>
+                    <Loader v-if="isGuessLoading" />
                 </button>
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
