@@ -6,7 +6,7 @@
                 <strong>{{ todayNbPlayersFound }} players </strong> have found today's trial map with an average of <strong>{{ todayAverageTries }} guesses</strong>
             </span>
         </div>
-        <div class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
+        <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex gap-4 w-full">
                 <MapSelect :map-names="mapNames" v-model="selectedMap" />
                 <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
@@ -46,7 +46,7 @@ import type { DailyStats } from '#/types/api/dailyStats';
 import type { Guess } from '#/types/api/guess';
 import { useStorage } from '@vueuse/core';
 import confetti from 'canvas-confetti';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 
 /* API data */
 const mapNames = ref<string[]>([]);
@@ -187,9 +187,12 @@ async function fetchData() {
 
 onMounted(async () => {
     await fetchData();
+});
+
+onBeforeMount(async () => {
     const serverDailyMapUuid = await fetchDailyMapUuid();
     if (serverDailyMapUuid && serverDailyMapUuid !== dailyMapUuid.value) {
-        // Delete local storage history if daily map has changed
+        // Delete history from local storage if daily map has changed
         history.value = null;
         dailyMapUuid.value = serverDailyMapUuid;
     } else if (historyContainsSuccess()) {
