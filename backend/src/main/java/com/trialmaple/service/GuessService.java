@@ -63,13 +63,13 @@ public class GuessService {
         DeltaHint pointsDelta = compareNumber(guessMap.getPoints(), mapOfTheDay.getPoints());
         HintPairDto<Integer, DeltaHint> points = new HintPairDto<Integer, DeltaHint>(guessMap.getPoints(), pointsDelta);
 
-        DeltaHint checkpointsDelta = compareNumber(guessMap.getNbCheckpoints(), mapOfTheDay.getNbCheckpoints());
-        HintPairDto<Integer, DeltaHint> checkpoints = new HintPairDto<Integer, DeltaHint>(guessMap.getNbCheckpoints(),
+        DeltaHint checkpointsDelta = compareNumber(guessMap.getCheckpointCount(), mapOfTheDay.getCheckpointCount());
+        HintPairDto<Integer, DeltaHint> checkpoints = new HintPairDto<Integer, DeltaHint>(guessMap.getCheckpointCount(),
                 checkpointsDelta);
 
-        DeltaHint nbFinishersDelta = compareNumber(guessMap.getNbFinishers(), mapOfTheDay.getNbFinishers());
-        HintPairDto<Integer, DeltaHint> nbFinishers = new HintPairDto<Integer, DeltaHint>(guessMap.getNbFinishers(),
-                nbFinishersDelta);
+        DeltaHint finisherCountDelta = compareNumber(guessMap.getFinisherCount(), mapOfTheDay.getFinisherCount());
+        HintPairDto<Integer, DeltaHint> finisherCount = new HintPairDto<Integer, DeltaHint>(guessMap.getFinisherCount(),
+                finisherCountDelta);
 
         DeltaHint wrDelta = null;
         if (guessMap.getWorldRecord() == null && mapOfTheDay.getWorldRecord() == null) {
@@ -95,7 +95,7 @@ public class GuessService {
             scoreRepository.save(score);
         }
 
-        return new GuessDto(true, success, difficulty, points, checkpoints, nbFinishers, worldRecord, authors);
+        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, worldRecord, authors);
     }
 
     private DeltaHint compareNumber(long guessValue, long realValue) {

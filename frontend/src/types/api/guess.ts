@@ -11,7 +11,7 @@ export type Guess = {
     difficulty: HintPair<string, boolean>;
     points: HintPair<number, DeltaHint>;
     checkpoints: HintPair<number, DeltaHint>;
-    nbFinishers: HintPair<number, DeltaHint>;
+    finisherCount: HintPair<number, DeltaHint>;
     worldRecord: HintPair<string, DeltaHint>;
     authors: HintPair<string, boolean>[];
 };

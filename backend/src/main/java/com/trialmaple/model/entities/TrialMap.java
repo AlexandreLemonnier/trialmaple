@@ -37,8 +37,8 @@ public class TrialMap {
     @Column(name = "author", columnDefinition = "VARCHAR(255)")
     private List<String> authors;
 
-    @Column(name = "nb_checkpoints", columnDefinition = "INT")
-    private int nbCheckpoints;
+    @Column(name = "checkpoint_count", columnDefinition = "INT")
+    private int checkpointCount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "difficulty", columnDefinition = "VARCHAR(50)")
@@ -51,8 +51,8 @@ public class TrialMap {
     @Convert(converter = DurationMillisConverter.class)
     private Duration worldRecord;
 
-    @Column(name = "nb_finishers", columnDefinition = "INT")
-    private int nbFinishers;
+    @Column(name = "finisher_count", columnDefinition = "INT")
+    private int finisherCount;
 
     @Column(name = "active", columnDefinition = "BOOLEAN")
     private boolean active;
@@ -60,15 +60,15 @@ public class TrialMap {
     protected TrialMap() {
     }
 
-    public TrialMap(String name, List<String> authors, int nbCheckpoints, DifficultyCategory difficulty,
-            int points, Duration worldRecord, int nbFinishers, boolean active) {
+    public TrialMap(String name, List<String> authors, int checkpointCount, DifficultyCategory difficulty,
+            int points, Duration worldRecord, int finisherCount, boolean active) {
         this.name = name;
         this.authors = authors;
-        this.nbCheckpoints = nbCheckpoints;
+        this.checkpointCount = checkpointCount;
         this.difficulty = difficulty;
         this.points = points;
         this.worldRecord = worldRecord;
-        this.nbFinishers = nbFinishers;
+        this.finisherCount = finisherCount;
         this.active = active;
     }
 
@@ -84,8 +84,8 @@ public class TrialMap {
         return new ArrayList<>(authors);
     }
 
-    public int getNbCheckpoints() {
-        return nbCheckpoints;
+    public int getCheckpointCount() {
+        return checkpointCount;
     }
 
     public DifficultyCategory getDifficulty() {
@@ -100,8 +100,8 @@ public class TrialMap {
         return worldRecord;
     }
 
-    public int getNbFinishers() {
-        return nbFinishers;
+    public int getFinisherCount() {
+        return finisherCount;
     }
 
     public boolean isActive() {

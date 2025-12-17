@@ -125,8 +125,8 @@ async function handleGuess() {
     try {
         isGuessLoading.value = true;
         isGuessCardAnimating.value = true;
-        const nbTries = Object.keys(history.value).length + 1;
-        const guess: Guess = await guessApi.postGuess(selectedMap.value, nbTries, dailyMapUuid.value);
+        const attemptCount = Object.keys(history.value).length + 1;
+        const guess: Guess = await guessApi.postGuess(selectedMap.value, attemptCount, dailyMapUuid.value);
         if (guess.isValidDay) {
             history.value[selectedMap.value!] = guess;
         } else {

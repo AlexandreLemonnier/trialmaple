@@ -5,10 +5,10 @@ import java.util.List;
 public record TrialMapDto(
                 String name,
                 List<String> authors,
-                int nbCheckpoints,
+                int checkpointCount,
                 String difficulty,
                 int points,
-                int nbFinishers,
+                int finisherCount,
                 String worldRecord // formatted string
 ) {
 }

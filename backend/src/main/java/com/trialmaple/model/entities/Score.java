@@ -18,8 +18,8 @@ public class Score {
     @Column(name = "id", columnDefinition = "BIGINT")
     private Long id;
 
-    @Column(name = "nb_tries", columnDefinition = "INT")
-    private int nbTries;
+    @Column(name = "attempt_count", columnDefinition = "INT")
+    private int attemptCount;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "daily_map_id", nullable = false)
@@ -31,14 +31,14 @@ public class Score {
     protected Score() {
     }
 
-    public Score(int nbTries, DailyMap dailyMap) {
-        this.nbTries = nbTries;
+    public Score(int attemptCount, DailyMap dailyMap) {
+        this.attemptCount = attemptCount;
         this.dailyMap = dailyMap;
         this.player = "Unknown";
     }
 
-    public int getNbTries() {
-        return nbTries;
+    public int getAttemptCount() {
+        return attemptCount;
     }
 
     public DailyMap getDailyMap() {

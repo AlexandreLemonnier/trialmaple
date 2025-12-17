@@ -12,7 +12,7 @@ public record GuessDto(
         HintPairDto<DifficultyCategory, Boolean> difficulty,
         HintPairDto<Integer, DeltaHint> points,
         HintPairDto<Integer, DeltaHint> checkpoints,
-        HintPairDto<Integer, DeltaHint> nbFinishers,
+        HintPairDto<Integer, DeltaHint> finisherCount,
         HintPairDto<String, DeltaHint> worldRecord,
         List<HintPairDto<String, Boolean>> authors
 ) {

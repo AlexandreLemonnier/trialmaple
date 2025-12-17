@@ -26,7 +26,7 @@ public class StatisticsService {
         List<Score> scores = scoreRepository.findByDailyMap(currentDailyMap);
 
         int totalWinners = scores.size();
-        double averageTries = scores.stream().mapToInt(Score::getNbTries).average().orElse(0.0);
+        double averageTries = scores.stream().mapToInt(Score::getAttemptCount).average().orElse(0.0);
         // Rounded to 1 decimal
         averageTries = Math.round(averageTries * 10.0) / 10.0;
 

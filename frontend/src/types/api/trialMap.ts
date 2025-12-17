@@ -1,9 +1,9 @@
 export type TrialMap = {
     name: string;
     authors: string[];
-    nbCheckpoints: number;
+    checkpointCount: number;
     difficulty: string;
     points: number;
-    nbFinishers: number;
+    finisherCount: number;
     worldRecord: string | null;
 };

@@ -12,10 +12,10 @@ public class TrialMapDtoMapper {
         return new TrialMapDto(
                 trialMap.getName(),
                 trialMap.getAuthors(),
-                trialMap.getNbCheckpoints(),
+                trialMap.getCheckpointCount(),
                 trialMap.getDifficulty().name(),
                 trialMap.getPoints(),
-                trialMap.getNbFinishers(),
+                trialMap.getFinisherCount(),
                 TimeUtils.formatDuration(trialMap.getWorldRecord()));
     }
 }
