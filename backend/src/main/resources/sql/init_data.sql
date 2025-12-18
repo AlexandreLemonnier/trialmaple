@@ -247,7 +247,7 @@ INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM tria
 INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="Vacation."), "Ryba");
 INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="The Journey"), "simo_900");
 INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="Tenebris"), "iklu");
-INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="Suduaya"), "Loe");
+INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="Suduaya"), "loe");
 INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="Suduaya"), "Bubble");
 INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="Narehate"), "Michu");
 INSERT INTO trial_map_authors(trial_map_id, author) VALUES ((SELECT id FROM trial_map WHERE name="MilkyHighWay"), "Muffles");

@@ -30,7 +30,7 @@ public class StatisticsService {
         // Rounded to 1 decimal
         averageTries = Math.round(averageTries * 10.0) / 10.0;
 
-        return new DailyStatsDto(totalWinners, averageTries);
+        return new DailyStatsDto(currentDailyMap.getId() ,totalWinners, averageTries);
     }
 
 }

@@ -39,6 +39,10 @@ public class DailyMap {
         this.day = day;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public UUID getUuid() {
         return uuid;
     }

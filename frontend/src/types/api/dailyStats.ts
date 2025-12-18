@@ -1,4 +1,5 @@
 export type DailyStats = {
-    nbWinners: number;
+    mapNumber: number;
+    winnersCount: number;
     averageTries: number;
 };

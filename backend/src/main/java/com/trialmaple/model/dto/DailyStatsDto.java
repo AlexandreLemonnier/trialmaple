@@ -1,6 +1,7 @@
 package com.trialmaple.model.dto;
 
 public record DailyStatsDto(
-        int nbWinners,
+        long mapNumber,
+        int winnersCount,
         double averageTries) {
 }

@@ -10,7 +10,8 @@
 
   --color-app-background: #ffffff;
   --color-app-text: #000000;
-  --color-app-border: #000000;
+  --color-confirmation-text: #089101;
+  --color-app-border: #7c7c7c;
   --color-header-background: #f8f4f4;
   --color-card-background: #f8f4f4;
 
@@ -32,6 +33,7 @@
   .dark {
     --color-app-background: #202020;
     --color-app-text: #ebebeb;
+    --color-confirmation-text: #22911c;
     --color-app-border: #999999;
     --color-header-background: #2a2a2a;
     --color-card-background: #2a2a2a;

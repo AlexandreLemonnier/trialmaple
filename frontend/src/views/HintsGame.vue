@@ -2,8 +2,8 @@
     <div class="flex flex-col items-center gap-4">
         <ResetCountdown class="self-end" />
         <div class="text-md lg:text-lg pt-4 text-center">
-            <span v-if="todayNbPlayersFound !== undefined && todayAverageTries !== undefined">
-                <strong>{{ todayNbPlayersFound }} players </strong> have found today's trial map with an average of <strong>{{ todayAverageTries }} guesses</strong>
+            <span v-if="todayWinnerCount !== undefined && todayAverageTries !== undefined">
+                <strong>{{ todayWinnerCount }} players </strong> have found TrialMaple #{{ dailyMapNumber }} with an average of <strong>{{ todayAverageTries }} guesses</strong>
             </span>
         </div>
         <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
@@ -19,7 +19,7 @@
             </div>
             <span v-if="mapAlreadyPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
-        <WinScreen v-if="hasWon" />
+        <WinScreen v-if="hasWon" :daily-map-number="dailyMapNumber ?? 0" :history />
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory"
                        :key="mapName"
@@ -48,8 +48,9 @@ import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 
 /* API data */
 const mapNames = ref<string[]>([]);
-const todayNbPlayersFound = ref<number>();
+const todayWinnerCount = ref<number>();
 const todayAverageTries = ref<number>();
+const dailyMapNumber = ref<number>();
 const dailyMapUuid = useStorage<string>('dailyMapUuid', '');
 
 /* Game info */
@@ -160,7 +161,8 @@ async function fetchMaps() {
 async function fetchDailyStats() {
     try {
         const dailyStats: DailyStats = await dailyStatsApi.getDailyStats();
-        todayNbPlayersFound.value = dailyStats.nbWinners;
+        dailyMapNumber.value = dailyStats.mapNumber;
+        todayWinnerCount.value = dailyStats.winnersCount;
         todayAverageTries.value = dailyStats.averageTries;
     } catch (e) {
         console.error('Error while fetching daily stats', e);

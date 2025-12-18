@@ -1,1 +1,1 @@
-export type DeltaHint = 'LESS' | 'EQUAL' | 'MORE' | 'NON_APPLICABLE';
+export type DeltaHint = 'LESS' | 'EQUAL' | 'MORE';
