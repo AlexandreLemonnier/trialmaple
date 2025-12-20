@@ -43,7 +43,15 @@ export function useApi(routePrefix: string) {
                 });
 
                 const dataText = await response.text();
-                if (!dataText.length) return {} as T;
+
+                if (!response.ok) {
+                    throw new RequestError(
+                        dataText ? JSON.parse(dataText)?.message ?? 'unknown' : 'unknown',
+                        response.status
+                    );
+                }
+
+                if (!dataText) return null as T;
 
                 const isJson = response.headers
                     .get('content-type')
@@ -53,9 +61,7 @@ export function useApi(routePrefix: string) {
                     return dataText as T;
                 }
 
-                const data = JSON.parse(dataText);
-                if (response.status >= 400) throw new RequestError(data.message ?? 'unknown', response.status);
-                return data as T;
+                return JSON.parse(dataText) as T;
             } catch (error) {
                 if (error instanceof RequestError) {
                     throw error;
