@@ -124,7 +124,7 @@ INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, 
 INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Hidden Palace",10,"CHALLENGING",11,853520,88,1);
 INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Heaven's on FIRE",10,"CHALLENGING",61,2739210,77,1);
 INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Groundhog Asylum",10,"CHALLENGING",15,650460,67,1);
-INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Field of currents",10,"CHALLENGING",8,106025,13,1);
+INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Field of currents",10,"CHALLENGING",8,1060250,14,1);
 INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Farewell Quest",10,"CHALLENGING",12,809680,53,1);
 INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Dune",10,"CHALLENGING",20,799980,59,1);
 INSERT INTO trial_map(name, points, difficulty, checkpoint_count, world_record, finisher_count, active) VALUES ("Curse of the Ancients",10,"CHALLENGING",20,388430,110,1);
