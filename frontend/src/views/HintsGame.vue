@@ -8,7 +8,7 @@
         </div>
         <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex gap-4 w-full">
-                <MapSelect :map-names="mapNames" v-model="selectedMap" />
+                <MapCombobox :map-names="mapNames" v-model="selectedMap" />
                 <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
                         type="button"
                         :inert="!mapNames.length || !selectedMap || isGuessCardAnimating"
@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import GuessCard from '#/components/GuessCard.vue';
 import Loader from '#/components/Loader.vue';
-import MapSelect from '#/components/MapSelect.vue';
+import MapCombobox from '#/components/MapCombobox.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
 import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
