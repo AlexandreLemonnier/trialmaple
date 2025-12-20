@@ -83,7 +83,7 @@ function hintToEmoji(hint: boolean | DeltaHint) {
 
 async function copyHistoryResult() {
     const guessesCount = Object.keys(history).length;
-    let result = `I solved TrialMaple #${dailyMapNumber} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'}.`;
+    let result = `I solved TrialMaple #${dailyMapNumber} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍`;
     for (const guess of Object.values(history)) {
         const difficultyEmoji = hintToEmoji(guess.difficulty.hint);
         const pointEmoji = hintToEmoji(guess.points.hint);
