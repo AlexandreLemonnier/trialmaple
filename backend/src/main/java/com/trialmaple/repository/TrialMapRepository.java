@@ -12,7 +12,7 @@ import com.trialmaple.model.entities.TrialMap;
 public interface TrialMapRepository extends JpaRepository<TrialMap, Long> {
     Optional<TrialMap> findByNameIgnoreCase(String name);
 
-    List<TrialMap> findByWorldRecordIsNotNull();
+    List<TrialMap> findByWorldRecordIsNotNullAndActiveTrue();
 
     @Query("SELECT map.name FROM TrialMap map WHERE (:finished = false OR map.worldRecord IS NOT NULL)")
     List<String> findAllMapNames(@Param("finished") boolean finished);

@@ -22,7 +22,7 @@ const { mapName, guess, ignoreAnimations } = defineProps<{
     ignoreAnimations?: boolean;
 }>();
 
-const emit = defineEmits <(e: 'animationFinished') => void>();
+const emit = defineEmits<(e: 'animationFinished') => void>();
 
 const delay = 300;
 
