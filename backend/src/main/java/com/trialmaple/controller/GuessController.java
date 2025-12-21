@@ -1,5 +1,7 @@
 package com.trialmaple.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +17,14 @@ import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.service.DailyMapService;
 import com.trialmaple.service.GuessService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class GuessController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GuessController.class);
 
     private final DailyMapService dailyMapService;
     private final GuessService guessService;
@@ -29,8 +35,15 @@ public class GuessController {
     }
 
     @PostMapping("/guess")
-    public GuessDto guess(@RequestBody GuessRequestDto request)
+    public GuessDto guess(@RequestBody GuessRequestDto request, HttpServletRequest httpRequest)
             throws NoDailyMapFoundException, InvalidMapNameException {
+        // temporary code
+        LOGGER.info("Guess from IP : " + httpRequest.getRemoteAddr());
+        String xff = httpRequest.getHeader("X-Forwarded-For");
+        if (xff != null && !xff.isEmpty()) {
+            LOGGER.info("IP through XFF : " + xff.split(",")[0].trim());
+        }
+        // end temporary code
         DailyMap dailyMap = dailyMapService.getCurrentDailyMap();
         return guessService.checkGuess(dailyMap, request);
     }
