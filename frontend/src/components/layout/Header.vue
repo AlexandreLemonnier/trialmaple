@@ -7,7 +7,7 @@
                 <h1 class="text-[clamp(1.25rem,2vw,1.5rem)] font-semibold">rial</h1>
                 <h1 class="text-[clamp(1.5rem,2.5vw,1.75rem)] font-bold">M</h1>
                 <h1 class="text-[clamp(1.25rem,2vw,1.5rem)] font-semibold">ap</h1>
-                <h1 class="text-[clamp(1.15rem,1.5vw,1.25rem)] font-semibold">le</h1>
+                <h1 class="text-[clamp(1rem,1.4vw,1.15rem)] font-semibold">le</h1>
             </div>
         </div>
         <div class="flex gap-2 lg:gap-4">
