@@ -85,7 +85,7 @@ public class GuessService {
 
         List<HintPairDto<String, Boolean>> authors = new ArrayList<>();
         guessMap.getAuthors().forEach((author) -> {
-            boolean isCorrect = mapOfTheDay.getAuthors().contains(author);
+            boolean isCorrect = mapOfTheDay.getAuthors().stream().anyMatch(a -> a.equalsIgnoreCase(author));
             authors.add(new HintPairDto<String, Boolean>(author, isCorrect));
         });
 
