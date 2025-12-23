@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Update sources
 cd /home/dev/trialmaple
 git pl
