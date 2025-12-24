@@ -8,7 +8,7 @@
             <p>You can either play without any help, relying only on your own knowledge, or use the trial <a :href="tmrpgtrialWebsiteLink" target="_blank"><u>website</u></a> list. I recommand the first option for a better experience, and the second one if you get stuck.</p>
             <hr class="opacity-20" />
             <p>A new map becomes available every day at <strong>00:00 CET/CEST</strong>.</p>
-            <p>Maps data last updated on <strong>16 December 2025</strong>.</p>
+            <p>Maps data last updated on <strong>24 December 2025</strong>.</p>
         </div>
     </Modal>
 </template>
