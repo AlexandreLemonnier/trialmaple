@@ -14,6 +14,7 @@
   --color-app-border: #7c7c7c;
   --color-header-background: #f8f4f4;
   --color-card-background: #f8f4f4;
+  --color-win-background: #26a520;
 
   --color-guess-button: #2dc426;
   --color-success: #2dc426;
@@ -37,6 +38,8 @@
     --color-app-border: #999999;
     --color-header-background: #2a2a2a;
     --color-card-background: #2a2a2a;
+    --color-win-background: #006400;
+
     --color-guess-button: #117c0d;
     --color-success: #117c0d;
     --color-error: #911313;
