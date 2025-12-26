@@ -18,10 +18,10 @@
 <script setup lang="ts">
 import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
+import ShareButton from '#/components/ShareButton.vue';
 import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
-import ShareButton from './ShareButton.vue';
 
 const appStore = useAppStore();
 const { history, dailyMapNumber, playersAverageScore } = storeToRefs(appStore);

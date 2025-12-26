@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
+import Icon from '#/components/Icon.vue';
 import type { DeltaHint } from '#/types/api/deltaHint';
 import type { HintPair } from '#/types/api/guess';
-import Icon from './Icon.vue';
 
 defineProps<{
     label: string;
