@@ -29,13 +29,17 @@
 
 <script setup lang="ts">
 import Icon from '#/components/Icon.vue';
+import { useAppStore } from '#/stores/appStore';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const { mapNames } = defineProps<{
     mapNames: string[];
 }>();
 
+const { isMapInHistory } = useAppStore();
+
 const selectedMap = defineModel<string>();
+const remainingMapNames = computed(() => mapNames.filter((mapName) => !isMapInHistory(mapName)));
 
 const dropdownRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -49,8 +53,8 @@ const previousValue = ref<string | undefined>();
 /* Filtered maps */
 const filteredMapNames = computed(() => {
     const filter = search.value.toLowerCase();
-    if (!filter) return mapNames;
-    return mapNames.filter((name) => name.toLowerCase().includes(filter));
+    if (!filter) return remainingMapNames.value;
+    return remainingMapNames.value.filter((name) => name.toLowerCase().includes(filter));
 });
 
 /* Open dropdown */

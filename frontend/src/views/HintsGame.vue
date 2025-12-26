@@ -2,13 +2,13 @@
     <div class="flex flex-col items-center gap-4">
         <ResetCountdown class="self-end" />
         <div class="text-md lg:text-lg pt-4 text-center">
-            <span v-if="todayWinnerCount !== undefined && todayAverageTries !== undefined">
+            <span v-if="todayWinnerCount !== undefined">
                 <strong>{{ todayWinnerCount }} players </strong> have solved TrialMaple #{{ dailyMapNumber }}
             </span>
         </div>
         <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex gap-4 w-full">
-                <MapCombobox :map-names="remainingMapNames" v-model="selectedMap" />
+                <MapCombobox :map-names="mapNames" v-model="selectedMap" />
                 <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
                         type="button"
                         :inert="!mapNames.length || !selectedMap || isGuessCardAnimating"
@@ -19,7 +19,7 @@
             </div>
             <span v-if="hasMapAlreadyBeenPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
-        <WinScreen v-if="hasWon" :daily-map-number="dailyMapNumber ?? 0" :history :players-average="todayAverageTries" />
+        <WinScreen v-if="hasWon" />
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory"
                        :key="mapName"
@@ -40,35 +40,30 @@ import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
+import { useAppStore } from '#/stores/appStore';
 import type { DailyStats } from '#/types/api/dailyStats';
 import type { Guess } from '#/types/api/guess';
 import { useStorage } from '@vueuse/core';
 import confetti from 'canvas-confetti';
+import { storeToRefs } from 'pinia';
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 
-/* API data */
+const appStore = useAppStore();
+const { isMapInHistory } = appStore;
+const { history, dailyMapNumber, playersAverageScore } = storeToRefs(appStore);
+
 const mapNames = ref<string[]>([]);
 const todayWinnerCount = ref<number>();
-const todayAverageTries = ref<number>();
-const dailyMapNumber = ref<number>();
 const dailyMapUuid = useStorage<string>('dailyMapUuid', '');
 
-/* Game info */
-const history = useStorage<Record<string, Guess>>('history', {});
 const reversedHistory = computed(() =>
     Object.entries(history.value).reverse()
 );
 
-function isMapInHistory(mapName: string) {
-    return Object.keys(history.value).includes(mapName);
-}
-
 const selectedMap = ref<string>();
-const remainingMapNames = computed(() => mapNames.value.filter((mapName) => !isMapInHistory(mapName)));
 const hasMapAlreadyBeenPicked = ref(false);
 const hasWon = ref(false);
 
-/* Other */
 const isGuessLoading = ref(false);
 const isGuessCardAnimating = ref(false);
 const pendingWin = ref(false);
@@ -165,7 +160,7 @@ async function fetchDailyStats() {
         const dailyStats: DailyStats = await dailyStatsApi.getDailyStats();
         dailyMapNumber.value = dailyStats.mapNumber;
         todayWinnerCount.value = dailyStats.winnersCount;
-        todayAverageTries.value = dailyStats.averageTries;
+        playersAverageScore.value = dailyStats.averageTries;
     } catch (e) {
         console.error('Error while fetching daily stats', e);
     }
@@ -195,7 +190,7 @@ onBeforeMount(async () => {
     const serverDailyMapUuid = await fetchDailyMapUuid();
     if (serverDailyMapUuid && serverDailyMapUuid !== dailyMapUuid.value) {
         // Delete history from local storage if daily map has changed
-        history.value = null;
+        history.value = {};
         dailyMapUuid.value = serverDailyMapUuid;
     } else if (historyContainsSuccess()) {
         hasWon.value = true;

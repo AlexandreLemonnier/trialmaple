@@ -8,7 +8,7 @@
             </div>
             <div class="flex flex-col items-center">
                 <span>You solved TrialMaple #{{ dailyMapNumber }} in <strong>{{ Object.keys(history).length }} guesses</strong>! 🎉</span>
-                <span>Other players needed an average of <strong>{{ playersAverage }} guesses</strong>.</span>
+                <span>Other players needed an average of <strong>{{ playersAverageScore }} guesses</strong>.</span>
             </div>
             <ShareButton :daily-map-number="dailyMapNumber" :history />
         </div>
@@ -18,15 +18,13 @@
 <script setup lang="ts">
 import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
-import type { Guess } from '#/types/api/guess';
+import { useAppStore } from '#/stores/appStore';
+import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 import ShareButton from './ShareButton.vue';
 
-const { dailyMapNumber, history, playersAverage } = defineProps<{
-    dailyMapNumber: number;
-    history: Record<string, Guess>;
-    playersAverage?: number;
-}>();
+const appStore = useAppStore();
+const { history, dailyMapNumber, playersAverageScore } = storeToRefs(appStore);
 
 const imagesLoaded = ref(false);
 const smirkRef = ref<HTMLImageElement | null>(null);

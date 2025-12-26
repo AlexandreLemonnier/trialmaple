@@ -10,15 +10,14 @@
 </template>
 
 <script setup lang="ts">
+import { useAppStore } from '#/stores/appStore';
 import type { DeltaHint } from '#/types/api/deltaHint';
-import type { Guess } from '#/types/api/guess';
 import { copyToClipboard } from '#/utils/copyToClipboard';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-const { dailyMapNumber, history } = defineProps<{
-    dailyMapNumber: number;
-    history: Record<string, Guess>;
-}>();
+const appStore = useAppStore();
+const { history, dailyMapNumber } = storeToRefs(appStore);
 
 type CopyStatus = 'NONE' | 'SUCCESS' | 'ERROR';
 
@@ -50,9 +49,9 @@ function hintToEmoji(hint: boolean | DeltaHint) {
 }
 
 async function copyHistoryResult() {
-    const guessesCount = Object.keys(history).length;
-    let result = `I solved TrialMaple #${dailyMapNumber} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍`;
-    for (const guess of Object.values(history)) {
+    const guessesCount = Object.keys(history.value).length;
+    let result = dailyMapNumber.value ? `I solved TrialMaple #${dailyMapNumber.value} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍` : '';
+    for (const guess of Object.values(history.value)) {
         const difficultyEmoji = hintToEmoji(guess.difficulty.hint);
         const pointEmoji = hintToEmoji(guess.points.hint);
         const checkpointEmoji = hintToEmoji(guess.checkpoints.hint);
