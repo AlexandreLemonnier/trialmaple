@@ -9,6 +9,7 @@ public record TrialMapDto(
                 String difficulty,
                 int points,
                 int finisherCount,
-                String worldRecord // formatted string
+                String worldRecord, // formatted string,
+                int releaseYear
 ) {
 }

@@ -57,11 +57,14 @@ public class TrialMap {
     @Column(name = "active", columnDefinition = "BOOLEAN")
     private boolean active;
 
+    @Column(name = "release_year", columnDefinition = "INT")
+    private int releaseYear;
+
     protected TrialMap() {
     }
 
     public TrialMap(String name, List<String> authors, int checkpointCount, DifficultyCategory difficulty,
-            int points, Duration worldRecord, int finisherCount, boolean active) {
+            int points, Duration worldRecord, int finisherCount, boolean active, int releaseYear) {
         this.name = name;
         this.authors = authors;
         this.checkpointCount = checkpointCount;
@@ -70,6 +73,7 @@ public class TrialMap {
         this.worldRecord = worldRecord;
         this.finisherCount = finisherCount;
         this.active = active;
+        this.releaseYear = releaseYear;
     }
 
     public Long getId() {
@@ -106,5 +110,9 @@ public class TrialMap {
 
     public boolean isActive() {
         return active;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
     }
 }

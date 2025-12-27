@@ -16,6 +16,7 @@ public class TrialMapDtoMapper {
                 trialMap.getDifficulty().name(),
                 trialMap.getPoints(),
                 trialMap.getFinisherCount(),
-                TimeUtils.formatDuration(trialMap.getWorldRecord()));
+                TimeUtils.formatDuration(trialMap.getWorldRecord()),
+                trialMap.getReleaseYear());
     }
 }

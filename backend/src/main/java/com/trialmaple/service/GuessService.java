@@ -89,13 +89,16 @@ public class GuessService {
             authors.add(new HintPairDto<String, Boolean>(author, isCorrect));
         });
 
+        DeltaHint releaseYearDelta = compareNumber(guessMap.getReleaseYear(), mapOfTheDay.getReleaseYear());
+        HintPairDto<Integer, DeltaHint> releaseYear = new HintPairDto<Integer, DeltaHint>(guessMap.getReleaseYear(), releaseYearDelta);
+
         // Save score if success
         if (success) {
             Score score = new Score(request.guessNumber(), dailyMap);
             scoreRepository.save(score);
         }
 
-        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, worldRecord, authors);
+        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, worldRecord, authors, releaseYear);
     }
 
     private DeltaHint compareNumber(long guessValue, long realValue) {

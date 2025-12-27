@@ -49,18 +49,25 @@ function hintToEmoji(hint: boolean | DeltaHint) {
 }
 
 async function copyHistoryResult() {
-    const guessesCount = Object.keys(history.value).length;
-    let result = dailyMapNumber.value ? `I solved TrialMaple #${dailyMapNumber.value} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍` : '';
-    for (const guess of Object.values(history.value)) {
-        const difficultyEmoji = hintToEmoji(guess.difficulty.hint);
-        const pointEmoji = hintToEmoji(guess.points.hint);
-        const checkpointEmoji = hintToEmoji(guess.checkpoints.hint);
-        const finisherCountEmoji = hintToEmoji(guess.finisherCount.hint);
-        const worldRecordEmoji = hintToEmoji(guess.worldRecord.hint);
-        const authorsEmoji = hintToEmoji(guess.authors.some((hintPair) => hintPair.hint));
-        result += `\n${difficultyEmoji}${pointEmoji}${checkpointEmoji}${finisherCountEmoji}${worldRecordEmoji}${authorsEmoji}`;
+    try {
+        const guessesCount = Object.keys(history.value).length;
+        let result = dailyMapNumber.value ? `I solved TrialMaple #${dailyMapNumber.value} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍` : '';
+        for (const guess of Object.values(history.value)) {
+            const difficultyEmoji = hintToEmoji(guess.difficulty.hint);
+            const pointEmoji = hintToEmoji(guess.points.hint);
+            const checkpointEmoji = hintToEmoji(guess.checkpoints.hint);
+            const finisherCountEmoji = hintToEmoji(guess.finisherCount.hint);
+            const worldRecordEmoji = hintToEmoji(guess.worldRecord.hint);
+            const authorsEmoji = hintToEmoji(guess.authors.some((hintPair) => hintPair.hint));
+            // TODO Remove after 1 day
+            const releaseYearEmoji = guess.releaseYear ? hintToEmoji(guess.releaseYear.hint) : '';
+            result += `\n${difficultyEmoji}${pointEmoji}${checkpointEmoji}${finisherCountEmoji}${worldRecordEmoji}${authorsEmoji}${releaseYearEmoji}`;
+        }
+        resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';
+    } catch (e) {
+        console.error(e);
+        resultCopyStatus.value = 'ERROR';
     }
-    resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';
     setTimeout(() => {
         resultCopyStatus.value = 'NONE';
     }, 1500);

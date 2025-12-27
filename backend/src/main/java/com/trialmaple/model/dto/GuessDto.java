@@ -14,9 +14,10 @@ public record GuessDto(
         HintPairDto<Integer, DeltaHint> checkpoints,
         HintPairDto<Integer, DeltaHint> finisherCount,
         HintPairDto<String, DeltaHint> worldRecord,
-        List<HintPairDto<String, Boolean>> authors
+        List<HintPairDto<String, Boolean>> authors,
+        HintPairDto<Integer, DeltaHint> releaseYear
 ) {
         public GuessDto(boolean isValidDay) {
-               this(isValidDay, false, null, null, null, null, null, Collections.emptyList());
+                this(isValidDay, false, null, null, null, null, null, Collections.emptyList(), null);
         }
 }

@@ -6,4 +6,5 @@ export type TrialMap = {
     points: number;
     finisherCount: number;
     worldRecord: string | null;
+    releaseYear: number;
 };
