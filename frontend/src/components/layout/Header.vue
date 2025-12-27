@@ -10,8 +10,8 @@
                 <h1 class="text-[clamp(1rem,1.4vw,1.15rem)] font-semibold">le</h1>
             </div>
         </div>
-        <div class="flex gap-2 lg:gap-4">
-            <Icon class="cursor-pointer" :name="theme === 'dark' ? 'sun' : 'moon'" size="md" @click="toggleTheme" />
+        <div class="flex gap-2 lg:gap-4 items-center">
+            <ThemeToggle />
             <Icon class="cursor-pointer" name="circle-info" size="md" @click="isInfoModalOpen = true" />
         </div>
     </header>
@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import TrackManiaLogo from '#/assets/TrackMania-Logo.svg?component';
 import Icon from '#/components/Icon.vue';
+import ThemeToggle from '#/components/layout/ThemeToggle.vue';
 import InfoModal from '#/components/modal/InfoModal.vue';
 import { useTheme } from '#/composables/useTheme';
 import { ref } from 'vue';
