@@ -7,8 +7,7 @@
                 <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
             </div>
             <div class="flex flex-col items-center">
-                <span>You solved TrialMaple #{{ dailyMapNumber }} in <strong>{{ Object.keys(history).length }} guesses</strong>! 🎉</span>
-                <span>Other players needed an average of <strong>{{ playersAverageScore }} guesses</strong>.</span>
+                <span>You solved TrialMaple #{{ dailyMapNumber }} in <strong>{{ Object.keys(history).length }} guesses</strong>! 🎉 Other players needed an average of <strong>{{ playersAverageScore }} guesses</strong>.</span>
             </div>
             <ShareButton :daily-map-number="dailyMapNumber" :history />
         </div>
