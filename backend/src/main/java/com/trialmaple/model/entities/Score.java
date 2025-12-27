@@ -25,16 +25,12 @@ public class Score {
     @JoinColumn(name = "daily_map_id", nullable = false)
     private DailyMap dailyMap;
 
-    @Column(name = "player", columnDefinition = "VARCHAR(255)")
-    private String player;
-
     protected Score() {
     }
 
     public Score(int attemptCount, DailyMap dailyMap) {
         this.attemptCount = attemptCount;
         this.dailyMap = dailyMap;
-        this.player = "Unknown";
     }
 
     public int getAttemptCount() {
@@ -43,9 +39,5 @@ public class Score {
 
     public DailyMap getDailyMap() {
         return dailyMap;
-    }
-
-    public String getPlayer() {
-        return player;
     }
 }
