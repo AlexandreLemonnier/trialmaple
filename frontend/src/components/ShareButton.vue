@@ -59,8 +59,7 @@ async function copyHistoryResult() {
             const finisherCountEmoji = hintToEmoji(guess.finisherCount.hint);
             const worldRecordEmoji = hintToEmoji(guess.worldRecord.hint);
             const authorsEmoji = hintToEmoji(guess.authors.some((hintPair) => hintPair.hint));
-            // TODO Remove after 1 day
-            const releaseYearEmoji = guess.releaseYear ? hintToEmoji(guess.releaseYear.hint) : '';
+            const releaseYearEmoji = hintToEmoji(guess.releaseYear.hint);
             result += `\n${difficultyEmoji}${pointEmoji}${checkpointEmoji}${finisherCountEmoji}${worldRecordEmoji}${authorsEmoji}${releaseYearEmoji}`;
         }
         resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';

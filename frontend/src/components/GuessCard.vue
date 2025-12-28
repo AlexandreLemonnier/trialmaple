@@ -3,13 +3,10 @@
         <span class="text-2xl font-semibold">{{ mapName }}</span>
 
         <TransitionGroup name="fade" tag="div" class="flex flex-wrap gap-4">
-            <!-- TODO Remove after 1 day -->
-            <template v-for="item in displayedElements">
-                <GuessElement v-if="item.hints.length"
-                              :key="item.label"
-                              :label="item.label"
-                              :hints="item.hints" />
-            </template>
+            <GuessElement v-for="item in displayedElements"
+                          :key="item.label"
+                          :label="item.label"
+                          :hints="item.hints" />
         </TransitionGroup>
     </div>
 </template>
@@ -36,8 +33,7 @@ const elementsToDisplay = [
     { label: 'Finishers', hints: [guess.finisherCount] },
     { label: 'World Record', hints: [guess.worldRecord] },
     { label: 'Author(s)', hints: guess.authors },
-    // TODO Remove after 1 day
-    { label: 'Release year', hints: guess.releaseYear ? [guess.releaseYear] : [] }
+    { label: 'Release year', hints: [guess.releaseYear] }
 ];
 
 const displayedElements = ref<typeof elementsToDisplay>([]);
