@@ -7,33 +7,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.trialmaple.controller.mappers.TrialMapDtoMapper;
+import com.trialmaple.controller.mappers.TmMapDtoMapper;
 import com.trialmaple.exception.InvalidMapNameException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.dto.HintPairDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.Score;
-import com.trialmaple.model.entities.TrialMap;
+import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.repository.ScoreRepository;
-import com.trialmaple.repository.TrialMapRepository;
+import com.trialmaple.repository.TmMapRepository;
 
 @Service
 public class GuessService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GuessService.class);
 
-    private final TrialMapRepository trialMapRepository;
+    private final TmMapRepository tmMapRepository;
     private final ScoreRepository scoreRepository;
-    private final TrialMapDtoMapper trialMapDtoMapper;
+    private final TmMapDtoMapper tmMapDtoMapper;
 
-    public GuessService(TrialMapRepository trialMapRepository, ScoreRepository scoreRepository,
-            TrialMapDtoMapper trialMapDtoMapper) {
-        this.trialMapRepository = trialMapRepository;
+    public GuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository,
+            TmMapDtoMapper tmMapDtoMapper) {
+        this.tmMapRepository = tmMapRepository;
         this.scoreRepository = scoreRepository;
-        this.trialMapDtoMapper = trialMapDtoMapper;
+        this.tmMapDtoMapper = tmMapDtoMapper;
     }
 
     /**
@@ -43,8 +43,8 @@ public class GuessService {
 
         LOGGER.info("New guess: " + request.guess());
 
-        TrialMap mapOfTheDay = dailyMap.getMap();
-        TrialMap guessMap = trialMapRepository
+        TmMap mapOfTheDay = dailyMap.getMap();
+        TmMap guessMap = tmMapRepository
                 .findByNameIgnoreCase(request.guess())
                 .orElseThrow(() -> new InvalidMapNameException(request.guess()));
 
@@ -72,16 +72,16 @@ public class GuessService {
                 finisherCountDelta);
 
         DeltaHint wrDelta = null;
-        if (guessMap.getWorldRecord() == null && mapOfTheDay.getWorldRecord() == null) {
+        if (guessMap.getWrTime() == null && mapOfTheDay.getWrTime() == null) {
             wrDelta = DeltaHint.EQUAL;
-        } else if (guessMap.getWorldRecord() == null || mapOfTheDay.getWorldRecord() == null) {
+        } else if (guessMap.getWrTime() == null || mapOfTheDay.getWrTime() == null) {
             // Can't compare a map without WR with a map with WR
             wrDelta = DeltaHint.NON_APPLICABLE;
         } else {
-            wrDelta = compareNumber(guessMap.getWorldRecord().toMillis(), mapOfTheDay.getWorldRecord().toMillis());
+            wrDelta = compareNumber(guessMap.getWrTime().toMillis(), mapOfTheDay.getWrTime().toMillis());
         }
-        String formattedWR = trialMapDtoMapper.serviceToDto(guessMap).worldRecord();
-        HintPairDto<String, DeltaHint> worldRecord = new HintPairDto<String, DeltaHint>(formattedWR, wrDelta);
+        String formattedWR = tmMapDtoMapper.serviceToDto(guessMap).wrTime();
+        HintPairDto<String, DeltaHint> wrTime = new HintPairDto<String, DeltaHint>(formattedWR, wrDelta);
 
         List<HintPairDto<String, Boolean>> authors = new ArrayList<>();
         guessMap.getAuthors().forEach((author) -> {
@@ -98,7 +98,7 @@ public class GuessService {
             scoreRepository.save(score);
         }
 
-        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, worldRecord, authors, releaseYear);
+        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, wrTime, authors, releaseYear);
     }
 
     private DeltaHint compareNumber(long guessValue, long realValue) {

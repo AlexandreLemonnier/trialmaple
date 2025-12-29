@@ -12,7 +12,7 @@ export type Guess = {
     points: HintPair<number, DeltaHint>;
     checkpoints: HintPair<number, DeltaHint>;
     finisherCount: HintPair<number, DeltaHint>;
-    worldRecord: HintPair<string, DeltaHint>;
+    wrTime: HintPair<string, DeltaHint>;
     authors: HintPair<string, boolean>[];
     releaseYear: HintPair<number, DeltaHint>;
 };

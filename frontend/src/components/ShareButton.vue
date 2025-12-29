@@ -57,10 +57,10 @@ async function copyHistoryResult() {
             const pointEmoji = hintToEmoji(guess.points.hint);
             const checkpointEmoji = hintToEmoji(guess.checkpoints.hint);
             const finisherCountEmoji = hintToEmoji(guess.finisherCount.hint);
-            const worldRecordEmoji = hintToEmoji(guess.worldRecord.hint);
+            const wrTimeEmoji = hintToEmoji(guess.wrTime.hint);
             const authorsEmoji = hintToEmoji(guess.authors.some((hintPair) => hintPair.hint));
             const releaseYearEmoji = hintToEmoji(guess.releaseYear.hint);
-            result += `\n${difficultyEmoji}${pointEmoji}${checkpointEmoji}${finisherCountEmoji}${worldRecordEmoji}${authorsEmoji}${releaseYearEmoji}`;
+            result += `\n${difficultyEmoji}${pointEmoji}${checkpointEmoji}${finisherCountEmoji}${wrTimeEmoji}${authorsEmoji}${releaseYearEmoji}`;
         }
         resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';
     } catch (e) {

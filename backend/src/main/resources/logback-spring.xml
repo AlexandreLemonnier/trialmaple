@@ -22,7 +22,7 @@
         <password>${MAIL_PASSWORD}</password>
         <SSL>true</SSL>
 
-        <to>alexandre.lemonnier@outlook.com</to>
+        <to></to>
         <from>${MAIL_USERNAME}</from>
         <subject>[${APP_NAME}] ERROR detected</subject>
 

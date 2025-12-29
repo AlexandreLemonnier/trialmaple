@@ -31,7 +31,7 @@ const elementsToDisplay = [
     { label: 'Points', hints: [guess.points] },
     { label: 'Checkpoints', hints: [guess.checkpoints] },
     { label: 'Finishers', hints: [guess.finisherCount] },
-    { label: 'World Record', hints: [guess.worldRecord] },
+    { label: 'World Record', hints: [guess.wrTime] },
     { label: 'Author(s)', hints: guess.authors },
     { label: 'Release year', hints: [guess.releaseYear] }
 ];

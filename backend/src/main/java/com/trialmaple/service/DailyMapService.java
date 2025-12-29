@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 
 import com.trialmaple.exception.NoDailyMapFoundException;
 import com.trialmaple.model.entities.DailyMap;
-import com.trialmaple.model.entities.TrialMap;
+import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.repository.DailyMapRepository;
-import com.trialmaple.repository.TrialMapRepository;
+import com.trialmaple.repository.TmMapRepository;
 
 @Service
 public class DailyMapService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DailyMapService.class);
 
-    private final TrialMapRepository trialMapRepository;
+    private final TmMapRepository tmMapRepository;
     private final DailyMapRepository dailyMapRepository;
 
-    public DailyMapService(TrialMapRepository trialMapRepository, DailyMapRepository dailyMapRepository) {
-        this.trialMapRepository = trialMapRepository;
+    public DailyMapService(TmMapRepository tmMapRepository, DailyMapRepository dailyMapRepository) {
+        this.tmMapRepository = tmMapRepository;
         this.dailyMapRepository = dailyMapRepository;
     }
 
@@ -38,13 +38,13 @@ public class DailyMapService {
         boolean exists = dailyMapRepository.existsByDay(today);
 
         if (!exists) {
-            List<TrialMap> allMaps = trialMapRepository.findByWorldRecordIsNotNullAndActiveTrue();
+            List<TmMap> allMaps = tmMapRepository.findByWrTimeIsNotNullAndActiveTrue();
             if (allMaps.isEmpty()) {
                 LOGGER.error("No trial maps available");
                 return;
             }
 
-            TrialMap randomMap = allMaps.get(new Random().nextInt(allMaps.size()));
+            TmMap randomMap = allMaps.get(new Random().nextInt(allMaps.size()));
 
             DailyMap dailyMap = new DailyMap(randomMap, today);
 

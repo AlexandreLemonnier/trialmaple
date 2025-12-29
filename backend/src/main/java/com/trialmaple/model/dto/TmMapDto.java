@@ -2,14 +2,14 @@ package com.trialmaple.model.dto;
 
 import java.util.List;
 
-public record TrialMapDto(
+public record TmMapDto(
                 String name,
                 List<String> authors,
                 int checkpointCount,
                 String difficulty,
                 int points,
                 int finisherCount,
-                String worldRecord, // formatted string,
+                String wrTime, // formatted string,
                 int releaseYear
 ) {
 }

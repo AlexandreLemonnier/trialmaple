@@ -25,8 +25,8 @@ public class DailyMap {
     private UUID uuid = UUID.randomUUID();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "trial_map_id", nullable = false)
-    private TrialMap map;
+    @JoinColumn(name = "tm_map_id", nullable = false)
+    private TmMap map;
 
     @Column(name = "day", columnDefinition = "DATE")
     private LocalDate day;
@@ -34,7 +34,7 @@ public class DailyMap {
     protected DailyMap() {
     }
 
-    public DailyMap(TrialMap map, LocalDate day) {
+    public DailyMap(TmMap map, LocalDate day) {
         this.map = map;
         this.day = day;
     }
@@ -47,7 +47,7 @@ public class DailyMap {
         return uuid;
     }
 
-    public TrialMap getMap() {
+    public TmMap getMap() {
         return map;
     }
 
