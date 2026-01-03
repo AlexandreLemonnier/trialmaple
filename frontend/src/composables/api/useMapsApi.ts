@@ -4,11 +4,11 @@ export function useMapsApi() {
     const { request } = useApi('/maps');
 
     return {
-        async getMapNames(finished: boolean) {
+        async getMapNames() {
             return await request<string[]>('/list', {
                 method: 'GET',
                 query: {
-                    finished
+                    gameMode: 'CLASSIC_TMNF_TRIAL'
                 }
             });
         }

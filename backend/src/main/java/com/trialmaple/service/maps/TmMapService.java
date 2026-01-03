@@ -4,21 +4,26 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.trialmaple.repository.TmMapRepository;
+import com.trialmaple.model.entities.TmMap;
+import com.trialmaple.model.enums.GameMode;
+import com.trialmaple.service.dailymap.DailyMapServiceProvider;
+import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;
 import com.trialmaple.service.maps.update.IMapUpdateStrategy;
 
 @Service
 public class TmMapService {
-    private final TmMapRepository repository;
     private final List<IMapUpdateStrategy> updateStrategies;
+    private final DailyMapServiceProvider provider;
 
-    public TmMapService(TmMapRepository repository, List<IMapUpdateStrategy> updateStrategies) {
-        this.repository = repository;
+    public TmMapService(List<IMapUpdateStrategy> updateStrategies, DailyMapServiceProvider provider) {
         this.updateStrategies = updateStrategies;
+        this.provider = provider;
     }
 
-    public List<String> getAllMapNames(boolean finished) {
-        return repository.findAllMapNames(finished);
+    public List<String> getAllMapNames(GameMode gameMode) {
+        IDailyMapPickerStrategy dailyMapService = provider.getDailyMapService(gameMode);
+        List<TmMap> maps = dailyMapService.getMapPool();
+        return maps.stream().map(tmMap -> tmMap.getName()).toList();
     }
 
     public void fetchAndUpdateMaps() {

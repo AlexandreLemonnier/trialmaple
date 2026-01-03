@@ -7,11 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trialmaple.exception.InvalidGameModeException;
+import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.maps.TmMapService;
+import com.trialmaple.utils.LoggerWrapper;
 
 @RestController
 @RequestMapping("/api")
 public class MapController {
+
+    private static final LoggerWrapper LOGGER = new LoggerWrapper(MapController.class);
 
     private final TmMapService service;
 
@@ -20,15 +25,19 @@ public class MapController {
     }
 
     /**
-     * List maps name
+     * List maps name for a specific game mode
      * 
-     * @param finished get only finished maps (wrTime != null)
      * @return
      */
     @GetMapping("/maps/list")
-    public List<String> getAllMapNames(
-            @RequestParam(name = "finished", required = false, defaultValue = "false") boolean finished) {
-        return service.getAllMapNames(finished);
+    public List<String> getAllMapNames(@RequestParam String gameMode) {
+        try {
+            GameMode gameModeValue = GameMode.valueOf(gameMode);
+            return service.getAllMapNames(gameModeValue);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        }
     }
 
 }
