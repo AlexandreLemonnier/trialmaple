@@ -23,8 +23,7 @@ public class TimeUtils {
             sb.append(hours).append(":");
         }
 
-        sb.append(minutes).append(":");
-        sb.append(String.format("%02d.%02d", seconds, centis));
+        sb.append(String.format("%02d:%02d.%02d", minutes, seconds, centis));
 
         return sb.toString();
     }
