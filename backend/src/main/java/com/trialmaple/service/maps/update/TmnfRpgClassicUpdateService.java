@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.trialmaple.controller.mappers.external.MapDtoMapper;
@@ -20,11 +18,13 @@ import com.trialmaple.model.enums.MapList;
 import com.trialmaple.model.enums.TmGame;
 import com.trialmaple.repository.TmMapRepository;
 import com.trialmaple.service.maps.TmUserService;
+import com.trialmaple.utils.LoggerConstant;
+import com.trialmaple.utils.LoggerWrapper;
 
 @Service
 public class TmnfRpgClassicUpdateService implements IMapUpdateStrategy {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TmnfRpgClassicUpdateService.class);
+    private static final LoggerWrapper LOGGER = new LoggerWrapper(TmnfRpgClassicUpdateService.class);
 
     private final TmRpgService tmRpgService;
     private final TmUserService tmUserService;
@@ -70,11 +70,11 @@ public class TmnfRpgClassicUpdateService implements IMapUpdateStrategy {
                     // Error log to be notified by email
                     // Use this to initialize data on first fetch: toCreate.add(mapDtoMapper.externalToService(map, getSupportedList(), wrHolder));
                     // tmMapRepository.saveAll(toCreate);
-                    LOGGER.error("New map to add to " + getSupportedList() + " : " + map.name());
+                    LOGGER.error("New map to add.", LoggerConstant.MAP_LIST, getSupportedList(), LoggerConstant.MAP_NAME, map.name());
                 } else {
                     boolean updated = mapDtoMapper.update(existingMap, map, wrHolder);
                     if (updated) {
-                        LOGGER.info("Map updated: " + existingMap.getName());
+                        LOGGER.info("Map updated.", LoggerConstant.MAP_NAME, existingMap.getName());
                         toUpdate.add(existingMap);
                     }
                 }

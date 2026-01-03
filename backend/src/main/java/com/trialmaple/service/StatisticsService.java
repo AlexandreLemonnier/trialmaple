@@ -8,6 +8,7 @@ import com.trialmaple.model.dto.DailyStatsDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.Score;
 import com.trialmaple.repository.ScoreRepository;
+import com.trialmaple.service.dailymap.DailyMapService;
 
 @Service
 public class StatisticsService {

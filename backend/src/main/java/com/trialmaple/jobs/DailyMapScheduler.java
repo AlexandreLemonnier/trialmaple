@@ -3,7 +3,7 @@ package com.trialmaple.jobs;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.trialmaple.service.DailyMapService;
+import com.trialmaple.service.dailymap.DailyMapService;
 import com.trialmaple.service.maps.TmMapService;
 
 @Component
@@ -19,7 +19,7 @@ public class DailyMapScheduler {
 
     @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Paris") // Everyday at midnight
     public void scheduledDailyMapSelection() {
-        dailyMapService.chooseDailyMapIfMissing();
+        dailyMapService.pickAllDailyMapsIfMissing();
         tmMapService.fetchAndUpdateMaps();
     }
 }

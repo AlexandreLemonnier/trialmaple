@@ -2,7 +2,7 @@ package com.trialmaple.jobs;
 
 import org.springframework.stereotype.Component;
 
-import com.trialmaple.service.DailyMapService;
+import com.trialmaple.service.dailymap.DailyMapService;
 
 import jakarta.annotation.PostConstruct;
 
@@ -17,6 +17,6 @@ public class DailyMapInitializer {
 
     @PostConstruct
     public void init() {
-        dailyMapService.chooseDailyMapIfMissing();
+        dailyMapService.pickAllDailyMapsIfMissing();
     }
 }
