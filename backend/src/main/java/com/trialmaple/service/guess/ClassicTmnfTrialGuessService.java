@@ -1,4 +1,4 @@
-package com.trialmaple.service;
+package com.trialmaple.service.guess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,26 +15,23 @@ import com.trialmaple.model.entities.Score;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
+import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
 
 @Service
-public class GuessService {
+public class ClassicTmnfTrialGuessService extends AbstractGuessService {
 
-    private final TmMapRepository tmMapRepository;
-    private final ScoreRepository scoreRepository;
-    private final TmMapDtoMapper tmMapDtoMapper;
-
-    public GuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository,
-            TmMapDtoMapper tmMapDtoMapper) {
-        this.tmMapRepository = tmMapRepository;
-        this.scoreRepository = scoreRepository;
-        this.tmMapDtoMapper = tmMapDtoMapper;
+    public ClassicTmnfTrialGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository, TmMapDtoMapper tmMapDtoMapper) {
+        super(tmMapRepository, scoreRepository, tmMapDtoMapper);
     }
 
-    /**
-     * Check if a guess is correct and give hints or correct elements
-     */
+    @Override
+    public GameMode getGameMode() {
+        return GameMode.CLASSIC_TMNF_TRIAL;
+    }
+
+    @Override
     public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapNameException {
         TmMap mapOfTheDay = dailyMap.getMap();
         TmMap guessMap = tmMapRepository
@@ -93,13 +90,5 @@ public class GuessService {
 
         return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, wrTime, authors, releaseYear);
     }
-
-    private DeltaHint compareNumber(long guessValue, long realValue) {
-        if (guessValue < realValue)
-            return DeltaHint.MORE;
-        if (guessValue > realValue)
-            return DeltaHint.LESS;
-        return DeltaHint.EQUAL;
-    }
-
+    
 }
