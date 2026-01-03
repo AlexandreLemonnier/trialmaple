@@ -29,4 +29,13 @@ public class GlobalExceptionHandler {
                         ex.getCode().name(),
                         ex.getMessage()));
     }
+    
+    @ExceptionHandler(InvalidGameModeException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidGameMode(InvalidGameModeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDto(
+                        Instant.now(),
+                        ex.getCode().name(),
+                        ex.getMessage()));
+    }
 }

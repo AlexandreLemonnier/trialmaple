@@ -12,12 +12,18 @@ export function useGuessApi() {
                     guess,
                     guessNumber,
                     dailyMapUuid
+                },
+                query: {
+                    gameMode: 'CLASSIC_TMNF_TRIAL'
                 }
             });
         },
         async getDailyMapUuid() {
             return await request<string>('/daily-map', {
-                method: 'GET'
+                method: 'GET',
+                query: {
+                    gameMode: 'CLASSIC_TMNF_TRIAL'
+                }
             });
         }
     };

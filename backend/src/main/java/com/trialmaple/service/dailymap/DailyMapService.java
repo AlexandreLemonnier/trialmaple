@@ -27,9 +27,9 @@ public class DailyMapService {
         this.dailyMapRepository = dailyMapRepository;
     }
 
-    public DailyMap getCurrentDailyMap() throws NoDailyMapFoundException {
+    public DailyMap getCurrentDailyMap(GameMode gameMode) throws NoDailyMapFoundException {
         LocalDate today = LocalDate.now();
-        return dailyMapRepository.findByDayAndGameMode(today, GameMode.CLASSIC_TMNF_TRIAL)
+        return dailyMapRepository.findByDayAndGameMode(today, gameMode)
                 .orElseThrow(() -> new NoDailyMapFoundException(today));
     }
 

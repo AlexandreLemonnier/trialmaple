@@ -12,4 +12,6 @@ public interface DailyMapRepository extends JpaRepository<DailyMap, Long> {
     boolean existsByDayAndGameMode(LocalDate day, GameMode gameMode);
 
     Optional<DailyMap> findByDayAndGameMode(LocalDate day, GameMode gameMode);
+
+    long countByGameMode(GameMode gameMode);
 }

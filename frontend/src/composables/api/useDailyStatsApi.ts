@@ -7,7 +7,10 @@ export function useDailyStatsApi() {
     return {
         async getDailyStats() {
             return await request<DailyStats>('', {
-                method: 'GET'
+                method: 'GET',
+                query: {
+                    gameMode: 'CLASSIC_TMNF_TRIAL'
+                }
             });
         }
     };

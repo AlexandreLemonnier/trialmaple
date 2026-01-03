@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.trialmaple.model.dto.DailyStatsDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.Score;
+import com.trialmaple.model.enums.GameMode;
+import com.trialmaple.repository.DailyMapRepository;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.service.dailymap.DailyMapService;
 
@@ -14,15 +16,19 @@ import com.trialmaple.service.dailymap.DailyMapService;
 public class StatisticsService {
 
     private final ScoreRepository scoreRepository;
+    private final DailyMapRepository dailyMapRepository;
     private final DailyMapService dailyMapService;
 
-    public StatisticsService(ScoreRepository scoreRepository, DailyMapService dailyMapService) {
+    public StatisticsService(ScoreRepository scoreRepository, DailyMapRepository dailyMapRepository, DailyMapService dailyMapService) {
         this.scoreRepository = scoreRepository;
+        this.dailyMapRepository = dailyMapRepository;
         this.dailyMapService = dailyMapService;
     }
 
-    public DailyStatsDto getDailyStats() {
-        DailyMap currentDailyMap = dailyMapService.getCurrentDailyMap();
+    public DailyStatsDto getDailyStats(GameMode gameMode) {
+        DailyMap currentDailyMap = dailyMapService.getCurrentDailyMap(gameMode);
+
+        Long mapNumber = dailyMapRepository.countByGameMode(currentDailyMap.getGameMode());
 
         List<Score> scores = scoreRepository.findByDailyMap(currentDailyMap);
 
@@ -31,7 +37,7 @@ public class StatisticsService {
         // Rounded to 1 decimal
         averageTries = Math.round(averageTries * 10.0) / 10.0;
 
-        return new DailyStatsDto(currentDailyMap.getId() ,totalWinners, averageTries);
+        return new DailyStatsDto(mapNumber ,totalWinners, averageTries);
     }
 
 }
