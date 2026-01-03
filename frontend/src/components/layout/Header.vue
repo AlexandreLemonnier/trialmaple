@@ -1,7 +1,7 @@
 <template>
     <header class="sticky flex justify-between items-center px-2 lg:px-5 w-full h-12 lg:h-16 bg-header-background tracking-wide">
         <div class="flex items-center gap-2 select-none">
-            <TrackManiaLogo aria-label="TrialMaple logo" class="w-auto h-[clamp(2rem,4vw,4rem)]" />
+            <TrackManiaLogo aria-label="TrialMaple logo" class="w-auto h-[clamp(3rem,4vw,4rem)]" />
             <div class="flex">
                 <h1 class="text-[clamp(1.5rem,2.5vw,1.75rem)] font-bold">T</h1>
                 <h1 class="text-[clamp(1.25rem,2vw,1.5rem)] font-semibold">rial</h1>
