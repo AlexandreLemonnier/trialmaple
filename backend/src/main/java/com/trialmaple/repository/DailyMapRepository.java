@@ -11,5 +11,5 @@ import com.trialmaple.model.enums.GameMode;
 public interface DailyMapRepository extends JpaRepository<DailyMap, Long> {
     boolean existsByDayAndGameMode(LocalDate day, GameMode gameMode);
 
-    Optional<DailyMap> findByDay(LocalDate day);
+    Optional<DailyMap> findByDayAndGameMode(LocalDate day, GameMode gameMode);
 }

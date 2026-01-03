@@ -29,7 +29,7 @@ public class DailyMapService {
 
     public DailyMap getCurrentDailyMap() throws NoDailyMapFoundException {
         LocalDate today = LocalDate.now();
-        return dailyMapRepository.findByDay(today)
+        return dailyMapRepository.findByDayAndGameMode(today, GameMode.CLASSIC_TMNF_TRIAL)
                 .orElseThrow(() -> new NoDailyMapFoundException(today));
     }
 
