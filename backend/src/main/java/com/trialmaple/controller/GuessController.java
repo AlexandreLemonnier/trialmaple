@@ -34,6 +34,9 @@ public class GuessController {
         this.dailyMapService = dailyMapService;
     }
 
+    /**
+     * Make a guess for the given game mode
+     */
     @PostMapping("/guess")
     public GuessDto guess(@RequestBody GuessRequestDto request, @RequestParam String gameMode)
             throws NoDailyMapFoundException, InvalidMapNameException {
@@ -47,6 +50,9 @@ public class GuessController {
         }
     }
 
+    /**
+     * Get current daily map uuid for the given game mode
+     */
     @GetMapping("/guess/daily-map")
     public String getDailyMapUuid(@RequestParam String gameMode) throws NoDailyMapFoundException {
         try {

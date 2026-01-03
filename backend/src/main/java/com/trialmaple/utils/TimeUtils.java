@@ -3,6 +3,11 @@ package com.trialmaple.utils;
 import java.time.Duration;
 
 public class TimeUtils {
+
+    /**
+     * Format a duration to a human readable format
+     * H:mm:ss.SS
+     */
     public static String formatDuration(Duration duration) {
         if (duration == null)
             return null;

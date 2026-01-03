@@ -26,8 +26,6 @@ public class MapController {
 
     /**
      * List maps name for a specific game mode
-     * 
-     * @return
      */
     @GetMapping("/maps/list")
     public List<String> getAllMapNames(@RequestParam String gameMode) {

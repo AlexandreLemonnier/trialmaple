@@ -17,6 +17,9 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
         this.tmMapDtoMapper = tmMapDtoMapper;
     }
 
+    /**
+     * Compare 2 numbers and return the corresponding DeltaHint
+     */
     protected DeltaHint compareNumber(long guessValue, long realValue) {
         if (guessValue < realValue)
             return DeltaHint.MORE;

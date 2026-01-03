@@ -11,6 +11,10 @@ import com.trialmaple.model.dto.external.tmrpg.MapsResponseDto;
 @HttpExchange(url = "https://tmrpg.com/api", accept = "application/json")
 public interface TmRpgService {
 
+    /**
+     * Get "TMNF Classic RPG" maps from tmrpg.com
+     * @return
+     */
     @GetExchange("/game/tmnf/maps?secret=arso&mode=classic")
     MapsResponseDto getTmnfRpgClassicMaps();
 

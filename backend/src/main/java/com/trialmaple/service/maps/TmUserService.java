@@ -16,6 +16,9 @@ public class TmUserService {
         this.tmUserRepository = tmUserRepository;
     }
 
+    /**
+     * Get the TM user corresponding to the given login if present, else create it with given parameters
+     */
     @Transactional
     public TmUser getOrCreate(String login, String displayName, TmGame game) {
         return tmUserRepository.findByLoginAndGame(login, game)

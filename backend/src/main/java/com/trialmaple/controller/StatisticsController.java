@@ -25,6 +25,9 @@ public class StatisticsController {
         this.statisticsService = statisticsService;
     }
 
+    /**
+     * Get daily stats and daily map number
+     */
     @GetMapping("/daily-stats")
     public DailyStatsDto getDaiyStats(@RequestParam String gameMode) {
         try {

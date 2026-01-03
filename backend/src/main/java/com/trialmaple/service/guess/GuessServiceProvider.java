@@ -18,6 +18,9 @@ public class GuessServiceProvider {
         this.services = services.stream().collect(Collectors.toMap(IGuessGameModeService::getGameMode, Function.identity()));
     }
 
+    /**
+     * Provides the correct GuessGameModeService for the given game mode
+     */
     public IGuessGameModeService getGuessService(GameMode gameMode) {
         IGuessGameModeService service = services.get(gameMode);
         if (service == null) {

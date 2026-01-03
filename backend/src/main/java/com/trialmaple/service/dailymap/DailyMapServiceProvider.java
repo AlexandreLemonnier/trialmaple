@@ -18,6 +18,9 @@ public class DailyMapServiceProvider {
         this.services = services.stream().collect(Collectors.toMap(IDailyMapPickerStrategy::getSupportedGameMode, Function.identity()));
     }
 
+    /**
+     * Provides the correct DailyMapPickerService for the given game mode
+     */
     public IDailyMapPickerStrategy getDailyMapService(GameMode gameMode) {
         IDailyMapPickerStrategy service = services.get(gameMode);
         if (service == null) {

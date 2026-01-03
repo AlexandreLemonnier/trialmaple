@@ -20,12 +20,18 @@ public class TmMapService {
         this.provider = provider;
     }
 
+    /**
+     * Get the map pool names for the given game mode
+     */
     public List<String> getAllMapNames(GameMode gameMode) {
         IDailyMapPickerStrategy dailyMapService = provider.getDailyMapService(gameMode);
         List<TmMap> maps = dailyMapService.getMapPool();
         return maps.stream().map(tmMap -> tmMap.getName()).toList();
     }
 
+    /**
+     * Fetch maps data from an external API and updated them if needed
+     */
     public void fetchAndUpdateMaps() {
         updateStrategies.forEach(IMapUpdateStrategy::fetchAndUpdate);
     }

@@ -25,6 +25,9 @@ public class StatisticsService {
         this.dailyMapService = dailyMapService;
     }
 
+    /**
+     * Get daily stats and daily map number
+     */
     public DailyStatsDto getDailyStats(GameMode gameMode) {
         DailyMap currentDailyMap = dailyMapService.getCurrentDailyMap(gameMode);
 
