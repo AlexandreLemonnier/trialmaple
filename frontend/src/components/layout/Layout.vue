@@ -3,6 +3,7 @@
         <Gutter />
         <div class="flex flex-col w-full md:w-3/5 bg-app-background text-app-text">
             <Header />
+            <NavigationBar />
             <main class="mx-2 mb-4">
                 <slot></slot>
             </main>
@@ -14,4 +15,5 @@
 <script setup lang="ts">
 import Gutter from '#/components/layout/Gutter.vue';
 import Header from '#/components/layout/Header.vue';
+import NavigationBar from '#/components/layout/NavigationBar.vue';
 </script>
