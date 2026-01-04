@@ -15,9 +15,10 @@
             <!-- Sub tab (game mode) -->
             <div class="absolute left-0 top-full w-full group-hover:block bg-navigation-bar-background border border-app-border/20 rounded-lg shadow-lg z-50 min-w-max"
                  :class="openTab === tab.title ? 'block' : 'hidden'">
+                <div v-if="!tab.subTabs.length" class="px-2 lg:px-4 py-1.5 lg:py-2 text-sm italic text-center whitespace-nowrap">Coming soon</div>
                 <div v-for="subTab in tab.subTabs"
                      :key="subTab.title"
-                     class="px-4 py-2 cursor-pointer text-center whitespace-nowrap hover:bg-navigation-bar-selection-background transition"
+                     class="px-2 lg:px-4 py-1.5 lg:py-2 cursor-pointer text-center whitespace-nowrap hover:bg-navigation-bar-selection-background transition"
                      :class="route.name === subTab.routeName ? 'text-success font-semibold' : ''"
                      @click="navigateToRoute(subTab.routeName)">
                     {{ subTab.title }}
@@ -28,6 +29,8 @@
 </template>
 
 <script setup lang="ts">
+import tm2Icon from '#/assets/tm2.png';
+import tm2020Icon from '#/assets/tm2020.jpg';
 import tmnfIcon from '#/assets/tmnf.jpg';
 import { Route } from '#/router/Route';
 import { onMounted, onUnmounted, ref } from 'vue';
@@ -61,6 +64,18 @@ const tabs: Tab[] = [
                 title: 'RPG',
                 routeName: Route.TMNF_RPG_CLASSIC_MODE
             }
+        ]
+    },
+    {
+        title: 'TM2',
+        icon: tm2Icon,
+        subTabs: [
+        ]
+    },
+    {
+        title: 'TM2020',
+        icon: tm2020Icon,
+        subTabs: [
         ]
     }
 ];
