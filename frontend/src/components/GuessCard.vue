@@ -13,12 +13,15 @@
 
 <script setup lang="ts">
 import GuessElement from '#/components/GuessElement.vue';
-import type { Guess } from '#/types/api/guess';
+import type { DeltaHint } from '#/types/api/deltaHint';
+import type { Guess, HintPair, WrHolder } from '#/types/api/guess';
+import { toArray } from '#/utils/toArray';
 import { onMounted, ref } from 'vue';
 
-const { mapName, guess, ignoreAnimations } = defineProps<{
+const { mapName, guess, hintsToDisplay, ignoreAnimations } = defineProps<{
     mapName: string;
     guess: Guess;
+    hintsToDisplay: { label: string, guessProp: keyof Guess }[];
     ignoreAnimations?: boolean;
 }>();
 
@@ -26,26 +29,25 @@ const emit = defineEmits<(e: 'animationFinished') => void>();
 
 const delay = 300;
 
-const elementsToDisplay = [
-    { label: 'Difficulty', hints: [guess.difficulty] },
-    { label: 'Points', hints: [guess.points] },
-    { label: 'Checkpoints', hints: [guess.checkpoints] },
-    { label: 'Finishers', hints: [guess.finisherCount] },
-    { label: 'World Record', hints: [guess.wrTime] },
-    { label: 'Author(s)', hints: guess.authors },
-    { label: 'Release year', hints: [guess.releaseYear] }
-];
-
-const displayedElements = ref<typeof elementsToDisplay>([]);
+const displayedElements = ref<{
+    label: string,
+    hints: HintPair<string | number | WrHolder, boolean | DeltaHint>[]
+}[]>([]);
 
 // Add elements progressively to make a sequential animation
 onMounted(async () => {
-    if (ignoreAnimations) {
-        displayedElements.value = elementsToDisplay;
-    } else {
-        for (const element of elementsToDisplay) {
-            displayedElements.value.push(element);
-            await new Promise((resolve) => setTimeout(resolve, delay));
+    for (const hint of hintsToDisplay) {
+        const guessElement = guess[hint.guessProp];
+        if (guessElement && typeof guessElement !== 'boolean') {
+            displayedElements.value.push(
+                {
+                    label: hint.label,
+                    hints: toArray(guessElement)
+                }
+            );
+            if (!ignoreAnimations) {
+                await new Promise((resolve) => setTimeout(resolve, delay));
+            }
         }
     }
     emit('animationFinished');

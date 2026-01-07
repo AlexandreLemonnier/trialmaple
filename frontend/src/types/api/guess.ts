@@ -5,14 +5,21 @@ export type HintPair<K, V> = {
     hint: V;
 };
 
+export type WrHolder = {
+    login: string,
+    displayName: string
+};
+
 export type Guess = {
     isValidDay: boolean;
     success: boolean;
-    difficulty: HintPair<string, boolean>;
-    points: HintPair<number, DeltaHint>;
-    checkpoints: HintPair<number, DeltaHint>;
-    finisherCount: HintPair<number, DeltaHint>;
-    wrTime: HintPair<string, DeltaHint>;
+    difficulty: HintPair<string, boolean> | null;
+    points: HintPair<number, DeltaHint> | null;
+    checkpoints: HintPair<number, DeltaHint> | null;
+    finisherCount: HintPair<number, DeltaHint> | null;
+    wrTime: HintPair<string, DeltaHint> | null;
+    wrHolder: HintPair<WrHolder, boolean> | null;
+    wrYear: HintPair<number, DeltaHint> | null;
     authors: HintPair<string, boolean>[];
-    releaseYear: HintPair<number, DeltaHint>;
+    releaseYear: HintPair<number, DeltaHint> | null;
 };

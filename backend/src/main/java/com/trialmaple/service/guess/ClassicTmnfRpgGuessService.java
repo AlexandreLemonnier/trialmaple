@@ -1,10 +1,12 @@
 package com.trialmaple.service.guess;
 
+import java.util.List;
+
 import com.trialmaple.controller.mappers.TmMapDtoMapper;
-import com.trialmaple.exception.InvalidMapNameException;
 import com.trialmaple.model.dto.GuessDto;
-import com.trialmaple.model.dto.GuessRequestDto;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.dto.HintPairDto;
+import com.trialmaple.model.dto.WrHolderDto;
+import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
@@ -21,8 +23,15 @@ public class ClassicTmnfRpgGuessService extends AbstractGuessService {
     }
 
     @Override
-    public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapNameException {
-        // TODO implementation and refacto with others GuessServices
-        return null;
+    protected GuessDto computeGuess(boolean success) {
+        HintPairDto<Integer, DeltaHint> points = computeMapPointsHint();
+        HintPairDto<Integer, DeltaHint> checkpoints = computeMapCheckpointsHint();
+        HintPairDto<Integer, DeltaHint> finisherCount = computeMapFinisherCountHint();
+        HintPairDto<String, DeltaHint> wrTime = computeMapWrTimeHint();
+        HintPairDto<WrHolderDto, Boolean> wrHolder = computeMapWrHolderHint();
+        HintPairDto<Integer, DeltaHint> wrYear = computeMapWrYearHint();
+        List<HintPairDto<String, Boolean>> authors = computeMapAuthorsHint();
+        HintPairDto<Integer, DeltaHint> releaseYear = computeMapReleaseYearHint();
+        return new GuessDto(true, success, null, points, checkpoints, finisherCount, wrTime, wrHolder, wrYear, authors, releaseYear);
     }
 }

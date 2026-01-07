@@ -25,6 +25,7 @@
                        :key="mapName"
                        :map-name
                        :guess
+                       :hints-to-display
                        @animationFinished="onGuessCardAnimationFinished"
                        :ignore-animations="ignoreCardsAnimations" />
         </div>
@@ -69,6 +70,37 @@ const isGuessCardAnimating = ref(false);
 const pendingWin = ref(false);
 // To avoid animations when initializing history from local storage
 const ignoreCardsAnimations = ref(true);
+
+const hintsToDisplay: { label: string, guessProp: keyof Guess }[] = [
+    {
+        label: 'Difficulty',
+        guessProp: 'difficulty'
+    },
+    {
+        label: 'Points',
+        guessProp: 'points'
+    },
+    {
+        label: 'Checkpoints',
+        guessProp: 'checkpoints'
+    },
+    {
+        label: 'Finishers',
+        guessProp: 'finisherCount'
+    },
+    {
+        label: 'World Record',
+        guessProp: 'wrTime'
+    },
+    {
+        label: 'Author(s)',
+        guessProp: 'authors'
+    },
+    {
+        label: 'Release year',
+        guessProp: 'releaseYear'
+    }
+];
 
 /** Animations */
 function triggerConfetti() {
