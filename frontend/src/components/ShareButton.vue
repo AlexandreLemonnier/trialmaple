@@ -10,14 +10,21 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from '#/stores/appStore';
+import { createGameStore } from '#/stores/appStore';
 import type { DeltaHint } from '#/types/api/deltaHint';
+import type { GameMode } from '#/types/api/gameMode';
 import { copyToClipboard } from '#/utils/copyToClipboard';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-const appStore = useAppStore();
-const { history, dailyMapNumber } = storeToRefs(appStore);
+const { gameMode, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+    gameMode: GameMode;
+    historyStorageKey: string;
+    dailyMapUuidStorageKey: string;
+}>();
+
+const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
+const { history, dailyMapNumber } = storeToRefs(gameStore);
 
 type CopyStatus = 'NONE' | 'SUCCESS' | 'ERROR';
 

@@ -1,11 +1,12 @@
 import { useApi } from '#/composables/useApi';
+import type { GameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
 
 export function useGuessApi() {
     const { request } = useApi('/guess');
 
     return {
-        async postGuess(guess: string, guessNumber: number, dailyMapUuid: string) {
+        async postGuess(gameMode: GameMode, guess: string, guessNumber: number, dailyMapUuid: string) {
             return await request<Guess>('', {
                 method: 'POST',
                 body: {
@@ -14,15 +15,15 @@ export function useGuessApi() {
                     dailyMapUuid
                 },
                 query: {
-                    gameMode: 'CLASSIC_TMNF_TRIAL'
+                    gameMode
                 }
             });
         },
-        async getDailyMapUuid() {
+        async getDailyMapUuid(gameMode: GameMode) {
             return await request<string>('/daily-map', {
                 method: 'GET',
                 query: {
-                    gameMode: 'CLASSIC_TMNF_TRIAL'
+                    gameMode
                 }
             });
         }

@@ -13,7 +13,7 @@ public class TmMapDtoMapper {
                 tmMap.getName(),
                 tmMap.getAuthors(),
                 tmMap.getCheckpointCount(),
-                tmMap.getDifficulty().name(),
+                tmMap.getDifficulty() != null ? tmMap.getDifficulty().name() : null,
                 tmMap.getPoints(),
                 tmMap.getFinisherCount(),
                 TimeUtils.formatDuration(tmMap.getWrTime()),

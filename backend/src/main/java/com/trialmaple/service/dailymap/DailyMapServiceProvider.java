@@ -24,7 +24,7 @@ public class DailyMapServiceProvider {
     public IDailyMapPickerStrategy getDailyMapService(GameMode gameMode) {
         IDailyMapPickerStrategy service = services.get(gameMode);
         if (service == null) {
-            throw new IllegalArgumentException("No GuessService found for game mode: " + gameMode);
+            throw new IllegalArgumentException("No DailyMapService found for game mode: " + gameMode);
         }
         return service;
     }

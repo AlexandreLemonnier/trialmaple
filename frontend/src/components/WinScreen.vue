@@ -9,7 +9,11 @@
             <div class="flex flex-col items-center">
                 <span>You solved TrialMaple #{{ dailyMapNumber }} in <strong>{{ Object.keys(history).length }} guesses</strong>! 🎉 Other players needed an average of <strong>{{ playersAverageScore }} guesses</strong>.</span>
             </div>
-            <ShareButton :daily-map-number="dailyMapNumber" :history />
+            <ShareButton :daily-map-number="dailyMapNumber"
+                         :history
+                         :game-mode
+                         :history-storage-key
+                         :daily-map-uuid-storage-key />
         </div>
     </Transition>
 </template>
@@ -18,12 +22,19 @@
 import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
 import ShareButton from '#/components/ShareButton.vue';
-import { useAppStore } from '#/stores/appStore';
+import { createGameStore } from '#/stores/appStore';
+import type { GameMode } from '#/types/api/gameMode';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';
 
-const appStore = useAppStore();
-const { history, dailyMapNumber, playersAverageScore } = storeToRefs(appStore);
+const { gameMode, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+    gameMode: GameMode;
+    historyStorageKey: string;
+    dailyMapUuidStorageKey: string;
+}>();
+
+const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
+const { history, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
 
 const imagesLoaded = ref(false);
 const smirkRef = ref<HTMLImageElement | null>(null);

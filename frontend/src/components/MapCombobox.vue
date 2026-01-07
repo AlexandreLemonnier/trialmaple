@@ -29,17 +29,15 @@
 
 <script setup lang="ts">
 import Icon from '#/components/Icon.vue';
-import { useAppStore } from '#/stores/appStore';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
-const { mapNames } = defineProps<{
+const { mapNames, pickedMaps } = defineProps<{
     mapNames: string[];
+    pickedMaps: string[];
 }>();
 
-const { isMapInHistory } = useAppStore();
-
 const selectedMap = defineModel<string>();
-const remainingMapNames = computed(() => mapNames.filter((mapName) => !isMapInHistory(mapName)));
+const remainingMapNames = computed(() => mapNames.filter((mapName) => !pickedMaps.includes(mapName)));
 
 const dropdownRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
