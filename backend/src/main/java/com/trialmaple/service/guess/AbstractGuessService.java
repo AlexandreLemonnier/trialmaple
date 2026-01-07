@@ -3,7 +3,6 @@ package com.trialmaple.service.guess;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trialmaple.controller.mappers.TmMapDtoMapper;
 import com.trialmaple.exception.InvalidMapNameException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
@@ -16,20 +15,19 @@ import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
+import com.trialmaple.utils.TimeUtils;
 
 public abstract class AbstractGuessService implements IGuessGameModeService {
 
     protected final TmMapRepository tmMapRepository;
     protected final ScoreRepository scoreRepository;
-    protected final TmMapDtoMapper tmMapDtoMapper;
 
     protected TmMap mapOfTheDay;
     protected TmMap guessMap;
 
-    public AbstractGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository, TmMapDtoMapper tmMapDtoMapper) {
+    public AbstractGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
         this.tmMapRepository = tmMapRepository;
         this.scoreRepository = scoreRepository;
-        this.tmMapDtoMapper = tmMapDtoMapper;
     }
 
     protected abstract GuessDto computeGuess(boolean success);
@@ -98,7 +96,7 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
         } else {
             wrDelta = compareNumber(guessMap.getWrTime().toMillis(), mapOfTheDay.getWrTime().toMillis());
         }
-        String formattedWR = tmMapDtoMapper.serviceToDto(guessMap).wrTime();
+        String formattedWR = TimeUtils.formatDuration(guessMap.getWrTime());
         return new HintPairDto<String, DeltaHint>(formattedWR, wrDelta);
     }
 

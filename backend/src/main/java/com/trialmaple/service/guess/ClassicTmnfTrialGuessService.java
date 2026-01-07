@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.trialmaple.controller.mappers.TmMapDtoMapper;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.HintPairDto;
 import com.trialmaple.model.enums.DeltaHint;
@@ -16,8 +15,8 @@ import com.trialmaple.repository.TmMapRepository;
 @Service
 public class ClassicTmnfTrialGuessService extends AbstractGuessService {
 
-    public ClassicTmnfTrialGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository, TmMapDtoMapper tmMapDtoMapper) {
-        super(tmMapRepository, scoreRepository, tmMapDtoMapper);
+    public ClassicTmnfTrialGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
+        super(tmMapRepository, scoreRepository);
     }
 
     @Override
