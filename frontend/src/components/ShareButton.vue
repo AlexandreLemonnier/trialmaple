@@ -13,12 +13,14 @@
 import { createGameStore } from '#/stores/appStore';
 import type { DeltaHint } from '#/types/api/deltaHint';
 import type { GameMode } from '#/types/api/gameMode';
+import type { Guess } from '#/types/api/guess';
 import { copyToClipboard } from '#/utils/copyToClipboard';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-const { gameMode, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+const { gameMode, guessProps, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
     gameMode: GameMode;
+    guessProps: (keyof Guess)[];
     historyStorageKey: string;
     dailyMapUuidStorageKey: string;
 }>();
@@ -60,14 +62,17 @@ async function copyHistoryResult() {
         const guessesCount = Object.keys(history.value).length;
         let result = dailyMapNumber.value ? `I solved TrialMaple #${dailyMapNumber.value} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍` : '';
         for (const guess of Object.values(history.value)) {
-            const difficultyEmoji = hintToEmoji(guess.difficulty.hint);
-            const pointEmoji = hintToEmoji(guess.points.hint);
-            const checkpointEmoji = hintToEmoji(guess.checkpoints.hint);
-            const finisherCountEmoji = hintToEmoji(guess.finisherCount.hint);
-            const wrTimeEmoji = hintToEmoji(guess.wrTime.hint);
-            const authorsEmoji = hintToEmoji(guess.authors.some((hintPair) => hintPair.hint));
-            const releaseYearEmoji = hintToEmoji(guess.releaseYear.hint);
-            result += `\n${difficultyEmoji}${pointEmoji}${checkpointEmoji}${finisherCountEmoji}${wrTimeEmoji}${authorsEmoji}${releaseYearEmoji}`;
+            result += '\n';
+            for (const prop of guessProps) {
+                const guessHint = guess[prop];
+                if (guessHint !== null && typeof guessHint !== 'boolean') {
+                    if (Array.isArray(guessHint)) {
+                        result += hintToEmoji(guessHint.some((hintPair) => hintPair.hint));
+                    } else {
+                        result += hintToEmoji(guessHint.hint);
+                    }
+                }
+            }
         }
         resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';
     } catch (e) {

@@ -22,7 +22,14 @@
         <WinScreen v-if="hasWon"
                    :game-mode
                    :history-storage-key
-                   :daily-map-uuid-storage-key />
+                   :daily-map-uuid-storage-key>
+            <template #shareButton>
+                <ShareButton :game-mode
+                             :guess-props="hintsToDisplay.map((hint) => hint.guessProp)"
+                             :history-storage-key
+                             :daily-map-uuid-storage-key />
+            </template>
+        </WinScreen>
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory"
                        :key="mapName"
@@ -40,6 +47,7 @@ import GuessCard from '#/components/GuessCard.vue';
 import Loader from '#/components/Loader.vue';
 import MapCombobox from '#/components/MapCombobox.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
+import ShareButton from '#/components/ShareButton.vue';
 import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';

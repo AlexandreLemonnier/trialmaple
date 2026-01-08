@@ -9,11 +9,7 @@
             <div class="flex flex-col items-center">
                 <span>You solved TrialMaple #{{ dailyMapNumber }} in <strong>{{ Object.keys(history).length }} guesses</strong>! 🎉 Other players needed an average of <strong>{{ playersAverageScore }} guesses</strong>.</span>
             </div>
-            <ShareButton :daily-map-number="dailyMapNumber"
-                         :history
-                         :game-mode
-                         :history-storage-key
-                         :daily-map-uuid-storage-key />
+            <slot name="shareButton"></slot>
         </div>
     </Transition>
 </template>
@@ -21,7 +17,6 @@
 <script setup lang="ts">
 import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
-import ShareButton from '#/components/ShareButton.vue';
 import { createGameStore } from '#/stores/appStore';
 import type { GameMode } from '#/types/api/gameMode';
 import { storeToRefs } from 'pinia';
