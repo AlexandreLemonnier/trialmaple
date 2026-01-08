@@ -8,7 +8,8 @@
                  'bg-error': hintElement.hint === 'LESS' || hintElement.hint === 'MORE' || hintElement.hint === false,
                  'bg-success': hintElement.hint === 'EQUAL' || hintElement.hint === true
              }">
-            <span>{{ isWrHolder(hintElement.value) ? `${hintElement.value.login} / ${hintElement.value.displayName}` : hintElement.value }}</span>
+            <div v-if="isWrHolder(hintElement.value)" v-html="displayWrHolderHtml(hintElement.value)"></div>
+            <span v-else>{{ hintElement.value }}</span>
             <Icon v-if="hintElement.hint === 'LESS'" name="chevron-down" size="sm" />
             <Icon v-else-if="hintElement.hint === 'MORE'" name="chevron-up" size="sm" />
         </div>
@@ -27,5 +28,11 @@ defineProps<{
 
 function isWrHolder(value: string | number | WrHolder): value is WrHolder {
     return typeof value === 'object' && value !== null && 'login' in value;
+}
+
+function displayWrHolderHtml(value: WrHolder) {
+    const displayNameHtml = MPStyle.Parser.toHTML(value.displayName);
+    const login = value.login;
+    return `${displayNameHtml} <span>(${login})</span>`;
 }
 </script>
