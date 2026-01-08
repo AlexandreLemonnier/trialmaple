@@ -3,7 +3,7 @@
         <ResetCountdown class="self-end" />
         <div class="text-md lg:text-lg pt-4 text-center">
             <span v-if="todayWinnerCount !== undefined">
-                <strong>{{ todayWinnerCount }} players </strong> have solved TrialMaple #{{ dailyMapNumber }}
+                <strong>{{ todayWinnerCount }} players </strong> have solved {{ gameModeDisplayName }} #{{ dailyMapNumber }}
             </span>
         </div>
         <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
@@ -21,10 +21,12 @@
         </div>
         <WinScreen v-if="hasWon"
                    :game-mode
+                   :game-mode-display-name
                    :history-storage-key
                    :daily-map-uuid-storage-key>
             <template #shareButton>
                 <ShareButton :game-mode
+                             :game-mode-display-name
                              :guess-props="hintsToDisplay.map((hint) => hint.guessProp)"
                              :history-storage-key
                              :daily-map-uuid-storage-key />
@@ -62,6 +64,7 @@ import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 
 const { gameMode, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
     gameMode: GameMode;
+    gameModeDisplayName: string;
     historyStorageKey: string;
     dailyMapUuidStorageKey: string;
     hintsToDisplay: { label: string, guessProp: keyof Guess }[];

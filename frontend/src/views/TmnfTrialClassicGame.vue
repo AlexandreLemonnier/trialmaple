@@ -1,5 +1,6 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TMNF_TRIAL"
+                 game-mode-display-name="TMNF Trial Maple"
                  history-storage-key="tmnfTrialClassicHistory"
                  daily-map-uuid-storage-key="tmnfTrialClassicDailyMapUuid"
                  :hints-to-display />
