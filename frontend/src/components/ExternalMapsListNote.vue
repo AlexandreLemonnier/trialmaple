@@ -1,16 +1,17 @@
 <template>
-    <span class="text-sm italic">Based on <a :href="mapLists[gameMode].url" target="_blank"><u>{{ mapLists[gameMode].name }}</u></a> list</span>
+    <span class="text-sm italic">Based on <a :href="mapList.url" target="_blank"><u>{{ mapList.name }}</u></a> list</span>
 </template>
 
 <script setup lang="ts">
 import type { GameMode } from '#/types/api/gameMode';
 import { ExternalMapList } from '#/types/ExternalMapList';
+import { computed } from 'vue';
 
 const { gameMode } = defineProps<{
     gameMode: GameMode;
 }>();
 
-const mapLists: Record<GameMode, {
+const MAP_LISTS: Record<GameMode, {
     url: ExternalMapList,
     name: string
 }> = {
@@ -23,4 +24,7 @@ const mapLists: Record<GameMode, {
         name: 'TMNF Classic RPG'
     }
 };
+
+const mapList = computed(() => MAP_LISTS[gameMode]);
+
 </script>
