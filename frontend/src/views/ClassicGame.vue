@@ -41,10 +41,12 @@
                        @animationFinished="onGuessCardAnimationFinished"
                        :ignore-animations="ignoreCardsAnimations" />
         </div>
+        <ExternalMapsListNote :game-mode />
     </div>
 </template>
 
 <script setup lang="ts">
+import ExternalMapsListNote from '#/components/ExternalMapsListNote.vue';
 import GuessCard from '#/components/GuessCard.vue';
 import Loader from '#/components/Loader.vue';
 import MapCombobox from '#/components/MapCombobox.vue';
