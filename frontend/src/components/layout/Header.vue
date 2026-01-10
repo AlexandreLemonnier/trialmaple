@@ -2,13 +2,13 @@
     <header class="sticky flex justify-between items-center px-2 lg:px-5 w-full h-12 lg:h-16 bg-header-background tracking-wide">
         <div class="flex items-center gap-2 select-none">
             <TrackManiaLogo aria-label="TrialMaple logo" class="w-auto h-[clamp(3rem,4vw,4rem)]" />
-            <div class="flex">
-                <h1 class="text-[clamp(1.5rem,2.5vw,1.75rem)] font-bold">T</h1>
-                <h1 class="text-[clamp(1.25rem,2vw,1.5rem)] font-semibold">rial</h1>
-                <h1 class="text-[clamp(1.5rem,2.5vw,1.75rem)] font-bold">M</h1>
-                <h1 class="text-[clamp(1.25rem,2vw,1.5rem)] font-semibold">ap</h1>
-                <h1 class="text-[clamp(1rem,1.4vw,1.15rem)] font-semibold">le</h1>
-            </div>
+            <h1 class="flex font-bold">
+                <span class="text-[clamp(1.5rem,2.5vw,1.75rem)]">TM</span>
+                <span class="text-[clamp(1rem,1.4vw,1.15rem)] font-semibold self-center">-</span>
+                <span class="text-[clamp(1.5rem,2.5vw,1.75rem)]">M</span>
+                <span class="text-[clamp(1.25rem,2vw,1.5rem)] font-semibold">ap</span>
+                <span class="text-[clamp(1rem,1.4vw,1.15rem)] font-semibold">le</span>
+            </h1>
         </div>
         <div class="flex gap-4 lg:gap-6 items-center">
             <ThemeToggle />
