@@ -11,13 +11,12 @@ import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;
-import com.trialmaple.utils.LoggerConstant;
-import com.trialmaple.utils.LoggerWrapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class DailyMapService {
-    private static final LoggerWrapper LOGGER = new LoggerWrapper(DailyMapService.class);
-
     private final List<IDailyMapPickerStrategy> dailyMapPickerStrategies;
 
     private final DailyMapRepository dailyMapRepository;
@@ -53,7 +52,7 @@ public class DailyMapService {
         if (!exists) {
             List<TmMap> mapPool = dailyMapPickerService.getMapPool();
             if (mapPool.isEmpty()) {
-                LOGGER.error("No maps available.", LoggerConstant.GAME_MODE, gameMode);
+                log.error("No maps available for {} game mode.", gameMode);
                 return;
             }
 
@@ -63,7 +62,7 @@ public class DailyMapService {
 
             dailyMapRepository.save(dailyMap);
 
-            LOGGER.info("New daily map chosen.", LoggerConstant.DAY, today, LoggerConstant.GAME_MODE, gameMode, LoggerConstant.MAP_NAME, randomMap.getName());
+            log.info("New daily map chosen for {} game mode: {}.", gameMode, randomMap.getName());
         }
     }
 }

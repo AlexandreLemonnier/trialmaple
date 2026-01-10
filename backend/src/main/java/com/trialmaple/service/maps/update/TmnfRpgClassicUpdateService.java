@@ -18,13 +18,12 @@ import com.trialmaple.model.enums.MapList;
 import com.trialmaple.model.enums.TmGame;
 import com.trialmaple.repository.TmMapRepository;
 import com.trialmaple.service.maps.TmUserService;
-import com.trialmaple.utils.LoggerConstant;
-import com.trialmaple.utils.LoggerWrapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class TmnfRpgClassicUpdateService implements IMapUpdateStrategy {
-
-    private static final LoggerWrapper LOGGER = new LoggerWrapper(TmnfRpgClassicUpdateService.class);
 
     private final TmRpgService tmRpgService;
     private final TmUserService tmUserService;
@@ -50,7 +49,7 @@ public class TmnfRpgClassicUpdateService implements IMapUpdateStrategy {
 
     @Override
     public void fetchAndUpdate() {
-        LOGGER.info("Updating maps for " + getSupportedList());
+        log.info("Updating maps for {}", getSupportedList());
         try {
             MapsResponseDto response = tmRpgService.getTmnfRpgClassicMaps();
             List<MapDto> maps = response.maps();
@@ -70,18 +69,18 @@ public class TmnfRpgClassicUpdateService implements IMapUpdateStrategy {
                     // Error log to be notified by email
                     // Use this to initialize data on first fetch: toCreate.add(mapDtoMapper.externalToService(map, getSupportedList(), wrHolder));
                     // tmMapRepository.saveAll(toCreate);
-                    LOGGER.error("New map to add.", LoggerConstant.MAP_LIST, getSupportedList(), LoggerConstant.MAP_NAME, map.name());
+                    log.error("New map to add to {} list: {}", getSupportedList(), map.name());
                 } else {
                     boolean updated = mapDtoMapper.update(existingMap, map, wrHolder);
                     if (updated) {
-                        LOGGER.info("Map updated.", LoggerConstant.MAP_NAME, existingMap.getName());
+                        log.info("Map updated: {}", existingMap.getName());
                         toUpdate.add(existingMap);
                     }
                 }
             }
             tmMapRepository.saveAll(toUpdate);
         } catch (Exception e) {
-            LOGGER.error("Error while fetching maps", e);
+            log.error("Error while fetching maps", e);
         }
     }
     

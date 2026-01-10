@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.maps.TmMapService;
-import com.trialmaple.utils.LoggerWrapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class MapController {
-
-    private static final LoggerWrapper LOGGER = new LoggerWrapper(MapController.class);
 
     private final TmMapService service;
 
@@ -33,7 +33,7 @@ public class MapController {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             return service.getAllMapNames(gameModeValue);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Invalid game mode.", e);
+            log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);
         }
     }

@@ -17,14 +17,14 @@ import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapService;
 import com.trialmaple.service.guess.GuessService;
-import com.trialmaple.utils.LoggerWrapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class GuessController {
-
-    private static final LoggerWrapper LOGGER = new LoggerWrapper(GuessController.class);
 
     private final DailyMapService dailyMapService;
     private final GuessService guessService;
@@ -45,7 +45,7 @@ public class GuessController {
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
             return guessService.checkGuess(dailyMap, request);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Invalid game mode.", e);
+            log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);
         }
     }
@@ -60,7 +60,7 @@ public class GuessController {
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
             return dailyMap.getUuid().toString();
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Invalid game mode.", e);
+            log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);
         }
     }

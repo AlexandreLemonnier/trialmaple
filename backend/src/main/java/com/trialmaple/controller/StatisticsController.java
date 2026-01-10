@@ -10,14 +10,14 @@ import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.dto.DailyStatsDto;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.StatisticsService;
-import com.trialmaple.utils.LoggerWrapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class StatisticsController {
-
-    private static final LoggerWrapper LOGGER = new LoggerWrapper(StatisticsController.class);
 
     private StatisticsService statisticsService;
 
@@ -34,7 +34,7 @@ public class StatisticsController {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             return statisticsService.getDailyStats(gameModeValue);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Invalid game mode.", e);
+            log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);
         }
     }
