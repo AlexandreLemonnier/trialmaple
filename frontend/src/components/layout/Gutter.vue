@@ -11,7 +11,6 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const gutterImage = computed(() => {
-    console.log(route.name);
     switch (route.name as Route) {
         case Route.TMNF_TRIAL_CLASSIC_MODE:
             return 'tmnf-trial.jpg';
