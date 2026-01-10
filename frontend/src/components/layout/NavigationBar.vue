@@ -1,7 +1,7 @@
 <template>
     <header ref="navRef"
             class="sticky flex items-center gap-2 lg:gap-6 text-md lg:text-xl font-semibold px-2 lg:px-5 w-full h-8 lg:h-12 bg-navigation-bar-background border-b border-app-border/20">
-        <span class="text-sm uppercase tracking-wide">Game mode</span>
+        <span class="text-sm uppercase tracking-wide shrink-0">Game mode</span>
         <div v-for="tab in tabs"
              :key="tab.title"
              class="relative group">
