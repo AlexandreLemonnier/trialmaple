@@ -1,22 +1,47 @@
 <template>
-    <Modal title="About TrialMaple" v-model="isOpen">
+    <Modal title="About TM-Maple" v-model="isOpen">
         <div class="flex flex-col gap-2 mt-3 text-sm text-neutral-300">
-            <p><strong>TrialMaple is a daily guessing game</strong> based on TMNF's "<a :href="tmrpgtrialWebsiteLink" target="_blank"><u>Hardest Trials List</u></a>".</p>
-            <p>Note that <strong>unfinished maps</strong> are not included.</p>
+            <p><strong>TM-Maple is a daily guessing game</strong> based on different TrackMania map lists.</p>
+            <p>A new map becomes available every day at <strong>00:00 CET/CEST</strong> for each game mode.</p>
             <hr class="opacity-20" />
             <p>Pick a map and click <strong>"Guess"</strong> to get hints: does today's map have more or fewer points? Which authors match? Repeat until you find it!</p>
-            <p>You can either play without any help, relying only on your own knowledge, or use the trial <a :href="tmrpgtrialWebsiteLink" target="_blank"><u>website</u></a> list. I recommand the first option for a better experience, and the second one if you get stuck.</p>
             <hr class="opacity-20" />
-            <p>A new map becomes available every day at <strong>00:00 CET/CEST</strong>.</p>
-            <p>Maps data last updated on <strong>24 December 2025</strong>.</p>
+            <p><strong>About current game mode</strong></p>
+            <template v-if="gameModeInfo">
+                <p v-if="gameModeInfo.excludeUnfinished">Note that <strong>unfinished maps</strong> are not included.</p>
+                <p v-if="gameModeInfo.updatedAt">Maps data last updated on <strong>{{ gameModeInfo.updatedAt }}</strong>.</p>
+                <p v-if="gameModeInfo.autoUpdate">Maps data are automatically updated everyday at midnight.</p>
+            </template>
         </div>
     </Modal>
 </template>
 
 <script setup lang="ts">
 import Modal from '#/components/modal/Modal.vue';
+import { Route } from '#/router/Route';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 const isOpen = defineModel<boolean>();
-const tmrpgtrialWebsiteLink = 'https://tmrpgtrial.com/list/cm7z509dr0f91mph5e47sftz0';
+
+const route = useRoute();
+
+const GAME_MODE_CONFIG: Record<Route, {
+    excludeUnfinished?: boolean;
+    updatedAt?: string;
+    autoUpdate?: boolean;
+}> = {
+    [Route.TMNF_TRIAL_CLASSIC_MODE]: {
+        excludeUnfinished: true,
+        updatedAt: '24 December 2025'
+    },
+    [Route.TMNF_RPG_CLASSIC_MODE]: {
+        autoUpdate: true
+    }
+};
+
+const gameModeInfo = computed(() =>
+    GAME_MODE_CONFIG[route.name as Route]
+);
 
 </script>
