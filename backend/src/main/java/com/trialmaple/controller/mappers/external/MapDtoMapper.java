@@ -12,6 +12,9 @@ import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.entities.TmUser;
 import com.trialmaple.model.enums.MapList;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class MapDtoMapper {
 
@@ -39,20 +42,24 @@ public class MapDtoMapper {
     public boolean update(TmMap originalMap, MapDto updatedMap, TmUser wrHolder) {
         boolean changed = false;
         if (originalMap.getPoints() != updatedMap.stars()) {
+            log.debug("{} {}: {} -> {}", originalMap.getName(), "points", originalMap.getPoints(), updatedMap.stars());
             originalMap.setPoints(updatedMap.stars());
             changed = true;
         }
         if (originalMap.getCheckpointCount() != updatedMap.cps() - 1) {
+            log.debug("{} {}: {} -> {}", originalMap.getName(), "checkpoints", originalMap.getCheckpointCount(), updatedMap.cps());
             originalMap.setCheckpointCount(updatedMap.cps() - 1);
             changed = true;
         }
         if (originalMap.getFinisherCount() != updatedMap.records()) {
+            log.debug("{} {}: {} -> {}", originalMap.getName(), "finishers", originalMap.getFinisherCount(), updatedMap.records());
             originalMap.setFinisherCount(updatedMap.records());
             changed = true;
         }
         boolean hasWrHolderChanged = !originalMap.getWrHolder().getLogin().equals(wrHolder.getLogin());
         boolean hasWrTimeChanged = updatedMap.wrTime() != null && originalMap.getWrTime().toMillis() != updatedMap.wrTime();
         if (hasWrHolderChanged || hasWrTimeChanged) {
+            log.debug("{} {}: {} -> {}", originalMap.getName(), "WR", originalMap.getWrTime(), Duration.ofMillis(updatedMap.wrTime()));
             originalMap.setWrTime(Duration.ofMillis(updatedMap.wrTime()));
             originalMap.setWrYear(Instant.ofEpochSecond(updatedMap.wrDate()).atZone(ZoneOffset.UTC).getYear());
             originalMap.setWrHolder(wrHolder);
