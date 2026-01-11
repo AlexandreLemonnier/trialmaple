@@ -195,4 +195,8 @@ public class TmMap {
     public void setFinisherCount(int finisherCount) {
         this.finisherCount = finisherCount;
     }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
 }

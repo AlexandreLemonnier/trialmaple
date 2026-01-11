@@ -42,27 +42,33 @@ public class MapDtoMapper {
     public boolean update(TmMap originalMap, MapDto updatedMap, TmUser wrHolder) {
         boolean changed = false;
         if (originalMap.getPoints() != updatedMap.stars()) {
-            log.debug("{} {}: {} -> {}", originalMap.getName(), "points", originalMap.getPoints(), updatedMap.stars());
+            log.info("{} {}: {} -> {}", originalMap.getName(), "points", originalMap.getPoints(), updatedMap.stars());
             originalMap.setPoints(updatedMap.stars());
             changed = true;
         }
         if (originalMap.getCheckpointCount() != updatedMap.cps() - 1) {
-            log.debug("{} {}: {} -> {}", originalMap.getName(), "checkpoints", originalMap.getCheckpointCount(), updatedMap.cps());
+            log.info("{} {}: {} -> {}", originalMap.getName(), "checkpoints", originalMap.getCheckpointCount(), updatedMap.cps());
             originalMap.setCheckpointCount(updatedMap.cps() - 1);
             changed = true;
         }
         if (originalMap.getFinisherCount() != updatedMap.records()) {
-            log.debug("{} {}: {} -> {}", originalMap.getName(), "finishers", originalMap.getFinisherCount(), updatedMap.records());
+            log.info("{} {}: {} -> {}", originalMap.getName(), "finishers", originalMap.getFinisherCount(), updatedMap.records());
             originalMap.setFinisherCount(updatedMap.records());
             changed = true;
         }
         boolean hasWrHolderChanged = !originalMap.getWrHolder().getLogin().equals(wrHolder.getLogin());
         boolean hasWrTimeChanged = updatedMap.wrTime() != null && originalMap.getWrTime().toMillis() != updatedMap.wrTime();
         if (hasWrHolderChanged || hasWrTimeChanged) {
-            log.debug("{} {}: {} -> {}", originalMap.getName(), "WR", originalMap.getWrTime(), Duration.ofMillis(updatedMap.wrTime()));
+            log.info("{} {}: {} -> {}", originalMap.getName(), "WR", originalMap.getWrTime(), Duration.ofMillis(updatedMap.wrTime()));
             originalMap.setWrTime(Duration.ofMillis(updatedMap.wrTime()));
             originalMap.setWrYear(Instant.ofEpochSecond(updatedMap.wrDate()).atZone(ZoneOffset.UTC).getYear());
             originalMap.setWrHolder(wrHolder);
+            changed = true;
+        }
+        int updatedReleaseYear = Instant.ofEpochSecond(updatedMap.releaseDate()).atZone(ZoneOffset.UTC).getYear();
+        if (originalMap.getReleaseYear() != updatedReleaseYear) {
+            log.info("{} {}: {} -> {}", originalMap.getName(), "release year", originalMap.getReleaseYear(), updatedReleaseYear);
+            originalMap.setReleaseYear(updatedReleaseYear);
             changed = true;
         }
         return changed;
