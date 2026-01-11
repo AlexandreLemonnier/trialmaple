@@ -7,6 +7,10 @@
             <main class="mx-2 mb-4">
                 <slot></slot>
             </main>
+            <footer class="flex flex-col mt-auto mb-2 text-center text-sm italic">
+                <span>Made by <strong>Arsolight</strong></span>
+                <span>Contact on Discord</span>
+            </footer>
         </div>
         <Gutter />
     </div>
