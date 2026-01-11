@@ -27,6 +27,7 @@
   --color-success: #2dc426;
   --color-error: #e91816;
 
+  --breakpoint-xs: 380px;
   --breakpoint-sm: 500px;
   --breakpoint-md: 800px;
   --breakpoint-lg: 1000px;

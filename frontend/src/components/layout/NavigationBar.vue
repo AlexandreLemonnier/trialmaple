@@ -10,7 +10,7 @@
                  :class="isActive(tab) ? 'underline underline-offset-2 bg-navigation-bar-selection-background text-success' : ''"
                  @click="toggleTab(tab.title)">
                 <img :src="tab.icon" alt="" class="w-4 h-4 lg:w-5 lg:h-5 object-contain" />
-                <span>{{ tab.title }}</span>
+                <span class="hidden xs:block">{{ tab.title }}</span>
             </div>
             <!-- Sub tab (game mode) -->
             <div class="absolute left-0 top-full w-full group-hover:block bg-navigation-bar-background border border-app-border/20 rounded-lg shadow-lg z-50 min-w-max"
