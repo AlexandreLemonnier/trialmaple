@@ -24,10 +24,6 @@ const hintsToDisplay: { label: string, guessProp: keyof Guess }[] = [
         guessProp: 'checkpoints'
     },
     {
-        label: 'Finishers',
-        guessProp: 'finisherCount'
-    },
-    {
         label: 'World Record',
         guessProp: 'wrTime'
     },
