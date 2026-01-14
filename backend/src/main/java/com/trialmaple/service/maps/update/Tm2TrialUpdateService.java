@@ -60,7 +60,6 @@ public class Tm2TrialUpdateService implements IMapUpdateStrategy {
                 .stream()
                 .collect(Collectors.toMap(TmMap::getName, Function.identity()));
 
-            List<TmMap> toCreate = new ArrayList<>();
             List<TmMap> toUpdate = new ArrayList<>();
 
             for (MapDto map : maps) {
@@ -68,10 +67,8 @@ public class Tm2TrialUpdateService implements IMapUpdateStrategy {
 
                 TmMap existingMap = existingMaps.get(map.name());
                 if (existingMap == null) {
-                    log.info("Map added: {}", map.name());
-                    toCreate.add(mapDtoMapper.externalToService(map, getSupportedList(), wrHolder));
                     // Error log to be notified by email
-                    // log.error("New map to add to {} list: {}", getSupportedList(), map.name());
+                    log.error("New map to add to {} list: {}", getSupportedList(), map.name());
                 } else {
                     boolean updated = mapDtoMapper.update(existingMap, map, wrHolder);
                     if (updated) {
@@ -80,7 +77,6 @@ public class Tm2TrialUpdateService implements IMapUpdateStrategy {
                     }
                 }
             }
-            tmMapRepository.saveAll(toCreate);
             tmMapRepository.saveAll(toUpdate);
         } catch (Exception e) {
             log.error("Error while fetching maps", e);
