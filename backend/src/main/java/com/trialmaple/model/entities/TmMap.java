@@ -77,20 +77,6 @@ public class TmMap {
     protected TmMap() {
     }
 
-    // TODO Remove if useless?
-    public TmMap(String name, List<String> authors, int checkpointCount, DifficultyCategory difficulty,
-            int points, Duration wrTime, int finisherCount, boolean active, int releaseYear) {
-        this.name = name;
-        this.authors = authors;
-        this.checkpointCount = checkpointCount;
-        this.difficulty = difficulty;
-        this.points = points;
-        this.wrTime = wrTime;
-        this.finisherCount = finisherCount;
-        this.active = active;
-        this.releaseYear = releaseYear;
-    }
-
     public TmMap(
         String name, 
         List<String> authors, 

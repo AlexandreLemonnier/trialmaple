@@ -26,7 +26,7 @@ public class DailyMap {
     private Long id;
 
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
-    private UUID uuid = UUID.randomUUID();
+    private final UUID uuid = UUID.randomUUID();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tm_map_id", nullable = false)

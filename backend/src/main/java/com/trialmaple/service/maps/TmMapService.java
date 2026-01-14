@@ -26,7 +26,7 @@ public class TmMapService {
     public List<String> getAllMapNames(GameMode gameMode) {
         IDailyMapPickerStrategy dailyMapService = provider.getDailyMapService(gameMode);
         List<TmMap> maps = dailyMapService.getMapPool();
-        return maps.stream().map(tmMap -> tmMap.getName()).toList();
+        return maps.stream().map(TmMap::getName).toList();
     }
 
     /**

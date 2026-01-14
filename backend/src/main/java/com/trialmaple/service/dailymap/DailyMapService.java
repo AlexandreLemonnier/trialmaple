@@ -21,6 +21,8 @@ public class DailyMapService {
 
     private final DailyMapRepository dailyMapRepository;
 
+    private final Random random = new Random();
+
     public DailyMapService(List<IDailyMapPickerStrategy> dailyMapPickerStrategies, DailyMapRepository dailyMapRepository) {
         this.dailyMapPickerStrategies = dailyMapPickerStrategies;
         this.dailyMapRepository = dailyMapRepository;
@@ -39,7 +41,7 @@ public class DailyMapService {
      * Pick a new daily map for all game modes if absent
      */
     public void pickAllDailyMapsIfMissing() {
-        dailyMapPickerStrategies.forEach(dailyMapPickerService -> pickDailyMapIfMissing(dailyMapPickerService));
+        dailyMapPickerStrategies.forEach(this::pickDailyMapIfMissing);
     }
 
     /**
@@ -56,7 +58,7 @@ public class DailyMapService {
                 return;
             }
 
-            TmMap randomMap = mapPool.get(new Random().nextInt(mapPool.size()));
+            TmMap randomMap = mapPool.get(this.random.nextInt(mapPool.size()));
 
             DailyMap dailyMap = new DailyMap(randomMap, today, gameMode);
 

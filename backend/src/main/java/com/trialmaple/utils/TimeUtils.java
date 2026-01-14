@@ -4,6 +4,10 @@ import java.time.Duration;
 
 public class TimeUtils {
 
+    private TimeUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Format a duration to a human readable format
      * H:mm:ss.SS

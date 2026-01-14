@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins = "*")
 public class StatisticsController {
 
-    private StatisticsService statisticsService;
+    private final StatisticsService statisticsService;
 
     public StatisticsController(StatisticsService statisticsService) {
         this.statisticsService = statisticsService;

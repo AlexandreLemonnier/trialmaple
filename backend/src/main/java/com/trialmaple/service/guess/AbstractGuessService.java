@@ -25,7 +25,7 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
     protected TmMap mapOfTheDay;
     protected TmMap guessMap;
 
-    public AbstractGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
+    protected AbstractGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
         this.tmMapRepository = tmMapRepository;
         this.scoreRepository = scoreRepository;
     }
@@ -67,27 +67,26 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
 
     protected HintPairDto<DifficultyCategory, Boolean> computeMapDifficultyHint() {
         boolean isCorrectDifficulty = mapOfTheDay.getDifficulty().equals(guessMap.getDifficulty());
-        return new HintPairDto<DifficultyCategory, Boolean>(
-                guessMap.getDifficulty(), isCorrectDifficulty);
+        return new HintPairDto<>(guessMap.getDifficulty(), isCorrectDifficulty);
     }
 
     protected HintPairDto<Integer, DeltaHint> computeMapPointsHint() {
         DeltaHint pointsDelta = compareNumber(guessMap.getPoints(), mapOfTheDay.getPoints());
-        return new HintPairDto<Integer, DeltaHint>(guessMap.getPoints(), pointsDelta);
+        return new HintPairDto<>(guessMap.getPoints(), pointsDelta);
     }
 
     protected HintPairDto<Integer, DeltaHint> computeMapCheckpointsHint() {
         DeltaHint checkpointsDelta = compareNumber(guessMap.getCheckpointCount(), mapOfTheDay.getCheckpointCount());
-        return new HintPairDto<Integer, DeltaHint>(guessMap.getCheckpointCount(), checkpointsDelta);
+        return new HintPairDto<>(guessMap.getCheckpointCount(), checkpointsDelta);
     }
 
     protected HintPairDto<Integer, DeltaHint> computeMapFinisherCountHint() {
         DeltaHint finisherCountDelta = compareNumber(guessMap.getFinisherCount(), mapOfTheDay.getFinisherCount());
-        return new HintPairDto<Integer, DeltaHint>(guessMap.getFinisherCount(), finisherCountDelta);
+        return new HintPairDto<>(guessMap.getFinisherCount(), finisherCountDelta);
     }
 
     protected HintPairDto<String, DeltaHint> computeMapWrTimeHint() {
-        DeltaHint wrDelta = null;
+        DeltaHint wrDelta;
         if (guessMap.getWrTime() == null && mapOfTheDay.getWrTime() == null) {
             wrDelta = DeltaHint.EQUAL;
         } else if (guessMap.getWrTime() == null || mapOfTheDay.getWrTime() == null) {
@@ -97,31 +96,31 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
             wrDelta = compareNumber(guessMap.getWrTime().toMillis(), mapOfTheDay.getWrTime().toMillis());
         }
         String formattedWR = TimeUtils.formatDuration(guessMap.getWrTime());
-        return new HintPairDto<String, DeltaHint>(formattedWR, wrDelta);
+        return new HintPairDto<>(formattedWR, wrDelta);
     }
 
     protected HintPairDto<WrHolderDto, Boolean> computeMapWrHolderHint() {
         boolean isCorrectWrHolder = mapOfTheDay.getWrHolder().getLogin().equals(guessMap.getWrHolder().getLogin());
         WrHolderDto wrHolder = new WrHolderDto(guessMap.getWrHolder().getLogin(), guessMap.getWrHolder().getDisplayName());
-        return new HintPairDto<WrHolderDto, Boolean>(wrHolder, isCorrectWrHolder);
+        return new HintPairDto<>(wrHolder, isCorrectWrHolder);
     }
 
     protected HintPairDto<Integer, DeltaHint> computeMapWrYearHint() {
         DeltaHint wrYearDelta = compareNumber(guessMap.getWrYear(), mapOfTheDay.getWrYear());
-        return new HintPairDto<Integer, DeltaHint>(guessMap.getWrYear(), wrYearDelta);
-    };
+        return new HintPairDto<>(guessMap.getWrYear(), wrYearDelta);
+    }
 
     protected List<HintPairDto<String, Boolean>> computeMapAuthorsHint() {
         List<HintPairDto<String, Boolean>> authors = new ArrayList<>();
-        guessMap.getAuthors().forEach((author) -> {
+        guessMap.getAuthors().forEach(author -> {
             boolean isCorrect = mapOfTheDay.getAuthors().stream().anyMatch(a -> a.equalsIgnoreCase(author));
-            authors.add(new HintPairDto<String, Boolean>(author, isCorrect));
+            authors.add(new HintPairDto<>(author, isCorrect));
         });
         return authors;
     }
 
     protected HintPairDto<Integer, DeltaHint> computeMapReleaseYearHint() {
         DeltaHint releaseYearDelta = compareNumber(guessMap.getReleaseYear(), mapOfTheDay.getReleaseYear());
-        return new HintPairDto<Integer, DeltaHint>(guessMap.getReleaseYear(), releaseYearDelta);
+        return new HintPairDto<>(guessMap.getReleaseYear(), releaseYearDelta);
     }
 }

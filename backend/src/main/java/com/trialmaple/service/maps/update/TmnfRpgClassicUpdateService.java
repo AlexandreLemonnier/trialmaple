@@ -52,7 +52,7 @@ public class TmnfRpgClassicUpdateService implements IMapUpdateStrategy {
         log.info("Updating maps for {}", getSupportedList());
         try {
             MapsResponseDto response = tmRpgService.getTmnfRpgClassicMaps();
-            List<MapDto> maps = response.maps().stream().map(map -> map.fixCpsCount()).toList();
+            List<MapDto> maps = response.maps().stream().map(MapDto::fixCpsCount).toList();
 
             List<String> externalMapNames = maps.stream().map(MapDto::name).toList();
             Map<String, TmMap> existingMaps = tmMapRepository.findAllByNameInAndMapList(externalMapNames, getSupportedList())
