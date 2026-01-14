@@ -61,7 +61,7 @@ function hintToEmoji(hint: boolean | DeltaHint) {
 async function copyHistoryResult() {
     try {
         const guessesCount = Object.keys(history.value).length;
-        let result = dailyMapNumber.value ? `I solved ${gameModeDisplayName} #${dailyMapNumber.value} in ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍` : '';
+        let result = dailyMapNumber.value ? `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍` : '';
         for (const guess of Object.values(history.value)) {
             result += '\n';
             for (const prop of guessProps) {
