@@ -47,9 +47,9 @@ public class MapDtoMapper {
             originalMap.setPoints(updatedMap.stars());
             changed = true;
         }
-        if (originalMap.getCheckpointCount() != updatedMap.cps() - 1) {
+        if (originalMap.getCheckpointCount() != updatedMap.cps()) {
             log.info(logFormat, originalMap.getName(), "checkpoints", originalMap.getCheckpointCount(), updatedMap.cps());
-            originalMap.setCheckpointCount(updatedMap.cps() - 1);
+            originalMap.setCheckpointCount(updatedMap.cps());
             changed = true;
         }
         if (originalMap.getFinisherCount() != updatedMap.records()) {

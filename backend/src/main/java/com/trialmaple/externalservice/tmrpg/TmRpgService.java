@@ -18,4 +18,11 @@ public interface TmRpgService {
     @GetExchange("/game/tmnf/maps?secret=arso&mode=classic")
     MapsResponseDto getTmnfRpgClassicMaps();
 
+    /**
+     * Get "TM2 Trial" maps from tmrpg.com
+     * @return
+     */
+    @GetExchange("/game/tm2-trial/maps?secret=arso")
+    MapsResponseDto getTm2TrialMaps();
+
 }
