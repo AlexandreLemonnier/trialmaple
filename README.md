@@ -1,6 +1,6 @@
 # TM-Maple
 
-**TM-Maple is a daily guessing game** based on some Trackmania map lists such as [**TMNF Hardest Trials List**](https://tmrpgtrial.com/list/cm7z509dr0f91mph5e47sftz0) or [**TMNF Classic RPG List**]([https://tmrpgtrial.com/list/cm7z509dr0f91mph5e47sftz0](https://tmrpg.com/maps?game=tmnf&mode=classic)).
+**TM-Maple is a daily guessing game** based on some Trackmania map lists such as [**TMNF Hardest Trials List**](https://tmrpgtrial.com/list/cm7z509dr0f91mph5e47sftz0) or [**TMNF Classic RPG List**](https://tmrpg.com/maps?game=tmnf&mode=classic).
 Each day at 00:00 CET/CEST, a new trial map is selected for each game mode.  
 Your goal: guess which map it is using progressively more precise hints!
 
