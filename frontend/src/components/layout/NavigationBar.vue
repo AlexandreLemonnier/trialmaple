@@ -70,6 +70,10 @@ const tabs: Tab[] = [
         title: 'TM2',
         icon: tm2Icon,
         subTabs: [
+            {
+                title: 'Trial',
+                routeName: Route.TM2_TRIAL_CLASSIC_MODE
+            }
         ]
     },
     {

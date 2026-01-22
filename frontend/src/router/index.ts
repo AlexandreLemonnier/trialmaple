@@ -1,4 +1,5 @@
 import { Route } from '#/router/Route';
+import Tm2TrialClassicGame from '#/views/Tm2TrialClassicGame.vue';
 import TmnfRpgClassicGame from '#/views/TmnfRpgClassicGame.vue';
 import TmnfTrialClassicGame from '#/views/TmnfTrialClassicGame.vue';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -21,6 +22,14 @@ const router = createRouter({
             component: TmnfRpgClassicGame,
             meta: {
                 titleKey: 'TMNF RPG'
+            }
+        },
+        {
+            name: Route.TM2_TRIAL_CLASSIC_MODE,
+            path: Route.TM2_TRIAL_CLASSIC_MODE,
+            component: Tm2TrialClassicGame,
+            meta: {
+                titleKey: 'TM2 Trial'
             }
         },
         {

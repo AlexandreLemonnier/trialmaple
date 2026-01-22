@@ -22,6 +22,10 @@ const MAP_LISTS: Record<GameMode, {
     CLASSIC_TMNF_RPG: {
         url: ExternalMapList.TMNF_RPG_LIST,
         name: 'TMNF Classic RPG'
+    },
+    CLASSIC_TM2_TRIAL: {
+        url: ExternalMapList.TM2_TRIAL,
+        name: 'TM2 Trial'
     }
 };
 
