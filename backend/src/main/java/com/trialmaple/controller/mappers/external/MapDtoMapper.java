@@ -21,6 +21,7 @@ public class MapDtoMapper {
     public TmMap externalToService(MapDto map, MapList mapList, TmUser wrHolder) {
         return new TmMap(
             map.name(),
+            map.displayName(),
             Arrays.asList(map.author()),
             map.cps(),
             map.stars(),
@@ -70,6 +71,11 @@ public class MapDtoMapper {
         if (originalMap.getReleaseYear() != updatedReleaseYear) {
             log.info(logFormat, originalMap.getName(), "release year", originalMap.getReleaseYear(), updatedReleaseYear);
             originalMap.setReleaseYear(updatedReleaseYear);
+            changed = true;
+        }
+        if (originalMap.getDisplayName() == null || !originalMap.getDisplayName().equals(updatedMap.displayName())) {
+            log.info(logFormat, originalMap.getName(), "display name", originalMap.getDisplayName(), updatedMap.displayName());
+            originalMap.setDisplayName(updatedMap.displayName());
             changed = true;
         }
         return changed;

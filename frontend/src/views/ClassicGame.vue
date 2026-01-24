@@ -35,7 +35,7 @@
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
             <GuessCard v-for="([mapName, guess]) in reversedHistory"
                        :key="mapName"
-                       :map-name
+                       :map-name="getMapDisplayName(mapName)"
                        :guess
                        :hints-to-display
                        @animationFinished="onGuessCardAnimationFinished"
@@ -60,6 +60,7 @@ import { createGameStore } from '#/stores/appStore';
 import type { DailyStats } from '#/types/api/dailyStats';
 import type { GameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
+import type { TmMap } from '#/types/api/tmMap';
 import confetti from 'canvas-confetti';
 import { storeToRefs } from 'pinia';
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
@@ -76,7 +77,8 @@ const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStora
 const { isMapInHistory } = gameStore;
 const { history, dailyMapUuid, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
 
-const mapNames = ref<string[]>([]);
+const maps = ref<TmMap[]>([]);
+const mapNames = computed(() => maps.value.map((map) => map.name));
 const todayWinnerCount = ref<number>();
 
 const reversedHistory = computed(() =>
@@ -135,6 +137,10 @@ const guessApi = useGuessApi();
 const mapsApi = useMapsApi();
 const dailyStatsApi = useDailyStatsApi();
 
+function getMapDisplayName(mapName: string) {
+    return maps.value.find((map) => map.name === mapName)?.displayName ?? mapName;
+}
+
 function historyContainsSuccess() {
     return Object.values(history.value).some((guess) => guess.success);
 }
@@ -150,9 +156,9 @@ async function handleGuess() {
         const attemptCount = Object.keys(history.value).length + 1;
         const guess: Guess = await guessApi.postGuess(gameMode, selectedMap.value, attemptCount, dailyMapUuid.value);
         if (guess.isValidDay) {
-            history.value[selectedMap.value!] = guess;
+            history.value[selectedMap.value] = guess;
         } else {
-            window.location.reload();
+            globalThis.location.reload();
         }
     } catch (e) {
         console.error('Error while guessing map', e);
@@ -172,8 +178,8 @@ watch(history, () => {
 /** FETCH DATA */
 async function fetchMaps() {
     try {
-        mapNames.value = await mapsApi.getMapNames(gameMode);
-        mapNames.value.sort((a, b) => a.localeCompare(b));
+        maps.value = await mapsApi.getMapNames(gameMode);
+        maps.value.sort((a, b) => a.name.localeCompare(b.name));
     } catch (e) {
         console.error('Error while fetching maps', e);
     }
@@ -211,10 +217,6 @@ onMounted(async () => {
 });
 
 onBeforeMount(async () => {
-    // Name of the old history, to be removed later
-    localStorage.removeItem('history');
-    localStorage.removeItem('dailyMapUuid');
-
     const serverDailyMapUuid = await fetchDailyMapUuid();
     if (serverDailyMapUuid && serverDailyMapUuid !== dailyMapUuid.value) {
         // Delete history from local storage if daily map has changed

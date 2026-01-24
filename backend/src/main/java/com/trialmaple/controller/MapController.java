@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trialmaple.exception.InvalidGameModeException;
+import com.trialmaple.model.dto.TmMapDto;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.maps.TmMapService;
 
@@ -25,13 +26,13 @@ public class MapController {
     }
 
     /**
-     * List maps name for a specific game mode
+     * List maps for a specific game mode
      */
     @GetMapping("/maps/list")
-    public List<String> getAllMapNames(@RequestParam String gameMode) {
+    public List<TmMapDto> getAllMapNames(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
-            return service.getAllMapNames(gameModeValue);
+            return service.getAllMaps(gameModeValue);
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

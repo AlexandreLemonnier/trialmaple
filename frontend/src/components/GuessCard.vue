@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-full gap-4 bg-card-background rounded-xl p-4 shadow-lg">
-        <span class="text-2xl font-semibold">{{ mapName }}</span>
+        <span class="text-2xl font-semibold drop-shadow-lg" v-html="displayMapNameHtml()"></span>
 
         <TransitionGroup name="fade" tag="div" class="flex flex-wrap gap-4">
             <GuessElement v-for="item in displayedElements"
@@ -33,6 +33,10 @@ const displayedElements = ref<{
     label: string,
     hints: HintPair<string | number | WrHolder, boolean | DeltaHint>[]
 }[]>([]);
+
+function displayMapNameHtml() {
+    return MPStyle.Parser.toHTML(mapName);
+}
 
 // Add elements progressively to make a sequential animation
 onMounted(async () => {

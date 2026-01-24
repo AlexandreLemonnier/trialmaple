@@ -38,6 +38,9 @@ public class TmMap {
     @Column(name = "name", columnDefinition = "VARCHAR(255)")
     private String name;
 
+    @Column(name = "display_name", columnDefinition = "VARCHAR(255)")
+    private String displayName;
+
     @ElementCollection
     @CollectionTable(name = "tm_map_authors", joinColumns = @JoinColumn(name = "tm_map_id"))
     @Column(name = "author", columnDefinition = "VARCHAR(255)")
@@ -78,7 +81,8 @@ public class TmMap {
     }
 
     public TmMap(
-        String name, 
+        String name,
+        String displayName,
         List<String> authors, 
         int checkpointCount, 
         int points, 
@@ -90,6 +94,7 @@ public class TmMap {
         MapList mapList
     ) {
         this.name = name;
+        this.displayName = displayName;
         this.authors = authors;
         this.checkpointCount = checkpointCount;
         this.points = points;
@@ -110,6 +115,10 @@ public class TmMap {
 
     public String getName() {
         return name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public List<String> getAuthors() {
@@ -157,6 +166,10 @@ public class TmMap {
     }
 
     /** SETTERS */
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
     public void setCheckpointCount(int checkpointCount) {
         this.checkpointCount = checkpointCount;

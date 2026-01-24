@@ -1,16 +1,17 @@
 package com.trialmaple.model.dto.external.tmrpg;
 
 public record MapDto(
-    Long id, 
-    String uid, 
-    String name, 
-    int stars, 
-    Long releaseDate, 
-    String author, 
-    int records, 
-    Long wrTime, 
-    Long wrDate, 
-    int cps, 
+    Long id,
+    String uid,
+    String name,
+    String displayName,
+    int stars,
+    Long releaseDate,
+    String author,
+    int records,
+    Long wrTime,
+    Long wrDate,
+    int cps,
     WrHolderDto wrHolder) {
         /**
          * Get a MapDto with fixed CP count.
@@ -18,7 +19,7 @@ public record MapDto(
          * @return
         */
         public MapDto fixCpsCount() {
-            return new MapDto(id, uid, name, stars, releaseDate, author, records, wrTime, wrDate, cps - 1, wrHolder);
+            return new MapDto(id, uid, name, displayName, stars, releaseDate, author, records, wrTime, wrDate, cps - 1, wrHolder);
         }
 }
 

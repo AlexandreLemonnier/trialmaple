@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.trialmaple.model.dto.TmMapDto;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapServiceProvider;
@@ -21,12 +22,12 @@ public class TmMapService {
     }
 
     /**
-     * Get the map pool names for the given game mode
+     * Get the maps for the given game mode
      */
-    public List<String> getAllMapNames(GameMode gameMode) {
+    public List<TmMapDto> getAllMaps(GameMode gameMode) {
         IDailyMapPickerStrategy dailyMapService = provider.getDailyMapService(gameMode);
         List<TmMap> maps = dailyMapService.getMapPool();
-        return maps.stream().map(TmMap::getName).toList();
+        return maps.stream().map(tmMap -> new TmMapDto(tmMap.getName(), tmMap.getDisplayName())).toList();
     }
 
     /**
