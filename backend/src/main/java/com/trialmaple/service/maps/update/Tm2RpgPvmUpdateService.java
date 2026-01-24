@@ -60,7 +60,6 @@ public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
                 .collect(Collectors.toMap(TmMap::getTmxId, Function.identity()));
 
             List<TmMap> toUpdate = new ArrayList<>();
-            List<TmMap> toCreate = new ArrayList<>();
 
             for (MapDto map : maps) {
                 TmUser wrHolder = tmUserService.getOrCreate(map.wrHolder().id(), map.wrHolder().name(), getSupportedGame());
@@ -68,8 +67,7 @@ public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
                 TmMap existingMap = existingMaps.get(map.id());
                 if (existingMap == null) {
                     // Error log to be notified by email
-                    // log.error("New map to add to {} list: {}", getSupportedList(), map.name());
-                    toCreate.add(mapDtoMapper.externalToService(map, getSupportedList(), wrHolder));
+                    log.error("New map to add to {} list: {}", getSupportedList(), map.name());
                 } else {
                     boolean updated = mapDtoMapper.update(existingMap, map, wrHolder);
                     if (updated) {
@@ -78,7 +76,6 @@ public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
                     }
                 }
             }
-            tmMapRepository.saveAll(toCreate);
             tmMapRepository.saveAll(toUpdate);
         } catch (Exception e) {
             log.error("Error while fetching maps", e);
