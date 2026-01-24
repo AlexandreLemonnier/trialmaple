@@ -25,4 +25,11 @@ public interface TmRpgService {
     @GetExchange("/game/tm2-trial/maps?secret=arso")
     MapsResponseDto getTm2TrialMaps();
 
+    /**
+     * Get "TM2 RPG PVM" maps from tmrpg.com
+     * @return
+     */
+    @GetExchange("/game/tm2/maps?secret=arso&mode=pvm")
+    MapsResponseDto getTm2RpgPvmMaps();
+
 }
