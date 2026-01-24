@@ -2,14 +2,12 @@ package com.trialmaple.service.dailymap;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.model.enums.MapList;
 import com.trialmaple.repository.TmMapRepository;
 
-@Service
+// @Service
 public class ClassicTm2TrialPickerService implements IDailyMapPickerStrategy {
     private final TmMapRepository tmMapRepository;
 
