@@ -70,6 +70,11 @@ public class MapDtoMapper {
             changed = true;
         }
         // TODO Remove after first execution
+        if (originalMap.getDisplayName() == null || !originalMap.getDisplayName().equals(updatedMap.displayName())) {
+            log.info(logFormat, originalMap.getName(), "display name", originalMap.getDisplayName(), updatedMap.displayName());
+            originalMap.setDisplayName(updatedMap.displayName());
+            changed = true;
+        }
         if (!Objects.equals(originalMap.getTmxId(), updatedMap.id())) {
             log.info(logFormat, originalMap.getName(), "TMX ID", originalMap.getTmxId(), updatedMap.id());
             originalMap.setTmxId(updatedMap.id());
