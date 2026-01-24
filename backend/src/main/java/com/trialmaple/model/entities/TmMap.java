@@ -180,6 +180,10 @@ public class TmMap {
         this.tmxId = tmxId;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }

@@ -55,17 +55,17 @@ public class Tm2TrialUpdateService implements IMapUpdateStrategy {
             MapsResponseDto response = tmRpgService.getTm2TrialMaps();
             List<MapDto> maps = response.maps().stream().map(MapDto::fixCpsCount).toList();
 
-            List<String> externalMapNames = maps.stream().map(MapDto::name).toList();
-            Map<String, TmMap> existingMaps = tmMapRepository.findAllByNameInAndMapList(externalMapNames, getSupportedList())
+            List<Long> externalMapIds = maps.stream().map(MapDto::id).toList();
+            Map<Long, TmMap> existingMaps = tmMapRepository.findAllByTmxIdInAndMapList(externalMapIds, getSupportedList())
                 .stream()
-                .collect(Collectors.toMap(TmMap::getName, Function.identity()));
+                .collect(Collectors.toMap(TmMap::getTmxId, Function.identity()));
 
             List<TmMap> toUpdate = new ArrayList<>();
 
             for (MapDto map : maps) {
                 TmUser wrHolder = tmUserService.getOrCreate(map.wrHolder().id(), map.wrHolder().name(), getSupportedGame());
 
-                TmMap existingMap = existingMaps.get(map.name());
+                TmMap existingMap = existingMaps.get(map.id());
                 if (existingMap == null) {
                     // Error log to be notified by email
                     log.error("New map to add to {} list: {}", getSupportedList(), map.name());

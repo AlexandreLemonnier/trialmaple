@@ -69,15 +69,14 @@ public class MapDtoMapper {
             originalMap.setWrHolder(wrHolder);
             changed = true;
         }
-        // TODO Remove after first execution
-        if (originalMap.getDisplayName() == null || !originalMap.getDisplayName().equals(updatedMap.displayName())) {
-            log.info(logFormat, originalMap.getName(), "display name", originalMap.getDisplayName(), updatedMap.displayName());
-            originalMap.setDisplayName(updatedMap.displayName());
+        if (!Objects.equals(originalMap.getName(), updatedMap.name().trim())) {
+            log.info(logFormat, originalMap.getName(), "name", originalMap.getName(), updatedMap.name().trim());
+            originalMap.setName(updatedMap.name().trim());
             changed = true;
         }
-        if (!Objects.equals(originalMap.getTmxId(), updatedMap.id())) {
-            log.info(logFormat, originalMap.getName(), "TMX ID", originalMap.getTmxId(), updatedMap.id());
-            originalMap.setTmxId(updatedMap.id());
+        if (!Objects.equals(originalMap.getDisplayName(), updatedMap.displayName().trim())) {
+            log.info(logFormat, originalMap.getName(), "displayName", originalMap.getDisplayName(), updatedMap.displayName().trim());
+            originalMap.setDisplayName(updatedMap.displayName().trim());
             changed = true;
         }
         return changed;
