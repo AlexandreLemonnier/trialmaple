@@ -32,6 +32,9 @@ public class TmMap {
     @Column(name = "id", columnDefinition = "BIGINT")
     private Long id;
 
+    @Column(name = "tmx_id", columnDefinition = "BIGINT")
+    private Long tmxId;
+
     @Column(name = "active", columnDefinition = "BOOLEAN")
     private boolean active;
 
@@ -81,6 +84,7 @@ public class TmMap {
     }
 
     public TmMap(
+        Long tmxId,
         String name,
         String displayName,
         List<String> authors, 
@@ -93,6 +97,7 @@ public class TmMap {
         int releaseYear,
         MapList mapList
     ) {
+        this.tmxId = tmxId;
         this.name = name;
         this.displayName = displayName;
         this.authors = authors;
@@ -111,6 +116,10 @@ public class TmMap {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getTmxId() {
+        return tmxId;
     }
 
     public String getName() {
@@ -166,6 +175,10 @@ public class TmMap {
     }
 
     /** SETTERS */
+
+    public void setTmxId(Long tmxId) {
+        this.tmxId = tmxId;
+    }
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;

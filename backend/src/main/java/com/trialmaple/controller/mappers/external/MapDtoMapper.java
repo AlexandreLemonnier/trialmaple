@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ public class MapDtoMapper {
 
     public TmMap externalToService(MapDto map, MapList mapList, TmUser wrHolder) {
         return new TmMap(
+            map.id(),
             map.name(),
             map.displayName(),
             Arrays.asList(map.author()),
@@ -67,15 +69,10 @@ public class MapDtoMapper {
             originalMap.setWrHolder(wrHolder);
             changed = true;
         }
-        int updatedReleaseYear = Instant.ofEpochSecond(updatedMap.releaseDate()).atZone(ZoneOffset.UTC).getYear();
-        if (originalMap.getReleaseYear() != updatedReleaseYear) {
-            log.info(logFormat, originalMap.getName(), "release year", originalMap.getReleaseYear(), updatedReleaseYear);
-            originalMap.setReleaseYear(updatedReleaseYear);
-            changed = true;
-        }
-        if (originalMap.getDisplayName() == null || !originalMap.getDisplayName().equals(updatedMap.displayName())) {
-            log.info(logFormat, originalMap.getName(), "display name", originalMap.getDisplayName(), updatedMap.displayName());
-            originalMap.setDisplayName(updatedMap.displayName());
+        // TODO Remove after first execution
+        if (!Objects.equals(originalMap.getTmxId(), updatedMap.id())) {
+            log.info(logFormat, originalMap.getName(), "TMX ID", originalMap.getTmxId(), updatedMap.id());
+            originalMap.setTmxId(updatedMap.id());
             changed = true;
         }
         return changed;
