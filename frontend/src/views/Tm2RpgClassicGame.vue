@@ -1,8 +1,8 @@
 <template>
-    <ClassicGame game-mode="CLASSIC_TM2_TRIAL"
-                 game-mode-display-name="TM2 Trial Maple"
-                 history-storage-key="tm2TrialClassicHistory"
-                 daily-map-uuid-storage-key="tm2TrialClassicDailyMapUuid"
+    <ClassicGame game-mode="CLASSIC_TM2_RPG"
+                 game-mode-display-name="TM2 RPG Maple"
+                 history-storage-key="tm2RpgClassicHistory"
+                 daily-map-uuid-storage-key="tm2RpgClassicDailyMapUuid"
                  :hints-to-display />
 </template>
 

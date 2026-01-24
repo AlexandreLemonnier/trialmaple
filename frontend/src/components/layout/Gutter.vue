@@ -18,6 +18,8 @@ const gutterImage = computed(() => {
             return 'tmnf-rpg.png';
         case Route.TM2_TRIAL_CLASSIC_MODE:
             return 'tm2-trial.png';
+        case Route.TM2_RPG_CLASSIC_MODE:
+            return 'tm2-rpg.png';
         default:
             return 'tmnf-trial.jpg';
     }

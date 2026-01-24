@@ -40,6 +40,9 @@ const GAME_MODE_CONFIG: Record<Route, {
     },
     [Route.TM2_TRIAL_CLASSIC_MODE]: {
         autoUpdate: true
+    },
+    [Route.TM2_RPG_CLASSIC_MODE]: {
+        autoUpdate: true
     }
 };
 

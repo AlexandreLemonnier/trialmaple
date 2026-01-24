@@ -26,6 +26,10 @@ const MAP_LISTS: Record<GameMode, {
     CLASSIC_TM2_TRIAL: {
         url: ExternalMapList.TM2_TRIAL,
         name: 'TM2 Trial'
+    },
+    CLASSIC_TM2_RPG: {
+        url: ExternalMapList.TM2_RPG_PVM,
+        name: 'TM2 RPG PVM'
     }
 };
 

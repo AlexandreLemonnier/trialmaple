@@ -1,4 +1,5 @@
 import { Route } from '#/router/Route';
+import Tm2RpgClassicGame from '#/views/Tm2RpgClassicGame.vue';
 import Tm2TrialClassicGame from '#/views/Tm2TrialClassicGame.vue';
 import TmnfRpgClassicGame from '#/views/TmnfRpgClassicGame.vue';
 import TmnfTrialClassicGame from '#/views/TmnfTrialClassicGame.vue';
@@ -31,6 +32,15 @@ const router = createRouter({
             meta: {
                 titleKey: 'TM2 Trial'
             }
+        },
+        {
+            name: Route.TM2_RPG_CLASSIC_MODE,
+            path: Route.TM2_RPG_CLASSIC_MODE,
+            component: Tm2RpgClassicGame,
+            meta: {
+                titleKey: 'TM2 RPG'
+            }
+
         },
         {
             path: '/:pathMatch(.*)', redirect: '/'

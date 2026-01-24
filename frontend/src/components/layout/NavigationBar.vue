@@ -73,6 +73,10 @@ const tabs: Tab[] = [
             {
                 title: 'Trial',
                 routeName: Route.TM2_TRIAL_CLASSIC_MODE
+            },
+            {
+                title: 'RPG',
+                routeName: Route.TM2_RPG_CLASSIC_MODE
             }
         ]
     },
