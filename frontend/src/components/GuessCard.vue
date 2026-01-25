@@ -35,7 +35,14 @@ const displayedElements = ref<{
 }[]>([]);
 
 function displayMapNameHtml() {
-    return MPStyle.Parser.toHTML(mapName);
+    const cleanMapName = mapName
+        // zero-width characters
+        .replaceAll(/[\u200B-\u200D\uFEFF]/g, '')
+        .normalize('NFD')
+        // all combining marks except VS16
+        .replaceAll(/(?!\uFE0F)\p{M}/gu, '')
+        .normalize('NFC');
+    return MPStyle.Parser.toHTML(cleanMapName);
 }
 
 // Add elements progressively to make a sequential animation
