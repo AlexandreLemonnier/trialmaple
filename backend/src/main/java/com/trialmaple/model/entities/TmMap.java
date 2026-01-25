@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.trialmaple.jpa.converter.DurationMillisConverter;
 import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.model.enums.MapList;
@@ -80,6 +82,10 @@ public class TmMap {
     @Column(name = "map_list", columnDefinition = "VARCHAR(50)")
     private MapList mapList;
 
+    @Column(name = "classic", columnDefinition = "BOOLEAN")
+    @ColumnDefault("false")
+    private boolean classic;
+
     protected TmMap() {
     }
 
@@ -95,7 +101,8 @@ public class TmMap {
         TmUser wrHolder, 
         int finisherCount, 
         int releaseYear,
-        MapList mapList
+        MapList mapList,
+        boolean classic
     ) {
         this.tmxId = tmxId;
         this.name = name;
@@ -109,6 +116,7 @@ public class TmMap {
         this.finisherCount = finisherCount;
         this.releaseYear = releaseYear;
         this.mapList = mapList;
+        this.classic = classic;
         this.active = true;
     }
 
@@ -174,6 +182,10 @@ public class TmMap {
         return mapList;
     }
 
+    public boolean isClassic() {
+        return classic;
+    }
+
     /** SETTERS */
 
     public void setTmxId(Long tmxId) {
@@ -214,5 +226,13 @@ public class TmMap {
 
     public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setClassic(boolean classic) {
+        this.classic = classic;
     }
 }

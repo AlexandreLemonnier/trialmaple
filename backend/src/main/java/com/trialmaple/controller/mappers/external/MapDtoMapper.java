@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class MapDtoMapper {
 
-    public TmMap externalToService(MapDto map, MapList mapList, TmUser wrHolder) {
+    public TmMap externalToService(MapDto map, MapList mapList, TmUser wrHolder, boolean classic) {
         return new TmMap(
             map.id(),
             map.name(),
@@ -31,7 +31,8 @@ public class MapDtoMapper {
             wrHolder,
             map.records(),
             Instant.ofEpochSecond(map.releaseDate()).atZone(ZoneOffset.UTC).getYear(),
-            mapList);
+            mapList,
+            classic);
     }
 
     /**
@@ -39,9 +40,10 @@ public class MapDtoMapper {
      * @param originalMap the map to update
      * @param updatedMap the new map
      * @param wrHolder the wrHolder entity
+     * @param classic belongs to classic list or not
      * @return true if updated, false if there is nothing to update
      */
-    public boolean update(TmMap originalMap, MapDto updatedMap, TmUser wrHolder) {
+    public boolean update(TmMap originalMap, MapDto updatedMap, TmUser wrHolder, boolean classic) {
         boolean changed = false;
         String logFormat = "{} {}: {} -> {}";
         if (originalMap.getPoints() != updatedMap.stars()) {
@@ -68,6 +70,15 @@ public class MapDtoMapper {
             originalMap.setWrHolder(wrHolder);
             changed = true;
         }
+        if (originalMap.isClassic() != classic) {
+            log.info(logFormat, originalMap.getName(), "classic", originalMap.isClassic(), classic);
+            originalMap.setClassic(classic);
+            changed = true;
+        }
         return changed;
+    }
+
+    public boolean update(TmMap originalMap, MapDto updatedMap, TmUser wrHolder) {
+        return update(originalMap, updatedMap, wrHolder, false);
     }
 }

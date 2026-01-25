@@ -53,6 +53,9 @@ public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
         try {
             MapsResponseDto response = tmRpgService.getTm2RpgPvmMaps();
             List<MapDto> maps = response.maps().stream().map(MapDto::fixMap).toList();
+            
+            MapsResponseDto classicResponse = tmRpgService.getTm2RpgClassicMaps();
+            List<Long> classicMapIds = classicResponse.maps().stream().map(MapDto::id).toList();
 
             List<Long> externalMapIds = maps.stream().map(MapDto::id).toList();
             Map<Long, TmMap> existingMaps = tmMapRepository.findAllByTmxIdInAndMapList(externalMapIds, getSupportedList())
@@ -63,13 +66,14 @@ public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
 
             for (MapDto map : maps) {
                 TmUser wrHolder = tmUserService.getOrCreate(map.wrHolder().id(), map.wrHolder().name(), getSupportedGame());
+                boolean classic = classicMapIds.contains(map.id());
 
                 TmMap existingMap = existingMaps.get(map.id());
                 if (existingMap == null) {
                     // Error log to be notified by email
                     log.error("New map to add to {} list: {}", getSupportedList(), map.name());
                 } else {
-                    boolean updated = mapDtoMapper.update(existingMap, map, wrHolder);
+                    boolean updated = mapDtoMapper.update(existingMap, map, wrHolder, classic);
                     if (updated) {
                         log.info("Map updated: {}", existingMap.getName());
                         toUpdate.add(existingMap);

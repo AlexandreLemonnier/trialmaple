@@ -123,4 +123,9 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
         DeltaHint releaseYearDelta = compareNumber(guessMap.getReleaseYear(), mapOfTheDay.getReleaseYear());
         return new HintPairDto<>(guessMap.getReleaseYear(), releaseYearDelta);
     }
+
+    protected HintPairDto<Boolean, Boolean> computeMapClassicHint() {
+        Boolean isCorrect = guessMap.isClassic() == mapOfTheDay.isClassic();
+        return new HintPairDto<>(guessMap.isClassic(), isCorrect);
+    }
 }

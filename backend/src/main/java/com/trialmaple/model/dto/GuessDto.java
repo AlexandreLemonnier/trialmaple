@@ -17,10 +17,11 @@ public record GuessDto(
         HintPairDto<WrHolderDto, Boolean> wrHolder,
         HintPairDto<Integer, DeltaHint> wrYear,
         List<HintPairDto<String, Boolean>> authors,
-        HintPairDto<Integer, DeltaHint> releaseYear
+        HintPairDto<Integer, DeltaHint> releaseYear,
+        HintPairDto<Boolean, Boolean> classic
 ) {
         public GuessDto(boolean isValidDay) {
-                this(isValidDay, false, null, null, null, null, null, Collections.emptyList(), null);
+                this(isValidDay, false, null, null, null, null, null, Collections.emptyList(), null, null);
         }
 
         public GuessDto(
@@ -32,8 +33,9 @@ public record GuessDto(
                 HintPairDto<Integer, DeltaHint> finisherCount,
                 HintPairDto<String, DeltaHint> wrTime,
                 List<HintPairDto<String, Boolean>> authors,
-                HintPairDto<Integer, DeltaHint> releaseYear
+                HintPairDto<Integer, DeltaHint> releaseYear,
+                HintPairDto<Boolean, Boolean> classic
         ) {
-                this(isValidDay, success, difficulty, points, checkpoints, finisherCount, wrTime, null, null, authors, releaseYear);
+                this(isValidDay, success, difficulty, points, checkpoints, finisherCount, wrTime, null, null, authors, releaseYear, classic);
         }
 }

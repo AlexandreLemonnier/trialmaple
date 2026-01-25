@@ -22,4 +22,5 @@ export type Guess = {
     wrYear: HintPair<number, DeltaHint> | null;
     authors: HintPair<string, boolean>[];
     releaseYear: HintPair<number, DeltaHint> | null;
+    classic: HintPair<boolean, boolean> | null;
 };

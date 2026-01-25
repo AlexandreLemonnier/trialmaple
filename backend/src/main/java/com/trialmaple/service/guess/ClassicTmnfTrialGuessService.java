@@ -33,6 +33,6 @@ public class ClassicTmnfTrialGuessService extends AbstractGuessService {
         HintPairDto<String, DeltaHint> wrTime = computeMapWrTimeHint();
         List<HintPairDto<String, Boolean>> authors = computeMapAuthorsHint();
         HintPairDto<Integer, DeltaHint> releaseYear = computeMapReleaseYearHint();
-        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, wrTime, authors, releaseYear);
+        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, wrTime, authors, releaseYear, null);
     }    
 }

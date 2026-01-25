@@ -34,6 +34,7 @@ public class ClassicTm2RpgGuessService extends AbstractGuessService {
         HintPairDto<Integer, DeltaHint> wrYear = computeMapWrYearHint();
         List<HintPairDto<String, Boolean>> authors = computeMapAuthorsHint();
         HintPairDto<Integer, DeltaHint> releaseYear = computeMapReleaseYearHint();
-        return new GuessDto(true, success, null, points, checkpoints, finisherCount, wrTime, wrHolder, wrYear, authors, releaseYear);
+        HintPairDto<Boolean, Boolean> classic = computeMapClassicHint();
+        return new GuessDto(true, success, null, points, checkpoints, finisherCount, wrTime, wrHolder, wrYear, authors, releaseYear, classic);
     } 
 }

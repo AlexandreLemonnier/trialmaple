@@ -32,4 +32,11 @@ public interface TmRpgService {
     @GetExchange("/game/tm2/maps?secret=arso&mode=pvm")
     MapsResponseDto getTm2RpgPvmMaps();
 
+    /**
+     * Get "TM2 RPG Classic" maps from tmrpg.com
+     * @return
+     */
+    @GetExchange("/game/tm2/maps?secret=arso&mode=classic")
+    MapsResponseDto getTm2RpgClassicMaps();
+
 }

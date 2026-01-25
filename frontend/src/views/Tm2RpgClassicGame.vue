@@ -12,6 +12,10 @@ import ClassicGame from '#/views/ClassicGame.vue';
 
 const hintsToDisplay: { label: string, guessProp: keyof Guess }[] = [
     {
+        label: 'Classic',
+        guessProp: 'classic'
+    },
+    {
         label: 'Stars',
         guessProp: 'points'
     },

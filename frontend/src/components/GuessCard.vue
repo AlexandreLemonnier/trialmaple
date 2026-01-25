@@ -31,7 +31,7 @@ const delay = 300;
 
 const displayedElements = ref<{
     label: string,
-    hints: HintPair<string | number | WrHolder, boolean | DeltaHint>[]
+    hints: HintPair<string | number | boolean | WrHolder, boolean | DeltaHint>[]
 }[]>([]);
 
 function displayMapNameHtml() {
