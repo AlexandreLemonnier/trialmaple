@@ -14,12 +14,12 @@ public record MapDto(
     int cps,
     WrHolderDto wrHolder) {
         /**
-         * Get a MapDto with fixed CP count.
+         * Get a MapDto with fixed CP count and without blank spaces on names/displayName.
          * tmrpg returns 1 extra CP because finish block is counted as one checkpoint
          * @return
         */
-        public MapDto fixCpsCount() {
-            return new MapDto(id, uid, name, displayName, stars, releaseDate, author, records, wrTime, wrDate, cps - 1, wrHolder);
+        public MapDto fixMap() {
+            return new MapDto(id, uid, name.trim(), displayName.trim(), stars, releaseDate, author, records, wrTime, wrDate, cps - 1, wrHolder);
         }
 }
 

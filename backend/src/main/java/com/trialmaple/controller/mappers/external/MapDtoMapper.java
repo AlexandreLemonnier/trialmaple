@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.Arrays;
-import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
@@ -67,16 +66,6 @@ public class MapDtoMapper {
             originalMap.setWrTime(Duration.ofMillis(updatedMap.wrTime()));
             originalMap.setWrYear(Instant.ofEpochSecond(updatedMap.wrDate()).atZone(ZoneOffset.UTC).getYear());
             originalMap.setWrHolder(wrHolder);
-            changed = true;
-        }
-        if (!Objects.equals(originalMap.getName(), updatedMap.name().trim())) {
-            log.info(logFormat, originalMap.getName(), "name", originalMap.getName(), updatedMap.name().trim());
-            originalMap.setName(updatedMap.name().trim());
-            changed = true;
-        }
-        if (!Objects.equals(originalMap.getDisplayName(), updatedMap.displayName().trim())) {
-            log.info(logFormat, originalMap.getName(), "displayName", originalMap.getDisplayName(), updatedMap.displayName().trim());
-            originalMap.setDisplayName(updatedMap.displayName().trim());
             changed = true;
         }
         return changed;

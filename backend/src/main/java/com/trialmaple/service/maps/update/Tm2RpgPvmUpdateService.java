@@ -52,7 +52,7 @@ public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
         log.info("Updating maps for {}", getSupportedList());
         try {
             MapsResponseDto response = tmRpgService.getTm2RpgPvmMaps();
-            List<MapDto> maps = response.maps().stream().map(MapDto::fixCpsCount).toList();
+            List<MapDto> maps = response.maps().stream().map(MapDto::fixMap).toList();
 
             List<Long> externalMapIds = maps.stream().map(MapDto::id).toList();
             Map<Long, TmMap> existingMaps = tmMapRepository.findAllByTmxIdInAndMapList(externalMapIds, getSupportedList())
