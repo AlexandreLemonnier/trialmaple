@@ -6,7 +6,7 @@ import { defineConfig, loadEnv } from 'vite';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import svgLoader from 'vite-svg-loader';
 
-export default ({ mode }: { mode: string }) => {
+const vite = ({ mode }: { mode: string }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
     const {
@@ -28,7 +28,7 @@ export default ({ mode }: { mode: string }) => {
             }
         },
         server: {
-            port: parseInt(VITE_APP_PORT as string),
+            port: Number.parseInt(VITE_APP_PORT as string),
             open: true,
             strictPort: true,
             proxy: {
@@ -41,3 +41,5 @@ export default ({ mode }: { mode: string }) => {
         }
     });
 };
+
+export default vite;

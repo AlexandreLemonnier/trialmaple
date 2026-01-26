@@ -28,7 +28,7 @@ export function useApi(routePrefix: string) {
         async request<T>(url: string, options: Omit<RequestInit, 'body'> & { body?: Record<string, unknown> | unknown[]; query?: Record<string, string | number | boolean | string[] | undefined> } = {}): Promise<T> {
             try {
                 const { query, body, ...baseOptions } = options;
-                const path = new URL(window.location.origin + env.PROXIED_API_URL_PREFIX + routePrefix + url);
+                const path = new URL(globalThis.location.origin + env.PROXIED_API_URL_PREFIX + routePrefix + url);
 
                 if (query) {
                     path.search = objectToURLSearchParams(query).toString();

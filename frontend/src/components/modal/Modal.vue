@@ -33,11 +33,11 @@ function onKeydown(e: KeyboardEvent) {
 }
 
 onMounted(() => {
-    window.addEventListener('keydown', onKeydown);
+    globalThis.addEventListener('keydown', onKeydown);
 });
 
 onUnmounted(() => {
-    window.removeEventListener('keydown', onKeydown);
+    globalThis.removeEventListener('keydown', onKeydown);
 });
 
 </script>

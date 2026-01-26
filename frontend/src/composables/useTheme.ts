@@ -21,7 +21,7 @@ export function useTheme() {
     onMounted(() => {
         if (!theme.value) {
             // Detect system theme
-            theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            theme.value = globalThis.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
         applyTheme();
     });

@@ -33,13 +33,13 @@ type CopyStatus = 'NONE' | 'SUCCESS' | 'ERROR';
 
 const resultCopyStatus = ref<CopyStatus>('NONE');
 
-const resultCopyMessage: Record<CopyStatus, String> = {
+const resultCopyMessage: Record<CopyStatus, string> = {
     SUCCESS: 'Copied!',
     ERROR: 'Error',
     NONE: 'Share result'
 };
 
-const resultCopyClass: Record<CopyStatus, String> = {
+const resultCopyClass: Record<CopyStatus, string> = {
     SUCCESS: 'text-confirmation-text italic',
     ERROR: 'text-error italic',
     NONE: ''
@@ -58,22 +58,34 @@ function hintToEmoji(hint: boolean | DeltaHint) {
     return deltaHintEmoji[hint];
 }
 
+function getTitle(guessesCount: number) {
+    if (dailyMapNumber.value) {
+        return `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍`;
+    }
+    return '';
+}
+
+function formatGuess(guess: Guess) {
+    let result = '';
+    for (const prop of guessProps) {
+        const guessHint = guess[prop];
+        if (guessHint !== null && typeof guessHint !== 'boolean') {
+            if (Array.isArray(guessHint)) {
+                result += hintToEmoji(guessHint.some((hintPair) => hintPair.hint));
+            } else {
+                result += hintToEmoji(guessHint.hint);
+            }
+        }
+    }
+    return result;
+}
+
 async function copyHistoryResult() {
     try {
         const guessesCount = Object.keys(history.value).length;
-        let result = dailyMapNumber.value ? `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍` : '';
+        let result = getTitle(guessesCount);
         for (const guess of Object.values(history.value)) {
-            result += '\n';
-            for (const prop of guessProps) {
-                const guessHint = guess[prop];
-                if (guessHint !== null && typeof guessHint !== 'boolean') {
-                    if (Array.isArray(guessHint)) {
-                        result += hintToEmoji(guessHint.some((hintPair) => hintPair.hint));
-                    } else {
-                        result += hintToEmoji(guessHint.hint);
-                    }
-                }
-            }
+            result += `\n${formatGuess(guess)}`;
         }
         resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';
     } catch (e) {
