@@ -1,6 +1,6 @@
 <template>
     <header ref="navRef"
-            class="sticky flex items-center gap-2 lg:gap-6 text-md lg:text-xl font-semibold px-2 lg:px-5 w-full h-8 lg:h-12 bg-navigation-bar-background border-b border-app-border/20">
+            class="sticky z-50 flex items-center gap-2 lg:gap-6 text-md lg:text-xl font-semibold px-2 lg:px-5 w-full h-8 lg:h-12 bg-navigation-bar-background border-b border-app-border/20">
         <span class="text-sm uppercase tracking-wide shrink-0">Game mode</span>
         <div v-for="tab in tabs"
              :key="tab.title"
@@ -13,15 +13,20 @@
                 <span class="hidden xs:block">{{ tab.title }}</span>
             </div>
             <!-- Sub tab (game mode) -->
-            <div class="absolute left-0 top-full w-full group-hover:block bg-navigation-bar-background border border-app-border/20 rounded-lg shadow-lg z-50 min-w-max"
+            <div class="absolute left-0 top-full w-full group-hover:block bg-navigation-bar-background border border-app-border/20 rounded-lg shadow-lg min-w-max"
                  :class="openTab === tab.title ? 'block' : 'hidden'">
                 <div v-if="!tab.subTabs.length" class="px-2 lg:px-4 py-1.5 lg:py-2 text-sm italic text-center whitespace-nowrap">Coming soon</div>
                 <div v-for="subTab in tab.subTabs"
                      :key="subTab.title"
-                     class="px-2 lg:px-4 py-1.5 lg:py-2 cursor-pointer text-center whitespace-nowrap hover:bg-navigation-bar-selection-background transition"
-                     :class="route.name === subTab.routeName ? 'text-success font-semibold' : ''"
-                     @click="navigateToRoute(subTab.routeName)">
-                    {{ subTab.title }}
+                     class="px-2 lg:px-4 py-1.5 lg:py-2 cursor-pointer text-center whitespace-nowrap hover:bg-navigation-bar-selection-background transition">
+                    <div class="flex gap-2 md:gap-3 items-center">
+                        <span :class="route.name === subTab.routeName ? 'text-success font-semibold' : ''"
+                              @click="navigateToRoute(subTab.routeName)">{{ subTab.title }}</span>
+                        <Icon :name="favoritePage === subTab.routeName ? 'star-fill' : 'star'"
+                              size="sm"
+                              class="text-fav-star"
+                              @click.stop="favoritePage = subTab.routeName" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,12 +37,16 @@
 import tm2Icon from '#/assets/tm2.png';
 import tm2020Icon from '#/assets/tm2020.jpg';
 import tmnfIcon from '#/assets/tmnf.jpg';
+import Icon from '#/components/Icon.vue';
 import { Route } from '#/router/Route';
+import { usePreferencesStore } from '#/stores/preferencesStore';
+import { storeToRefs } from 'pinia';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
+const { favoritePage } = storeToRefs(usePreferencesStore());
 
 const openTab = ref<string | null>(null);
 const navRef = ref<HTMLElement | null>(null);

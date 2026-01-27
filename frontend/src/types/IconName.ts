@@ -4,4 +4,6 @@ export type IconName =
     | 'chevron-down'
     | 'chevron-up'
     | 'moon'
-    | 'sun';
+    | 'sun'
+    | 'star'
+    | 'star-fill';
