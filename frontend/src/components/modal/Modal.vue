@@ -16,14 +16,16 @@
 import Icon from '#/components/Icon.vue';
 import { onMounted, onUnmounted } from 'vue';
 
-defineProps<{
+const { onClose } = defineProps<{
     title: string;
+    onClose?(): void;
 }>();
 
 const isModalOpen = defineModel<boolean>();
 
 function close() {
     isModalOpen.value = false;
+    onClose?.();
 }
 
 function onKeydown(e: KeyboardEvent) {

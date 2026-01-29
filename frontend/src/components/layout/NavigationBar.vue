@@ -1,4 +1,5 @@
 <template>
+    <FavoritePageExplanationModal v-model="isFavoritePageModalOpen" />
     <header ref="navRef"
             class="sticky z-50 flex items-center gap-2 lg:gap-6 text-md lg:text-xl font-semibold px-2 lg:px-5 w-full h-8 lg:h-12 bg-navigation-bar-background border-b border-app-border/20">
         <span class="text-sm uppercase tracking-wide shrink-0">Game mode</span>
@@ -25,7 +26,7 @@
                         <Icon :name="favoritePage === subTab.routeName ? 'star-fill' : 'star'"
                               size="sm"
                               class="text-fav-star"
-                              @click.stop="favoritePage = subTab.routeName" />
+                              @click.stop="setFavoritePage(subTab.routeName)" />
                     </div>
                 </div>
             </div>
@@ -39,14 +40,21 @@ import tm2020Icon from '#/assets/tm2020.jpg';
 import tmnfIcon from '#/assets/tmnf.jpg';
 import Icon from '#/components/Icon.vue';
 import { Route } from '#/router/Route';
+import { useModalStore } from '#/stores/modalStore';
 import { usePreferencesStore } from '#/stores/preferencesStore';
 import { storeToRefs } from 'pinia';
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import FavoritePageExplanationModal from '../modal/FavoritePageExplanationModal.vue';
 
 const router = useRouter();
 const route = useRoute();
+
 const { favoritePage } = storeToRefs(usePreferencesStore());
+const { modals } = storeToRefs(useModalStore());
+
+const hasFavoritePageModalBeenSeen = computed(() => modals.value.FAVORITE_PAGE);
+const isFavoritePageModalOpen = ref(false);
 
 const openTab = ref<string | null>(null);
 const navRef = ref<HTMLElement | null>(null);
@@ -115,6 +123,13 @@ async function navigateToRoute(routeName: Route) {
 function handleClickOutside(event: MouseEvent) {
     if (openTab.value && !navRef.value?.contains(event.target as Node)) {
         openTab.value = null;
+    }
+}
+
+function setFavoritePage(pageName: Route) {
+    favoritePage.value = pageName;
+    if (!hasFavoritePageModalBeenSeen.value) {
+        isFavoritePageModalOpen.value = true;
     }
 }
 
