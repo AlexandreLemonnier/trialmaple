@@ -44,6 +44,6 @@ onMounted(() => {
 });
 
 function sizeToClass(size: Size) {
-    return size === 'sm' ? 'size-5' : 'size-8';
+    return size === 'sm' ? 'size-4 lg:size-5' : 'size-6 lg:size-8';
 }
 </script>

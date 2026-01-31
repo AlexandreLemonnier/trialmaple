@@ -7,7 +7,7 @@
              :key="tab.title"
              class="relative group">
             <!-- TM game tab -->
-            <div class="flex items-center gap-1.5 lg:gap-2 px-2 lg:px-3 py-0.5 lg:py-1.5 rounded-lg font-medium cursor-pointer hover:bg-navigation-bar-selection-background transition"
+            <div class="flex items-center gap-1.5 lg:gap-2 px-2 lg:px-3 py-0.5 lg:py-1.5 rounded-lg font-medium cursor-pointer hover:bg-navigation-bar-selection-background"
                  :class="isActive(tab) ? 'underline underline-offset-2 bg-navigation-bar-selection-background text-success' : ''"
                  @click="toggleTab(tab.title)">
                 <img :src="tab.icon" alt="" class="w-4 h-4 lg:w-5 lg:h-5 object-contain" />

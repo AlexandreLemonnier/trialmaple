@@ -6,4 +6,5 @@ export type IconName =
     | 'moon'
     | 'sun'
     | 'star'
-    | 'star-fill';
+    | 'star-fill'
+    | 'discord';
