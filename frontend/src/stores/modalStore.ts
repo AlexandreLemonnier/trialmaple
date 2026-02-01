@@ -3,7 +3,8 @@ import { useStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 
 const defaultModals: Record<OneShotModalName, boolean> = {
-    FAVORITE_PAGE: false
+    FAVORITE_PAGE: false,
+    NEW_DISCORD: false
 };
 
 export const useModalStore = defineStore('modal', () => {
