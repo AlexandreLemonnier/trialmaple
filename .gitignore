@@ -4,7 +4,6 @@
 /backend/.project
 /backend/.settings/
 /backend/.idea/
-/backend/.mvn/
 /backend/HELP.md
 /backend/*.iml
 /backend/hs_err_pid*
