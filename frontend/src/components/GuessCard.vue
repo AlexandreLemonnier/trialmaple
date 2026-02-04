@@ -6,6 +6,7 @@
             <GuessElement v-for="item in displayedElements"
                           :key="item.label"
                           :label="item.label"
+                          :tooltip="item.tooltip"
                           :hints="item.hints" />
         </TransitionGroup>
     </div>
@@ -15,13 +16,14 @@
 import GuessElement from '#/components/GuessElement.vue';
 import type { DeltaHint } from '#/types/api/deltaHint';
 import type { Guess, HintPair, WrHolder } from '#/types/api/guess';
+import type { HintInformation } from '#/types/HintInformation';
 import { toArray } from '#/utils/toArray';
 import { onMounted, ref } from 'vue';
 
 const { mapName, guess, hintsToDisplay, ignoreAnimations } = defineProps<{
     mapName: string;
     guess: Guess;
-    hintsToDisplay: { label: string, guessProp: keyof Guess }[];
+    hintsToDisplay: HintInformation[];
     ignoreAnimations?: boolean;
 }>();
 
@@ -31,6 +33,7 @@ const delay = 300;
 
 const displayedElements = ref<{
     label: string,
+    tooltip?: string,
     hints: HintPair<string | number | boolean | WrHolder, boolean | DeltaHint>[]
 }[]>([]);
 
@@ -53,6 +56,7 @@ onMounted(async () => {
             displayedElements.value.push(
                 {
                     label: hint.label,
+                    tooltip: hint.tooltip,
                     hints: toArray(guessElement)
                 }
             );

@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-wrap items-center gap-2 font-semibold text-sm md:text-base">
-        <span>{{ label }}</span>
+        <span :title="tooltip" :class="tooltip ? 'cursor-help' : ''">{{ label }}</span>
         <div v-for="hintElement in hints"
              :key="getKey(hintElement.value)"
              class="flex items-center gap-2 rounded-full border border-app-border px-2.5 py-0.5"
@@ -26,6 +26,7 @@ type HintValue = string | number | boolean | WrHolder;
 
 defineProps<{
     label: string;
+    tooltip?: string;
     hints: HintPair<HintValue, boolean | DeltaHint>[];
 }>();
 

@@ -7,12 +7,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Guess } from '#/types/api/guess';
+import type { HintInformation } from '#/types/HintInformation';
 import ClassicGame from '#/views/ClassicGame.vue';
 
-const hintsToDisplay: { label: string, guessProp: keyof Guess }[] = [
+const hintsToDisplay: HintInformation[] = [
     {
         label: 'Stars',
+        tooltip: 'From 1 to 7, how competitive is the map',
         guessProp: 'points'
     },
     {

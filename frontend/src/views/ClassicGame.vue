@@ -61,6 +61,7 @@ import type { DailyStats } from '#/types/api/dailyStats';
 import type { GameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
 import type { TmMap } from '#/types/api/tmMap';
+import type { HintInformation } from '#/types/HintInformation';
 import confetti from 'canvas-confetti';
 import { storeToRefs } from 'pinia';
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
@@ -70,7 +71,7 @@ const { gameMode, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
     gameModeDisplayName: string;
     historyStorageKey: string;
     dailyMapUuidStorageKey: string;
-    hintsToDisplay: { label: string, guessProp: keyof Guess }[];
+    hintsToDisplay: HintInformation[];
 }>();
 
 const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
