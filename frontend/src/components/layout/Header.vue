@@ -24,9 +24,9 @@
 import TrackManiaLogo from '#/assets/TrackMania-Logo.svg?component';
 import Icon from '#/components/Icon.vue';
 import ThemeToggle from '#/components/layout/ThemeToggle.vue';
+import DiscordModal from '#/components/modal/DiscordModal.vue';
 import InfoModal from '#/components/modal/InfoModal.vue';
 import { ref } from 'vue';
-import DiscordModal from '../modal/DiscordModal.vue';
 
 const isInfoModalOpen = ref(false);
 const isDiscordModalOpen = ref(false);

@@ -14,26 +14,11 @@
         </div>
         <Gutter />
     </div>
-    <DiscordModal v-model="isDiscordModalOpen" />
 </template>
 
 <script setup lang="ts">
 import Gutter from '#/components/layout/Gutter.vue';
 import Header from '#/components/layout/Header.vue';
 import NavigationBar from '#/components/layout/NavigationBar.vue';
-import { useModalStore } from '#/stores/modalStore';
-import { storeToRefs } from 'pinia';
-import { computed, onMounted, ref } from 'vue';
-import DiscordModal from '../modal/DiscordModal.vue';
 
-const { modals } = storeToRefs(useModalStore());
-
-const hasDiscordModalBeenSeen = computed(() => modals.value.NEW_DISCORD);
-const isDiscordModalOpen = ref(false);
-
-onMounted(() => {
-    if (!hasDiscordModalBeenSeen.value) {
-        isDiscordModalOpen.value = true;
-    }
-});
 </script>
