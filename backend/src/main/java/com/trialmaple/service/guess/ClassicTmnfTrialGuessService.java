@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.HintPairDto;
+import com.trialmaple.model.dto.WrHolderDto;
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.model.enums.GameMode;
@@ -31,8 +32,9 @@ public class ClassicTmnfTrialGuessService extends AbstractGuessService {
         HintPairDto<Integer, DeltaHint> checkpoints = computeMapCheckpointsHint();
         HintPairDto<Integer, DeltaHint> finisherCount = computeMapFinisherCountHint();
         HintPairDto<String, DeltaHint> wrTime = computeMapWrTimeHint();
+        HintPairDto<WrHolderDto, Boolean> wrHolder = computeMapWrHolderHint();
         List<HintPairDto<String, Boolean>> authors = computeMapAuthorsHint();
         HintPairDto<Integer, DeltaHint> releaseYear = computeMapReleaseYearHint();
-        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, wrTime, authors, releaseYear, null);
+        return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, wrTime, wrHolder, null, authors, releaseYear, null);
     }    
 }

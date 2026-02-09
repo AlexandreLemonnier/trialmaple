@@ -24,8 +24,12 @@ const hintsToDisplay: HintInformation[] = [
         guessProp: 'checkpoints'
     },
     {
-        label: 'World Record',
+        label: 'WR Time',
         guessProp: 'wrTime'
+    },
+    {
+        label: 'WR Holder',
+        guessProp: 'wrHolder'
     },
     {
         label: 'Author(s)',

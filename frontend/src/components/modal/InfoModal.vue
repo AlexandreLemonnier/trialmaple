@@ -33,7 +33,7 @@ const GAME_MODE_CONFIG: Record<Route, {
 }> = {
     [Route.TMNF_TRIAL_CLASSIC_MODE]: {
         excludeUnfinished: true,
-        updatedAt: '19 January 2026'
+        updatedAt: '9 February 2026'
     },
     [Route.TMNF_RPG_CLASSIC_MODE]: {
         autoUpdate: true

@@ -37,7 +37,7 @@ function isWrHolder(value: HintValue): value is WrHolder {
 function displayWrHolderHtml(value: WrHolder) {
     const displayNameHtml = MPStyle.Parser.toHTML(value.displayName);
     const login = value.login;
-    return `${displayNameHtml} <span>(${login})</span>`;
+    return displayNameHtml + (login === value.displayName ? '' : `<span>(${login})</span>`);
 }
 
 function displayBoolean(value: boolean) {
