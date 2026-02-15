@@ -39,4 +39,11 @@ public interface TmRpgService {
     @GetExchange("/game/tm2/maps?secret=arso&mode=classic")
     MapsResponseDto getTm2RpgClassicMaps();
 
+    /**
+     * Get "TM2020 Trial Classic" maps from tmrpg.com
+     * @return
+     */
+    @GetExchange("/game/tm20-trial/maps?secret=arso")
+    MapsResponseDto getTm2020TrialClassicMaps();
+
 }
