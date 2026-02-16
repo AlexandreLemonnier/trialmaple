@@ -39,7 +39,8 @@
                        :guess
                        :hints-to-display
                        @animationFinished="onGuessCardAnimationFinished"
-                       :ignore-animations="ignoreCardsAnimations" />
+                       :ignore-animations="ignoreCardsAnimations"
+                       :show-login />
         </div>
         <ExternalMapsListNote :game-mode />
     </div>
@@ -66,12 +67,13 @@ import confetti from 'canvas-confetti';
 import { storeToRefs } from 'pinia';
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 
-const { gameMode, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+const { gameMode, historyStorageKey, dailyMapUuidStorageKey, showLogin = true } = defineProps<{
     gameMode: GameMode;
     gameModeDisplayName: string;
     historyStorageKey: string;
     dailyMapUuidStorageKey: string;
     hintsToDisplay: HintInformation[];
+    showLogin?: boolean;
 }>();
 
 const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();

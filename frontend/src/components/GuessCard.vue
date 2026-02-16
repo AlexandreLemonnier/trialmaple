@@ -7,7 +7,8 @@
                           :key="item.label"
                           :label="item.label"
                           :tooltip="item.tooltip"
-                          :hints="item.hints" />
+                          :hints="item.hints"
+                          :show-login />
         </TransitionGroup>
     </div>
 </template>
@@ -20,11 +21,12 @@ import type { HintInformation } from '#/types/HintInformation';
 import { toArray } from '#/utils/toArray';
 import { onMounted, ref } from 'vue';
 
-const { mapName, guess, hintsToDisplay, ignoreAnimations } = defineProps<{
+const { mapName, guess, hintsToDisplay, ignoreAnimations, showLogin } = defineProps<{
     mapName: string;
     guess: Guess;
     hintsToDisplay: HintInformation[];
     ignoreAnimations?: boolean;
+    showLogin: boolean;
 }>();
 
 const emit = defineEmits<(e: 'animationFinished') => void>();

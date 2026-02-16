@@ -1,5 +1,6 @@
 import { Route } from '#/router/Route';
 import { usePreferencesStore } from '#/stores/preferencesStore';
+import Tm2020TrialClassicGame from '#/views/Tm2020TrialClassicGame.vue';
 import Tm2RpgClassicGame from '#/views/Tm2RpgClassicGame.vue';
 import Tm2TrialClassicGame from '#/views/Tm2TrialClassicGame.vue';
 import TmnfRpgClassicGame from '#/views/TmnfRpgClassicGame.vue';
@@ -54,6 +55,15 @@ const router = createRouter({
             component: Tm2RpgClassicGame,
             meta: {
                 titleKey: 'TM2 RPG'
+            }
+
+        },
+        {
+            name: Route.TM2020_TRIAL_CLASSIC_MODE,
+            path: Route.TM2020_TRIAL_CLASSIC_MODE,
+            component: Tm2020TrialClassicGame,
+            meta: {
+                titleKey: 'TM2020 Trial'
             }
 
         },

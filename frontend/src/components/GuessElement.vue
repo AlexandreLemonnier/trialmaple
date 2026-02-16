@@ -24,10 +24,11 @@ import type { HintPair, WrHolder } from '#/types/api/guess';
 
 type HintValue = string | number | boolean | WrHolder;
 
-defineProps<{
+const { showLogin } = defineProps<{
     label: string;
     tooltip?: string;
     hints: HintPair<HintValue, boolean | DeltaHint>[];
+    showLogin: boolean;
 }>();
 
 function isWrHolder(value: HintValue): value is WrHolder {
@@ -37,7 +38,7 @@ function isWrHolder(value: HintValue): value is WrHolder {
 function displayWrHolderHtml(value: WrHolder) {
     const displayNameHtml = MPStyle.Parser.toHTML(value.displayName);
     const login = value.login;
-    return displayNameHtml + (login === value.displayName ? '' : `<span>(${login})</span>`);
+    return displayNameHtml + (showLogin ? `<span> (${login})</span>` : '');
 }
 
 function displayBoolean(value: boolean) {

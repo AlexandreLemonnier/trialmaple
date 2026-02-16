@@ -1,8 +1,8 @@
 <template>
-    <ClassicGame game-mode="CLASSIC_TMNF_TRIAL"
-                 game-mode-display-name="TMNF Trial Maple"
-                 history-storage-key="tmnfTrialClassicHistory"
-                 daily-map-uuid-storage-key="tmnfTrialClassicDailyMapUuid"
+    <ClassicGame game-mode="CLASSIC_TM2020_TRIAL"
+                 game-mode-display-name="TM2020 Trial Maple"
+                 history-storage-key="tm2020TrialClassicHistory"
+                 daily-map-uuid-storage-key="tm2020TrialClassicDailyMapUuid"
                  :hints-to-display
                  :show-login="false" />
 </template>
@@ -13,11 +13,8 @@ import ClassicGame from '#/views/ClassicGame.vue';
 
 const hintsToDisplay: HintInformation[] = [
     {
-        label: 'Difficulty',
-        guessProp: 'difficulty'
-    },
-    {
-        label: 'Points',
+        label: 'Stars',
+        tooltip: 'Difficulty rating',
         guessProp: 'points'
     },
     {
@@ -31,6 +28,10 @@ const hintsToDisplay: HintInformation[] = [
     {
         label: 'WR Holder',
         guessProp: 'wrHolder'
+    },
+    {
+        label: 'WR Year',
+        guessProp: 'wrYear'
     },
     {
         label: 'Author(s)',

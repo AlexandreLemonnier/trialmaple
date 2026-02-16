@@ -71,9 +71,9 @@ public class Tm2020TrialUpdateService implements IMapUpdateStrategy {
                     // Set not active + error log to be notified by email (for manual check and update if needed)
                     mapToAdd.setActive(false);
                     toCreate.add(mapToAdd);
-                    log.info("New map added to {} list: {}", getSupportedList(), map.name());
+                    log.error("New map added to {} list: {}", getSupportedList(), map.name());
                 } else {
-                    boolean updated = mapDtoMapper.update(existingMap, map, wrHolder);
+                    boolean updated = mapDtoMapper.update(existingMap, map, wrHolder, true);
                     if (updated) {
                         log.info("Map updated: {}", existingMap.getName());
                         toUpdate.add(existingMap);

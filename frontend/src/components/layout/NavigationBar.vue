@@ -20,7 +20,7 @@
                 <div v-for="subTab in tab.subTabs"
                      :key="subTab.title"
                      class="px-2 lg:px-4 py-1.5 lg:py-2 cursor-pointer text-center whitespace-nowrap hover:bg-navigation-bar-selection-background transition">
-                    <div class="flex gap-2 md:gap-3 items-center">
+                    <div class="flex justify-between gap-2 md:gap-3 items-center">
                         <span :class="route.name === subTab.routeName ? 'text-success font-semibold' : ''"
                               @click="navigateToRoute(subTab.routeName)">{{ subTab.title }}</span>
                         <Icon :name="favoritePage === subTab.routeName ? 'star-fill' : 'star'"
@@ -101,6 +101,10 @@ const tabs: Tab[] = [
         title: 'TM2020',
         icon: tm2020Icon,
         subTabs: [
+            {
+                title: 'Trial',
+                routeName: Route.TM2020_TRIAL_CLASSIC_MODE
+            }
         ]
     }
 ];
