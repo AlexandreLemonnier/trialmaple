@@ -77,8 +77,4 @@ public class MapDtoMapper {
         }
         return changed;
     }
-
-    public boolean update(TmMap originalMap, MapDto updatedMap, TmUser wrHolder) {
-        return update(originalMap, updatedMap, wrHolder, false);
-    }
 }

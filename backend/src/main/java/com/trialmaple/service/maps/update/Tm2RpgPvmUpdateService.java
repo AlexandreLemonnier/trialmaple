@@ -2,9 +2,6 @@ package com.trialmaple.service.maps.update;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -12,8 +9,6 @@ import com.trialmaple.controller.mappers.external.MapDtoMapper;
 import com.trialmaple.externalservice.tmrpg.TmRpgService;
 import com.trialmaple.model.dto.external.tmrpg.MapDto;
 import com.trialmaple.model.dto.external.tmrpg.MapsResponseDto;
-import com.trialmaple.model.entities.TmMap;
-import com.trialmaple.model.entities.TmUser;
 import com.trialmaple.model.enums.MapList;
 import com.trialmaple.model.enums.TmGame;
 import com.trialmaple.repository.TmMapRepository;
@@ -23,18 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
+public class Tm2RpgPvmUpdateService extends AbstractTmRpgUpdateStrategy {
 
-    private final TmRpgService tmRpgService;
-    private final TmUserService tmUserService;
-    private final TmMapRepository tmMapRepository;
-    private final MapDtoMapper mapDtoMapper;
+    private List<Long> classicMapIds = new ArrayList<>();
 
     public Tm2RpgPvmUpdateService(TmRpgService tmRpgService, TmUserService tmUserService, TmMapRepository tmMapRepository, MapDtoMapper mapDtoMapper) {
-        this.tmRpgService = tmRpgService;
-        this.tmUserService = tmUserService;
-        this.tmMapRepository = tmMapRepository;
-        this.mapDtoMapper = mapDtoMapper;
+        super(tmRpgService, tmUserService, tmMapRepository, mapDtoMapper);
     }
 
     @Override
@@ -48,47 +37,18 @@ public class Tm2RpgPvmUpdateService implements IMapUpdateStrategy {
     }
 
     @Override
-    public void fetchAndUpdate() {
-        log.info("Updating maps for {}", getSupportedList());
-        try {
-            MapsResponseDto response = tmRpgService.getTm2RpgPvmMaps();
-            List<MapDto> maps = response.maps().stream().map(MapDto::fixMap).toList();
-            
-            MapsResponseDto classicResponse = tmRpgService.getTm2RpgClassicMaps();
-            List<Long> classicMapIds = classicResponse.maps().stream().map(MapDto::id).toList();
-
-            List<Long> externalMapIds = maps.stream().map(MapDto::id).toList();
-            Map<Long, TmMap> existingMaps = tmMapRepository.findAllByTmxIdInAndMapList(externalMapIds, getSupportedList())
-                .stream()
-                .collect(Collectors.toMap(TmMap::getTmxId, Function.identity()));
-
-            List<TmMap> toCreate = new ArrayList<>();
-            List<TmMap> toUpdate = new ArrayList<>();
-
-            for (MapDto map : maps) {
-                TmUser wrHolder = tmUserService.getOrCreate(map.wrHolder().id(), map.wrHolder().name(), getSupportedGame());
-                boolean classic = classicMapIds.contains(map.id());
-
-                TmMap existingMap = existingMaps.get(map.id());
-                if (existingMap == null) {
-                    TmMap mapToAdd = mapDtoMapper.externalToService(map, getSupportedList(), wrHolder, classic);
-                    // Set not active + error log to be notified by email (for manual check and update if needed)
-                    mapToAdd.setActive(false);
-                    toCreate.add(mapToAdd);
-                    log.error("New map added to {} list: {}", getSupportedList(), map.name());
-                } else {
-                    boolean updated = mapDtoMapper.update(existingMap, map, wrHolder, classic);
-                    if (updated) {
-                        log.info("Map updated: {}", existingMap.getName());
-                        toUpdate.add(existingMap);
-                    }
-                }
-            }
-            tmMapRepository.saveAll(toCreate);
-            tmMapRepository.saveAll(toUpdate);
-        } catch (Exception e) {
-            log.error("Error while fetching maps", e);
-        }
+    protected void preProcess() {
+        MapsResponseDto classicResponse = tmRpgService.getTm2RpgClassicMaps();
+        classicMapIds = classicResponse.maps().stream().map(MapDto::id).toList();
     }
-    
+
+    @Override
+    MapsResponseDto fetchMaps() {
+        return tmRpgService.getTm2RpgPvmMaps();
+    }
+
+    @Override
+    boolean isClassic(Long mapId) {
+        return classicMapIds.contains(mapId);
+    }
 }
