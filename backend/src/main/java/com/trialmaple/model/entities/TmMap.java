@@ -25,69 +25,57 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Table(name = "tm_map")
+@Getter
+@Setter
+@NoArgsConstructor
 public class TmMap {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "BIGINT")
     private Long id;
 
-    @Column(name = "tmx_id", columnDefinition = "BIGINT")
     private Long tmxId;
 
-    @Column(name = "active", columnDefinition = "BOOLEAN")
     private boolean active;
 
-    @Column(name = "name", columnDefinition = "VARCHAR(255)")
     private String name;
 
-    @Column(name = "display_name", columnDefinition = "VARCHAR(255)")
     private String displayName;
 
     @ElementCollection
     @CollectionTable(name = "tm_map_authors", joinColumns = @JoinColumn(name = "tm_map_id"))
-    @Column(name = "author", columnDefinition = "VARCHAR(255)")
+    @Column(name = "author")
     private List<String> authors;
 
-    @Column(name = "checkpoint_count", columnDefinition = "INT")
     private int checkpointCount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "difficulty", columnDefinition = "VARCHAR(50)")
     private DifficultyCategory difficulty;
 
-    @Column(name = "points", columnDefinition = "INT")
     private int points;
 
-    @Column(name = "wr_time", columnDefinition = "BIGINT")
     @Convert(converter = DurationMillisConverter.class)
     private Duration wrTime;
 
-    @Column(name = "wr_year", columnDefinition = "INT")
     private Integer wrYear;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wr_holder_id")
     private TmUser wrHolder;
 
-    @Column(name = "finisher_count", columnDefinition = "INT")
     private int finisherCount;
 
-    @Column(name = "release_year", columnDefinition = "INT")
     private int releaseYear;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "map_list", columnDefinition = "VARCHAR(50)")
     private MapList mapList;
 
-    @Column(name = "classic", columnDefinition = "BOOLEAN")
-    @ColumnDefault("false")
     private boolean classic;
-
-    protected TmMap() {
-    }
 
     public TmMap(
         Long tmxId,
@@ -118,121 +106,5 @@ public class TmMap {
         this.mapList = mapList;
         this.classic = classic;
         this.active = true;
-    }
-
-    /** GETTERS */
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getTmxId() {
-        return tmxId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public List<String> getAuthors() {
-        return new ArrayList<>(authors);
-    }
-
-    public int getCheckpointCount() {
-        return checkpointCount;
-    }
-
-    public DifficultyCategory getDifficulty() {
-        return difficulty;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public Duration getWrTime() {
-        return wrTime;
-    }
-
-    public Integer getWrYear() {
-        return wrYear;
-    }
-
-    public TmUser getWrHolder() {
-        return wrHolder;
-    }
-
-    public int getFinisherCount() {
-        return finisherCount;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-
-    public MapList getMapList() {
-        return mapList;
-    }
-
-    public boolean isClassic() {
-        return classic;
-    }
-
-    /** SETTERS */
-
-    public void setTmxId(Long tmxId) {
-        this.tmxId = tmxId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public void setCheckpointCount(int checkpointCount) {
-        this.checkpointCount = checkpointCount;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public void setWrTime(Duration wrTime) {
-        this.wrTime = wrTime;
-    }
-
-    public void setWrYear(Integer wrYear) {
-        this.wrYear = wrYear;
-    }
-
-    public void setWrHolder(TmUser wrHolder) {
-        this.wrHolder = wrHolder;
-    }
-
-    public void setFinisherCount(int finisherCount) {
-        this.finisherCount = finisherCount;
-    }
-
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public void setClassic(boolean classic) {
-        this.classic = classic;
     }
 }
