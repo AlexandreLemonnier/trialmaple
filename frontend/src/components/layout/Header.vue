@@ -10,10 +10,14 @@
                 <span class="text-[clamp(0.75rem,1.4vw,1.15rem)] font-semibold">le</span>
             </h1>
         </div>
-        <div class="flex gap-4 lg:gap-6 items-center">
+        <div class="flex gap-3 lg:gap-6 items-center">
             <ThemeToggle />
             <Icon class="cursor-pointer" name="circle-info" size="md" @click="isInfoModalOpen = true" />
-            <Icon class="text-discord cursor-pointer" name="discord" size="md" @click="isDiscordModalOpen = true" />
+            <Button class="hidden lg:flex bg-discord/80 text-white"
+                    label="Discord"
+                    icon-name="discord"
+                    @click="isDiscordModalOpen = true" />
+            <Icon class="block lg:hidden text-discord cursor-pointer" name="discord" size="md" @click="isDiscordModalOpen = true" />
         </div>
     </header>
     <InfoModal v-model="isInfoModalOpen" />
@@ -22,6 +26,7 @@
 
 <script setup lang="ts">
 import TrackManiaLogo from '#/assets/TrackMania-Logo.svg?component';
+import Button from '#/components/Button.vue';
 import Icon from '#/components/Icon.vue';
 import ThemeToggle from '#/components/layout/ThemeToggle.vue';
 import DiscordModal from '#/components/modal/DiscordModal.vue';
