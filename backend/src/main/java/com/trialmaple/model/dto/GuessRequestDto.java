@@ -1,7 +1,7 @@
 package com.trialmaple.model.dto;
 
 public record GuessRequestDto(
-        String guess,
+        String guessedMapUuid,
         int guessNumber,
         String dailyMapUuid
 ) {

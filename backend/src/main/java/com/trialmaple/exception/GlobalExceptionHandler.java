@@ -1,13 +1,12 @@
 package com.trialmaple.exception;
 
-import java.time.Instant;
-
+import com.trialmaple.model.dto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.trialmaple.model.dto.ErrorResponseDto;
+import java.time.Instant;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,8 +20,8 @@ public class GlobalExceptionHandler {
                         ex.getMessage()));
     }
 
-    @ExceptionHandler(InvalidMapNameException.class)
-    public ResponseEntity<ErrorResponseDto> handleInvalidMapName(InvalidMapNameException ex) {
+    @ExceptionHandler(InvalidMapException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidMap(InvalidMapException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseDto(
                         Instant.now(),

@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
-import { createGameStore } from '#/stores/appStore';
+import { createGameStore } from '#/stores/gameStore';
 import type { GameMode } from '#/types/api/gameMode';
 import { storeToRefs } from 'pinia';
 import { onMounted, ref } from 'vue';

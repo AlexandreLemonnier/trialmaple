@@ -1,9 +1,6 @@
 package com.trialmaple.service.guess;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.trialmaple.exception.InvalidMapNameException;
+import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.dto.HintPairDto;
@@ -16,6 +13,10 @@ import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
 import com.trialmaple.utils.TimeUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractGuessService implements IGuessGameModeService {
 
@@ -36,8 +37,8 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
     public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) {
         this.mapOfTheDay = dailyMap.getMap();
         this.guessMap = tmMapRepository
-                .findByNameIgnoreCase(request.guess())
-                .orElseThrow(() -> new InvalidMapNameException(request.guess()));
+                .findByUuid(UUID.fromString(request.guessedMapUuid()))
+                .orElseThrow(() -> new InvalidMapException(request.guessedMapUuid()));
 
         boolean isValidMap = dailyMap.getUuid().toString().equals(request.dailyMapUuid());
         if (!isValidMap) {
@@ -45,7 +46,7 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
             return new GuessDto(false);
         }
 
-        boolean success = mapOfTheDay.getName().equalsIgnoreCase(guessMap.getName());
+        boolean success = mapOfTheDay.getUuid().equals(guessMap.getUuid());
         // Save score if success
         if (success) {
             Score score = new Score(request.guessNumber(), dailyMap);

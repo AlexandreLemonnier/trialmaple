@@ -1,6 +1,6 @@
 package com.trialmaple.service.guess;
 
-import com.trialmaple.exception.InvalidMapNameException;
+import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.entities.DailyMap;
@@ -16,5 +16,5 @@ public interface IGuessGameModeService {
     /**
      * Check if guess is scorrect for the given daily map, and returns a guessDto with hints
      */
-    GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapNameException;
+    GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapException;
 }

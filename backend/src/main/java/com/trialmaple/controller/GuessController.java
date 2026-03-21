@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trialmaple.exception.InvalidGameModeException;
-import com.trialmaple.exception.InvalidMapNameException;
+import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.exception.NoDailyMapFoundException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
@@ -39,7 +39,7 @@ public class GuessController {
      */
     @PostMapping("/guess")
     public GuessDto guess(@RequestBody GuessRequestDto request, @RequestParam String gameMode)
-            throws NoDailyMapFoundException, InvalidMapNameException {
+            throws NoDailyMapFoundException, InvalidMapException {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);

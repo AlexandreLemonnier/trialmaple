@@ -8,10 +8,10 @@
         </div>
         <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex gap-4 w-full">
-                <MapCombobox :map-names="mapNames" :picked-maps v-model="selectedMap" />
+                <MapCombobox :maps :picked-maps v-model="selectedMap" />
                 <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
                         type="button"
-                        :inert="!mapNames.length || !selectedMap || isGuessCardAnimating"
+                        :inert="!maps.length || !selectedMap || isGuessCardAnimating"
                         @click="handleGuess">
                     <span v-if="!isGuessLoading">Guess</span>
                     <Loader v-else />
@@ -33,9 +33,9 @@
             </template>
         </WinScreen>
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
-            <GuessCard v-for="([mapName, guess]) in reversedHistory"
-                       :key="mapName"
-                       :map-name="getMapDisplayName(mapName)"
+            <GuessCard v-for="([uuid, guess]) in reversedHistory"
+                       :key="uuid"
+                       :map-name="getMapDisplayName(uuid)"
                        :guess
                        :hints-to-display
                        @animationFinished="onGuessCardAnimationFinished"
@@ -57,7 +57,7 @@ import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
-import { createGameStore } from '#/stores/appStore';
+import { createGameStore } from '#/stores/gameStore';
 import type { DailyStats } from '#/types/api/dailyStats';
 import type { GameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
@@ -81,15 +81,14 @@ const { isMapInHistory } = gameStore;
 const { history, dailyMapUuid, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
 
 const maps = ref<TmMap[]>([]);
-const mapNames = computed(() => maps.value.map((map) => map.name));
 const todayWinnerCount = ref<number>();
 
 const reversedHistory = computed(() =>
     Object.entries(history.value).reverse()
 );
 
-const selectedMap = ref<string>();
-const pickedMaps = computed(() => mapNames.value.filter((mapName) => Object.keys(history.value).includes(mapName)));
+const selectedMap = ref<TmMap>();
+const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.uuid)));
 const hasMapAlreadyBeenPicked = ref(false);
 const hasWon = ref(false);
 
@@ -140,8 +139,12 @@ const guessApi = useGuessApi();
 const mapsApi = useMapsApi();
 const dailyStatsApi = useDailyStatsApi();
 
-function getMapDisplayName(mapName: string) {
-    return maps.value.find((map) => map.name === mapName)?.displayName ?? mapName;
+function getMapDisplayName(uuid: string) {
+    const matchingMap = maps.value.find((map) => map.uuid === uuid);
+    if (matchingMap) {
+        return matchingMap.displayName ?? matchingMap.name;
+    }
+    return 'Map not found';
 }
 
 function historyContainsSuccess() {
@@ -157,9 +160,9 @@ async function handleGuess() {
         isGuessLoading.value = true;
         isGuessCardAnimating.value = true;
         const attemptCount = Object.keys(history.value).length + 1;
-        const guess: Guess = await guessApi.postGuess(gameMode, selectedMap.value, attemptCount, dailyMapUuid.value);
+        const guess: Guess = await guessApi.postGuess(gameMode, selectedMap.value.uuid, attemptCount, dailyMapUuid.value);
         if (guess.isValidDay) {
-            history.value[selectedMap.value] = guess;
+            history.value[selectedMap.value.uuid] = guess;
         } else {
             globalThis.location.reload();
         }
@@ -181,7 +184,7 @@ watch(history, () => {
 /** FETCH DATA */
 async function fetchMaps() {
     try {
-        maps.value = await mapsApi.getMapNames(gameMode);
+        maps.value = await mapsApi.getMaps(gameMode);
         maps.value.sort((a, b) => a.name.localeCompare(b.name));
     } catch (e) {
         console.error('Error while fetching maps', e);

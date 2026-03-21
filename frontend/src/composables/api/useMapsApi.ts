@@ -6,7 +6,7 @@ export function useMapsApi() {
     const { request } = useApi('/maps');
 
     return {
-        async getMapNames(gameMode: GameMode) {
+        async getMaps(gameMode: GameMode) {
             return await request<TmMap[]>('/list', {
                 method: 'GET',
                 query: {

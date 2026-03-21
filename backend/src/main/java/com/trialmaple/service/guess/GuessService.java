@@ -2,7 +2,7 @@ package com.trialmaple.service.guess;
 
 import org.springframework.stereotype.Service;
 
-import com.trialmaple.exception.InvalidMapNameException;
+import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.entities.DailyMap;
@@ -19,7 +19,7 @@ public class GuessService {
     /**
      * Check if a guess is correct and give hints or correct elements
      */
-    public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapNameException {
+    public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapException {
         IGuessGameModeService guessService = provider.getGuessService(dailyMap.getGameMode());
         return guessService.checkGuess(dailyMap, request);
     }

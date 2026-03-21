@@ -2,6 +2,7 @@ package com.trialmaple.model.entities;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 import com.trialmaple.jpa.converter.DurationMillisConverter;
 import com.trialmaple.model.enums.DifficultyCategory;
@@ -33,6 +34,9 @@ public class TmMap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "uuid", unique = true, nullable = false, updatable = false)
+    private final UUID uuid = UUID.randomUUID();
 
     private Long tmxId;
 

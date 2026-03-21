@@ -13,31 +13,32 @@
 
         <!-- Dropdown -->
         <ul v-if="isOpen" class="absolute text-md lg:text-lg xl:text-xl mt-2 w-full max-h-60 overflow-y-auto rounded-xl border border-app-border shadow-lg bg-app-background scrollbar-hide z-20">
-            <li v-for="(mapName, index) in filteredMapNames"
-                :key="mapName"
+            <li v-for="(map, index) in filteredMaps"
+                :key="map.uuid"
                 ref="itemRefs"
-                @click="select(mapName)"
+                @click="select(map)"
                 class="px-4 py-1 cursor-pointer"
                 :class="{ 'bg-neutral-400/20': index === highlightedIndex }">
-                {{ mapName }}
+                {{ map.name }}
             </li>
 
-            <li v-if="filteredMapNames.length === 0" class="px-4 py-2 text-sm">No maps found.</li>
+            <li v-if="filteredMaps.length === 0" class="px-4 py-2 text-sm">No maps found.</li>
         </ul>
     </div>
 </template>
 
 <script setup lang="ts">
 import Icon from '#/components/Icon.vue';
+import type { TmMap } from '#/types/api/tmMap';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
-const { mapNames, pickedMaps } = defineProps<{
-    mapNames: string[];
-    pickedMaps: string[];
+const { maps, pickedMaps } = defineProps<{
+    maps: TmMap[];
+    pickedMaps: TmMap[];
 }>();
 
-const selectedMap = defineModel<string>();
-const remainingMapNames = computed(() => mapNames.filter((mapName) => !pickedMaps.includes(mapName)));
+const selectedMap = defineModel<TmMap>();
+const remainingMaps = computed(() => maps.filter((map) => !pickedMaps.includes(map)));
 
 const dropdownRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -46,20 +47,20 @@ const itemRefs = ref<(HTMLElement | null)[]>([]);
 const isOpen = ref(false);
 const search = ref('');
 const highlightedIndex = ref(-1);
-const previousValue = ref<string | undefined>();
+const previousValue = ref<string>();
 
 /* Filtered maps */
-const filteredMapNames = computed(() => {
+const filteredMaps = computed(() => {
     const filter = search.value.toLowerCase();
-    if (!filter) return remainingMapNames.value;
-    return remainingMapNames.value.filter((name) => name.toLowerCase().includes(filter));
+    if (!filter) return remainingMaps.value;
+    return remainingMaps.value.filter((map) => map.name.toLowerCase().includes(filter));
 });
 
 /* Open dropdown */
 function open() {
     if (isOpen.value) return;
 
-    previousValue.value = selectedMap.value;
+    previousValue.value = selectedMap.value?.name;
 
     search.value = '';
     isOpen.value = true;
@@ -80,9 +81,9 @@ function close(committed = false) {
 }
 
 /* Select item */
-function select(mapName: string) {
-    selectedMap.value = mapName;
-    search.value = mapName;
+function select(map: TmMap) {
+    selectedMap.value = map;
+    search.value = map.name;
     close(true);
 }
 
@@ -99,20 +100,20 @@ function onKeyDown(e: KeyboardEvent) {
     switch (e.key) {
         case 'ArrowDown':
             e.preventDefault();
-            highlightedIndex.value = (highlightedIndex.value + 1) % filteredMapNames.value.length;
+            highlightedIndex.value = (highlightedIndex.value + 1) % filteredMaps.value.length;
             scrollToHighlighted();
             break;
 
         case 'ArrowUp':
             e.preventDefault();
-            highlightedIndex.value = highlightedIndex.value <= 0 ? filteredMapNames.value.length - 1 : highlightedIndex.value - 1;
+            highlightedIndex.value = highlightedIndex.value <= 0 ? filteredMaps.value.length - 1 : highlightedIndex.value - 1;
             scrollToHighlighted();
             break;
 
         case 'Enter':
             e.preventDefault();
             if (highlightedIndex.value >= 0) {
-                select(filteredMapNames.value[highlightedIndex.value]!);
+                select(filteredMaps.value[highlightedIndex.value]!);
             }
             break;
 
@@ -141,7 +142,7 @@ onUnmounted(() => {
 /* Keep search synced with selection */
 watch(selectedMap, () => {
     if (!isOpen.value) {
-        search.value = selectedMap.value ?? '';
+        search.value = selectedMap.value?.name ?? '';
     }
 });
 </script>

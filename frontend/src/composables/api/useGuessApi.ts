@@ -6,11 +6,11 @@ export function useGuessApi() {
     const { request } = useApi('/guess');
 
     return {
-        async postGuess(gameMode: GameMode, guess: string, guessNumber: number, dailyMapUuid: string) {
+        async postGuess(gameMode: GameMode, guessedMapUuid: string, guessNumber: number, dailyMapUuid: string) {
             return await request<Guess>('', {
                 method: 'POST',
                 body: {
-                    guess,
+                    guessedMapUuid,
                     guessNumber,
                     dailyMapUuid
                 },

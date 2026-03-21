@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { createGameStore } from '#/stores/appStore';
+import { createGameStore } from '#/stores/gameStore';
 import type { DeltaHint } from '#/types/api/deltaHint';
 import type { GameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';

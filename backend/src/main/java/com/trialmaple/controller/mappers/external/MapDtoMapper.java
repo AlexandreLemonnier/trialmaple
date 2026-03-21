@@ -1,18 +1,16 @@
 package com.trialmaple.controller.mappers.external;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.util.Arrays;
-
-import org.springframework.stereotype.Component;
-
 import com.trialmaple.model.dto.external.tmrpg.MapDto;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.entities.TmUser;
 import com.trialmaple.model.enums.MapList;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.util.Collections;
 
 @Slf4j
 @Component
@@ -23,7 +21,7 @@ public class MapDtoMapper {
             map.id(),
             map.name(),
             map.displayName(),
-            Arrays.asList(map.author()),
+            Collections.singletonList(map.author()),
             map.cps(),
             map.stars(),
             Duration.ofMillis(map.wrTime()),
@@ -63,7 +61,7 @@ public class MapDtoMapper {
         }
         boolean hasWrHolderChanged = !originalMap.getWrHolder().getLogin().equals(wrHolder.getLogin());
         boolean hasWrTimeChanged = updatedMap.wrTime() != null && originalMap.getWrTime().toMillis() != updatedMap.wrTime();
-        if (hasWrHolderChanged || hasWrTimeChanged) {
+        if ((hasWrHolderChanged || hasWrTimeChanged) && updatedMap.wrTime() != null) {
             log.info(logFormat, originalMap.getName(), "WR", originalMap.getWrTime(), Duration.ofMillis(updatedMap.wrTime()));
             originalMap.setWrTime(Duration.ofMillis(updatedMap.wrTime()));
             originalMap.setWrYear(Instant.ofEpochSecond(updatedMap.wrDate()).atZone(ZoneOffset.UTC).getYear());

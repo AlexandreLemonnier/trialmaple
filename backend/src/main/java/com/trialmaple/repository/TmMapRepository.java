@@ -1,18 +1,18 @@
 package com.trialmaple.repository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
+import com.trialmaple.model.entities.TmMap;
+import com.trialmaple.model.enums.MapList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.trialmaple.model.entities.TmMap;
-import com.trialmaple.model.enums.MapList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface TmMapRepository extends JpaRepository<TmMap, Long> {
-    Optional<TmMap> findByNameIgnoreCase(String name);
+    Optional<TmMap> findByUuid(UUID uuid);
 
     List<TmMap> findByWrTimeIsNotNullAndActiveTrueAndMapList(MapList mapList);
 
