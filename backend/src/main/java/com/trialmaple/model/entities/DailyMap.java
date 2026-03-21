@@ -15,8 +15,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +29,7 @@ public class DailyMap {
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
     private final UUID uuid = UUID.randomUUID();
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tm_map_id", nullable = false)
     private TmMap map;
 

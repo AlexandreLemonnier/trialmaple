@@ -1,10 +1,7 @@
 package com.trialmaple.model.entities;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.annotations.ColumnDefault;
 
 import com.trialmaple.jpa.converter.DurationMillisConverter;
 import com.trialmaple.model.enums.DifficultyCategory;
@@ -23,8 +20,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
