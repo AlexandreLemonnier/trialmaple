@@ -1,22 +1,12 @@
 package com.trialmaple.model.entities;
 
-import java.time.LocalDate;
-import java.util.UUID;
-
 import com.trialmaple.model.enums.GameMode;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -30,8 +20,12 @@ public class DailyMap {
     private final UUID uuid = UUID.randomUUID();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tm_map_id", nullable = false)
+    @JoinColumn(name = "tm_map_id")
     private TmMap map;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "daily_pictures_id")
+    private DailyPictures dailyPictures;
 
     private LocalDate day;
 
@@ -40,6 +34,12 @@ public class DailyMap {
 
     public DailyMap(TmMap map, LocalDate day, GameMode gameMode) {
         this.map = map;
+        this.day = day;
+        this.gameMode = gameMode;
+    }
+
+    public DailyMap(DailyPictures dailyPictures, LocalDate day, GameMode gameMode) {
+        this.dailyPictures = dailyPictures;
         this.day = day;
         this.gameMode = gameMode;
     }

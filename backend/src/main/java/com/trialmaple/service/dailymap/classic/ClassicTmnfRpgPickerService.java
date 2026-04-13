@@ -1,21 +1,19 @@
-package com.trialmaple.service.dailymap;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
+package com.trialmaple.service.dailymap.classic;
 
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.model.enums.MapList;
+import com.trialmaple.repository.DailyMapRepository;
 import com.trialmaple.repository.TmMapRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
-public class ClassicTmnfRpgPickerService implements IDailyMapPickerStrategy {
+public class ClassicTmnfRpgPickerService extends AbstractClassicPickerService {
 
-    private final TmMapRepository tmMapRepository;
-
-    public ClassicTmnfRpgPickerService(TmMapRepository tmMapRepository) {
-        this.tmMapRepository = tmMapRepository;
+    public ClassicTmnfRpgPickerService(TmMapRepository tmMapRepository, DailyMapRepository dailyMapRepository) {
+        super(tmMapRepository, dailyMapRepository);
     }
 
     @Override

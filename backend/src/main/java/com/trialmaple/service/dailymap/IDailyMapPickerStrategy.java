@@ -1,9 +1,11 @@
 package com.trialmaple.service.dailymap;
 
-import java.util.List;
-
+import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public interface IDailyMapPickerStrategy {
     /**
@@ -15,4 +17,9 @@ public interface IDailyMapPickerStrategy {
      * Get the maps to choose from
      */
     List<TmMap> getMapPool();
+
+    /**
+     * Randomly pick a daily map
+     */
+    DailyMap pickDailyMap(LocalDate day);
 }
