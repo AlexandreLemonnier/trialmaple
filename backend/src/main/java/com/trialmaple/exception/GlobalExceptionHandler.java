@@ -37,4 +37,13 @@ public class GlobalExceptionHandler {
                         ex.getCode().name(),
                         ex.getMessage()));
     }
+
+    @ExceptionHandler(InvalidAttemptException.class)
+    public ResponseEntity<ErrorResponseDto> handleInvalidAttemptNumber(InvalidAttemptException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponseDto(
+                        Instant.now(),
+                        ex.getCode().name(),
+                        ex.getMessage()));
+    }
 }

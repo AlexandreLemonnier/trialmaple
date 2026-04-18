@@ -1,10 +1,10 @@
 package com.trialmaple.model.dto;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
+
+import java.util.Collections;
+import java.util.List;
 
 public record GuessDto(
         boolean isValidDay,
@@ -21,7 +21,11 @@ public record GuessDto(
         HintPairDto<Boolean, Boolean> classic
 ) {
         public GuessDto(boolean isValidDay) {
-                this(isValidDay, false, null, null, null, null, null, Collections.emptyList(), null, null);
+                this(isValidDay, false);
+        }
+
+        public GuessDto(boolean isValidDay, boolean success) {
+                this(isValidDay, success, null, null, null, null, null, Collections.emptyList(), null, null);
         }
 
         public GuessDto(

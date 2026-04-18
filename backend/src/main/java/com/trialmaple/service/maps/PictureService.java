@@ -1,7 +1,9 @@
 package com.trialmaple.service.maps;
 
 import com.trialmaple.TmMapleConstant;
+import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.DailyPictures;
+import com.trialmaple.model.enums.GameMode;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +18,8 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class PicturesService {
+public class PictureService {
+
     @Value("${game.pictures-path}")
     private String mapsPath;
 
@@ -116,5 +119,19 @@ public class PicturesService {
     private String pickRandom(List<String> list) {
         if (list == null || list.isEmpty()) return null;
         return list.get(random.nextInt(list.size()));
+    }
+
+    public Path getTodayPicturePath(GameMode gameMode, DailyMap dailyMap, int attempt) {
+        DailyPictures dailyPictures = dailyMap.getDailyPictures();
+
+        String gameFolder = gameMode.getPicturesFolderName();
+        String dailyMapName = dailyPictures.getMapName();
+        String pictureName = dailyPictures.getPicturesName().get(attempt - 1);
+
+        return getPicturePath(gameFolder, dailyMapName, attempt, pictureName);
+    }
+
+    public Path getPicturePath(String game, String mapName, int attempt, String pictureName) {
+        return Paths.get(mapsPath, game, mapName, String.valueOf(attempt), pictureName);
     }
 }

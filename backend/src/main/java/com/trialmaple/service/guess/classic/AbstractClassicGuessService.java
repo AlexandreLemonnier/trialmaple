@@ -1,4 +1,4 @@
-package com.trialmaple.service.guess;
+package com.trialmaple.service.guess.classic;
 
 import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.GuessDto;
@@ -12,21 +12,22 @@ import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
+import com.trialmaple.service.guess.IGuessGameModeService;
 import com.trialmaple.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class AbstractGuessService implements IGuessGameModeService {
+public abstract class AbstractClassicGuessService implements IGuessGameModeService {
 
-    protected final TmMapRepository tmMapRepository;
-    protected final ScoreRepository scoreRepository;
+    private final TmMapRepository tmMapRepository;
+    private final ScoreRepository scoreRepository;
 
-    protected TmMap mapOfTheDay;
-    protected TmMap guessMap;
+    private TmMap mapOfTheDay;
+    private TmMap guessMap;
 
-    protected AbstractGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
+    protected AbstractClassicGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
         this.tmMapRepository = tmMapRepository;
         this.scoreRepository = scoreRepository;
     }
@@ -39,12 +40,6 @@ public abstract class AbstractGuessService implements IGuessGameModeService {
         this.guessMap = tmMapRepository
                 .findByUuid(UUID.fromString(request.guessedMapUuid()))
                 .orElseThrow(() -> new InvalidMapException(request.guessedMapUuid()));
-
-        boolean isValidMap = dailyMap.getUuid().toString().equals(request.dailyMapUuid());
-        if (!isValidMap) {
-            // Client must refresh his page to play with the new daily map
-            return new GuessDto(false);
-        }
 
         boolean success = mapOfTheDay.getUuid().equals(guessMap.getUuid());
         // Save score if success

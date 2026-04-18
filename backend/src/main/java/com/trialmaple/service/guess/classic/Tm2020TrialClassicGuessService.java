@@ -1,4 +1,4 @@
-package com.trialmaple.service.guess;
+package com.trialmaple.service.guess.classic;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
 
 @Service
-public class ClassicTm2020TrialGuessService extends AbstractGuessService {
+public class Tm2020TrialClassicGuessService extends AbstractClassicGuessService {
 
-    public ClassicTm2020TrialGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
+    public Tm2020TrialClassicGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
         super(tmMapRepository, scoreRepository);
     }
 

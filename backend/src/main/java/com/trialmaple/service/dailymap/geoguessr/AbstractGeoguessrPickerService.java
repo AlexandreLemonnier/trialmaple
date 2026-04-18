@@ -4,32 +4,25 @@ import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.DailyPictures;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;
-import com.trialmaple.service.maps.PicturesService;
+import com.trialmaple.service.maps.PictureService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Random;
 
 @Slf4j
 public abstract class AbstractGeoguessrPickerService implements IDailyMapPickerStrategy {
 
-    PicturesService picturesService;
+    PictureService pictureService;
 
-    private final Random random = new Random();
-
-    protected AbstractGeoguessrPickerService(PicturesService picturesService) {
-        this.picturesService = picturesService;
+    protected AbstractGeoguessrPickerService(PictureService pictureService) {
+        this.pictureService = pictureService;
     }
-
-    /**
-     * Name of the folder under src/main/resources containing pictures corresponding to the game mode
-     */
-    abstract String getPicturesFolder();
 
     @Override
     public DailyMap pickDailyMap(LocalDate day) {
-        DailyPictures dailyPictures = picturesService.getRandomMap(getPicturesFolder());
+        String picturesFolder = getSupportedGameMode().getPicturesFolderName();
+        DailyPictures dailyPictures = pictureService.getRandomMap(picturesFolder);
         if (dailyPictures == null) {
             return null;
         }

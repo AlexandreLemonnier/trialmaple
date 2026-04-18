@@ -20,6 +20,11 @@ public class GuessService {
      * Check if a guess is correct and give hints or correct elements
      */
     public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapException {
+        boolean isValidMap = dailyMap.getUuid().toString().equals(request.dailyMapUuid());
+        if (!isValidMap) {
+            // Client must refresh his page to play with the new daily map
+            return new GuessDto(false);
+        }
         IGuessGameModeService guessService = provider.getGuessService(dailyMap.getGameMode());
         return guessService.checkGuess(dailyMap, request);
     }

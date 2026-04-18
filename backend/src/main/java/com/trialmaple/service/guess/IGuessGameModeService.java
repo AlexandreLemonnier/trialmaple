@@ -14,7 +14,7 @@ public interface IGuessGameModeService {
     GameMode getGameMode();
 
     /**
-     * Check if guess is scorrect for the given daily map, and returns a guessDto with hints
+     * Check if guess is correct for the given daily map, and returns a guessDto with hints
      */
     GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapException;
 }
