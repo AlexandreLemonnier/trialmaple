@@ -1,5 +1,14 @@
 import { RequestError } from '#/classes/RequestError';
 import { useEnv } from '#/composables/useEnv';
+import { promiseTimeout } from '@vueuse/core';
+
+async function waitMinimumTime(start: number) {
+    const requestMinimumTime = 500;
+    const requestDuration = performance.now() - start;
+    if (requestDuration < requestMinimumTime) {
+        await promiseTimeout(requestMinimumTime - requestDuration);
+    }
+}
 
 function objectToURLSearchParams(obj: Record<string, string | number | boolean | string[] | undefined>) {
     const entries: [string, string][] = [];
@@ -24,50 +33,55 @@ function objectToURLSearchParams(obj: Record<string, string | number | boolean |
 export function useApi(routePrefix: string) {
     const env = useEnv();
 
-    return {
-        async request<T>(url: string, options: Omit<RequestInit, 'body'> & { body?: Record<string, unknown> | unknown[]; query?: Record<string, string | number | boolean | string[] | undefined> } = {}): Promise<T> {
-            try {
-                const { query, body, ...baseOptions } = options;
-                const path = new URL(globalThis.location.origin + env.PROXIED_API_URL_PREFIX + routePrefix + url);
+    async function request<T>(url: string, options: Omit<RequestInit, 'body'> & { body?: Record<string, unknown> | unknown[]; query?: Record<string, string | number | boolean | string[] | undefined> } = {}): Promise<T> {
+        const start = performance.now();
 
-                if (query) {
-                    path.search = objectToURLSearchParams(query).toString();
-                }
+        try {
+            const { query, body, ...baseOptions } = options;
+            const path = new URL(globalThis.location.origin + env.PROXIED_API_URL_PREFIX + routePrefix + url);
 
-                const response = await fetch(path.href, {
-                    body: JSON.stringify(body),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    ...baseOptions
-                });
-
-                const dataText = await response.text();
-
-                if (!response.ok) {
-                    throw new RequestError(
-                        dataText ? JSON.parse(dataText)?.message ?? 'unknown' : 'unknown',
-                        response.status
-                    );
-                }
-
-                if (!dataText) return null as T;
-
-                const isJson = response.headers
-                    .get('content-type')
-                    ?.includes('application/json');
-
-                if (!isJson) {
-                    return dataText as T;
-                }
-
-                return JSON.parse(dataText) as T;
-            } catch (error) {
-                if (error instanceof RequestError) {
-                    throw error;
-                }
-                throw new RequestError('unknown', 500);
+            if (query) {
+                path.search = objectToURLSearchParams(query).toString();
             }
+
+            const response = await fetch(path.href, {
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                ...baseOptions
+            });
+
+            const dataText = await response.text();
+
+            if (!response.ok) {
+                throw new RequestError(
+                    dataText ? JSON.parse(dataText)?.message ?? 'unknown' : 'unknown',
+                    response.status
+                );
+            }
+
+            await waitMinimumTime(start);
+
+            if (!dataText) return null as T;
+
+            const isJson = response.headers
+                .get('content-type')
+                ?.includes('application/json');
+
+            if (!isJson) {
+                return dataText as T;
+            }
+
+            return JSON.parse(dataText) as T;
+        } catch (error) {
+            await waitMinimumTime(start);
+            if (error instanceof RequestError) {
+                throw error;
+            }
+            throw new RequestError('unknown', 500);
         }
-    };
+    }
+
+    return { request };
 }

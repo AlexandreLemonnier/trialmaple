@@ -1,4 +1,4 @@
-package com.trialmaple.controller.mappers.external;
+package com.trialmaple.controller.mappers;
 
 import com.trialmaple.model.dto.TmMapDto;
 import com.trialmaple.model.entities.TmMap;

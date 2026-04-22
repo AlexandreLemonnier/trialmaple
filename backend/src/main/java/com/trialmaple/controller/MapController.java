@@ -1,8 +1,10 @@
 package com.trialmaple.controller;
 
 import com.trialmaple.exception.InvalidGameModeException;
+import com.trialmaple.model.dto.GeoguessrMapDto;
 import com.trialmaple.model.dto.TmMapDto;
 import com.trialmaple.model.enums.GameMode;
+import com.trialmaple.service.maps.PictureService;
 import com.trialmaple.service.maps.TmMapService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +20,11 @@ import java.util.List;
 public class MapController {
 
     private final TmMapService tmMapService;
+    private final PictureService pictureService;
 
-    public MapController(TmMapService tmMapService) {
+    public MapController(TmMapService tmMapService, PictureService pictureService) {
         this.tmMapService = tmMapService;
+        this.pictureService = pictureService;
     }
 
     /**
@@ -37,4 +41,17 @@ public class MapController {
         }
     }
 
+    /**
+     * List maps name for geoguessr game mode
+     */
+    @GetMapping("/maps/geoguessr")
+    public List<GeoguessrMapDto> getGeoguessrMaps(@RequestParam String gameMode) {
+        try {
+            GameMode gameModeValue = GameMode.valueOf(gameMode);
+            return pictureService.getMapsName(gameModeValue).stream().map(GeoguessrMapDto::new).toList();
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        }
+    }
 }

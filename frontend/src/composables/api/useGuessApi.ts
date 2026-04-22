@@ -1,19 +1,16 @@
 import { useApi } from '#/composables/useApi';
 import type { GameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
+import type { GuessRequest } from '#/types/api/guessRequest';
 
 export function useGuessApi() {
     const { request } = useApi('/guess');
 
     return {
-        async postGuess(gameMode: GameMode, guessedMapUuid: string, guessNumber: number, dailyMapUuid: string) {
+        async postGuess(gameMode: GameMode, guessRequest: GuessRequest) {
             return await request<Guess>('', {
                 method: 'POST',
-                body: {
-                    guessedMapUuid,
-                    guessNumber,
-                    dailyMapUuid
-                },
+                body: guessRequest,
                 query: {
                     gameMode
                 }

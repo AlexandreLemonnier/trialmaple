@@ -1,6 +1,6 @@
 package com.trialmaple.service.maps;
 
-import com.trialmaple.controller.mappers.external.TmMapDtoMapper;
+import com.trialmaple.controller.mappers.TmMapDtoMapper;
 import com.trialmaple.model.dto.TmMapDto;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;

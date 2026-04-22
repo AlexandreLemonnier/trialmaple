@@ -11,17 +11,15 @@
 
 <script setup lang="ts">
 import { createGameStore } from '#/stores/gameStore';
-import type { DeltaHint } from '#/types/api/deltaHint';
 import type { GameMode } from '#/types/api/gameMode';
-import type { Guess } from '#/types/api/guess';
 import { copyToClipboard } from '#/utils/copyToClipboard';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-const { gameMode, gameModeDisplayName, guessProps, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+const { formatResult, gameMode, gameModeDisplayName, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+    formatResult(): string;
     gameMode: GameMode;
     gameModeDisplayName: string;
-    guessProps: (keyof Guess)[];
     historyStorageKey: string;
     dailyMapUuidStorageKey: string;
 }>();
@@ -45,19 +43,6 @@ const resultCopyClass: Record<CopyStatus, string> = {
     NONE: ''
 };
 
-const deltaHintEmoji: Record<DeltaHint, string> = {
-    EQUAL: '🟩',
-    LESS: '🔻',
-    MORE: '🔺'
-};
-
-function hintToEmoji(hint: boolean | DeltaHint) {
-    if (typeof hint === 'boolean') {
-        return hint ? '🟩' : '🟥';
-    }
-    return deltaHintEmoji[hint];
-}
-
 function getTitle(guessesCount: number) {
     if (dailyMapNumber.value) {
         return `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍`;
@@ -65,28 +50,10 @@ function getTitle(guessesCount: number) {
     return '';
 }
 
-function formatGuess(guess: Guess) {
-    let result = '';
-    for (const prop of guessProps) {
-        const guessHint = guess[prop];
-        if (guessHint !== null && typeof guessHint !== 'boolean') {
-            if (Array.isArray(guessHint)) {
-                result += hintToEmoji(guessHint.some((hintPair) => hintPair.hint));
-            } else {
-                result += hintToEmoji(guessHint.hint);
-            }
-        }
-    }
-    return result;
-}
-
 async function copyHistoryResult() {
     try {
         const guessesCount = Object.keys(history.value).length;
-        let result = getTitle(guessesCount);
-        for (const guess of Object.values(history.value)) {
-            result += `\n${formatGuess(guess)}`;
-        }
+        const result = getTitle(guessesCount) + formatResult();
         resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';
     } catch (e) {
         console.error(e);

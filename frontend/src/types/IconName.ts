@@ -1,5 +1,6 @@
 export type IconName =
     'x'
+    | 'check'
     | 'circle-info'
     | 'chevron-down'
     | 'chevron-up'

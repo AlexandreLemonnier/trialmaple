@@ -14,12 +14,12 @@
         <!-- Dropdown -->
         <ul v-if="isOpen" class="absolute text-md lg:text-lg xl:text-xl mt-2 w-full max-h-60 overflow-y-auto rounded-xl border border-app-border shadow-lg bg-app-background scrollbar-hide z-20">
             <li v-for="(map, index) in filteredMaps"
-                :key="map.uuid"
+                :key="String(map[uniqueId])"
                 ref="itemRefs"
                 @click="select(map)"
                 class="px-4 py-1 cursor-pointer"
                 :class="{ 'bg-neutral-400/20': index === highlightedIndex }">
-                {{ map.name }}
+                {{ map[nameProp] }}
             </li>
 
             <li v-if="filteredMaps.length === 0" class="px-4 py-2 text-sm">No maps found.</li>
@@ -27,17 +27,18 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import Icon from '#/components/Icon.vue';
-import type { TmMap } from '#/types/api/tmMap';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
-const { maps, pickedMaps } = defineProps<{
-    maps: TmMap[];
-    pickedMaps: TmMap[];
+const { maps, pickedMaps, nameProp } = defineProps<{
+    maps: T[];
+    pickedMaps: T[];
+    nameProp: keyof T;
+    uniqueId: keyof T;
 }>();
 
-const selectedMap = defineModel<TmMap>();
+const selectedMap = defineModel<T>();
 const remainingMaps = computed(() => maps.filter((map) => !pickedMaps.includes(map)));
 
 const dropdownRef = ref<HTMLElement | null>(null);
@@ -53,14 +54,14 @@ const previousValue = ref<string>();
 const filteredMaps = computed(() => {
     const filter = search.value.toLowerCase();
     if (!filter) return remainingMaps.value;
-    return remainingMaps.value.filter((map) => map.name.toLowerCase().includes(filter));
+    return remainingMaps.value.filter((map) => String(map[nameProp]).toLowerCase().includes(filter));
 });
 
 /* Open dropdown */
 function open() {
     if (isOpen.value) return;
 
-    previousValue.value = selectedMap.value?.name;
+    previousValue.value = String(selectedMap.value?.[nameProp] ?? '');
 
     search.value = '';
     isOpen.value = true;
@@ -81,9 +82,9 @@ function close(committed = false) {
 }
 
 /* Select item */
-function select(map: TmMap) {
+function select(map: T) {
     selectedMap.value = map;
-    search.value = map.name;
+    search.value = String(map[nameProp]);
     close(true);
 }
 
@@ -142,7 +143,7 @@ onUnmounted(() => {
 /* Keep search synced with selection */
 watch(selectedMap, () => {
     if (!isOpen.value) {
-        search.value = selectedMap.value?.name ?? '';
+        search.value = String(selectedMap.value?.[nameProp] ?? '');
     }
 });
 </script>

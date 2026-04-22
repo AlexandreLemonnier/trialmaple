@@ -134,4 +134,9 @@ public class PictureService {
     public Path getPicturePath(String game, String mapName, int attempt, String pictureName) {
         return Paths.get(mapsPath, game, mapName, String.valueOf(attempt), pictureName);
     }
+
+    public List<String> getMapsName(GameMode gameMode) {
+        String gameFolder = gameMode.getPicturesFolderName();
+        return index.get(gameFolder).keySet().stream().toList();
+    }
 }

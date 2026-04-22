@@ -12,10 +12,10 @@
                              :maps
                              :picked-maps
                              name-prop="name"
-                             unique-id="uuid" />
+                             unique-id="name" />
                 <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
                         type="button"
-                        :inert="!maps.length || !selectedMap || isGuessCardAnimating"
+                        :inert="!maps.length || !selectedMap"
                         @click="handleGuess">
                     <span v-if="!isGuessLoading">Guess</span>
                     <Loader v-else />
@@ -36,50 +36,49 @@
                              :daily-map-uuid-storage-key />
             </template>
         </WinScreen>
-        <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
-            <GuessCard v-for="([uuid, guess]) in reversedHistory"
-                       :key="uuid"
-                       :map-name="getMapDisplayName(uuid)"
-                       :guess
-                       :hints-to-display
-                       @animationFinished="onGuessCardAnimationFinished"
-                       :ignore-animations="ignoreCardsAnimations"
-                       :show-login />
+        <div class="flex flex-wrap gap-2 lg:gap-4">
+            <GuessChip v-for="([mapName, guess]) in Object.entries(history)"
+                       :key="mapName"
+                       :name="mapName"
+                       :success="guess.success" />
         </div>
-        <ExternalMapsListNote :game-mode />
+        <div class="flex flex-col w-full gap-2 lg:gap-4 items-center">
+            <Picture v-for="n in reversedPicturesRange"
+                     :key="n"
+                     :src="getPictureUrl(n)"
+                     :number="n" />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import ExternalMapsListNote from '#/components/ExternalMapsListNote.vue';
-import GuessCard from '#/components/GuessCard.vue';
+import GuessChip from '#/components/GuessChip.vue';
 import Loader from '#/components/Loader.vue';
 import MapCombobox from '#/components/MapCombobox.vue';
+import Picture from '#/components/Picture.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
 import ShareButton from '#/components/ShareButton.vue';
 import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
+import { usePictureApi } from '#/composables/api/usePictureApi';
 import { useConfetti } from '#/composables/useConfetti';
 import { useShare } from '#/composables/useShare';
 import { createGameStore } from '#/stores/gameStore';
 import type { DailyStats } from '#/types/api/dailyStats';
 import type { GameMode } from '#/types/api/gameMode';
+import type { GeoguessrMap } from '#/types/api/geoguessrMap';
 import type { Guess } from '#/types/api/guess';
-import type { TmMap } from '#/types/api/tmMap';
-import type { HintInformation } from '#/types/HintInformation';
 import { storeToRefs } from 'pinia';
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 
-const { gameMode, historyStorageKey, dailyMapUuidStorageKey, hintsToDisplay, showLogin = true } = defineProps<{
-    gameMode: GameMode;
-    gameModeDisplayName: string;
-    historyStorageKey: string;
-    dailyMapUuidStorageKey: string;
-    hintsToDisplay: HintInformation[];
-    showLogin?: boolean;
-}>();
+const gameMode: GameMode = 'GEOGUESSR_TM2020_RPG';
+const historyStorageKey = 'tm2020RpgGeoguessrHistory';
+const dailyMapUuidStorageKey = 'tm2020RpgGeoguessrDailyMapUuid';
+const gameModeDisplayName = 'TM2020 RPG Geoguessr';
+
+const MAX_PICTURES_NUMBER = 3;
 
 const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
 const { isInHistory } = gameStore;
@@ -87,23 +86,22 @@ const { history, dailyMapUuid, dailyMapNumber, playersAverageScore } = storeToRe
 const { triggerConfetti } = useConfetti();
 const { hintToEmoji } = useShare();
 
-const maps = ref<TmMap[]>([]);
-const todayWinnerCount = ref<number>();
-
-const reversedHistory = computed(() =>
-    Object.entries(history.value).reverse()
+const picturesCount = computed(() => {
+    return Math.min(MAX_PICTURES_NUMBER, Object.keys(history.value).length + 1);
+});
+const reversedPicturesRange = computed(() =>
+    Array.from({ length: picturesCount.value }, (_, i) => picturesCount.value - i)
 );
 
-const selectedMap = ref<TmMap>();
-const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.uuid)));
+const maps = ref<GeoguessrMap[]>([]);
+const todayWinnerCount = ref<number>();
+
+const selectedMap = ref<GeoguessrMap>();
+const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.name)));
 const hasMapAlreadyBeenPicked = ref(false);
 const hasWon = ref(false);
 
 const isGuessLoading = ref(false);
-const isGuessCardAnimating = ref(false);
-const pendingWin = ref(false);
-// To avoid animations when initializing history from local storage
-const ignoreCardsAnimations = ref(true);
 
 /** Animations */
 watch(hasWon, () => {
@@ -112,25 +110,14 @@ watch(hasWon, () => {
     }
 });
 
-function onGuessCardAnimationFinished() {
-    if (pendingWin.value) {
-        hasWon.value = true;
-        pendingWin.value = false;
-    }
-    isGuessCardAnimating.value = false;
-}
-
 /** Game core */
 const guessApi = useGuessApi();
-const mapsApi = useMapsApi();
 const dailyStatsApi = useDailyStatsApi();
+const mapsApi = useMapsApi();
+const pictureApi = usePictureApi();
 
-function getMapDisplayName(uuid: string) {
-    const matchingMap = maps.value.find((map) => map.uuid === uuid);
-    if (matchingMap) {
-        return matchingMap.displayName ?? matchingMap.name;
-    }
-    return 'Map not found';
+function getPictureUrl(attempt: number) {
+    return pictureApi.getPictureUrl(gameMode, attempt);
 }
 
 function historyContainsSuccess() {
@@ -139,71 +126,40 @@ function historyContainsSuccess() {
 
 async function handleGuess() {
     if (!selectedMap.value || !dailyMapUuid.value) return;
-    ignoreCardsAnimations.value = false;
-    hasMapAlreadyBeenPicked.value = isInHistory(selectedMap.value.uuid);
+    hasMapAlreadyBeenPicked.value = isInHistory(selectedMap.value.name);
     if (hasMapAlreadyBeenPicked.value) return;
     try {
         isGuessLoading.value = true;
-        isGuessCardAnimating.value = true;
         const attemptCount = Object.keys(history.value).length + 1;
         const guess: Guess = await guessApi.postGuess(gameMode, {
-            guessedMapUuid: selectedMap.value.uuid,
+            guessedMapName: selectedMap.value.name,
             guessNumber: attemptCount,
             dailyMapUuid: dailyMapUuid.value
         });
         if (guess.isValidDay) {
-            history.value[selectedMap.value.uuid] = guess;
+            history.value[selectedMap.value.name] = guess;
         } else {
             globalThis.location.reload();
         }
     } catch (e) {
         console.error('Error while guessing map', e);
-        isGuessCardAnimating.value = false;
     } finally {
         isGuessLoading.value = false;
     }
 }
 
-function formatGuess(guess: Guess) {
-    let result = '';
-    const guessProps = hintsToDisplay.map((hint) => hint.guessProp);
-    for (const prop of guessProps) {
-        const guessHint = guess[prop];
-        if (guessHint !== null && typeof guessHint !== 'boolean') {
-            if (Array.isArray(guessHint)) {
-                result += hintToEmoji(guessHint.some((hintPair) => hintPair.hint));
-            } else {
-                result += hintToEmoji(guessHint.hint);
-            }
-        }
-    }
-    return result;
-}
-
 function formatResult() {
-    let result = '';
-    for (const guess of Object.values(history.value)) {
-        result += `\n${formatGuess(guess)}`;
-    }
-    return result;
+    return `\n${Object.values(history.value).map((guess) => hintToEmoji(guess.success)).join('')}`;
 }
 
 /** Local storage */
 watch(history, () => {
     if (historyContainsSuccess()) {
-        pendingWin.value = true;
+        hasWon.value = true;
     }
 }, { deep: true });
 
 /** FETCH DATA */
-async function fetchMaps() {
-    try {
-        maps.value = await mapsApi.getMaps(gameMode);
-        maps.value.sort((a, b) => a.name.localeCompare(b.name));
-    } catch (e) {
-        console.error('Error while fetching maps', e);
-    }
-}
 
 async function fetchDailyStats() {
     try {
@@ -223,6 +179,16 @@ async function fetchDailyMapUuid() {
         console.error('Error while fetching daily map uuid', e);
     }
     return null;
+}
+
+/** FETCH DATA */
+async function fetchMaps() {
+    try {
+        maps.value = await mapsApi.getGeoguessrMaps(gameMode);
+        maps.value.sort((a, b) => a.name.localeCompare(b.name));
+    } catch (e) {
+        console.error('Error while fetching maps', e);
+    }
 }
 
 async function fetchData() {

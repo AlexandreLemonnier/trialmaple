@@ -43,7 +43,7 @@ public class PictureController {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
             int attemptValue = Integer.parseInt(attempt);
-            if (attemptValue > TmMapleConstant.GEOGUESSR_PICTURES_COUNT) {
+            if (attemptValue <= 0 || attemptValue > TmMapleConstant.GEOGUESSR_PICTURES_COUNT) {
                 throw new InvalidAttemptException(attempt);
             }
             Path picturePath = pictureService.getTodayPicturePath(gameModeValue, dailyMap, attemptValue);
