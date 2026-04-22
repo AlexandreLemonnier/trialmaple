@@ -2,7 +2,7 @@ import { useStorage } from '@vueuse/core';
 import { onMounted } from 'vue';
 
 export function useTheme() {
-    const theme = useStorage<'light' | 'dark'>('theme', 'light');
+    const theme = useStorage<'light' | 'dark' | null>('theme', null);
 
     function applyTheme() {
         const root = document.documentElement;

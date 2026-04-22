@@ -9,7 +9,6 @@
             <p><strong>About current game mode</strong></p>
             <template v-if="gameModeInfo">
                 <p v-if="gameModeInfo.excludeUnfinished">Note that <strong>unfinished maps</strong> are not included.</p>
-                <p v-if="gameModeInfo.updatedAt">Maps data last updated on <strong>{{ gameModeInfo.updatedAt }}</strong>.</p>
                 <p v-if="gameModeInfo.autoUpdate">Maps data are automatically updated everyday at midnight.</p>
             </template>
         </div>
@@ -28,12 +27,10 @@ const route = useRoute();
 
 const GAME_MODE_CONFIG: Record<Route, {
     excludeUnfinished?: boolean;
-    updatedAt?: string;
     autoUpdate?: boolean;
 }> = {
     [Route.TMNF_TRIAL_CLASSIC_MODE]: {
-        excludeUnfinished: true,
-        updatedAt: '9 February 2026'
+        excludeUnfinished: true
     },
     [Route.TMNF_RPG_CLASSIC_MODE]: {
         autoUpdate: true
