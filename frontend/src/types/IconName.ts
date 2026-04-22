@@ -8,4 +8,6 @@ export type IconName =
     | 'sun'
     | 'star'
     | 'star-fill'
-    | 'discord';
+    | 'discord'
+    | 'lock'
+    | 'lock-open';
