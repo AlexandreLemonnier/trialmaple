@@ -17,11 +17,12 @@
   --color-navigation-bar-background: #ffffff;
   --color-navigation-bar-selection-background: #f8f4f4;
 
-  --color-theme-toggle-background: #e6e6e6;
+  --color-theme-toggle-background: #e4e4e4;
   --color-theme-toggle-knob: #ffffff;
 
   --color-confirmation-text: #089101;
   --color-win-background: #26a520;
+  --color-share-button: #f8f4f4;
   --color-guess-button: #2dc426;
   --color-fav-star: #ffe500;
   --color-discord: #5865F2;
@@ -43,7 +44,7 @@
 
   .dark {
     --color-app-background: #202020;
-    --color-app-text: #ebebeb;
+    --color-app-text: #d8d8d8;
     --color-app-border: #4b4b4b;
 
     --color-header-background: #2a2a2a;
@@ -56,6 +57,7 @@
 
     --color-confirmation-text: #22911c;
     --color-win-background: #006400;
+    --color-share-button: #2a2a2a;
     --color-guess-button: #117c0d;
     --color-fav-star: #e7d000;
 

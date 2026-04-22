@@ -1,6 +1,6 @@
 <template>
     <Transition name="fade" appear>
-        <div class="flex flex-col gap-4 items-center p-2 lg:p-4 border bg-win-background rounded-lg">
+        <div class="flex flex-col gap-4 items-center p-2 lg:p-4 border-2 border-app-border bg-win-background rounded-lg">
             <div v-if="imagesLoaded" class="flex gap-2 items-center text-5xl lg:text-6xl xl:text-7xl">
                 <span>woho</span>
                 <img :src="smirkcat" alt="smirkcat" class="h-[1em]" />
