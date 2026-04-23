@@ -1,7 +1,7 @@
 <template>
     <div class="flex gap-2 items-center">
         <button type="button"
-                class="text-md lg:text-lg xl:text-xl rounded-md bg-share-button border border-app-border py-1 px-2 cursor-pointer hover:scale-105 transition-transform"
+                class="text-md lg:text-lg xl:text-xl rounded-md bg-button border border-app-border py-1 px-2 cursor-pointer hover:scale-105 transition-transform"
                 :class="resultCopyClass[resultCopyStatus]"
                 @click="copyHistoryResult">
             {{ resultCopyMessage[resultCopyStatus] }}

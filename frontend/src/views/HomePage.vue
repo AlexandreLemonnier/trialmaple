@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-8 items-center mt-2 lg:mt-4">
-        <h1 class="text-3xl lg:text-4xl font-bold">Trackmania Maple</h1>
+        <h1 class="text-3xl lg:text-4xl font-bold">- Trackmania Maple -</h1>
         <h2 class="text-lg lg:text-2xl">Choose a game mode and find today's map!</h2>
         <div class="flex flex-col lg:flex-wrap xl:flex-row xl:flex-nowrap gap-4 items-center">
             <!-- Game Card -->
@@ -13,7 +13,7 @@
                     <h3>{{ game.title }}</h3>
                 </div>
                 <!-- Sub styles (Trial, RPG) -->
-                <div class="flex gap-2 w-full">
+                <div class="flex w-full">
                     <div v-for="style in game.styles"
                          :key="style.title"
                          class="flex flex-col items-center w-full gap-2 lg:gap-3 px-2 lg:px-3 py-1.5 lg:py-2.5">
@@ -22,7 +22,7 @@
                             <button v-for="gameMode in style.gameModes"
                                     :key="gameMode.title"
                                     type="button"
-                                    class="flex items-center gap-1.5 lg:gap-2 text-sm lg:text-base rounded-full border-2 border-app-border py-1 px-3 bg-share-button cursor-pointer hover:scale-105 transition-transform"
+                                    class="flex items-center gap-1.5 lg:gap-2 text-sm lg:text-base rounded-full border-2 border-app-border py-1 px-3 bg-button cursor-pointer hover:scale-105 transition-transform"
                                     @click="navigateToRoute(gameMode.routeName)">
                                 <Icon class="text-error" :name="gameMode.icon" size="sm" />
                                 <span class="hidden xs:block">{{ gameMode.title }}</span>

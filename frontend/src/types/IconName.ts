@@ -11,4 +11,5 @@ export type IconName =
     | 'lock'
     | 'lock-open'
     | 'triangle'
-    | 'image';
+    | 'image'
+    | 'house';
