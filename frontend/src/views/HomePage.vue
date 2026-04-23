@@ -19,14 +19,14 @@
                          class="flex flex-col items-center w-full gap-2 lg:gap-3 px-2 lg:px-3 py-1.5 lg:py-2.5">
                         <h3 class="text-sm lg:text-base font-semibold italic">{{ style.title }}</h3>
                         <div class="flex flex-col gap-1">
-                            <button v-for="gameMode in style.gameModes"
+                            <Button v-for="gameMode in style.gameModes"
                                     :key="gameMode.title"
-                                    type="button"
-                                    class="flex items-center gap-1.5 lg:gap-2 text-sm lg:text-base rounded-full border-2 border-app-border py-1 px-3 bg-button cursor-pointer hover:scale-105 transition-transform"
-                                    @click="navigateToRoute(gameMode.routeName)">
-                                <Icon class="text-error" :name="gameMode.icon" size="sm" />
-                                <span class="hidden xs:block">{{ gameMode.title }}</span>
-                            </button>
+                                    @click="navigateToRoute(gameMode.routeName)"
+                                    :label="gameMode.title"
+                                    :icon-name="gameMode.icon"
+                                    icon-class="text-error"
+                                    icon-size="sm"
+                                    icon-position="left" />
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
 import tm2Icon from '#/assets/tm2.png';
 import tm2020Icon from '#/assets/tm2020.jpg';
 import tmnfIcon from '#/assets/tmnf.jpg';
-import Icon from '#/components/Icon.vue';
+import Button from '#/components/Button.vue';
 import { Route } from '#/router/Route';
 import type { IconName } from '#/types/IconName';
 import { useRouter } from 'vue-router';

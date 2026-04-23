@@ -1,15 +1,11 @@
 <template>
     <div class="flex gap-2 items-center">
-        <button type="button"
-                class="text-md lg:text-lg xl:text-xl rounded-md bg-button border border-app-border py-1 px-2 cursor-pointer hover:scale-105 transition-transform"
-                :class="resultCopyClass[resultCopyStatus]"
-                @click="copyHistoryResult">
-            {{ resultCopyMessage[resultCopyStatus] }}
-        </button>
+        <Button :label="resultCopyMessage[resultCopyStatus]" :class="resultCopyClass[resultCopyStatus]" @click="copyHistoryResult" />
     </div>
 </template>
 
 <script setup lang="ts">
+import Button from '#/components/Button.vue';
 import { createGameStore } from '#/stores/gameStore';
 import type { GameMode } from '#/types/api/gameMode';
 import { copyToClipboard } from '#/utils/copyToClipboard';
