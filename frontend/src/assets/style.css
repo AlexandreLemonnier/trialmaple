@@ -14,8 +14,6 @@
 
   --color-header-background: #f8f4f4;
   --color-card-background: #f8f4f4;
-  --color-navigation-bar-background: #ffffff;
-  --color-navigation-bar-selection-background: #f8f4f4;
 
   --color-theme-toggle-background: #e4e4e4;
   --color-theme-toggle-knob: #ffffff;
@@ -48,8 +46,6 @@
 
     --color-header-background: #2a2a2a;
     --color-card-background: #2a2a2a;
-    --color-navigation-bar-background: #202020;
-    --color-navigation-bar-selection-background: #2a2a2a;
 
     --color-theme-toggle-background: #1d1d1d;
     --color-theme-toggle-knob: #000000;
