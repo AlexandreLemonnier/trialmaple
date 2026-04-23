@@ -1,4 +1,5 @@
 import { Route } from '#/router/Route';
+import HomePage from '#/views/HomePage.vue';
 import Tm2020RpgGeoguessrGame from '#/views/Tm2020RpgGeoguessrGame.vue';
 import Tm2020TrialClassicGame from '#/views/Tm2020TrialClassicGame.vue';
 import Tm2RpgClassicGame from '#/views/Tm2RpgClassicGame.vue';
@@ -7,17 +8,14 @@ import TmnfRpgClassicGame from '#/views/TmnfRpgClassicGame.vue';
 import TmnfTrialClassicGame from '#/views/TmnfTrialClassicGame.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
-function isValidRoute(route: Route) {
-    return Object.values(Route).includes(route);
-}
-
 const router = createRouter({
     history: createWebHistory('/'),
     routes: [
         {
             path: '/',
-            redirect: () => {
-                return Route.TMNF_TRIAL_CLASSIC_MODE;
+            component: HomePage,
+            meta: {
+                titleKey: 'Home'
             }
         },
         {

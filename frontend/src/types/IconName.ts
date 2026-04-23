@@ -9,4 +9,6 @@ export type IconName =
     | 'star-fill'
     | 'discord'
     | 'lock'
-    | 'lock-open';
+    | 'lock-open'
+    | 'triangle'
+    | 'image';
