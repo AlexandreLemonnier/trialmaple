@@ -1,6 +1,9 @@
-export type GameMode = 'CLASSIC_TMNF_TRIAL'
+export type ClassicGameMode = 'CLASSIC_TMNF_TRIAL'
     | 'CLASSIC_TMNF_RPG'
     | 'CLASSIC_TM2_TRIAL'
     | 'CLASSIC_TM2_RPG'
-    | 'CLASSIC_TM2020_TRIAL'
-    | 'GEOGUESSR_TM2020_RPG';
+    | 'CLASSIC_TM2020_TRIAL';
+
+export type GeoguessrGameMode = 'GEOGUESSR_TM2020_RPG';
+
+export type GameMode = ClassicGameMode | GeoguessrGameMode;

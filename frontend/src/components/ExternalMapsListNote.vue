@@ -3,15 +3,15 @@
 </template>
 
 <script setup lang="ts">
-import type { GameMode } from '#/types/api/gameMode';
+import type { ClassicGameMode } from '#/types/api/gameMode';
 import { ExternalMapList } from '#/types/ExternalMapList';
 import { computed } from 'vue';
 
 const { gameMode } = defineProps<{
-    gameMode: GameMode;
+    gameMode: ClassicGameMode;
 }>();
 
-const MAP_LISTS: Record<GameMode, {
+const MAP_LISTS: Record<ClassicGameMode, {
     url: ExternalMapList,
     name: string
 }> = {

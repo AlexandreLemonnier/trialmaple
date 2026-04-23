@@ -1,5 +1,5 @@
 import { useApi } from '#/composables/useApi';
-import type { GameMode } from '#/types/api/gameMode';
+import type { ClassicGameMode, GeoguessrGameMode } from '#/types/api/gameMode';
 import type { GeoguessrMap } from '#/types/api/geoguessrMap';
 import type { TmMap } from '#/types/api/tmMap';
 
@@ -7,7 +7,7 @@ export function useMapsApi() {
     const { request } = useApi('/maps');
 
     return {
-        async getMaps(gameMode: GameMode) {
+        async getMaps(gameMode: ClassicGameMode) {
             return await request<TmMap[]>('/list', {
                 method: 'GET',
                 query: {
@@ -15,7 +15,7 @@ export function useMapsApi() {
                 }
             });
         },
-        async getGeoguessrMaps(gameMode: GameMode) {
+        async getGeoguessrMaps(gameMode: GeoguessrGameMode) {
             return await request<GeoguessrMap[]>('/geoguessr', {
                 method: 'GET',
                 query: {

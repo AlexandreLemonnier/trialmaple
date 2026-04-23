@@ -68,7 +68,7 @@ import { useConfetti } from '#/composables/useConfetti';
 import { useShare } from '#/composables/useShare';
 import { createGameStore } from '#/stores/gameStore';
 import type { DailyStats } from '#/types/api/dailyStats';
-import type { GameMode } from '#/types/api/gameMode';
+import type { ClassicGameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
 import type { TmMap } from '#/types/api/tmMap';
 import type { HintInformation } from '#/types/HintInformation';
@@ -76,7 +76,7 @@ import { storeToRefs } from 'pinia';
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 
 const { gameMode, historyStorageKey, dailyMapUuidStorageKey, hintsToDisplay, showLogin = true } = defineProps<{
-    gameMode: GameMode;
+    gameMode: ClassicGameMode;
     gameModeDisplayName: string;
     historyStorageKey: string;
     dailyMapUuidStorageKey: string;
