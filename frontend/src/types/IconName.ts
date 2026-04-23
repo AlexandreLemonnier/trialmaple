@@ -6,7 +6,6 @@ export type IconName =
     | 'chevron-up'
     | 'moon'
     | 'sun'
-    | 'star'
     | 'star-fill'
     | 'discord'
     | 'lock'

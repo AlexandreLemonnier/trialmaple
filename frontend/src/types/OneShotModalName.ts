@@ -1,1 +1,1 @@
-export type OneShotModalName = 'FAVORITE_PAGE' | 'NEW_DISCORD';
+export type OneShotModalName = 'NEW_DISCORD';

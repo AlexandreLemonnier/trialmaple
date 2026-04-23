@@ -1,5 +1,4 @@
 import { Route } from '#/router/Route';
-import { usePreferencesStore } from '#/stores/preferencesStore';
 import Tm2020RpgGeoguessrGame from '#/views/Tm2020RpgGeoguessrGame.vue';
 import Tm2020TrialClassicGame from '#/views/Tm2020TrialClassicGame.vue';
 import Tm2RpgClassicGame from '#/views/Tm2RpgClassicGame.vue';
@@ -18,11 +17,6 @@ const router = createRouter({
         {
             path: '/',
             redirect: () => {
-                const { favoritePage } = usePreferencesStore();
-                // Safeguard if someone changes the value in local storage, or if a route gets deleted
-                if (isValidRoute(favoritePage)) {
-                    return favoritePage;
-                }
                 return Route.TMNF_TRIAL_CLASSIC_MODE;
             }
         },
