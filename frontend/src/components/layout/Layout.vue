@@ -7,13 +7,13 @@
                 <slot></slot>
             </main>
             <footer class="flex flex-col mt-auto mx-2 lg:mx-4 mb-2 text-sm italic">
-                <button v-if="route.name !== Route.HOME"
-                        type="button"
-                        class="flex items-center w-fit gap-1.5 lg:gap-2 text-sm lg:text-base rounded-full border-2 border-app-border py-1 px-3 bg-button cursor-pointer hover:scale-105 transition-transform"
-                        @click="router.push({ name: Route.HOME })">
-                    <Icon name="house" size="sm" />
-                    <span class="hidden xs:block">Back to home</span>
-                </button>
+                <Button v-if="route.name !== Route.HOME"
+                        class="w-fit"
+                        label="Back to home"
+                        icon-name="house"
+                        icon-size="sm"
+                        icon-position="left"
+                        @click="router.push({ name: Route.HOME })" />
                 <span class="self-center">Made by <strong>Arsolight</strong></span>
             </footer>
         </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '#/components/Icon.vue';
+import Button from '#/components/Button.vue';
 import Gutter from '#/components/layout/Gutter.vue';
 import Header from '#/components/layout/Header.vue';
 import { Route } from '#/router/Route';
