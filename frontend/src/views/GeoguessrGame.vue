@@ -39,6 +39,10 @@
                              :daily-map-uuid-storage-key />
             </template>
         </WinScreen>
+        <div class="flex items-center justify-center gap-2 text-sm text-app-text/70 bg-discord/10 py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
+            <span>💡</span>
+            <p>Want to help improve the game? Send me map screenshots (new or existing maps) on Discord!</p>
+        </div>
         <div class="flex flex-wrap gap-2 lg:gap-4">
             <GuessChip v-for="([mapName, guess]) in Object.entries(history)"
                        :key="mapName"
