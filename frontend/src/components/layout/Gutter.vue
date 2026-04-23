@@ -25,7 +25,7 @@ const gutterImage = computed(() => {
         case Route.TM2020_RPG_GEOGUESSR_MODE:
             return 'tm2020-rpg.png';
         default:
-            return 'tmnf-trial.jpg';
+            return 'tm-all.png';
     }
 });
 
