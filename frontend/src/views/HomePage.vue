@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-8 items-center mt-2 lg:mt-4">
+    <div class="flex flex-col gap-8 lg:gap-12 items-center mt-2 lg:mt-4">
         <h1 class="text-3xl lg:text-4xl font-bold">- Trackmania Maple -</h1>
         <h2 class="text-lg lg:text-2xl">Choose a game mode and find today's map!</h2>
         <div class="flex flex-col lg:flex-wrap xl:flex-row xl:flex-nowrap gap-4 items-center">
@@ -32,6 +32,25 @@
                 </div>
             </div>
         </div>
+        <!-- Modes description -->
+        <div class="w-fit bg-card-background border border-app-border rounded-xl p-3 lg:p-5">
+            <h3 class="flex items-center gap-2 font-semibold text-lg lg:text-xl mb-4">
+                <Icon name="circle-info" size="md" />
+                <span>How it works</span>
+            </h3>
+
+            <div class="flex flex-wrap gap-6 md:gap-12 text-nowrap">
+                <div v-for="description in gameDescriptions" :key="description.title" class="flex-1 flex flex-col items-center gap-1">
+                    <span class="font-semibold flex items-center gap-2">
+                        <Icon class="text-error" :name="description.icon" size="sm" />
+                        <span>{{ description.title }}</span>
+                    </span>
+                    <p class="text-sm lg:text-base opacity-75">
+                        {{ description.description }}
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -40,6 +59,7 @@ import tm2Icon from '#/assets/tm2.png';
 import tm2020Icon from '#/assets/tm2020.jpg';
 import tmnfIcon from '#/assets/tmnf.jpg';
 import Button from '#/components/Button.vue';
+import Icon from '#/components/Icon.vue';
 import { Route } from '#/router/Route';
 import type { IconName } from '#/types/IconName';
 import { useRouter } from 'vue-router';
@@ -157,6 +177,25 @@ const games: Game[] = [
                 ]
             }
         ]
+    }
+];
+
+type GameDescription = {
+    title: string;
+    icon: IconName;
+    description: string;
+};
+
+const gameDescriptions: GameDescription[] = [
+    {
+        title: 'Classic mode',
+        icon: 'triangle',
+        description: 'Get hints on every try.'
+    },
+    {
+        title: 'Geoguessr mode',
+        icon: 'image',
+        description: 'Get up to 3 pictures.'
     }
 ];
 </script>
