@@ -1,10 +1,10 @@
 <template>
     <div class="absolute top-0 left-0 flex min-h-screen overflow-x-hidden w-full">
         <Gutter />
-        <div class="flex flex-col w-full md:w-3/5 bg-app-background text-app-text">
+        <div class="flex flex-col w-full md:w-3/5 bg-app-background text-app-text min-h-screen">
             <Header />
             <NavigationBar />
-            <main class="mx-2 mb-4">
+            <main class="mx-2 mb-4 flex flex-1 flex-col">
                 <slot></slot>
             </main>
             <footer class="flex flex-col mt-auto mb-2 text-center text-sm italic">

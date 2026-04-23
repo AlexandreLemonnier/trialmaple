@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center gap-4">
+    <div v-if="isReady" class="flex flex-col items-center gap-4">
         <ResetCountdown class="self-end" />
         <div class="text-md lg:text-lg pt-4 text-center">
             <span v-if="todayWinnerCount !== undefined">
@@ -48,6 +48,9 @@
         </div>
         <ExternalMapsListNote :game-mode />
     </div>
+    <div v-else class="flex items-center justify-center h-full">
+        <Loader />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -86,6 +89,8 @@ const { isInHistory } = gameStore;
 const { history, dailyMapUuid, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
 const { triggerConfetti } = useConfetti();
 const { hintToEmoji } = useShare();
+
+const isReady = ref(false);
 
 const maps = ref<TmMap[]>([]);
 const todayWinnerCount = ref<number>();
@@ -245,6 +250,7 @@ onBeforeMount(async () => {
     } else if (historyContainsSuccess()) {
         hasWon.value = true;
     }
+    isReady.value = true;
 });
 
 </script>
