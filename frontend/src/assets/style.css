@@ -8,9 +8,15 @@
 
   --width-sidebar: 25vw;
 
+  --color-primary-white: #eeeeee;
+  --color-success: #2dc426;
+  --color-error: #e91816;
+
   --color-app-background: #ffffff;
   --color-app-text: #000000;
   --color-app-border: #7c7c7c;
+
+  --color-modal-background: #e7e7e7;
 
   --color-header-background: #f8f4f4;
   --color-card-background: #f8f4f4;
@@ -20,12 +26,12 @@
 
   --color-confirmation-text: #089101;
   --color-win-background: #26a520;
+  --color-lose-background: #a50f0d;
   --color-button: #f8f4f4;
   --color-guess-button: #2dc426;
-  --color-discord: #5865F2;
+  --color-giveup-button: #d61815;
 
-  --color-success: #2dc426;
-  --color-error: #e91816;
+  --color-discord: #5865F2;
 
   --breakpoint-xs: 380px;
   --breakpoint-sm: 500px;
@@ -40,9 +46,15 @@
   }
 
   .dark {
+    --color-primary-white: #d8d8d8;
+    --color-success: #117c0d;
+    --color-error: #911313;
+
     --color-app-background: #202020;
     --color-app-text: #d8d8d8;
     --color-app-border: #4b4b4b;
+
+    --color-modal-background: #111111;
 
     --color-header-background: #2a2a2a;
     --color-card-background: #2a2a2a;
@@ -52,11 +64,10 @@
 
     --color-confirmation-text: #22911c;
     --color-win-background: #006400;
+    --color-lose-background: #680e0e;
     --color-button: #2a2a2a;
     --color-guess-button: #117c0d;
-
-    --color-success: #117c0d;
-    --color-error: #911313;
+    --color-giveup-button: #800e0e;
   }
 
   ::-webkit-scrollbar {
@@ -65,8 +76,6 @@
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
     background: #b3b3b3;
   }
   ::-webkit-scrollbar-thumb:hover,

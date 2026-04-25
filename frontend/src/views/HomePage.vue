@@ -24,9 +24,7 @@
                                     @click="navigateToRoute(gameMode.routeName)"
                                     :label="gameMode.title"
                                     :icon-name="gameMode.icon"
-                                    icon-class="text-error"
-                                    icon-size="sm"
-                                    icon-position="left" />
+                                    icon-class="text-error" />
                         </div>
                     </div>
                 </div>

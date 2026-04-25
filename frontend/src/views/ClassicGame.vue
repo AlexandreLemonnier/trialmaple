@@ -23,11 +23,12 @@
             </div>
             <span v-if="hasMapAlreadyBeenPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
-        <WinScreen v-if="hasWon"
-                   :game-mode
-                   :game-mode-display-name
-                   :history-storage-key
-                   :daily-map-uuid-storage-key>
+        <ResultScreen v-if="hasWon"
+                      :has-won="true"
+                      :game-mode
+                      :game-mode-display-name
+                      :history-storage-key
+                      :daily-map-uuid-storage-key>
             <template #shareButton>
                 <ShareButton :format-result="formatResult"
                              :game-mode
@@ -35,7 +36,7 @@
                              :history-storage-key
                              :daily-map-uuid-storage-key />
             </template>
-        </WinScreen>
+        </ResultScreen>
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
             <GuessCard v-for="([uuid, guess]) in reversedHistory"
                        :key="uuid"
@@ -59,8 +60,8 @@ import GuessCard from '#/components/GuessCard.vue';
 import Loader from '#/components/Loader.vue';
 import MapCombobox from '#/components/MapCombobox.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
+import ResultScreen from '#/components/ResultScreen.vue';
 import ShareButton from '#/components/ShareButton.vue';
-import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';

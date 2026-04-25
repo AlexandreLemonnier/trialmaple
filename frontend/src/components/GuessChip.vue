@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from './Icon.vue';
+import Icon from '#/components/Icon.vue';
 
 defineProps<{
     name: string;

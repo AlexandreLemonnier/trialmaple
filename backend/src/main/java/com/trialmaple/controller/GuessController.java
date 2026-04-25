@@ -1,5 +1,6 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.model.dto.AnswerDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,6 +60,22 @@ public class GuessController {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
             return dailyMap.getUuid().toString();
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        }
+    }
+
+    /**
+     * Give up on finding daily map
+     */
+    @PostMapping("/guess/giveup")
+    public AnswerDto giveUp(@RequestParam String gameMode) throws NoDailyMapFoundException {
+        try {
+            GameMode gameModeValue = GameMode.valueOf(gameMode);
+            DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
+            String mapName = dailyMap.getMap() != null ? dailyMap.getMap().getName() : dailyMap.getDailyPictures().getMapName();
+            return new AnswerDto(mapName);
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

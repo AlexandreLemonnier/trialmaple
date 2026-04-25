@@ -6,13 +6,11 @@
             <main class="mx-2 mb-4 flex flex-1 flex-col">
                 <slot></slot>
             </main>
-            <footer class="flex flex-col mt-auto mx-2 lg:mx-4 mb-2 text-sm italic">
+            <footer class="flex flex-col gap-2 mt-auto mx-2 lg:mx-4 mb-2 text-sm italic">
                 <Button v-if="route.name !== Route.HOME"
                         class="w-fit"
                         label="Back to home"
                         icon-name="house"
-                        icon-size="sm"
-                        icon-position="left"
                         @click="router.push({ name: Route.HOME })" />
                 <span class="self-center">Made by <strong>Arsolight</strong></span>
             </footer>

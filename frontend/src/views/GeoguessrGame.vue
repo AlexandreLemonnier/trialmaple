@@ -6,7 +6,7 @@
                 <strong>{{ todayWinnerCount }} players </strong> have solved {{ gameModeDisplayName }} #{{ dailyMapNumber }}
             </span>
         </div>
-        <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
+        <div v-if="!gameEnded" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex flex-col gap-2 lg:gap-4 items-center">
                 <h2 class="text-lg lg:text-xl font-semibold">Which map is this?</h2>
                 <div class="flex gap-4 w-full">
@@ -26,11 +26,13 @@
             </div>
             <span v-if="hasMapAlreadyBeenPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
-        <WinScreen v-if="hasWon"
-                   :game-mode
-                   :game-mode-display-name
-                   :history-storage-key
-                   :daily-map-uuid-storage-key>
+        <ResultScreen v-if="gameEnded"
+                      :has-won="hasWon"
+                      :answer="answer"
+                      :game-mode
+                      :game-mode-display-name
+                      :history-storage-key
+                      :daily-map-uuid-storage-key>
             <template #shareButton>
                 <ShareButton :format-result="formatResult"
                              :game-mode
@@ -38,8 +40,8 @@
                              :history-storage-key
                              :daily-map-uuid-storage-key />
             </template>
-        </WinScreen>
-        <div class="flex items-center justify-center gap-2 text-sm text-app-text/70 bg-discord/10 py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
+        </ResultScreen>
+        <div v-if="gameEnded" class="flex items-center justify-center gap-2 text-sm text-app-text/70 bg-discord/10 py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
             <span>💡</span>
             <p>Want to help improve the game? Send me map screenshots (new or existing maps) on Discord!</p>
         </div>
@@ -55,6 +57,7 @@
                      :src="getPictureUrl(n)"
                      :number="n" />
         </div>
+        <GiveUpButton :game-mode="gameMode" @done="handleGiveUp" />
     </div>
     <div v-else class="flex items-center justify-center h-full">
         <Loader />
@@ -62,13 +65,14 @@
 </template>
 
 <script setup lang="ts">
+import GiveUpButton from '#/components/GiveUpButton.vue';
 import GuessChip from '#/components/GuessChip.vue';
 import Loader from '#/components/Loader.vue';
 import MapCombobox from '#/components/MapCombobox.vue';
 import Picture from '#/components/Picture.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
+import ResultScreen from '#/components/ResultScreen.vue';
 import ShareButton from '#/components/ShareButton.vue';
-import WinScreen from '#/components/WinScreen.vue';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
@@ -76,6 +80,7 @@ import { usePictureApi } from '#/composables/api/usePictureApi';
 import { useConfetti } from '#/composables/useConfetti';
 import { useShare } from '#/composables/useShare';
 import { createGameStore } from '#/stores/gameStore';
+import type { Answer } from '#/types/api/answer';
 import type { DailyStats } from '#/types/api/dailyStats';
 import type { GeoguessrGameMode } from '#/types/api/gameMode';
 import type { GeoguessrMap } from '#/types/api/geoguessrMap';
@@ -114,6 +119,10 @@ const selectedMap = ref<GeoguessrMap>();
 const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.name)));
 const hasMapAlreadyBeenPicked = ref(false);
 const hasWon = ref(false);
+const hasLost = ref(false);
+const answer = ref<Answer | undefined>(undefined);
+
+const gameEnded = computed(() => hasWon.value || hasLost.value);
 
 const isGuessLoading = ref(false);
 
@@ -164,6 +173,12 @@ async function handleGuess() {
 
 function formatResult() {
     return `\n${Object.values(history.value).map((guess) => hintToEmoji(guess.success)).join('')}`;
+}
+
+function handleGiveUp(_answer: Answer) {
+    hasLost.value = true;
+    answer.value = _answer;
+    // TODO Local storage pour garder l'info
 }
 
 /** Local storage */

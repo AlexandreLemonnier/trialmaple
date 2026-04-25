@@ -13,9 +13,11 @@
         <div class="flex gap-3 lg:gap-6 items-center">
             <ThemeToggle />
             <Icon class="cursor-pointer" name="circle-info" size="md" @click="isInfoModalOpen = true" />
-            <Button class="hidden lg:flex bg-discord/80 text-white"
+            <Button class="hidden lg:flex bg-discord/80 text-primary-white"
                     label="Discord"
                     icon-name="discord"
+                    icon-size="md"
+                    icon-position="right"
                     @click="isDiscordModalOpen = true" />
             <Icon class="block lg:hidden text-discord cursor-pointer" name="discord" size="md" @click="isDiscordModalOpen = true" />
         </div>

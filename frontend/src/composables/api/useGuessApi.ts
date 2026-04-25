@@ -1,4 +1,5 @@
 import { useApi } from '#/composables/useApi';
+import type { Answer } from '#/types/api/answer';
 import type { GameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
 import type { GuessRequest } from '#/types/api/guessRequest';
@@ -19,6 +20,14 @@ export function useGuessApi() {
         async getDailyMapUuid(gameMode: GameMode) {
             return await request<string>('/daily-map', {
                 method: 'GET',
+                query: {
+                    gameMode
+                }
+            });
+        },
+        async giveUp(gameMode: GameMode) {
+            return await request<Answer>('/giveup', {
+                method: 'POST',
                 query: {
                     gameMode
                 }
