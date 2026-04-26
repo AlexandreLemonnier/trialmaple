@@ -4,7 +4,7 @@
             <div v-if="imagesLoaded" class="flex gap-2 items-center text-5xl lg:text-6xl xl:text-7xl">
                 <template v-if="hasWon">
                     <span>woho</span>
-                    <img :src="smirkcat" alt="smirkcat" class="h-[1em]" />
+                    <img :src="displayedCatImage" alt="smirkcat" class="h-[1em]" @click="handleClick" />
                     <img :src="thumbsup" alt="thumbsup" class="h-[1em]" />
                 </template>
                 <template v-else>
@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import crycat from '#/assets/crycat.png';
+import smilecat from '#/assets/smilecat.png';
 import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
 import { createGameStore } from '#/stores/gameStore';
@@ -69,5 +70,22 @@ onMounted(async () => {
     await Promise.all(imgs.map(waitForImage));
     imagesLoaded.value = true;
 });
+
+/** Easter egg */
+const clickCount = ref(0);
+const isCatSmiling = ref(false);
+
+const displayedCatImage = computed(() => isCatSmiling.value ? smilecat : smirkcat);
+
+function handleClick() {
+    clickCount.value++;
+    if (clickCount.value === 5) {
+        isCatSmiling.value = true;
+        setTimeout(() => {
+            isCatSmiling.value = false;
+            clickCount.value = 0;
+        }, 1000);
+    }
+}
 
 </script>
