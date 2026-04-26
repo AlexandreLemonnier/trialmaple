@@ -1,8 +1,7 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TMNF_RPG"
                  game-mode-display-name="TMNF RPG Maple"
-                 history-storage-key="tmnfRpgClassicHistory"
-                 daily-map-uuid-storage-key="tmnfRpgClassicDailyMapUuid"
+                 storage-key="tmnfRpgClassic"
                  :hints-to-display />
 </template>
 

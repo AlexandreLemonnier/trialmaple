@@ -1,8 +1,7 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TM2_TRIAL"
                  game-mode-display-name="TM2 Trial Maple"
-                 history-storage-key="tm2TrialClassicHistory"
-                 daily-map-uuid-storage-key="tm2TrialClassicDailyMapUuid"
+                 storage-key="tm2TrialClassic"
                  :hints-to-display />
 </template>
 

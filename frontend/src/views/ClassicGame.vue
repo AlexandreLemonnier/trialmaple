@@ -6,7 +6,7 @@
                 <strong>{{ todayWinnerCount }} players </strong> have solved {{ gameModeDisplayName }} #{{ dailyMapNumber }}
             </span>
         </div>
-        <div v-if="!hasWon" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
+        <div v-if="!gameEnded" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
             <div class="flex gap-4 w-full">
                 <MapCombobox v-model="selectedMap"
                              :maps
@@ -23,18 +23,17 @@
             </div>
             <span v-if="hasMapAlreadyBeenPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
-        <ResultScreen v-if="hasWon"
-                      :has-won="true"
+        <ResultScreen v-if="gameEnded"
+                      :has-won
+                      :answer
                       :game-mode
                       :game-mode-display-name
-                      :history-storage-key
-                      :daily-map-uuid-storage-key>
+                      :storage-key>
             <template #shareButton>
                 <ShareButton :format-result="formatResult"
                              :game-mode
                              :game-mode-display-name
-                             :history-storage-key
-                             :daily-map-uuid-storage-key />
+                             :storage-key />
             </template>
         </ResultScreen>
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
@@ -48,6 +47,7 @@
                        :show-login />
         </div>
         <ExternalMapsListNote :game-mode />
+        <GiveUpButton v-if="!gameEnded" :game-mode="gameMode" @done="handleGiveUp" />
     </div>
     <div v-else class="flex items-center justify-center h-full">
         <Loader />
@@ -56,6 +56,7 @@
 
 <script setup lang="ts">
 import ExternalMapsListNote from '#/components/ExternalMapsListNote.vue';
+import GiveUpButton from '#/components/GiveUpButton.vue';
 import GuessCard from '#/components/GuessCard.vue';
 import Loader from '#/components/Loader.vue';
 import MapCombobox from '#/components/MapCombobox.vue';
@@ -68,26 +69,26 @@ import { useMapsApi } from '#/composables/api/useMapsApi';
 import { useConfetti } from '#/composables/useConfetti';
 import { useShare } from '#/composables/useShare';
 import { createGameStore } from '#/stores/gameStore';
+import type { Answer } from '#/types/api/answer';
 import type { DailyStats } from '#/types/api/dailyStats';
 import type { ClassicGameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
 import type { TmMap } from '#/types/api/tmMap';
 import type { HintInformation } from '#/types/HintInformation';
 import { storeToRefs } from 'pinia';
-import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
-const { gameMode, historyStorageKey, dailyMapUuidStorageKey, hintsToDisplay, showLogin = true } = defineProps<{
+const { gameMode, storageKey, hintsToDisplay, showLogin = true } = defineProps<{
     gameMode: ClassicGameMode;
     gameModeDisplayName: string;
-    historyStorageKey: string;
-    dailyMapUuidStorageKey: string;
+    storageKey: string;
     hintsToDisplay: HintInformation[];
     showLogin?: boolean;
 }>();
 
-const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
+const gameStore = createGameStore(gameMode, storageKey)();
 const { isInHistory } = gameStore;
-const { history, dailyMapUuid, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
+const { history, dailyMapUuid, dailyMapNumber, playersAverageScore, answer } = storeToRefs(gameStore);
 const { triggerConfetti } = useConfetti();
 const { hintToEmoji } = useShare();
 
@@ -103,7 +104,10 @@ const reversedHistory = computed(() =>
 const selectedMap = ref<TmMap>();
 const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.uuid)));
 const hasMapAlreadyBeenPicked = ref(false);
+
 const hasWon = ref(false);
+const hasLost = computed(() => !!answer.value);
+const gameEnded = computed(() => hasWon.value || hasLost.value);
 
 const isGuessLoading = ref(false);
 const isGuessCardAnimating = ref(false);
@@ -194,6 +198,10 @@ function formatResult() {
     return result;
 }
 
+function handleGiveUp(_answer: Answer) {
+    answer.value = _answer;
+}
+
 /** Local storage */
 watch(history, () => {
     if (historyContainsSuccess()) {
@@ -239,18 +247,16 @@ async function fetchData() {
 }
 
 onMounted(async () => {
-    await fetchData();
-});
-
-onBeforeMount(async () => {
     const serverDailyMapUuid = await fetchDailyMapUuid();
     if (serverDailyMapUuid && serverDailyMapUuid !== dailyMapUuid.value) {
-        // Delete history from local storage if daily map has changed
+        // Delete game data from local storage if daily map has changed
         history.value = {};
+        answer.value = null;
         dailyMapUuid.value = serverDailyMapUuid;
     } else if (historyContainsSuccess()) {
         hasWon.value = true;
     }
+    await fetchData();
     isReady.value = true;
 });
 

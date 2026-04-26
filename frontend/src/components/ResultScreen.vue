@@ -27,16 +27,15 @@ import type { GameMode } from '#/types/api/gameMode';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
 
-const { hasWon, answer, gameMode, gameModeDisplayName, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+const { hasWon, answer, gameMode, gameModeDisplayName, storageKey } = defineProps<{
     hasWon: boolean;
-    answer?: Answer;
+    answer: Answer | null;
     gameMode: GameMode;
     gameModeDisplayName: string;
-    historyStorageKey: string;
-    dailyMapUuidStorageKey: string;
+    storageKey: string;
 }>();
 
-const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
+const gameStore = createGameStore(gameMode, storageKey)();
 const { history, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
 
 const resultMessage = computed(() => {

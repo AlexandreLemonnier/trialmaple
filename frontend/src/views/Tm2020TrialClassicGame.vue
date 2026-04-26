@@ -1,8 +1,7 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TM2020_TRIAL"
                  game-mode-display-name="TM2020 Trial Maple"
-                 history-storage-key="tm2020TrialClassicHistory"
-                 daily-map-uuid-storage-key="tm2020TrialClassicDailyMapUuid"
+                 storage-key="tm2020TrialClassic"
                  :hints-to-display
                  :show-login="false" />
 </template>

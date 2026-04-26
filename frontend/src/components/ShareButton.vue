@@ -12,15 +12,14 @@ import { copyToClipboard } from '#/utils/copyToClipboard';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-const { formatResult, gameMode, gameModeDisplayName, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+const { formatResult, gameMode, gameModeDisplayName, storageKey } = defineProps<{
     formatResult(): string;
     gameMode: GameMode;
     gameModeDisplayName: string;
-    historyStorageKey: string;
-    dailyMapUuidStorageKey: string;
+    storageKey: string;
 }>();
 
-const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
+const gameStore = createGameStore(gameMode, storageKey)();
 const { history, dailyMapNumber } = storeToRefs(gameStore);
 
 type CopyStatus = 'NONE' | 'SUCCESS' | 'ERROR';

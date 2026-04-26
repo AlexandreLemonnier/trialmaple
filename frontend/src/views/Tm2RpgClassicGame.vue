@@ -1,8 +1,7 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TM2_RPG"
                  game-mode-display-name="TM2 RPG Maple"
-                 history-storage-key="tm2RpgClassicHistory"
-                 daily-map-uuid-storage-key="tm2RpgClassicDailyMapUuid"
+                 storage-key="tm2RpgClassic"
                  :hints-to-display />
 </template>
 

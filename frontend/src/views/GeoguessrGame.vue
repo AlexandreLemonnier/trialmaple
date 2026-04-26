@@ -27,18 +27,16 @@
             <span v-if="hasMapAlreadyBeenPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
         <ResultScreen v-if="gameEnded"
-                      :has-won="hasWon"
-                      :answer="answer"
+                      :has-won
+                      :answer
                       :game-mode
                       :game-mode-display-name
-                      :history-storage-key
-                      :daily-map-uuid-storage-key>
+                      :storage-key>
             <template #shareButton>
                 <ShareButton :format-result="formatResult"
                              :game-mode
                              :game-mode-display-name
-                             :history-storage-key
-                             :daily-map-uuid-storage-key />
+                             :storage-key />
             </template>
         </ResultScreen>
         <div v-if="gameEnded" class="flex items-center justify-center gap-2 text-sm text-app-text/70 bg-discord/10 py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
@@ -57,7 +55,7 @@
                      :src="getPictureUrl(n)"
                      :number="n" />
         </div>
-        <GiveUpButton :game-mode="gameMode" @done="handleGiveUp" />
+        <GiveUpButton v-if="!gameEnded" :game-mode="gameMode" @done="handleGiveUp" />
     </div>
     <div v-else class="flex items-center justify-center h-full">
         <Loader />
@@ -86,31 +84,23 @@ import type { GeoguessrGameMode } from '#/types/api/gameMode';
 import type { GeoguessrMap } from '#/types/api/geoguessrMap';
 import type { Guess } from '#/types/api/guess';
 import { storeToRefs } from 'pinia';
-import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
-const { gameMode, historyStorageKey, dailyMapUuidStorageKey } = defineProps<{
+const { gameMode, storageKey } = defineProps<{
     gameMode: GeoguessrGameMode;
     gameModeDisplayName: string;
-    historyStorageKey: string;
-    dailyMapUuidStorageKey: string;
+    storageKey: string;
 }>();
 
 const MAX_PICTURES_NUMBER = 3;
 
-const gameStore = createGameStore(gameMode, historyStorageKey, dailyMapUuidStorageKey)();
+const gameStore = createGameStore(gameMode, storageKey)();
 const { isInHistory } = gameStore;
-const { history, dailyMapUuid, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
+const { history, dailyMapUuid, dailyMapNumber, playersAverageScore, answer } = storeToRefs(gameStore);
 const { triggerConfetti } = useConfetti();
 const { hintToEmoji } = useShare();
 
 const isReady = ref(false);
-
-const picturesCount = computed(() => {
-    return Math.min(MAX_PICTURES_NUMBER, Object.keys(history.value).length + 1);
-});
-const reversedPicturesRange = computed(() =>
-    Array.from({ length: picturesCount.value }, (_, i) => picturesCount.value - i)
-);
 
 const maps = ref<GeoguessrMap[]>([]);
 const todayWinnerCount = ref<number>();
@@ -118,13 +108,23 @@ const todayWinnerCount = ref<number>();
 const selectedMap = ref<GeoguessrMap>();
 const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.name)));
 const hasMapAlreadyBeenPicked = ref(false);
-const hasWon = ref(false);
-const hasLost = ref(false);
-const answer = ref<Answer | undefined>(undefined);
 
+function historyContainsSuccess() {
+    return Object.values(history.value).some((guess) => guess.success);
+}
+
+const hasWon = computed(() => historyContainsSuccess());
+const hasLost = computed(() => !!answer.value);
 const gameEnded = computed(() => hasWon.value || hasLost.value);
 
 const isGuessLoading = ref(false);
+
+const picturesCount = computed(() => {
+    return Math.min(MAX_PICTURES_NUMBER, Object.keys(history.value).length - (hasWon.value ? 1 : 0) + 1);
+});
+const reversedPicturesRange = computed(() =>
+    Array.from({ length: picturesCount.value }, (_, i) => picturesCount.value - i)
+);
 
 /** Animations */
 watch(hasWon, () => {
@@ -141,10 +141,6 @@ const pictureApi = usePictureApi();
 
 function getPictureUrl(attempt: number) {
     return pictureApi.getPictureUrl(gameMode, attempt);
-}
-
-function historyContainsSuccess() {
-    return Object.values(history.value).some((guess) => guess.success);
 }
 
 async function handleGuess() {
@@ -176,17 +172,8 @@ function formatResult() {
 }
 
 function handleGiveUp(_answer: Answer) {
-    hasLost.value = true;
     answer.value = _answer;
-    // TODO Local storage pour garder l'info
 }
-
-/** Local storage */
-watch(history, () => {
-    if (historyContainsSuccess()) {
-        hasWon.value = true;
-    }
-}, { deep: true });
 
 /** FETCH DATA */
 
@@ -228,18 +215,14 @@ async function fetchData() {
 }
 
 onMounted(async () => {
-    await fetchData();
-});
-
-onBeforeMount(async () => {
     const serverDailyMapUuid = await fetchDailyMapUuid();
     if (serverDailyMapUuid && serverDailyMapUuid !== dailyMapUuid.value) {
-        // Delete history from local storage if daily map has changed
+        // Delete game data from local storage if daily map has changed
         history.value = {};
+        answer.value = null;
         dailyMapUuid.value = serverDailyMapUuid;
-    } else if (historyContainsSuccess()) {
-        hasWon.value = true;
     }
+    await fetchData();
     isReady.value = true;
 });
 
