@@ -1,8 +1,8 @@
 package com.trialmaple.service.maps;
 
 import com.trialmaple.TmMapleConstant;
-import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.DailyPictures;
+import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -121,7 +121,7 @@ public class PictureService {
         return list.get(random.nextInt(list.size()));
     }
 
-    public Path getTodayPicturePath(GameMode gameMode, DailyMap dailyMap, int attempt) {
+    public Path getTodayPicturePath(GameMode gameMode, GeoguessrDailyMap dailyMap, int attempt) {
         DailyPictures dailyPictures = dailyMap.getDailyPictures();
 
         String gameFolder = gameMode.getPicturesFolderName();

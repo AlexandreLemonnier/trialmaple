@@ -1,7 +1,7 @@
 package com.trialmaple.service.dailymap.geoguessr;
 
-import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.DailyPictures;
+import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;
 import com.trialmaple.service.maps.PictureService;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
-public abstract class AbstractGeoguessrPickerService implements IDailyMapPickerStrategy {
+public abstract class AbstractGeoguessrPickerService implements IDailyMapPickerStrategy<GeoguessrDailyMap> {
 
     PictureService pictureService;
 
@@ -20,13 +20,13 @@ public abstract class AbstractGeoguessrPickerService implements IDailyMapPickerS
     }
 
     @Override
-    public DailyMap pickDailyMap(LocalDate day) {
+    public GeoguessrDailyMap pickDailyMap(LocalDate day) {
         String picturesFolder = getSupportedGameMode().getPicturesFolderName();
         DailyPictures dailyPictures = pictureService.getRandomMap(picturesFolder);
         if (dailyPictures == null) {
             return null;
         }
-        return new DailyMap(dailyPictures, day, getSupportedGameMode());
+        return new GeoguessrDailyMap(dailyPictures, day, getSupportedGameMode());
     }
 
     @Override

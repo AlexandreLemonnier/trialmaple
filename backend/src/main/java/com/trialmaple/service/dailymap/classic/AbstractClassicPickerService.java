@@ -1,7 +1,7 @@
 package com.trialmaple.service.dailymap.classic;
 
 import com.trialmaple.model.dto.projection.MapPickCount;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.ClassicDailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.repository.DailyMapRepository;
 import com.trialmaple.repository.TmMapRepository;
@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Slf4j
-public abstract class AbstractClassicPickerService implements IDailyMapPickerStrategy {
+public abstract class AbstractClassicPickerService implements IDailyMapPickerStrategy<ClassicDailyMap> {
     protected final TmMapRepository tmMapRepository;
     private final DailyMapRepository dailyMapRepository;
     private final Random random = new Random();
@@ -27,7 +27,7 @@ public abstract class AbstractClassicPickerService implements IDailyMapPickerStr
     }
 
     @Override
-    public DailyMap pickDailyMap(LocalDate day) {
+    public ClassicDailyMap pickDailyMap(LocalDate day) {
         List<TmMap> mapPool = this.getMapPool();
         if (mapPool.isEmpty()) {
             log.error("No maps available for {} game mode.", this.getSupportedGameMode());
@@ -37,7 +37,7 @@ public abstract class AbstractClassicPickerService implements IDailyMapPickerStr
         Map<Long, Long> pickCounts = getPickCounts(mapPool);
         TmMap randomMap = pickWeightedRandomMap(mapPool, pickCounts);
 
-        return new DailyMap(randomMap, day, this.getSupportedGameMode());
+        return new ClassicDailyMap(randomMap, day, this.getSupportedGameMode());
     }
 
     /**

@@ -5,7 +5,7 @@ import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.dto.HintPairDto;
 import com.trialmaple.model.dto.WrHolderDto;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.ClassicDailyMap;
 import com.trialmaple.model.entities.Score;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.DeltaHint;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class AbstractClassicGuessService implements IGuessGameModeService {
+public abstract class AbstractClassicGuessService implements IGuessGameModeService<ClassicDailyMap> {
 
     private final TmMapRepository tmMapRepository;
     private final ScoreRepository scoreRepository;
@@ -35,7 +35,7 @@ public abstract class AbstractClassicGuessService implements IGuessGameModeServi
     protected abstract GuessDto computeGuess(boolean success);
 
     @Override
-    public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) {
+    public GuessDto checkGuess(ClassicDailyMap dailyMap, GuessRequestDto request) {
         this.mapOfTheDay = dailyMap.getMap();
         this.guessMap = tmMapRepository
                 .findByUuid(UUID.fromString(request.guessedMapUuid()))

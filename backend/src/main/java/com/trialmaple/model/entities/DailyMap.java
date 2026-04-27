@@ -9,9 +9,10 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@DiscriminatorColumn(name = "mode")
 @Getter
 @NoArgsConstructor
-public class DailyMap {
+public abstract class DailyMap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,28 +20,15 @@ public class DailyMap {
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
     private final UUID uuid = UUID.randomUUID();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tm_map_id")
-    private TmMap map;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "daily_pictures_id")
-    private DailyPictures dailyPictures;
-
     private LocalDate day;
 
     @Enumerated(EnumType.STRING)
     private GameMode gameMode;
 
-    public DailyMap(TmMap map, LocalDate day, GameMode gameMode) {
-        this.map = map;
+    public DailyMap(LocalDate day, GameMode gameMode) {
         this.day = day;
         this.gameMode = gameMode;
     }
 
-    public DailyMap(DailyPictures dailyPictures, LocalDate day, GameMode gameMode) {
-        this.dailyPictures = dailyPictures;
-        this.day = day;
-        this.gameMode = gameMode;
-    }
+    public abstract String getMapName();
 }

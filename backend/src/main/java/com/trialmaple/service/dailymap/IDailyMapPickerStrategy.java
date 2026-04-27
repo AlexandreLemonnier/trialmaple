@@ -7,7 +7,7 @@ import com.trialmaple.model.enums.GameMode;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface IDailyMapPickerStrategy {
+public interface IDailyMapPickerStrategy<T extends DailyMap> {
     /**
      * The game mode where strategy applies
      */
@@ -21,5 +21,5 @@ public interface IDailyMapPickerStrategy {
     /**
      * Randomly pick a daily map
      */
-    DailyMap pickDailyMap(LocalDate day);
+    T pickDailyMap(LocalDate day);
 }

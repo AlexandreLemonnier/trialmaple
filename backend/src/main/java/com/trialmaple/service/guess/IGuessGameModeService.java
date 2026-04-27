@@ -6,7 +6,7 @@ import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.enums.GameMode;
 
-public interface IGuessGameModeService {
+public interface IGuessGameModeService<T extends DailyMap> {
 
     /**
      * The game mode where strategy applies
@@ -16,5 +16,5 @@ public interface IGuessGameModeService {
     /**
      * Check if guess is correct for the given daily map, and returns a guessDto with hints
      */
-    GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapException;
+    GuessDto checkGuess(T dailyMap, GuessRequestDto request) throws InvalidMapException;
 }

@@ -1,9 +1,5 @@
 package com.trialmaple.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.trialmaple.model.dto.DailyStatsDto;
 import com.trialmaple.model.entities.DailyMap;
 import com.trialmaple.model.entities.Score;
@@ -11,6 +7,9 @@ import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.service.dailymap.DailyMapService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StatisticsService {
@@ -31,7 +30,7 @@ public class StatisticsService {
     public DailyStatsDto getDailyStats(GameMode gameMode) {
         DailyMap currentDailyMap = dailyMapService.getCurrentDailyMap(gameMode);
 
-        Long mapNumber = dailyMapRepository.countByGameMode(currentDailyMap.getGameMode());
+        long mapNumber = dailyMapRepository.countByGameMode(currentDailyMap.getGameMode());
 
         List<Score> scores = scoreRepository.findByDailyMap(currentDailyMap);
 

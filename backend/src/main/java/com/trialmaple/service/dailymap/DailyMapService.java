@@ -13,11 +13,11 @@ import java.util.List;
 @Slf4j
 @Service
 public class DailyMapService {
-    private final List<IDailyMapPickerStrategy> dailyMapPickerStrategies;
+    private final List<IDailyMapPickerStrategy<DailyMap>> dailyMapPickerStrategies;
 
     private final DailyMapRepository dailyMapRepository;
 
-    public DailyMapService(List<IDailyMapPickerStrategy> dailyMapPickerStrategies, DailyMapRepository dailyMapRepository) {
+    public DailyMapService(List<IDailyMapPickerStrategy<DailyMap>> dailyMapPickerStrategies, DailyMapRepository dailyMapRepository) {
         this.dailyMapPickerStrategies = dailyMapPickerStrategies;
         this.dailyMapRepository = dailyMapRepository;
     }
@@ -41,7 +41,7 @@ public class DailyMapService {
     /**
      * Pick a new daily map if absent with the given map picker
      */
-    private void pickDailyMapIfMissing(IDailyMapPickerStrategy dailyMapPickerService) {
+    private void pickDailyMapIfMissing(IDailyMapPickerStrategy<DailyMap> dailyMapPickerService) {
         GameMode gameMode = dailyMapPickerService.getSupportedGameMode();
         LocalDate today = LocalDate.now();
         boolean exists = dailyMapRepository.existsByDayAndGameMode(today, gameMode);
@@ -51,7 +51,7 @@ public class DailyMapService {
                 return;
             }
             dailyMapRepository.save(dailyMap);
-            String name = dailyMap.getMap() != null ? dailyMap.getMap().getName() : dailyMap.getDailyPictures().getMapName();
+            String name = dailyMap.getMapName();
             log.info("New daily map chosen for {} game mode: {}.", gameMode, name);
         }
     }

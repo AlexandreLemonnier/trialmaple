@@ -3,7 +3,7 @@ package com.trialmaple.controller;
 import com.trialmaple.TmMapleConstant;
 import com.trialmaple.exception.InvalidAttemptException;
 import com.trialmaple.exception.InvalidGameModeException;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapService;
 import com.trialmaple.service.maps.PictureService;
@@ -41,7 +41,7 @@ public class PictureController {
     public ResponseEntity<Resource> getPicture(@RequestParam String gameMode, @PathVariable String attempt) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
-            DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
+            GeoguessrDailyMap dailyMap = (GeoguessrDailyMap) dailyMapService.getCurrentDailyMap(gameModeValue);
             int attemptValue = Integer.parseInt(attempt);
             if (attemptValue <= 0 || attemptValue > TmMapleConstant.GEOGUESSR_PICTURES_COUNT) {
                 throw new InvalidAttemptException(attempt);
