@@ -5,12 +5,24 @@
 
 <script setup lang="ts">
 import { Route } from '#/router/Route';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const gutterImage = computed(() => {
+const IMAGES = [
+    'tmnf-trial.jpg',
+    'tmnf-rpg.png',
+    'tm2-trial.png',
+    'tm2-rpg.png',
+    'tm2020-trial.png',
+    'tm2020-rpg.png',
+    'tm-all.png'
+] as const;
+
+type GutterImage = typeof IMAGES[number];
+
+const gutterImage = computed<GutterImage>(() => {
     switch (route.name as Route) {
         case Route.TMNF_TRIAL_CLASSIC_MODE:
             return 'tmnf-trial.jpg';
@@ -32,5 +44,16 @@ const gutterImage = computed(() => {
 const gutterStyle = computed(() => ({
     backgroundImage: `url('/side_images/${gutterImage.value}')`
 }));
+
+onMounted(() => {
+    // Preload gutter images for smooth page transitions
+    IMAGES.forEach((img) => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = `/side_images/${img}`;
+        document.head.appendChild(link);
+    });
+});
 
 </script>
