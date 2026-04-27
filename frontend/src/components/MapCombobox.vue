@@ -29,6 +29,7 @@
 
 <script setup lang="ts" generic="T">
 import Icon from '#/components/Icon.vue';
+import { deburr } from 'moderndash';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const { maps, pickedMaps, nameProp } = defineProps<{
@@ -54,7 +55,7 @@ const previousValue = ref<string>();
 const filteredMaps = computed(() => {
     const filter = search.value.toLowerCase();
     if (!filter) return remainingMaps.value;
-    return remainingMaps.value.filter((map) => String(map[nameProp]).toLowerCase().includes(filter));
+    return remainingMaps.value.filter((map) => deburr(String(map[nameProp])).toLowerCase().includes(deburr(filter)));
 });
 
 /* Open dropdown */

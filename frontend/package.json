@@ -17,6 +17,7 @@
     "@vueuse/core": "^14.1.0",
     "canvas-confetti": "^1.9.4",
     "dayjs": "^1.11.19",
+    "moderndash": "^4.0.2",
     "pinia": "^3.0.4",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
