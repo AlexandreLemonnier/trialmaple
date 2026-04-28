@@ -1,6 +1,6 @@
 <template>
     <Modal title="Discord server" v-model="isOpen" :on-close="setHasBeenSeen">
-        <div class="flex flex-col gap-2 mt-3 text-sm text-neutral-300">
+        <div class="flex flex-col gap-2 mt-3 text-sm">
             <p>Join the Discord server to share your results and keep up with the latest updates!</p>
             <a class="underline w-fit" :href="discordLink" target="_blank">{{ discordLink }}</a>
         </div>

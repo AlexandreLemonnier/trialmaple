@@ -1,4 +1,5 @@
 import { Route } from '#/router/Route';
+import { useAppStore } from '#/stores/appStore';
 import HomePage from '#/views/HomePage.vue';
 import Tm2020RpgGeoguessrGame from '#/views/Tm2020RpgGeoguessrGame.vue';
 import Tm2020TrialClassicGame from '#/views/Tm2020TrialClassicGame.vue';
@@ -74,6 +75,15 @@ const router = createRouter({
             path: '/:pathMatch(.*)', redirect: '/'
         }
     ]
+});
+
+router.beforeEach((to) => {
+    const { setIsFromOldDomainName } = useAppStore();
+
+    const isFromOldDomainName = to.query.isFromOldDomainName === 'true';
+    setIsFromOldDomainName(isFromOldDomainName);
+
+    return true;
 });
 
 export default router;

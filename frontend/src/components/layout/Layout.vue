@@ -1,7 +1,8 @@
 <template>
-    <div class="absolute top-0 left-0 flex min-h-screen overflow-x-hidden w-full">
+    <div class="absolute top-0 left-0 flex min-h-screen overflow-x-hidden w-full text-app-text">
+        <OldDomainWarningModal v-model="isFromOldDomainName" />
         <Gutter />
-        <div class="flex flex-col w-full md:w-3/5 bg-app-background text-app-text min-h-screen">
+        <div class="flex flex-col w-full md:w-3/5 bg-app-background min-h-screen">
             <Header />
             <main class="mx-2 mb-4 flex flex-1 flex-col">
                 <slot></slot>
@@ -23,10 +24,15 @@
 import Button from '#/components/Button.vue';
 import Gutter from '#/components/layout/Gutter.vue';
 import Header from '#/components/layout/Header.vue';
+import OldDomainWarningModal from '#/components/modal/OldDomainWarningModal.vue';
 import { Route } from '#/router/Route';
+import { useAppStore } from '#/stores/appStore';
+import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
+
+const { isFromOldDomainName } = storeToRefs(useAppStore());
 
 </script>
