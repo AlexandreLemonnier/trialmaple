@@ -48,10 +48,14 @@ const gutterStyle = computed(() => ({
 onMounted(() => {
     // Preload gutter images for smooth page transitions
     IMAGES.forEach((img) => {
+        const href = `/side_images/${img}`;
+
+        if (document.querySelector(`link[href="${href}"]`)) return;
+
         const link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'image';
-        link.href = `/side_images/${img}`;
+        link.href = href;
         document.head.appendChild(link);
     });
 });
