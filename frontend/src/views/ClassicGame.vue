@@ -76,7 +76,7 @@ import type { Guess } from '#/types/api/guess';
 import type { TmMap } from '#/types/api/tmMap';
 import type { HintInformation } from '#/types/HintInformation';
 import { storeToRefs } from 'pinia';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch, watchEffect } from 'vue';
 
 const { gameMode, storageKey, hintsToDisplay, showLogin = true } = defineProps<{
     gameMode: ClassicGameMode;
@@ -116,8 +116,8 @@ const pendingWin = ref(false);
 const ignoreCardsAnimations = ref(true);
 
 /** Animations */
-watch(hasWon, () => {
-    if (hasWon.value) {
+watchEffect(() => {
+    if (hasWon.value && isReady.value) {
         triggerConfetti();
     }
 });

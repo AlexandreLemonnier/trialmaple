@@ -84,7 +84,7 @@ import type { GeoguessrGameMode } from '#/types/api/gameMode';
 import type { GeoguessrMap } from '#/types/api/geoguessrMap';
 import type { Guess } from '#/types/api/guess';
 import { storeToRefs } from 'pinia';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watchEffect } from 'vue';
 
 const { gameMode, storageKey } = defineProps<{
     gameMode: GeoguessrGameMode;
@@ -127,8 +127,8 @@ const reversedPicturesRange = computed(() =>
 );
 
 /** Animations */
-watch(hasWon, () => {
-    if (hasWon.value) {
+watchEffect(() => {
+    if (hasWon.value && isReady.value) {
         triggerConfetti();
     }
 });
