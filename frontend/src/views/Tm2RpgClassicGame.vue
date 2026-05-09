@@ -38,12 +38,12 @@ const hintsToDisplay: HintInformation[] = [
     },
     {
         label: 'Author(s)',
-	tooltip: 'Authors with a slight contribution like cutfix are not included',
+        tooltip: 'Authors with a slight contribution like cutfix are not included',
         guessProp: 'authors'
     },
     {
         label: 'Original release year',
-	tooltip: 'Release year of the original map (not the cutfix/v2/+/mp4 version)',
+        tooltip: 'Release year of the original map (not the cutfix/v2/+/mp4 version)',
         guessProp: 'releaseYear'
     }
 ];

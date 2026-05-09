@@ -25,7 +25,7 @@ public abstract class DailyMap {
     @Enumerated(EnumType.STRING)
     private GameMode gameMode;
 
-    public DailyMap(LocalDate day, GameMode gameMode) {
+    protected DailyMap(LocalDate day, GameMode gameMode) {
         this.day = day;
         this.gameMode = gameMode;
     }
