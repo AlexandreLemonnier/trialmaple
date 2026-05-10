@@ -8,6 +8,7 @@
 import spriteContent from '#/assets/icons.svg?raw';
 import type { IconName } from '#/types/IconName';
 import type { Size } from '#/types/Size';
+import { sizeToClass } from '#/utils/sizeToClass';
 import { onMounted } from 'vue';
 
 defineProps<{
@@ -43,7 +44,4 @@ onMounted(() => {
     }
 });
 
-function sizeToClass(size: Size) {
-    return size === 'sm' ? 'size-4 lg:size-5' : 'size-6 lg:size-7';
-}
 </script>

@@ -17,18 +17,29 @@
                 </div>
                 <!-- Image -->
                 <img v-show="!isLoading"
-                     class="absolute inset-0 w-full h-full object-cover rounded-lg border border-app-border"
+                     class="absolute inset-0 w-full h-full object-cover rounded-lg border border-app-border cursor-zoom-in"
                      :src
                      :alt="`Hint n°${number}`"
-                     @load="onLoad" />
+                     @load="onLoad"
+                     @click="openModal" />
             </div>
         </div>
     </Transition>
+    <Modal v-model="isZoomOpen" size="full">
+        <div class="flex items-center justify-center w-full h-full">
+            <div class="relative w-full aspect-video max-h-[85vh] max-w-[calc(85vh*16/9)] mx-auto overflow-hidden rounded-lg border border-app-border shadow-2xl">
+                <img class="absolute inset-0 w-full h-full object-cover"
+                     :src="src"
+                     :alt="`Hint n°${number}`" />
+            </div>
+        </div>
+    </Modal>
 </template>
 
 <script setup lang="ts">
 import Icon from '#/components/Icon.vue';
 import Loader from '#/components/Loader.vue';
+import Modal from '#/components/modal/Modal.vue';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps<{
@@ -37,6 +48,7 @@ const props = defineProps<{
 }>();
 
 const isLoading = ref(true);
+const isZoomOpen = ref(false);
 
 function onLoad() {
     isLoading.value = false;
@@ -47,6 +59,12 @@ const isUnlocking = ref(false);
 
 const TIME_BEFORE_UNLOCK = 300;
 const UNLOCK_ANIMATION_DURATION = 700;
+
+function openModal() {
+    if (!showLockedState.value && !isLoading.value) {
+        isZoomOpen.value = true;
+    }
+}
 
 function triggerLockAnimation() {
     isUnlocking.value = true;
