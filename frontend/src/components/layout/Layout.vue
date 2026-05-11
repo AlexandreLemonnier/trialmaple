@@ -10,7 +10,7 @@
             <footer class="flex flex-col gap-2 mt-auto mx-2 lg:mx-4 mb-2 text-sm italic">
                 <Button v-if="route.name !== Route.HOME"
                         class="w-fit"
-                        label="Back to home"
+                        label="Back to Home"
                         icon-name="house"
                         @click="router.push({ name: Route.HOME })" />
                 <span class="self-center">Made by <strong>Arsolight</strong></span>
