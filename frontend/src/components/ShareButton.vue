@@ -20,6 +20,7 @@ const { formatResult, gameMode, gameModeDisplayName, storageKey } = defineProps<
 }>();
 
 const gameStore = createGameStore(gameMode, storageKey)();
+const { historyContainsSuccess } = gameStore;
 const { history, dailyMapNumber } = storeToRefs(gameStore);
 
 type CopyStatus = 'NONE' | 'SUCCESS' | 'ERROR';
@@ -38,9 +39,9 @@ const resultCopyClass: Record<CopyStatus, string> = {
     NONE: ''
 };
 
-function getTitle(guessesCount: number) {
+function getTitle(guessesCount: number, hasWon: boolean) {
     if (dailyMapNumber.value) {
-        return `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} 😼👍`;
+        return `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} ${hasWon ? '😼👍' : '😿'}`;
     }
     return '';
 }
@@ -48,7 +49,8 @@ function getTitle(guessesCount: number) {
 async function copyHistoryResult() {
     try {
         const guessesCount = Object.keys(history.value).length;
-        const result = getTitle(guessesCount) + formatResult();
+        const hasWon = historyContainsSuccess();
+        const result = getTitle(guessesCount, hasWon) + formatResult();
         resultCopyStatus.value = await copyToClipboard(result) ? 'SUCCESS' : 'ERROR';
     } catch (e) {
         console.error(e);

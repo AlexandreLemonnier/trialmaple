@@ -87,7 +87,7 @@ const { gameMode, storageKey, hintsToDisplay, showLogin = true } = defineProps<{
 }>();
 
 const gameStore = createGameStore(gameMode, storageKey)();
-const { isInHistory } = gameStore;
+const { isInHistory, historyContainsSuccess } = gameStore;
 const { history, dailyMapUuid, dailyMapNumber, playersAverageScore, answer } = storeToRefs(gameStore);
 const { triggerConfetti } = useConfetti();
 const { hintToEmoji } = useShare();
@@ -141,10 +141,6 @@ function getMapDisplayName(uuid: string) {
         return matchingMap.displayName ?? matchingMap.name;
     }
     return 'Map not found';
-}
-
-function historyContainsSuccess() {
-    return Object.values(history.value).some((guess) => guess.success);
 }
 
 async function handleGuess() {

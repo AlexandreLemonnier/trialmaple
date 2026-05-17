@@ -19,6 +19,10 @@ export function createGameStore(storeId: string, storageKey: string) {
             return Object.keys(history).includes(mapId);
         }
 
-        return { history, dailyMapUuid, dailyMapNumber, playersAverageScore, isInHistory, answer };
+        function historyContainsSuccess() {
+            return Object.values(history.value).some((guess) => guess.success);
+        }
+
+        return { history, dailyMapUuid, dailyMapNumber, playersAverageScore, isInHistory, historyContainsSuccess, answer };
     });
 }

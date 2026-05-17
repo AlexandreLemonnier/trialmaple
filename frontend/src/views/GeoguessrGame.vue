@@ -95,7 +95,7 @@ const { gameMode, storageKey } = defineProps<{
 const MAX_PICTURES_NUMBER = 3;
 
 const gameStore = createGameStore(gameMode, storageKey)();
-const { isInHistory } = gameStore;
+const { isInHistory, historyContainsSuccess } = gameStore;
 const { history, dailyMapUuid, dailyMapNumber, playersAverageScore, answer } = storeToRefs(gameStore);
 const { triggerConfetti } = useConfetti();
 const { hintToEmoji } = useShare();
@@ -108,10 +108,6 @@ const todayWinnerCount = ref<number>();
 const selectedMap = ref<GeoguessrMap>();
 const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.name)));
 const hasMapAlreadyBeenPicked = ref(false);
-
-function historyContainsSuccess() {
-    return Object.values(history.value).some((guess) => guess.success);
-}
 
 const hasWon = computed(() => historyContainsSuccess());
 const hasLost = computed(() => !!answer.value);
