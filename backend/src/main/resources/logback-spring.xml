@@ -6,6 +6,7 @@
     <springProperty scope="context" name="MAIL_PORT" source="spring.mail.port"/>
     <springProperty scope="context" name="MAIL_USERNAME" source="spring.mail.username"/>
     <springProperty scope="context" name="MAIL_PASSWORD" source="spring.mail.password"/>
+    <springProperty scope="context" name="MAIL_TO" source="spring.mail.to"/>
 
     <!-- Appender standard output -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -22,7 +23,7 @@
         <password>${MAIL_PASSWORD}</password>
         <SSL>true</SSL>
 
-        <to></to>
+        <to>${MAIL_TO}</to>
         <from>${MAIL_USERNAME}</from>
         <subject>[${APP_NAME}] ERROR detected</subject>
 
