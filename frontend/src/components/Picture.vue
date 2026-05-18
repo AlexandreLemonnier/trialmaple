@@ -28,9 +28,10 @@
     <Modal v-model="isZoomOpen" size="full">
         <div class="flex items-center justify-center w-full h-full">
             <div class="relative w-full aspect-video max-h-[85vh] max-w-[calc(85vh*16/9)] mx-auto overflow-hidden rounded-lg border border-app-border shadow-2xl">
-                <img class="absolute inset-0 w-full h-full object-cover"
+                <img class="absolute inset-0 w-full h-full object-cover cursor-zoom-out"
                      :src="src"
-                     :alt="`Hint n°${number}`" />
+                     :alt="`Hint n°${number}`"
+                     @click="isZoomOpen = false" />
             </div>
         </div>
     </Modal>
