@@ -5,5 +5,6 @@ public enum MapList {
     TMNF_RPG_CLASSIC,
     TM2_TRIAL,
     TM2_RPG_PVM,
-    TM2020_TRIAL_CLASSIC
+    TM2020_TRIAL_CLASSIC,
+    TM2020_RPG
 }
