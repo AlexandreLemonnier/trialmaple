@@ -1,7 +1,7 @@
 <template>
-    <ClassicGame game-mode="CLASSIC_TM2020_TRIAL"
-                 game-mode-display-name="TM2020 Trial Maple"
-                 storage-key="tm2020TrialClassic"
+    <ClassicGame game-mode="CLASSIC_TM2020_RPG"
+                 game-mode-display-name="TM2020 RPG Maple"
+                 storage-key="tm2020RpgClassic"
                  :hints-to-display
                  :show-login="false" />
 </template>
@@ -13,7 +13,7 @@ import ClassicGame from '#/views/ClassicGame.vue';
 const hintsToDisplay: HintInformation[] = [
     {
         label: 'Stars',
-        tooltip: 'Difficulty rating',
+        tooltip: 'From 3 to 7, how competitive is the map',
         guessProp: 'points'
     },
     {

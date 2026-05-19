@@ -65,6 +65,11 @@ const GAME_MODE_CONFIG: Record<Route, {
         autoUpdate: true,
         isMapPickWeighted: true
     },
+    [Route.TM2020_RPG_CLASSIC_MODE]: {
+        mode: 'CLASSIC',
+        autoUpdate: true,
+        isMapPickWeighted: true
+    },
     [Route.TM2020_RPG_GEOGUESSR_MODE]: {
         mode: 'GEOGUESSR'
     }

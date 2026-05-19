@@ -34,6 +34,7 @@ const gutterImage = computed<GutterImage>(() => {
             return 'tm2-rpg.png';
         case Route.TM2020_TRIAL_CLASSIC_MODE:
             return 'tm2020-trial.png';
+        case Route.TM2020_RPG_CLASSIC_MODE:
         case Route.TM2020_RPG_GEOGUESSR_MODE:
             return 'tm2020-rpg.png';
         default:

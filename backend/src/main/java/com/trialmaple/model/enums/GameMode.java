@@ -9,6 +9,7 @@ public enum GameMode {
     CLASSIC_TM2_TRIAL(null),
     CLASSIC_TM2_RPG(null),
     CLASSIC_TM2020_TRIAL(null),
+    CLASSIC_TM2020_RPG(null),
     GEOGUESSR_TM2020_RPG("TM2020_RPG");
 
     private final String picturesFolderName;

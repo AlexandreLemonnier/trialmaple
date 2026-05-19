@@ -6,7 +6,7 @@
             <!-- Game Card -->
             <div v-for="(game) in games"
                  :key="game.title"
-                 class="flex flex-col gap-2 w-full rounded-md border border-app-border"
+                 class="flex flex-col gap-2 w-full h-full rounded-md border border-app-border"
                  :style="{ background: `linear-gradient(to bottom, ${game.colorGradient.start}40, ${game.colorGradient.end}40)` }">
                 <div class="flex items-center gap-2 lg:gap-3 px-2 lg:px-3 py-1 lg:py-1.5 rounded-lg font-semibold">
                     <img :src="game.icon" :alt="game.title" class="w-4 h-4 lg:w-5 lg:h-5 object-contain" />
@@ -18,7 +18,7 @@
                          :key="style.title"
                          class="flex flex-col items-center w-full gap-2 lg:gap-3 px-2 lg:px-3 py-1.5 lg:py-2.5">
                         <h3 class="text-sm lg:text-base font-semibold italic">{{ style.title }}</h3>
-                        <div class="flex flex-col gap-1">
+                        <div class="flex flex-col gap-2 lg:gap-3">
                             <Button v-for="gameMode in style.gameModes"
                                     :key="gameMode.title"
                                     @click="navigateToRoute(gameMode.routeName)"
@@ -107,6 +107,11 @@ const games: Game[] = [
             {
                 title: 'RPG',
                 gameModes: [
+                    {
+                        title: 'Classic',
+                        icon: 'triangle',
+                        routeName: Route.TM2020_RPG_CLASSIC_MODE
+                    },
                     {
                         title: 'Geoguessr',
                         icon: 'image',

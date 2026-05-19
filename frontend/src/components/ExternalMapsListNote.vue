@@ -34,6 +34,10 @@ const MAP_LISTS: Record<ClassicGameMode, {
     CLASSIC_TM2020_TRIAL: {
         url: ExternalMapList.TM2020_TRIAL_CLASSIC,
         name: 'TM2020 Classic Trial'
+    },
+    CLASSIC_TM2020_RPG: {
+        url: ExternalMapList.TM2020_RPG_CLASSIC,
+        name: 'TM2020 RPG'
     }
 };
 
