@@ -3,6 +3,7 @@ package com.trialmaple.service.dailymap.geoguessr;
 import com.trialmaple.model.entities.DailyPictures;
 import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.entities.TmMap;
+import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;
 import com.trialmaple.service.maps.PictureService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +22,9 @@ public abstract class AbstractGeoguessrPickerService implements IDailyMapPickerS
 
     @Override
     public GeoguessrDailyMap pickDailyMap(LocalDate day) {
+        GameMode gameMode = getSupportedGameMode();
         String picturesFolder = getSupportedGameMode().getPicturesFolderName();
-        DailyPictures dailyPictures = pictureService.getRandomMap(picturesFolder);
+        DailyPictures dailyPictures = pictureService.getRandomMap(picturesFolder, gameMode);
         if (dailyPictures == null) {
             return null;
         }

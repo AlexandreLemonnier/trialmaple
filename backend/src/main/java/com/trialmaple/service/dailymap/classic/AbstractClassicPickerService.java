@@ -3,16 +3,14 @@ package com.trialmaple.service.dailymap.classic;
 import com.trialmaple.model.dto.projection.MapPickCount;
 import com.trialmaple.model.entities.ClassicDailyMap;
 import com.trialmaple.model.entities.TmMap;
+import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;
 import com.trialmaple.repository.TmMapRepository;
 import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -34,6 +32,20 @@ public abstract class AbstractClassicPickerService implements IDailyMapPickerStr
             return null;
         }
 
+        GameMode gameMode = getSupportedGameMode();
+        LocalDate startDate = LocalDate.now().minusDays(10);
+        List<TmMap> recentlyPickedMaps = dailyMapRepository.findTmMapsByGameModeAndStartDate(gameMode, startDate);
+        Set<Long> recentlyPickedMapIds = recentlyPickedMaps.stream()
+                .map(TmMap::getId)
+                .collect(Collectors.toSet());
+
+        // Remove recently picked maps from map pool to avoid repeats
+        if (recentlyPickedMaps.size() < mapPool.size()) {
+            mapPool = mapPool.stream()
+                    .filter(map -> !recentlyPickedMapIds.contains(map.getId()))
+                    .toList();
+        }
+
         Map<Long, Long> pickCounts = getPickCounts(mapPool);
         TmMap randomMap = pickWeightedRandomMap(mapPool, pickCounts);
 
@@ -45,7 +57,8 @@ public abstract class AbstractClassicPickerService implements IDailyMapPickerStr
      */
     private Map<Long, Long> getPickCounts(List<TmMap> mapPool) {
         List<Long> mapPoolIds = mapPool.stream().map(TmMap::getId).toList();
-        return dailyMapRepository.countDailyMapsByMap(mapPoolIds)
+        LocalDate startDate = LocalDate.now().minusDays(60);
+        return dailyMapRepository.countDailyMapsByMapAndStartDate(mapPoolIds, startDate)
                 .stream()
                 .collect(Collectors.toMap(
                         MapPickCount::mapId,
@@ -59,17 +72,9 @@ public abstract class AbstractClassicPickerService implements IDailyMapPickerStr
     private TmMap pickWeightedRandomMap(List<TmMap> mapPool, Map<Long, Long> pickCounts) {
         double totalWeight = 0.0;
         List<Double> weights = new ArrayList<>();
-        long minPickCount;
-        if (mapPool.size() == pickCounts.size()) {
-            // All maps have been picked at least once (all present in the Map)
-            minPickCount = pickCounts.values().stream().min(Long::compareTo).orElse(0L);
-        } else {
-            // Some maps have not been picked yet, so min is 0
-            minPickCount = 0L;
-        }
         for (TmMap map : mapPool) {
-            long n = pickCounts.getOrDefault(map.getId(), 0L);
-            double weight = getMapWeight(n, minPickCount);
+            long pickCount = pickCounts.getOrDefault(map.getId(), 0L);
+            double weight = getMapWeight(pickCount);
             weights.add(weight);
             totalWeight += weight;
         }
@@ -90,9 +95,8 @@ public abstract class AbstractClassicPickerService implements IDailyMapPickerStr
     /**
      * Compute a map weight
      * @param n number of occurrences
-     * @param offset value subtracted from n to shift it toward zero
      */
-    private double getMapWeight(long n, long offset) {
-        return 1/Math.sqrt(Math.max(n - offset, 0) + 1.0);
+    private double getMapWeight(long n) {
+        return 1.0/(n + 1);
     }
 }

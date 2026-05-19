@@ -4,6 +4,7 @@ import com.trialmaple.TmMapleConstant;
 import com.trialmaple.model.entities.DailyPictures;
 import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
+import com.trialmaple.repository.DailyMapRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,11 +15,14 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
 @Slf4j
 public class PictureService {
+
+    private final DailyMapRepository dailyMapRepository;
 
     @Value("${game.pictures-path}")
     private String mapsPath;
@@ -27,6 +31,10 @@ public class PictureService {
 
     // Game mode -> (map name -> (difficulty level -> list of pictures))
     private final Map<String, Map<String, Map<Integer, List<String>>>> index = new HashMap<>();
+
+    public PictureService(DailyMapRepository dailyMapRepository) {
+        this.dailyMapRepository = dailyMapRepository;
+    }
 
     /**
      * Initialize the structure containing all maps pictures for each game mode
@@ -91,14 +99,23 @@ public class PictureService {
         }
     }
 
-    public DailyPictures getRandomMap(String gameMode) {
-        Map<String, Map<Integer, List<String>>> gameMaps = index.get(gameMode);
+    public DailyPictures getRandomMap(String picturesFolder, GameMode gameMode) {
+        Map<String, Map<Integer, List<String>>> gameMaps = index.get(picturesFolder);
         if (gameMaps.isEmpty()) {
-            log.error("No maps folder found for game mode {}", gameMode);
+            log.error("No maps folder found for game mode {}", picturesFolder);
             return null;
         }
 
         List<String> maps = new ArrayList<>(gameMaps.keySet());
+
+        // Remove recently picked maps from map pool to avoid repeats
+        LocalDate startDate = LocalDate.now().minusDays(10);
+        Set<String> recentlyPickedMaps = new HashSet<>(dailyMapRepository.findGeoguessrMapNameByGameModeAndStartDate(gameMode, startDate));
+        if (recentlyPickedMaps.size() < maps.size()) {
+            maps = maps.stream()
+                    .filter(map -> !recentlyPickedMaps.contains(map))
+                    .toList();
+        }
 
         String selectedMap = maps.get(random.nextInt(maps.size()));
         Map<Integer, List<String>> subFolders = gameMaps.get(selectedMap);
@@ -107,7 +124,7 @@ public class PictureService {
         for (int i = 1; i <= TmMapleConstant.GEOGUESSR_PICTURES_COUNT; i++) {
             String picture = pickRandom(subFolders.get(i));
             if (picture == null) {
-                log.error("No picture found for subfolder {} for map {} for game {}", i, selectedMap, gameMode);
+                log.error("No picture found for subfolder {} for map {} for game {}", i, selectedMap, picturesFolder);
                 return null;
             }
             pictures.add(picture);

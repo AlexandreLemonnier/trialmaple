@@ -12,7 +12,9 @@
                 <template v-if="gameModeInfo">
                     <p v-if="gameModeInfo.excludeUnfinished">Note that <strong>unfinished maps</strong> are not included.</p>
                     <p v-if="gameModeInfo.autoUpdate">Maps data are automatically updated everyday at midnight.</p>
-                    <p v-if="gameModeInfo.mode === 'GEOGUESSR'">A map can be picked multiple times with different pictures (or the same ones).</p>
+                    <p>A map that has been picked cannot be picked again in the next 10 days.</p>
+                    <p v-if="gameModeInfo.isMapPickWeighted">Maps are picked with a weighted probability equal to 1/(N+1) where N is the number of times the map has been picked in the past 60 days.</p>
+                    <p v-if="gameModeInfo.mode === 'GEOGUESSR'">Each map has multiple pictures for each level.</p>
                 </template>
             </template>
         </div>
@@ -33,29 +35,35 @@ const GAME_MODE_CONFIG: Record<Route, {
     mode: 'CLASSIC' | 'GEOGUESSR' | 'NONE';
     excludeUnfinished?: boolean;
     autoUpdate?: boolean;
+    isMapPickWeighted?: boolean;
 }> = {
     [Route.HOME]: {
         mode: 'NONE'
     },
     [Route.TMNF_TRIAL_CLASSIC_MODE]: {
         mode: 'CLASSIC',
-        excludeUnfinished: true
+        excludeUnfinished: true,
+        isMapPickWeighted: true
     },
     [Route.TMNF_RPG_CLASSIC_MODE]: {
         mode: 'CLASSIC',
-        autoUpdate: true
+        autoUpdate: true,
+        isMapPickWeighted: true
     },
     [Route.TM2_TRIAL_CLASSIC_MODE]: {
         mode: 'CLASSIC',
-        autoUpdate: true
+        autoUpdate: true,
+        isMapPickWeighted: true
     },
     [Route.TM2_RPG_CLASSIC_MODE]: {
         mode: 'CLASSIC',
-        autoUpdate: true
+        autoUpdate: true,
+        isMapPickWeighted: true
     },
     [Route.TM2020_TRIAL_CLASSIC_MODE]: {
         mode: 'CLASSIC',
-        autoUpdate: true
+        autoUpdate: true,
+        isMapPickWeighted: true
     },
     [Route.TM2020_RPG_GEOGUESSR_MODE]: {
         mode: 'GEOGUESSR'
