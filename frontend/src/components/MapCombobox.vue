@@ -12,18 +12,20 @@
         </div>
 
         <!-- Dropdown -->
-        <ul v-if="isOpen" class="absolute text-md lg:text-lg xl:text-xl mt-2 w-full max-h-60 overflow-y-auto rounded-xl border border-app-border shadow-lg bg-app-background scrollbar-hide z-20">
-            <li v-for="(map, index) in filteredMaps"
-                :key="String(map[uniqueId])"
-                ref="itemRefs"
-                @click="select(map)"
-                class="px-4 py-1 cursor-pointer hover:bg-selection-background"
-                :class="{ 'bg-selection-background': map[uniqueId] === selectedMap?.[uniqueId] || index === highlightedIndex }">
-                {{ map[nameProp] }}
-            </li>
+        <div v-if="isOpen" class="absolute mt-2 w-full rounded-xl border border-app-border shadow-lg bg-app-background overflow-hidden z-20">
+            <ul class="text-md lg:text-lg xl:text-xl max-h-60 overflow-y-auto">
+                <li v-for="(map, index) in filteredMaps"
+                    :key="String(map[uniqueId])"
+                    ref="itemRefs"
+                    @click="select(map)"
+                    class="px-4 py-1 cursor-pointer hover:bg-selection-background"
+                    :class="{ 'bg-selection-background': map[uniqueId] === selectedMap?.[uniqueId] || index === highlightedIndex }">
+                    {{ map[nameProp] }}
+                </li>
 
-            <li v-if="filteredMaps.length === 0" class="px-4 py-2 text-sm">No maps found.</li>
-        </ul>
+                <li v-if="filteredMaps.length === 0" class="px-4 py-2 text-sm">No maps found.</li>
+            </ul>
+        </div>
     </div>
 </template>
 
