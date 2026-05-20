@@ -18,7 +18,7 @@
                 ref="itemRefs"
                 @click="select(map)"
                 class="px-4 py-1 cursor-pointer hover:bg-selection-background"
-                :class="{ 'bg-neutral-400/20': index === highlightedIndex }">
+                :class="{ 'bg-selection-background': map[uniqueId] === selectedMap?.[uniqueId] || index === highlightedIndex }">
                 {{ map[nameProp] }}
             </li>
 
@@ -32,7 +32,7 @@ import Icon from '#/components/Icon.vue';
 import { deburr } from 'moderndash';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
-const { maps, pickedMaps, nameProp } = defineProps<{
+const { maps, pickedMaps, nameProp, uniqueId } = defineProps<{
     maps: T[];
     pickedMaps: T[];
     nameProp: keyof T;
@@ -58,6 +58,12 @@ const filteredMaps = computed(() => {
     return remainingMaps.value.filter((map) => deburr(String(map[nameProp])).toLowerCase().includes(deburr(filter)));
 });
 
+/* Scroll highlighted item into view */
+function scrollToHighlighted() {
+    const el = itemRefs.value[highlightedIndex.value];
+    el?.scrollIntoView({ block: 'center' });
+}
+
 /* Open dropdown */
 function open() {
     if (isOpen.value) return;
@@ -66,9 +72,23 @@ function open() {
 
     search.value = '';
     isOpen.value = true;
-    highlightedIndex.value = -1;
 
-    nextTick(() => inputRef.value?.focus());
+    // Find selected map index
+    if (selectedMap.value) {
+        highlightedIndex.value = filteredMaps.value.findIndex(
+            (map) => map[uniqueId] === selectedMap.value?.[uniqueId]
+        );
+    } else {
+        highlightedIndex.value = -1;
+    }
+
+    // Focus and scroll to selection
+    nextTick(() => {
+        inputRef.value?.focus();
+        if (highlightedIndex.value >= 0) {
+            scrollToHighlighted();
+        }
+    });
 }
 
 /* Close dropdown */
@@ -87,12 +107,6 @@ function select(map: T) {
     selectedMap.value = map;
     search.value = String(map[nameProp]);
     close(true);
-}
-
-/* Scroll highlighted item into view */
-function scrollToHighlighted() {
-    const el = itemRefs.value[highlightedIndex.value];
-    el?.scrollIntoView({ block: 'nearest' });
 }
 
 /* Keyboard navigation */
