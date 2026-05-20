@@ -20,6 +20,7 @@
 
   --color-header-background: #f8f4f4;
   --color-card-background: #f8f4f4;
+  --color-selection-background: #f0f0f0;
 
   --color-theme-toggle-background: #e4e4e4;
   --color-theme-toggle-knob: #ffffff;
@@ -58,6 +59,7 @@
 
     --color-header-background: #2a2a2a;
     --color-card-background: #2a2a2a;
+    --color-selection-background: #333333;
 
     --color-theme-toggle-background: #1d1d1d;
     --color-theme-toggle-knob: #000000;

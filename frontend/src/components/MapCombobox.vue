@@ -17,7 +17,7 @@
                 :key="String(map[uniqueId])"
                 ref="itemRefs"
                 @click="select(map)"
-                class="px-4 py-1 cursor-pointer"
+                class="px-4 py-1 cursor-pointer hover:bg-selection-background"
                 :class="{ 'bg-neutral-400/20': index === highlightedIndex }">
                 {{ map[nameProp] }}
             </li>
