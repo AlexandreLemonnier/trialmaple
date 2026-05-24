@@ -3,6 +3,7 @@ package com.trialmaple.service.guess.classic;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.HintPairDto;
 import com.trialmaple.model.dto.WrHolderDto;
+import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.model.enums.GameMode;
@@ -25,15 +26,15 @@ public class TmnfTrialClassicGuessService extends AbstractClassicGuessService {
     }
 
     @Override
-    protected GuessDto computeGuess(boolean success) {
-        HintPairDto<DifficultyCategory, Boolean> difficulty = computeMapDifficultyHint();
-        HintPairDto<Integer, DeltaHint> points = computeMapPointsHint();
-        HintPairDto<Integer, DeltaHint> checkpoints = computeMapCheckpointsHint();
-        HintPairDto<Integer, DeltaHint> finisherCount = computeMapFinisherCountHint();
-        HintPairDto<String, DeltaHint> wrTime = computeMapWrTimeHint();
-        HintPairDto<WrHolderDto, Boolean> wrHolder = computeMapWrHolderHint();
-        List<HintPairDto<String, Boolean>> authors = computeMapAuthorsHint();
-        HintPairDto<Integer, DeltaHint> releaseYear = computeMapReleaseYearHint();
+    protected GuessDto computeGuess(boolean success, TmMap mapOfTheDay, TmMap guessMap) {
+        HintPairDto<DifficultyCategory, Boolean> difficulty = computeMapDifficultyHint(mapOfTheDay, guessMap);
+        HintPairDto<Integer, DeltaHint> points = computeMapPointsHint(mapOfTheDay, guessMap);
+        HintPairDto<Integer, DeltaHint> checkpoints = computeMapCheckpointsHint(mapOfTheDay, guessMap);
+        HintPairDto<Integer, DeltaHint> finisherCount = computeMapFinisherCountHint(mapOfTheDay, guessMap);
+        HintPairDto<String, DeltaHint> wrTime = computeMapWrTimeHint(mapOfTheDay, guessMap);
+        HintPairDto<WrHolderDto, Boolean> wrHolder = computeMapWrHolderHint(mapOfTheDay, guessMap);
+        List<HintPairDto<String, Boolean>> authors = computeMapAuthorsHint(mapOfTheDay, guessMap);
+        HintPairDto<Integer, DeltaHint> releaseYear = computeMapReleaseYearHint(mapOfTheDay, guessMap);
         return new GuessDto(true, success, difficulty, points, checkpoints, finisherCount, wrTime, wrHolder, null, authors, releaseYear, null);
     }    
 }

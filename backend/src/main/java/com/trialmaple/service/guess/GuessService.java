@@ -1,6 +1,7 @@
 package com.trialmaple.service.guess;
 
 import com.trialmaple.exception.InvalidMapException;
+import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.entities.DailyMap;
@@ -26,5 +27,13 @@ public class GuessService {
         }
         IGuessGameModeService<DailyMap> guessService = provider.getGuessService(dailyMap.getGameMode());
         return guessService.checkGuess(dailyMap, request);
+    }
+
+    /**
+     * Give up. Give the mapName and the correct guess details.
+     */
+    public AnswerDto giveUp(DailyMap dailyMap) {
+        IGuessGameModeService<DailyMap> guessService = provider.getGuessService(dailyMap.getGameMode());
+        return guessService.getAnswer(dailyMap);
     }
 }

@@ -74,8 +74,7 @@ public class GuessController {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
-            String mapName = dailyMap.getMapName();
-            return new AnswerDto(mapName);
+            return guessService.giveUp(dailyMap);
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

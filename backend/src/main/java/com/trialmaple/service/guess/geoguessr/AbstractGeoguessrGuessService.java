@@ -1,6 +1,7 @@
 package com.trialmaple.service.guess.geoguessr;
 
 import com.trialmaple.exception.InvalidMapException;
+import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.entities.GeoguessrDailyMap;
@@ -28,5 +29,10 @@ public abstract class AbstractGeoguessrGuessService implements IGuessGameModeSer
             scoreRepository.save(score);
         }
         return new GuessDto(true, success);
+    }
+
+    @Override
+    public AnswerDto getAnswer(GeoguessrDailyMap dailyMap) {
+        return new AnswerDto(dailyMap.getMapName(), null, null);
     }
 }

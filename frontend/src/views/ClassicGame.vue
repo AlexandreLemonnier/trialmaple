@@ -37,7 +37,7 @@
             </template>
         </ResultScreen>
         <div class="flex flex-col w-full gap-5 lg:px-10 xl:px-20">
-            <GuessCard v-for="([uuid, guess]) in reversedHistory"
+            <GuessCard v-for="([uuid, guess]) in guessesToIterate"
                        :key="uuid"
                        :map-name="getMapDisplayName(uuid)"
                        :guess
@@ -97,9 +97,14 @@ const isReady = ref(false);
 const maps = ref<TmMap[]>([]);
 const todayWinnerCount = ref<number>();
 
-const reversedHistory = computed(() =>
-    Object.entries(history.value).reverse()
-);
+const guessesToIterate = computed(() => {
+    const entries = Object.entries(history.value).reverse();
+    if (answer.value?.mapUuid && answer.value.answerDetails) {
+        // If the player gave up, we want to display the answer at the end of the list of guesses, so we add it to the entries array
+        entries.unshift([answer.value.mapUuid, answer.value.answerDetails]);
+    }
+    return entries;
+});
 
 const selectedMap = ref<TmMap>();
 const pickedMaps = computed(() => maps.value.filter((map) => Object.keys(history.value).includes(map.uuid)));
