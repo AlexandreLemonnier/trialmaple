@@ -17,9 +17,9 @@ public class DailyMapScheduler {
         this.tmMapService = tmMapService;
     }
 
-    @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Paris") // Everyday at midnight
+    @Scheduled(cron = "0 0 0 * * *", zone = "Europe/Paris") // Every day at midnight
     public void scheduledDailyMapSelection() {
-        dailyMapService.pickAllDailyMapsIfMissing();
         tmMapService.fetchAndUpdateMaps();
+        dailyMapService.pickAllDailyMapsIfMissing();
     }
 }

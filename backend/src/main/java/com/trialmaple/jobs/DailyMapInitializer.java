@@ -20,7 +20,7 @@ public class DailyMapInitializer {
 
     @PostConstruct
     public void init() {
-        dailyMapService.pickAllDailyMapsIfMissing();
         tmMapService.fetchAndUpdateMaps();
+        dailyMapService.pickAllDailyMapsIfMissing();
     }
 }
