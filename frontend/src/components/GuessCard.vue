@@ -1,6 +1,11 @@
 <template>
     <div class="flex flex-col w-full gap-4 bg-card-background rounded-xl p-4 shadow-lg">
-        <span class="text-2xl font-semibold drop-shadow-lg" v-html="displayMapNameHtml()"></span>
+        <component :is="externalMapUrl ? 'a' : 'span'"
+                   class="w-fit text-2xl font-semibold drop-shadow-lg"
+                   :class="externalMapUrl && 'cursor-pointer hover:underline'"
+                   v-bind="externalMapUrl ? { href: externalMapUrl, target: '_blank', rel: 'noopener noreferrer' } : {}"
+                   v-html="displayMapNameHtml()">
+        </component>
 
         <TransitionGroup name="fade" tag="div" class="flex flex-wrap gap-4">
             <GuessElement v-for="item in displayedElements"
@@ -21,12 +26,13 @@ import type { HintInformation } from '#/types/HintInformation';
 import { toArray } from '#/utils/toArray';
 import { onMounted, ref } from 'vue';
 
-const { mapName, guess, hintsToDisplay, ignoreAnimations, showLogin } = defineProps<{
+const { mapName, guess, hintsToDisplay, ignoreAnimations, showLogin, externalMapUrl } = defineProps<{
     mapName: string;
     guess: Guess;
     hintsToDisplay: HintInformation[];
     ignoreAnimations?: boolean;
     showLogin: boolean;
+    externalMapUrl?: string | null;
 }>();
 
 const emit = defineEmits<(e: 'animationFinished') => void>();

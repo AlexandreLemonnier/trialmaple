@@ -44,7 +44,8 @@
                        :hints-to-display
                        @animationFinished="onGuessCardAnimationFinished"
                        :ignore-animations="ignoreCardsAnimations"
-                       :show-login />
+                       :show-login
+                       :external-map-url="getExternalMapUrl(uuid)" />
         </div>
         <ExternalMapsListNote :game-mode />
         <GiveUpButton v-if="!gameEnded" :game-mode="gameMode" @done="handleGiveUp" />
@@ -75,6 +76,7 @@ import type { ClassicGameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
 import type { TmMap } from '#/types/api/tmMap';
 import type { HintInformation } from '#/types/HintInformation';
+import { getMapList } from '#/utils/getMapList';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref, watch, watchEffect } from 'vue';
 
@@ -146,6 +148,13 @@ function getMapDisplayName(uuid: string) {
         return matchingMap.displayName ?? matchingMap.name;
     }
     return 'Map not found';
+}
+
+function getExternalMapUrl(uuid: string) {
+    const matchingMap = maps.value.find((map) => map.uuid === uuid);
+    const externalMapId = matchingMap?.tmxId ?? null;
+    const baseUrl = getMapList(gameMode).url;
+    return externalMapId ? `${baseUrl}&map=${externalMapId}` : null;
 }
 
 async function handleGuess() {
