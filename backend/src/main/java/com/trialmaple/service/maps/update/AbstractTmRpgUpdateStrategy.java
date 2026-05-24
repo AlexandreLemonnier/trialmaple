@@ -1,14 +1,5 @@
 package com.trialmaple.service.maps.update;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.trialmaple.controller.mappers.external.MapDtoMapper;
 import com.trialmaple.externalservice.tmrpg.TmRpgService;
 import com.trialmaple.model.dto.external.tmrpg.MapDto;
@@ -17,8 +8,15 @@ import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.entities.TmUser;
 import com.trialmaple.repository.TmMapRepository;
 import com.trialmaple.service.maps.TmUserService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -43,6 +41,14 @@ public abstract class AbstractTmRpgUpdateStrategy implements IMapUpdateStrategy 
      * Anything that needs to be done before fetch and update
      */
     protected void preProcess() {
+    }
+
+    /**
+     * Specific updates to TmMap for some game modes
+     */
+    protected boolean specificUpdate(TmMap existingMap, MapDto updatedMap) {
+        // default implementation
+        return false;
     }
 
     @Transactional
@@ -72,7 +78,8 @@ public abstract class AbstractTmRpgUpdateStrategy implements IMapUpdateStrategy 
                     mapToAdd.setActive(false);
                     toCreate.add(mapToAdd);
                 } else {
-                    boolean updated = mapDtoMapper.update(existingMap, map, wrHolder, classic);
+                    boolean updated = specificUpdate(existingMap, map);
+                    updated = updated || mapDtoMapper.update(existingMap, map, wrHolder, classic);
                     if (updated) {
                         log.info("Map updated: {}", existingMap.getName());
                         toUpdate.add(existingMap);
