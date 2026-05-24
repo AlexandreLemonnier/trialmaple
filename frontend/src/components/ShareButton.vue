@@ -41,7 +41,7 @@ const resultCopyClass: Record<CopyStatus, string> = {
 
 function getTitle(guessesCount: number, hasWon: boolean) {
     if (dailyMapNumber.value) {
-        return `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} ${hasWon ? '😼👍' : '😿'}`;
+        return `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} ${hasWon ? '😼👍' : '😿❌'}`;
     }
     return '';
 }
