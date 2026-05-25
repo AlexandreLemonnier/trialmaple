@@ -3,6 +3,6 @@ export enum ExternalMapList {
     TMNF_RPG_LIST = 'https://tmrpg.com/maps?game=tmnf&mode=classic',
     TM2_TRIAL = 'https://tmrpg.com/maps?game=tm2-trial',
     TM2_RPG_PVM = 'https://tmrpg.com/maps?game=tm2&mode=pvm',
-    TM2020_TRIAL_CLASSIC = 'https://tmrpg.com/maps?game=tm20-trial',
-    TM2020_RPG_CLASSIC = 'https://tmrpg.com/maps?game=tm20'
+    TM2020_TRIAL_CLASSIC = 'https://tmrpg.com/maps?game=tm20-trial&mode=classic',
+    TM2020_RPG = 'https://tmrpg.com/maps?game=tm20'
 }

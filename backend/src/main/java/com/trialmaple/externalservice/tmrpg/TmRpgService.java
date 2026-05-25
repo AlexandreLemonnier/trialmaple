@@ -38,7 +38,7 @@ public interface TmRpgService {
     /**
      * Get "TM2020 Trial Classic" maps from tmrpg.com
      */
-    @GetExchange("/game/tm20-trial/maps?secret=arso")
+    @GetExchange("/game/tm20-trial/maps?secret=arso&mode=classic")
     MapsResponseDto getTm2020TrialClassicMaps();
 
     /**
