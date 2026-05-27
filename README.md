@@ -4,6 +4,8 @@
 Each day at 00:00 CET/CEST, a new trial map is selected for each game mode.  
 Your goal: guess which map it is using progressively more precise hints!
 
+See [**https://tmmaple.com**](https://tmmaple.com)
+
 ---
 
 ## How to Play
