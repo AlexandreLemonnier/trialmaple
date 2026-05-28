@@ -1,6 +1,6 @@
 <template>
     <div class="text-sm italic">
-        Time before reset: {{ remainingTime }}
+        Next map pick in: {{ remainingTime }}
     </div>
 </template>
 
