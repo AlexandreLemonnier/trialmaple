@@ -5,7 +5,7 @@ import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;
-import com.trialmaple.service.maps.GeoguessrPictureService;
+import com.trialmaple.service.picture.GeoguessrPictureService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;

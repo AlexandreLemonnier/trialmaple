@@ -6,7 +6,7 @@ import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapService;
-import com.trialmaple.service.maps.GeoguessrPictureService;
+import com.trialmaple.service.picture.GeoguessrPictureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;

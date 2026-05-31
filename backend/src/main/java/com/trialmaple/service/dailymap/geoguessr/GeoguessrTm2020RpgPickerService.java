@@ -1,7 +1,7 @@
 package com.trialmaple.service.dailymap.geoguessr;
 
 import com.trialmaple.model.enums.GameMode;
-import com.trialmaple.service.maps.GeoguessrPictureService;
+import com.trialmaple.service.picture.GeoguessrPictureService;
 import org.springframework.stereotype.Service;
 
 @Service

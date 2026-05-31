@@ -1,4 +1,4 @@
-package com.trialmaple.service.maps;
+package com.trialmaple.service.picture;
 
 import com.trialmaple.TmMapleConstant;
 import com.trialmaple.model.entities.DailyPictures;

@@ -4,7 +4,7 @@ import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.dto.GeoguessrMapDto;
 import com.trialmaple.model.dto.TmMapDto;
 import com.trialmaple.model.enums.GameMode;
-import com.trialmaple.service.maps.GeoguessrPictureService;
+import com.trialmaple.service.picture.GeoguessrPictureService;
 import com.trialmaple.service.maps.TmMapService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

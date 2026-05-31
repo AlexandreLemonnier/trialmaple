@@ -3,7 +3,7 @@ package com.trialmaple.service.dailymap.blur;
 import com.trialmaple.model.entities.*;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;
-import com.trialmaple.service.maps.BlurPictureService;
+import com.trialmaple.service.picture.BlurPictureService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
