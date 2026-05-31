@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -20,19 +21,21 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class PictureService {
+public class GeoguessrPictureService {
+
+    private final static String GAME_MODE_PATH_NAME = "GEOGUESSR";
 
     private final DailyMapRepository dailyMapRepository;
 
     @Value("${game.pictures-path}")
-    private String mapsPath;
+    private String rootPathName;
 
     private final Random random = new Random();
 
     // Game mode -> (map name -> (difficulty level -> list of pictures))
     private final Map<String, Map<String, Map<Integer, List<String>>>> index = new HashMap<>();
 
-    public PictureService(DailyMapRepository dailyMapRepository) {
+    public GeoguessrPictureService(DailyMapRepository dailyMapRepository) {
         this.dailyMapRepository = dailyMapRepository;
     }
 
@@ -41,7 +44,7 @@ public class PictureService {
      */
     @PostConstruct
     public void init() throws IOException {
-        Path rootPath = Paths.get(mapsPath);
+        Path rootPath = Paths.get(rootPathName + File.separator + GAME_MODE_PATH_NAME);
         try (DirectoryStream<Path> gameModes = Files.newDirectoryStream(rootPath)) {
             // Loop over game modes
             for (Path gameModeDir : gameModes) {
@@ -138,6 +141,9 @@ public class PictureService {
         return list.get(random.nextInt(list.size()));
     }
 
+    /**
+     * Returns the path of the picture n°{attempt} for the daily map of given game mode
+     */
     public Path getTodayPicturePath(GameMode gameMode, GeoguessrDailyMap dailyMap, int attempt) {
         DailyPictures dailyPictures = dailyMap.getDailyPictures();
 
@@ -148,10 +154,13 @@ public class PictureService {
         return getPicturePath(gameFolder, dailyMapName, attempt, pictureName);
     }
 
-    public Path getPicturePath(String game, String mapName, int attempt, String pictureName) {
-        return Paths.get(mapsPath, game, mapName, String.valueOf(attempt), pictureName);
+    private Path getPicturePath(String game, String mapName, int attempt, String pictureName) {
+        return Paths.get(rootPathName, game, mapName, String.valueOf(attempt), pictureName);
     }
 
+    /**
+     * Get the list of maps name (map pool)
+     */
     public List<String> getMapsName(GameMode gameMode) {
         String gameFolder = gameMode.getPicturesFolderName();
         return index.get(gameFolder).keySet().stream().toList();

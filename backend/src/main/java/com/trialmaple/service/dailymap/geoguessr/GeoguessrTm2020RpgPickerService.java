@@ -1,14 +1,14 @@
 package com.trialmaple.service.dailymap.geoguessr;
 
 import com.trialmaple.model.enums.GameMode;
-import com.trialmaple.service.maps.PictureService;
+import com.trialmaple.service.maps.GeoguessrPictureService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GeoguessrTm2020RpgPickerService extends AbstractGeoguessrPickerService {
 
-    public GeoguessrTm2020RpgPickerService(PictureService pictureService) {
-        super(pictureService);
+    public GeoguessrTm2020RpgPickerService(GeoguessrPictureService geoguessrPictureService) {
+        super(geoguessrPictureService);
     }
 
     @Override

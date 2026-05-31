@@ -6,7 +6,7 @@ import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapService;
-import com.trialmaple.service.maps.PictureService;
+import com.trialmaple.service.maps.GeoguessrPictureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -27,11 +27,11 @@ import java.nio.file.Path;
 public class PictureController {
 
     private final DailyMapService dailyMapService;
-    private final PictureService pictureService;
+    private final GeoguessrPictureService geoguessrPictureService;
 
-    public PictureController(DailyMapService dailyMapService, PictureService pictureService) {
+    public PictureController(DailyMapService dailyMapService, GeoguessrPictureService geoguessrPictureService) {
         this.dailyMapService = dailyMapService;
-        this.pictureService = pictureService;
+        this.geoguessrPictureService = geoguessrPictureService;
     }
 
     /**
@@ -46,7 +46,7 @@ public class PictureController {
             if (attemptValue <= 0 || attemptValue > TmMapleConstant.GEOGUESSR_PICTURES_COUNT) {
                 throw new InvalidAttemptException(attempt);
             }
-            Path picturePath = pictureService.getTodayPicturePath(gameModeValue, dailyMap, attemptValue);
+            Path picturePath = geoguessrPictureService.getTodayPicturePath(gameModeValue, dailyMap, attemptValue);
             if (!Files.exists(picturePath)) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
             }
