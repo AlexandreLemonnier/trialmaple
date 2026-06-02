@@ -1,12 +1,15 @@
 import { useEnv } from '#/composables/useEnv';
-import type { GeoguessrGameMode } from '#/types/api/gameMode';
+import type { BlurGameMode, GeoguessrGameMode } from '#/types/api/gameMode';
 
 export function usePictureApi() {
     const env = useEnv();
 
     return {
-        getPictureUrl(gameMode: GeoguessrGameMode, attempt: number) {
-            return `${env.PROXIED_API_URL_PREFIX}/picture/${attempt}?gameMode=${gameMode}`;
+        getGeoguessrPictureUrl(gameMode: GeoguessrGameMode, attempt: number) {
+            return `${env.PROXIED_API_URL_PREFIX}/geoguessr-picture/${attempt}?gameMode=${gameMode}`;
+        },
+        getBlurPictureUrl(gameMode: BlurGameMode) {
+            return `${env.PROXIED_API_URL_PREFIX}/blur-picture?gameMode=${gameMode}`;
         }
     };
 }

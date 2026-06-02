@@ -447,7 +447,6 @@ export default defineConfig(
                 destructuring: 'any',
                 ignoreReadBeforeAssign: false
             }],
-            'prefer-exponentiation-operator': ['error'],
             'prefer-object-has-own': ['error'],
             'prefer-object-spread': ['error'],
             'prefer-promise-reject-errors': ['error', {

@@ -6,5 +6,6 @@ export enum Route {
     TM2_RPG_CLASSIC_MODE = '/tm2/rpg/classic',
     TM2020_TRIAL_CLASSIC_MODE = '/tm2020/trial/classic',
     TM2020_RPG_CLASSIC_MODE = '/tm2020/rpg/classic',
-    TM2020_RPG_GEOGUESSR_MODE = '/tm2020/rpg/geoguessr'
+    TM2020_RPG_GEOGUESSR_MODE = '/tm2020/rpg/geoguessr',
+    TMNF_TRIAL_BLUR_MODE = '/tmnf/trial/blur'
 }

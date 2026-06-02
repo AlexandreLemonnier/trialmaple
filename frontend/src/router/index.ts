@@ -7,6 +7,7 @@ import Tm2020TrialClassicGame from '#/views/Tm2020TrialClassicGame.vue';
 import Tm2RpgClassicGame from '#/views/Tm2RpgClassicGame.vue';
 import Tm2TrialClassicGame from '#/views/Tm2TrialClassicGame.vue';
 import TmnfRpgClassicGame from '#/views/TmnfRpgClassicGame.vue';
+import TmnfTrialBlurGame from '#/views/TmnfTrialBlurGame.vue';
 import TmnfTrialClassicGame from '#/views/TmnfTrialClassicGame.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -78,6 +79,15 @@ const router = createRouter({
             component: Tm2020RpgGeoguessrGame,
             meta: {
                 titleKey: 'TM2020 RPG Geoguessr'
+            }
+
+        },
+        {
+            name: Route.TMNF_TRIAL_BLUR_MODE,
+            path: Route.TMNF_TRIAL_BLUR_MODE,
+            component: TmnfTrialBlurGame,
+            meta: {
+                titleKey: 'TMNF Trial Blurred'
             }
 
         },

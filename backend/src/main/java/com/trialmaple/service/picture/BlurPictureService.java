@@ -1,7 +1,7 @@
 package com.trialmaple.service.picture;
 
+import com.trialmaple.model.entities.BlurDailyMap;
 import com.trialmaple.model.entities.DailyPictures;
-import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;
 import jakarta.annotation.PostConstruct;
@@ -89,7 +89,7 @@ public class BlurPictureService {
         List<String> maps = new ArrayList<>(gameMaps.keySet());
 
         // Remove recently picked maps from map pool to avoid repeats
-        LocalDate startDate = LocalDate.now().minusDays(30);
+        LocalDate startDate = LocalDate.now().minusDays(60);
         Set<String> recentlyPickedMaps = new HashSet<>(dailyMapRepository.findGeoguessrMapNameByGameModeAndStartDate(gameMode, startDate));
         if (recentlyPickedMaps.size() < maps.size()) {
             maps = maps.stream()
@@ -111,18 +111,18 @@ public class BlurPictureService {
     /**
      * Returns the path of the picture for the daily map of given game mode
      */
-    public Path getTodayPicturePath(GameMode gameMode, GeoguessrDailyMap dailyMap, int attempt) {
+    public Path getTodayPicturePath(GameMode gameMode, BlurDailyMap dailyMap) {
         DailyPictures dailyPictures = dailyMap.getDailyPictures();
 
         String gameFolder = gameMode.getPicturesFolderName();
         String dailyMapName = dailyPictures.getMapName();
         String pictureName = dailyPictures.getPicturesName().getFirst();
 
-        return getPicturePath(gameFolder, dailyMapName, attempt, pictureName);
+        return getPicturePath(gameFolder, dailyMapName, pictureName);
     }
 
-    private Path getPicturePath(String game, String mapName, int attempt, String pictureName) {
-        return Paths.get(rootPathName, game, mapName, String.valueOf(attempt), pictureName);
+    private Path getPicturePath(String game, String mapName, String pictureName) {
+        return Paths.get(rootPathName, GAME_MODE_PATH_NAME, game, mapName, pictureName);
     }
 
     /**

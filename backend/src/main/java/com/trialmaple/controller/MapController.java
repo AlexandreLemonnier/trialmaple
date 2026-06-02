@@ -1,11 +1,13 @@
 package com.trialmaple.controller;
 
 import com.trialmaple.exception.InvalidGameModeException;
+import com.trialmaple.model.dto.BlurMapDto;
 import com.trialmaple.model.dto.GeoguessrMapDto;
 import com.trialmaple.model.dto.TmMapDto;
 import com.trialmaple.model.enums.GameMode;
-import com.trialmaple.service.picture.GeoguessrPictureService;
 import com.trialmaple.service.maps.TmMapService;
+import com.trialmaple.service.picture.BlurPictureService;
+import com.trialmaple.service.picture.GeoguessrPictureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +23,12 @@ public class MapController {
 
     private final TmMapService tmMapService;
     private final GeoguessrPictureService geoguessrPictureService;
+    private final BlurPictureService blurPictureService;
 
-    public MapController(TmMapService tmMapService, GeoguessrPictureService geoguessrPictureService) {
+    public MapController(TmMapService tmMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService) {
         this.tmMapService = tmMapService;
         this.geoguessrPictureService = geoguessrPictureService;
+        this.blurPictureService = blurPictureService;
     }
 
     /**
@@ -49,6 +53,20 @@ public class MapController {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             return geoguessrPictureService.getMapsName(gameModeValue).stream().map(GeoguessrMapDto::new).toList();
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        }
+    }
+
+    /**
+     * List maps name for blur game mode
+     */
+    @GetMapping("/maps/blur")
+    public List<BlurMapDto> getBlurMaps(@RequestParam String gameMode) {
+        try {
+            GameMode gameModeValue = GameMode.valueOf(gameMode);
+            return blurPictureService.getMapsName(gameModeValue).stream().map(BlurMapDto::new).toList();
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

@@ -7,4 +7,6 @@ export type ClassicGameMode = 'CLASSIC_TMNF_TRIAL'
 
 export type GeoguessrGameMode = 'GEOGUESSR_TM2020_RPG';
 
-export type GameMode = ClassicGameMode | GeoguessrGameMode;
+export type BlurGameMode = 'BLUR_TMNF_TRIAL';
+
+export type GameMode = ClassicGameMode | GeoguessrGameMode | BlurGameMode;

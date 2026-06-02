@@ -3,9 +3,11 @@ package com.trialmaple.controller;
 import com.trialmaple.TmMapleConstant;
 import com.trialmaple.exception.InvalidAttemptException;
 import com.trialmaple.exception.InvalidGameModeException;
+import com.trialmaple.model.entities.BlurDailyMap;
 import com.trialmaple.model.entities.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapService;
+import com.trialmaple.service.picture.BlurPictureService;
 import com.trialmaple.service.picture.GeoguessrPictureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
@@ -28,17 +30,19 @@ public class PictureController {
 
     private final DailyMapService dailyMapService;
     private final GeoguessrPictureService geoguessrPictureService;
+    private final BlurPictureService blurPictureService;
 
-    public PictureController(DailyMapService dailyMapService, GeoguessrPictureService geoguessrPictureService) {
+    public PictureController(DailyMapService dailyMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService) {
         this.dailyMapService = dailyMapService;
         this.geoguessrPictureService = geoguessrPictureService;
+        this.blurPictureService = blurPictureService;
     }
 
     /**
-     * Get specific picture for given game mode
+     * Get specific picture for given Geoguessr game mode
      */
-    @GetMapping("/picture/{attempt}")
-    public ResponseEntity<Resource> getPicture(@RequestParam String gameMode, @PathVariable String attempt) {
+    @GetMapping("/geoguessr-picture/{attempt}")
+    public ResponseEntity<Resource> getGeoguessrPicture(@RequestParam String gameMode, @PathVariable String attempt) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             GeoguessrDailyMap dailyMap = (GeoguessrDailyMap) dailyMapService.getCurrentDailyMap(gameModeValue);
@@ -47,6 +51,38 @@ public class PictureController {
                 throw new InvalidAttemptException(attempt);
             }
             Path picturePath = geoguessrPictureService.getTodayPicturePath(gameModeValue, dailyMap, attemptValue);
+            return sendResponse(picturePath);
+        } catch (NumberFormatException e) {
+            log.error("Invalid attempt.", e);
+            throw new InvalidAttemptException(attempt);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        }
+    }
+
+    /**
+     * Get specific picture for given Blur game mode
+     */
+    @GetMapping("/blur-picture")
+    public ResponseEntity<Resource> getBlurPicture(@RequestParam String gameMode) {
+        try {
+            GameMode gameModeValue = GameMode.valueOf(gameMode);
+            BlurDailyMap dailyMap = (BlurDailyMap) dailyMapService.getCurrentDailyMap(gameModeValue);
+
+            Path picturePath = blurPictureService.getTodayPicturePath(gameModeValue, dailyMap);
+            return sendResponse(picturePath);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        }
+    }
+
+    /**
+     * Returns ResponseEntity with attached picture as Resource if it exists
+     */
+    private ResponseEntity<Resource> sendResponse(Path picturePath) throws ResponseStatusException {
+        try {
             if (!Files.exists(picturePath)) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
             }
@@ -61,12 +97,6 @@ public class PictureController {
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
                     .body(resource);
-        } catch (NumberFormatException e) {
-            log.error("Invalid attempt.", e);
-            throw new InvalidAttemptException(attempt);
-        } catch (IllegalArgumentException e) {
-            log.error("Invalid game mode.", e);
-            throw new InvalidGameModeException(gameMode);
         } catch (IOException e) {
             log.error("Error reading file.", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);

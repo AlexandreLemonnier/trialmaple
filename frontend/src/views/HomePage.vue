@@ -166,6 +166,11 @@ const games: Game[] = [
                         title: 'Classic',
                         icon: 'triangle',
                         routeName: Route.TMNF_TRIAL_CLASSIC_MODE
+                    },
+                    {
+                        title: 'Blur',
+                        icon: 'focus',
+                        routeName: Route.TMNF_TRIAL_BLUR_MODE
                     }
                 ]
             },
@@ -199,6 +204,11 @@ const gameDescriptions: GameDescription[] = [
         title: 'Geoguessr mode',
         icon: 'image',
         description: 'Get up to 3 pictures.'
+    },
+    {
+        title: 'Blur mode',
+        icon: 'focus',
+        description: 'Get a blurry picture.'
     }
 ];
 </script>

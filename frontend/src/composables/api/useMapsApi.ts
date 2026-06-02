@@ -1,5 +1,6 @@
 import { useApi } from '#/composables/useApi';
-import type { ClassicGameMode, GeoguessrGameMode } from '#/types/api/gameMode';
+import type { BlurMap } from '#/types/api/blurMap';
+import type { BlurGameMode, ClassicGameMode, GeoguessrGameMode } from '#/types/api/gameMode';
 import type { GeoguessrMap } from '#/types/api/geoguessrMap';
 import type { TmMap } from '#/types/api/tmMap';
 
@@ -17,6 +18,14 @@ export function useMapsApi() {
         },
         async getGeoguessrMaps(gameMode: GeoguessrGameMode) {
             return await request<GeoguessrMap[]>('/geoguessr', {
+                method: 'GET',
+                query: {
+                    gameMode
+                }
+            });
+        },
+        async getBlurMaps(gameMode: BlurGameMode) {
+            return await request<BlurMap[]>('/blur', {
                 method: 'GET',
                 query: {
                     gameMode

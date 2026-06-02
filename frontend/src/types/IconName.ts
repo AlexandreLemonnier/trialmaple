@@ -13,4 +13,5 @@ export type IconName =
     | 'triangle'
     | 'image'
     | 'house'
-    | 'flag';
+    | 'flag'
+    | 'focus';

@@ -155,7 +155,7 @@ public class GeoguessrPictureService {
     }
 
     private Path getPicturePath(String game, String mapName, int attempt, String pictureName) {
-        return Paths.get(rootPathName, game, mapName, String.valueOf(attempt), pictureName);
+        return Paths.get(rootPathName, GAME_MODE_PATH_NAME, game, mapName, String.valueOf(attempt), pictureName);
     }
 
     /**
