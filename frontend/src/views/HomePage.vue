@@ -168,7 +168,7 @@ const games: Game[] = [
                         routeName: Route.TMNF_TRIAL_CLASSIC_MODE
                     },
                     {
-                        title: 'Blur',
+                        title: 'Blurred',
                         icon: 'focus',
                         routeName: Route.TMNF_TRIAL_BLUR_MODE
                     }
@@ -206,7 +206,7 @@ const gameDescriptions: GameDescription[] = [
         description: 'Get up to 3 pictures.'
     },
     {
-        title: 'Blur mode',
+        title: 'Blurred mode',
         icon: 'focus',
         description: 'Get a blurry picture.'
     }
