@@ -4,10 +4,12 @@ import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.dto.BlurMapDto;
 import com.trialmaple.model.dto.GeoguessrMapDto;
 import com.trialmaple.model.dto.TmMapDto;
+import com.trialmaple.model.dto.ZoomMapDto;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.maps.TmMapService;
 import com.trialmaple.service.picture.BlurPictureService;
 import com.trialmaple.service.picture.GeoguessrPictureService;
+import com.trialmaple.service.picture.ZoomPictureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +26,13 @@ public class MapController {
     private final TmMapService tmMapService;
     private final GeoguessrPictureService geoguessrPictureService;
     private final BlurPictureService blurPictureService;
+    private final ZoomPictureService zoomPictureService;
 
-    public MapController(TmMapService tmMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService) {
+    public MapController(TmMapService tmMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService, ZoomPictureService zoomPictureService) {
         this.tmMapService = tmMapService;
         this.geoguessrPictureService = geoguessrPictureService;
         this.blurPictureService = blurPictureService;
+        this.zoomPictureService = zoomPictureService;
     }
 
     /**
@@ -67,6 +71,20 @@ public class MapController {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             return blurPictureService.getMapsName(gameModeValue).stream().map(BlurMapDto::new).toList();
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        }
+    }
+
+    /**
+     * List maps name for zoom game mode
+     */
+    @GetMapping("/maps/zoom")
+    public List<ZoomMapDto> getZoomMaps(@RequestParam String gameMode) {
+        try {
+            GameMode gameModeValue = GameMode.valueOf(gameMode);
+            return zoomPictureService.getMapsName(gameModeValue).stream().map(ZoomMapDto::new).toList();
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

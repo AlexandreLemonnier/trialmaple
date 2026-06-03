@@ -10,6 +10,7 @@ public class TmnfTrialBlurGuessService extends AbstractBlurGuessService {
     public TmnfTrialBlurGuessService(ScoreRepository scoreRepository) {
         super(scoreRepository);
     }
+
     @Override
     public GameMode getGameMode() {
         return GameMode.BLUR_TMNF_TRIAL;
