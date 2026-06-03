@@ -1,4 +1,4 @@
-package com.trialmaple.model.entities;
+package com.trialmaple.model.entities.dailymap;
 
 import com.trialmaple.model.enums.GameMode;
 import jakarta.persistence.*;

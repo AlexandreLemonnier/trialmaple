@@ -1,7 +1,7 @@
 package com.trialmaple.service;
 
 import com.trialmaple.model.dto.DailyStatsDto;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.entities.Score;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;

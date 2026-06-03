@@ -1,6 +1,6 @@
 package com.trialmaple.service.dailymap;
 
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 

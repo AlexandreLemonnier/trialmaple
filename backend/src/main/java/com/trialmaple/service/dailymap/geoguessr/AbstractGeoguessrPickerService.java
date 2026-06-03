@@ -1,7 +1,7 @@
 package com.trialmaple.service.dailymap.geoguessr;
 
 import com.trialmaple.model.entities.DailyPictures;
-import com.trialmaple.model.entities.GeoguessrDailyMap;
+import com.trialmaple.model.entities.dailymap.GeoguessrDailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.IDailyMapPickerStrategy;

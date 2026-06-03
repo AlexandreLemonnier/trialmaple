@@ -1,6 +1,6 @@
 package com.trialmaple.service.guess;
 
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.enums.GameMode;
 import org.springframework.stereotype.Service;
 

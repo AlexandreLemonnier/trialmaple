@@ -11,7 +11,8 @@ public enum GameMode {
     CLASSIC_TM2020_TRIAL(null),
     CLASSIC_TM2020_RPG(null),
     GEOGUESSR_TM2020_RPG("TM2020_RPG"),
-    BLUR_TMNF_TRIAL("TMNF_TRIAL");
+    BLUR_TMNF_TRIAL("TMNF_TRIAL"),
+    ZOOM_TMNF_TRIAL("TMNF_TRIAL");
 
     private final String picturesFolderName;
 

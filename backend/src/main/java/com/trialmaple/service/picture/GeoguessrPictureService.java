@@ -2,7 +2,7 @@ package com.trialmaple.service.picture;
 
 import com.trialmaple.TmMapleConstant;
 import com.trialmaple.model.entities.DailyPictures;
-import com.trialmaple.model.entities.GeoguessrDailyMap;
+import com.trialmaple.model.entities.dailymap.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;
 import jakarta.annotation.PostConstruct;

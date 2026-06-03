@@ -1,7 +1,7 @@
 package com.trialmaple.service.dailymap.classic;
 
 import com.trialmaple.model.dto.projection.MapPickCount;
-import com.trialmaple.model.entities.ClassicDailyMap;
+import com.trialmaple.model.entities.dailymap.ClassicDailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;

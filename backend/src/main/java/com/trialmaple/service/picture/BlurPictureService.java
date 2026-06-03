@@ -1,6 +1,6 @@
 package com.trialmaple.service.picture;
 
-import com.trialmaple.model.entities.BlurDailyMap;
+import com.trialmaple.model.entities.dailymap.BlurDailyMap;
 import com.trialmaple.model.entities.DailyPictures;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;

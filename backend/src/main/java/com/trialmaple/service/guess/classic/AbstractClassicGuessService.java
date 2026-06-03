@@ -2,7 +2,7 @@ package com.trialmaple.service.guess.classic;
 
 import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.*;
-import com.trialmaple.model.entities.ClassicDailyMap;
+import com.trialmaple.model.entities.dailymap.ClassicDailyMap;
 import com.trialmaple.model.entities.Score;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.DeltaHint;

@@ -1,7 +1,7 @@
 package com.trialmaple.service.dailymap;
 
 import com.trialmaple.exception.NoDailyMapFoundException;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;
 import lombok.extern.slf4j.Slf4j;

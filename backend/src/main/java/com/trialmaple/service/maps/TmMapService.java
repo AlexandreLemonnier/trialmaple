@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.trialmaple.controller.mappers.TmMapDtoMapper;
 import com.trialmaple.model.dto.TmMapDto;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapServiceProvider;

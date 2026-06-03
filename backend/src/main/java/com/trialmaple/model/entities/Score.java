@@ -1,5 +1,6 @@
 package com.trialmaple.model.entities;
 
+import com.trialmaple.model.entities.dailymap.DailyMap;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

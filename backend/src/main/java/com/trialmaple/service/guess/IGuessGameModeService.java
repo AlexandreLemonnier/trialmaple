@@ -4,7 +4,7 @@ import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
-import com.trialmaple.model.entities.DailyMap;
+import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.enums.GameMode;
 
 public interface IGuessGameModeService<T extends DailyMap> {
