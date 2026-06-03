@@ -1,25 +1,17 @@
 package com.trialmaple.controller;
 
-import com.trialmaple.model.dto.AnswerDto;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.exception.NoDailyMapFoundException;
+import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.service.dailymap.DailyMapService;
 import com.trialmaple.service.guess.GuessService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -45,21 +37,6 @@ public class GuessController {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
             return guessService.checkGuess(dailyMap, request);
-        } catch (IllegalArgumentException e) {
-            log.error("Invalid game mode.", e);
-            throw new InvalidGameModeException(gameMode);
-        }
-    }
-
-    /**
-     * Get current daily map uuid for the given game mode
-     */
-    @GetMapping("/guess/daily-map")
-    public String getDailyMapUuid(@RequestParam String gameMode) throws NoDailyMapFoundException {
-        try {
-            GameMode gameModeValue = GameMode.valueOf(gameMode);
-            DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
-            return dailyMap.getUuid().toString();
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

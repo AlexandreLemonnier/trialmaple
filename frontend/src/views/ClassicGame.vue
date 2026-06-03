@@ -64,6 +64,7 @@ import MapCombobox from '#/components/MapCombobox.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
 import ResultScreen from '#/components/ResultScreen.vue';
 import ShareButton from '#/components/ShareButton.vue';
+import { useDailyMapApi } from '#/composables/api/useDailyMapApi';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
@@ -140,6 +141,7 @@ function onGuessCardAnimationFinished() {
 /** Game core */
 const guessApi = useGuessApi();
 const mapsApi = useMapsApi();
+const dailyMapApi = useDailyMapApi();
 const dailyStatsApi = useDailyStatsApi();
 
 function getMapDisplayName(uuid: string) {
@@ -242,7 +244,7 @@ async function fetchDailyStats() {
 
 async function fetchDailyMapUuid() {
     try {
-        return await guessApi.getDailyMapUuid(gameMode);
+        return await dailyMapApi.getDailyMapUuid(gameMode);
     } catch (e) {
         console.error('Error while fetching daily map uuid', e);
     }

@@ -66,6 +66,7 @@ import Picture from '#/components/Picture.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
 import ResultScreen from '#/components/ResultScreen.vue';
 import ShareButton from '#/components/ShareButton.vue';
+import { useDailyMapApi } from '#/composables/api/useDailyMapApi';
 import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
@@ -119,6 +120,7 @@ watchEffect(() => {
 const guessApi = useGuessApi();
 const dailyStatsApi = useDailyStatsApi();
 const mapsApi = useMapsApi();
+const dailyMapApi = useDailyMapApi();
 const pictureApi = usePictureApi();
 const pictureUrl = pictureApi.getZoomPictureUrl(gameMode);
 
@@ -182,7 +184,7 @@ async function fetchDailyStats() {
 
 async function fetchDailyMapUuid() {
     try {
-        return await guessApi.getDailyMapUuid(gameMode);
+        return await dailyMapApi.getDailyMapUuid(gameMode);
     } catch (e) {
         console.error('Error while fetching daily map uuid', e);
     }

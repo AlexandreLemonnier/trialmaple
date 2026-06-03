@@ -17,14 +17,6 @@ export function useGuessApi() {
                 }
             });
         },
-        async getDailyMapUuid(gameMode: GameMode) {
-            return await request<string>('/daily-map', {
-                method: 'GET',
-                query: {
-                    gameMode
-                }
-            });
-        },
         async giveUp(gameMode: GameMode) {
             return await request<Answer>('/giveup', {
                 method: 'POST',
