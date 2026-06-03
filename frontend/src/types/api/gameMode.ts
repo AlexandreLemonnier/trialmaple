@@ -9,4 +9,6 @@ export type GeoguessrGameMode = 'GEOGUESSR_TM2020_RPG';
 
 export type BlurGameMode = 'BLUR_TMNF_TRIAL';
 
-export type GameMode = ClassicGameMode | GeoguessrGameMode | BlurGameMode;
+export type ZoomGameMode = 'ZOOM_TMNF_TRIAL';
+
+export type GameMode = ClassicGameMode | GeoguessrGameMode | BlurGameMode | ZoomGameMode;

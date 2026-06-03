@@ -17,8 +17,11 @@
                 </div>
                 <!-- Image -->
                 <img v-show="!isLoading"
-                     class="absolute inset-0 w-full h-full object-cover rounded-lg border border-app-border cursor-zoom-in select-none transition-all duration-500 ease-in-out"
-                     :style="{ filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none' }"
+                     class="absolute inset-0 w-full h-full object-cover cursor-zoom-in select-none transition-all duration-500 ease-in-out"
+                     :style="{
+                         filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none',
+                         transform: zoomLevel ? `scale(${zoomLevel})` : 'scale(1)'
+                     }"
                      :src
                      :alt="`Hint n°${number}`"
                      @load="onLoad"
@@ -33,7 +36,10 @@
             <div class="relative w-full aspect-video max-h-[85vh] max-w-[calc(85vh*16/9)] mx-auto overflow-hidden rounded-lg border border-app-border shadow-2xl"
                  style="container-type: inline-size">
                 <img class="absolute inset-0 w-full h-full object-cover cursor-zoom-out select-none"
-                     :style="{ filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none' }"
+                     :style="{
+                         filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none',
+                         transform: zoomLevel ? `scale(${zoomLevel})` : 'scale(1)'
+                     }"
                      :src="src"
                      :alt="`Hint n°${number}`"
                      @click="isZoomOpen = false"
@@ -54,6 +60,7 @@ const props = defineProps<{
     src: string;
     number: number;
     blurLevel?: number;
+    zoomLevel?: number;
 }>();
 
 const isLoading = ref(true);

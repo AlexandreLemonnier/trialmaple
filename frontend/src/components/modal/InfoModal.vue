@@ -8,6 +8,7 @@
                 <p v-if="gameModeInfo.mode === 'CLASSIC'">Pick a map and click <strong>"Guess"</strong> to get hints: does today's map have more or fewer points? Which authors match? Repeat until you find it!</p>
                 <p v-else-if="gameModeInfo.mode === 'GEOGUESSR'">Pick a map, click <strong>"Guess"</strong>, and either win or unlock next picture!</p>
                 <p v-else-if="gameModeInfo.mode === 'BLUR'">Pick a map, click <strong>"Guess"</strong>, and either win or sharpen the picture!</p>
+                <p v-else-if="gameModeInfo.mode === 'ZOOM'">Pick a map, click <strong>"Guess"</strong>, and either win or zoom out on the picture!</p>
                 <hr class="opacity-20" />
                 <p><strong>About current game mode</strong></p>
                 <template v-if="gameModeInfo">
@@ -33,7 +34,7 @@ const isOpen = defineModel<boolean>();
 const route = useRoute();
 
 const GAME_MODE_CONFIG: Record<Route, {
-    mode: 'CLASSIC' | 'GEOGUESSR' | 'BLUR' | 'NONE';
+    mode: 'CLASSIC' | 'GEOGUESSR' | 'BLUR' | 'ZOOM' | 'NONE';
     excludeUnfinished?: boolean;
     autoUpdate?: boolean;
     mapRepeatDelayDays?: number;
@@ -84,6 +85,10 @@ const GAME_MODE_CONFIG: Record<Route, {
     },
     [Route.TMNF_TRIAL_BLUR_MODE]: {
         mode: 'BLUR',
+        mapRepeatDelayDays: 60
+    },
+    [Route.TMNF_TRIAL_ZOOM_MODE]: {
+        mode: 'ZOOM',
         mapRepeatDelayDays: 60
     }
 };

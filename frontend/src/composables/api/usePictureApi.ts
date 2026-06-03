@@ -1,5 +1,5 @@
 import { useEnv } from '#/composables/useEnv';
-import type { BlurGameMode, GeoguessrGameMode } from '#/types/api/gameMode';
+import type { BlurGameMode, GeoguessrGameMode, ZoomGameMode } from '#/types/api/gameMode';
 
 export function usePictureApi() {
     const env = useEnv();
@@ -10,6 +10,9 @@ export function usePictureApi() {
         },
         getBlurPictureUrl(gameMode: BlurGameMode) {
             return `${env.PROXIED_API_URL_PREFIX}/blur-picture?gameMode=${gameMode}`;
+        },
+        getZoomPictureUrl(gameMode: ZoomGameMode) {
+            return `${env.PROXIED_API_URL_PREFIX}/zoom-picture?gameMode=${gameMode}`;
         }
     };
 }

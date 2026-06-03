@@ -171,6 +171,11 @@ const games: Game[] = [
                         title: 'Blurred',
                         icon: 'focus',
                         routeName: Route.TMNF_TRIAL_BLUR_MODE
+                    },
+                    {
+                        title: 'Zoomed',
+                        icon: 'search',
+                        routeName: Route.TMNF_TRIAL_ZOOM_MODE
                     }
                 ]
             },
@@ -209,6 +214,11 @@ const gameDescriptions: GameDescription[] = [
         title: 'Blurred mode',
         icon: 'focus',
         description: 'Get a blurry picture.'
+    },
+    {
+        title: 'Zoomed mode',
+        icon: 'search',
+        description: 'Get a zoomed-in picture.'
     }
 ];
 </script>
