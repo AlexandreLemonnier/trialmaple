@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.0</version>
+		<version>4.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.trialmaple</groupId>
 	<artifactId>trialmaple</artifactId>
 	<version>1.0.0</version>
 	<name>trialmaple</name>
-	<description>Trialmaple backend project</description>
+	<description>TM-Maple backend project</description>
 	<url/>
 	<licenses>
 	<license/>
@@ -71,12 +71,12 @@
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
-			<version>3.5.6</version>
+			<version>3.5.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.42</version>
+			<version>1.18.46</version>
 		</dependency>
 	</dependencies>
 
