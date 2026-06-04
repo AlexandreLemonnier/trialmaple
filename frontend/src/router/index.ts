@@ -1,5 +1,6 @@
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
+import AuthCallback from '#/views/AuthCallback.vue';
 import HomePage from '#/views/HomePage.vue';
 import Tm2020RpgClassicGame from '#/views/Tm2020RpgClassicGame.vue';
 import Tm2020RpgGeoguessrGame from '#/views/Tm2020RpgGeoguessrGame.vue';
@@ -98,6 +99,15 @@ const router = createRouter({
             component: TmnfTrialZoomGame,
             meta: {
                 titleKey: 'TMNF Trial Zoomed'
+            }
+
+        },
+        {
+            name: Route.AUTH_CALLBACK,
+            path: Route.AUTH_CALLBACK,
+            component: AuthCallback,
+            meta: {
+                titleKey: 'Auth Callback'
             }
 
         },

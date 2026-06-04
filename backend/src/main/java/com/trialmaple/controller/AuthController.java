@@ -38,7 +38,7 @@ public class AuthController {
 
         String jwt = jwtUtils.generateToken(discordId, username);
 
-        UserDto userDto = new UserDto(discordId, username);
+        UserDto userDto = new UserDto(username);
         return new LoginResponseDto(jwt, userDto);
     }
 }

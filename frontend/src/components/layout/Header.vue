@@ -20,6 +20,7 @@
                     icon-position="right"
                     @click="isDiscordModalOpen = true" />
             <Icon class="block lg:hidden text-discord cursor-pointer" name="discord" size="md" @click="isDiscordModalOpen = true" />
+            <LoginButton />
         </div>
     </header>
     <InfoModal v-model="isInfoModalOpen" />
@@ -36,6 +37,7 @@ import InfoModal from '#/components/modal/InfoModal.vue';
 import { Route } from '#/router/Route';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import LoginButton from './LoginButton.vue';
 
 const router = useRouter();
 

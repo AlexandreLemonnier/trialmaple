@@ -1,3 +1,3 @@
 package com.trialmaple.model.dto;
 
-public record UserDto(String id, String username) {}
+public record UserDto(String username) {}

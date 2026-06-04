@@ -8,5 +8,6 @@ export enum Route {
     TM2020_RPG_CLASSIC_MODE = '/tm2020/rpg/classic',
     TM2020_RPG_GEOGUESSR_MODE = '/tm2020/rpg/geoguessr',
     TMNF_TRIAL_BLUR_MODE = '/tmnf/trial/blur',
-    TMNF_TRIAL_ZOOM_MODE = '/tmnf/trial/zoom'
+    TMNF_TRIAL_ZOOM_MODE = '/tmnf/trial/zoom',
+    AUTH_CALLBACK = '/auth/callback'
 }
