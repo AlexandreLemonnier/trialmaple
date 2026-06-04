@@ -25,3 +25,11 @@ spring.mail.properties.mail.smtp.writetimeout=5000
 
 # Application config
 game.pictures-path=/data/pictures
+
+# Discord auth config
+discord.client-id=YOUR_CLIENT_ID
+discord.client-secret=YOUR_CLIENT_SECRET
+discord.redirect-uri=http://localhost:3000/auth/callback
+# JWT config
+jwt.secret=YOUR_SIGNING_KEY
+jwt.expiration=86400000

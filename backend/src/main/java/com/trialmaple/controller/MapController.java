@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/maps")
 public class MapController {
 
     private final TmMapService tmMapService;
@@ -38,7 +38,7 @@ public class MapController {
     /**
      * List maps for a specific game mode
      */
-    @GetMapping("/maps/list")
+    @GetMapping("/list")
     public List<TmMapDto> getActiveMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -52,7 +52,7 @@ public class MapController {
     /**
      * List maps name for geoguessr game mode
      */
-    @GetMapping("/maps/geoguessr")
+    @GetMapping("/geoguessr")
     public List<GeoguessrMapDto> getGeoguessrMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -66,7 +66,7 @@ public class MapController {
     /**
      * List maps name for blur game mode
      */
-    @GetMapping("/maps/blur")
+    @GetMapping("/blur")
     public List<BlurMapDto> getBlurMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -80,7 +80,7 @@ public class MapController {
     /**
      * List maps name for zoom game mode
      */
-    @GetMapping("/maps/zoom")
+    @GetMapping("/zoom")
     public List<ZoomMapDto> getZoomMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);

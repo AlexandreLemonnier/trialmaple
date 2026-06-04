@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/guess")
 @CrossOrigin(origins = "*")
 public class GuessController {
 
@@ -30,7 +30,7 @@ public class GuessController {
     /**
      * Make a guess for the given game mode
      */
-    @PostMapping("/guess")
+    @PostMapping("")
     public GuessDto guess(@RequestBody GuessRequestDto request, @RequestParam String gameMode)
             throws NoDailyMapFoundException, InvalidMapException {
         try {
@@ -46,7 +46,7 @@ public class GuessController {
     /**
      * Give up on finding daily map
      */
-    @PostMapping("/guess/giveup")
+    @PostMapping("/giveup")
     public AnswerDto giveUp(@RequestParam String gameMode) throws NoDailyMapFoundException {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);

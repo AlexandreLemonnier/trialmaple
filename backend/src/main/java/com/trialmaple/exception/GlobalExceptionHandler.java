@@ -46,4 +46,14 @@ public class GlobalExceptionHandler {
                         ex.getCode().name(),
                         ex.getMessage()));
     }
+
+    @ExceptionHandler(DiscordAuthenticationException.class)
+    public ResponseEntity<ErrorResponseDto> handleDiscordAuthentication(DiscordAuthenticationException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponseDto(
+                        Instant.now(),
+                        ex.getCode().name(),
+                        ex.getMessage()));
+    }
+
 }

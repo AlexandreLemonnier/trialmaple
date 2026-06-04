@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/daily-map")
 @CrossOrigin(origins = "*")
 public class DailyMapController {
 
@@ -23,7 +23,7 @@ public class DailyMapController {
     /**
      * Get current daily map uuid for the given game mode
      */
-    @GetMapping("/daily-map/uuid")
+    @GetMapping("/uuid")
     public String getDailyMapUuid(@RequestParam String gameMode) throws NoDailyMapFoundException {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
