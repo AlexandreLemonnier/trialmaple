@@ -17,7 +17,8 @@
                 </div>
                 <!-- Image -->
                 <img v-show="!isLoading"
-                     class="absolute inset-0 w-full h-full object-cover cursor-zoom-in select-none transition-all duration-500 ease-in-out"
+                     class="absolute inset-0 w-full h-full cursor-zoom-in select-none transition-all duration-500 ease-in-out"
+                     :class="showFull ? 'object-contain' : 'object-cover'"
                      :style="{
                          filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none',
                          transform: zoomLevel ? `scale(${zoomLevel})` : 'scale(1)'
@@ -35,7 +36,8 @@
         <div class="flex items-center justify-center w-full h-full">
             <div class="relative w-full aspect-video max-h-[85vh] max-w-[calc(85vh*16/9)] mx-auto overflow-hidden rounded-lg border border-app-border shadow-2xl"
                  style="container-type: inline-size">
-                <img class="absolute inset-0 w-full h-full object-cover cursor-zoom-out select-none"
+                <img class="absolute inset-0 w-full h-full cursor-zoom-out select-none"
+                     :class="showFull ? 'object-contain' : 'object-cover'"
                      :style="{
                          filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none',
                          transform: zoomLevel ? `scale(${zoomLevel})` : 'scale(1)'
@@ -61,6 +63,7 @@ const props = defineProps<{
     number: number;
     blurLevel?: number;
     zoomLevel?: number;
+    showFull?: boolean;
 }>();
 
 const isLoading = ref(true);

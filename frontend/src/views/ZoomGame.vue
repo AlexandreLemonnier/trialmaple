@@ -48,7 +48,8 @@
         <div class="flex flex-col w-full gap-2 lg:gap-4 items-center">
             <Picture :src="pictureUrl"
                      :number="1"
-                     :zoom-level="currentZoom" />
+                     :zoom-level="currentZoom"
+                     :show-full="gameEnded" />
         </div>
         <GiveUpButton v-if="!gameEnded" :game-mode="gameMode" @done="handleGiveUp" />
     </div>
