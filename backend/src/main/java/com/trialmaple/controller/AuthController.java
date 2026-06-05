@@ -1,12 +1,16 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.controller.mappers.UserMapper;
+import com.trialmaple.controller.mappers.external.DiscordUserMapper;
 import com.trialmaple.exception.DiscordAuthenticationException;
 import com.trialmaple.exception.DiscordErrorCode;
 import com.trialmaple.model.dto.UserDto;
 import com.trialmaple.model.dto.auth.DiscordLoginRequestDto;
 import com.trialmaple.model.dto.auth.LoginResponseDto;
 import com.trialmaple.model.dto.external.discord.DiscordUserDto;
+import com.trialmaple.model.entities.User;
 import com.trialmaple.service.auth.DiscordAuthService;
+import com.trialmaple.service.user.UserService;
 import com.trialmaple.utils.JwtUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +20,22 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final DiscordAuthService discordAuthService;
     private final JwtUtils jwtUtils;
+    private final UserService userService;
+    private final DiscordUserMapper discordUserMapper;
+    private final UserMapper userMapper;
 
-    public AuthController(DiscordAuthService discordAuthService, JwtUtils jwtUtils) {
+    public AuthController(
+            DiscordAuthService discordAuthService,
+            JwtUtils jwtUtils,
+            UserService userService,
+            DiscordUserMapper discordUserMapper,
+            UserMapper userMapper
+    ) {
         this.discordAuthService = discordAuthService;
         this.jwtUtils = jwtUtils;
+        this.userService = userService;
+        this.discordUserMapper = discordUserMapper;
+        this.userMapper = userMapper;
     }
 
     @PostMapping("/discord")
@@ -31,14 +47,15 @@ public class AuthController {
         }
 
         DiscordUserDto discordUser = discordAuthService.authenticateWithDiscord(code);
-        String discordId = discordUser.id();
-        String username = discordUser.username();
+        User user = discordUserMapper.externalToService(discordUser);
 
-        // TODO : Find user with discordId. If absent, create it.
+        // Save user if not existing yet
+        userService.createUser(user);
 
-        String jwt = jwtUtils.generateToken(discordId, username);
+        // Generate JWT
+        UserDto userDto = userMapper.serviceToDto(user);
+        String jwt = jwtUtils.generateToken(userDto.discordId(), userDto.username());
 
-        UserDto userDto = new UserDto(username);
         return new LoginResponseDto(jwt, userDto);
     }
 }

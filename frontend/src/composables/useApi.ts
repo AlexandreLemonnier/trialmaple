@@ -44,10 +44,13 @@ export function useApi(routePrefix: string) {
                 path.search = objectToURLSearchParams(query).toString();
             }
 
+            const token = localStorage.getItem('auth_token');
+
             const response = await fetch(path.href, {
                 body: JSON.stringify(body),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    ...token ? { Authorization: `Bearer ${token}` } : {}
                 },
                 ...baseOptions
             });

@@ -20,7 +20,8 @@
                     icon-position="right"
                     @click="isDiscordModalOpen = true" />
             <Icon class="block lg:hidden text-discord cursor-pointer" name="discord" size="md" @click="isDiscordModalOpen = true" />
-            <LoginButton />
+            <Avatar v-if="isConnected" />
+            <LoginButton v-else />
         </div>
     </header>
     <InfoModal v-model="isInfoModalOpen" />
@@ -31,15 +32,19 @@
 import TrackManiaLogo from '#/assets/TrackMania-Logo.svg?component';
 import Button from '#/components/Button.vue';
 import Icon from '#/components/Icon.vue';
+import Avatar from '#/components/layout/Avatar.vue';
+import LoginButton from '#/components/layout/LoginButton.vue';
 import ThemeToggle from '#/components/layout/ThemeToggle.vue';
 import DiscordModal from '#/components/modal/DiscordModal.vue';
 import InfoModal from '#/components/modal/InfoModal.vue';
 import { Route } from '#/router/Route';
+import { useAppStore } from '#/stores/appStore.js';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import LoginButton from './LoginButton.vue';
 
 const router = useRouter();
+const { isConnected } = storeToRefs(useAppStore());
 
 const isInfoModalOpen = ref(false);
 const isDiscordModalOpen = ref(false);

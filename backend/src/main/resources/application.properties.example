@@ -32,4 +32,4 @@ discord.client-secret=YOUR_CLIENT_SECRET
 discord.redirect-uri=http://localhost:3000/auth/callback
 # JWT config
 jwt.secret=YOUR_SIGNING_KEY
-jwt.expiration=86400000
+jwt.expiration=7776000000

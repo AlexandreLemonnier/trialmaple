@@ -1,5 +1,6 @@
+import type { User } from '#/types/api/user';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export const useAppStore = defineStore('app', () => {
     const isFromOldDomainName = ref(false);
@@ -8,5 +9,8 @@ export const useAppStore = defineStore('app', () => {
         isFromOldDomainName.value = value;
     }
 
-    return { isFromOldDomainName, setIsFromOldDomainName };
+    const user = ref<User | null>(null);
+    const isConnected = computed(() => user.value !== null);
+
+    return { isFromOldDomainName, setIsFromOldDomainName, user, isConnected };
 });
