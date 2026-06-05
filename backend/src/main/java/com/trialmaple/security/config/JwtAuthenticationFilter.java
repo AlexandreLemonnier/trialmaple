@@ -1,4 +1,4 @@
-package com.trialmaple.config;
+package com.trialmaple.security.config;
 
 import com.trialmaple.utils.JwtUtils;
 import jakarta.servlet.FilterChain;

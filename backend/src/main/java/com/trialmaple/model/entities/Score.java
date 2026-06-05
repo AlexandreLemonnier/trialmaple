@@ -25,8 +25,13 @@ public class Score {
     @JoinColumn(name = "daily_map_id", nullable = false)
     private DailyMap dailyMap;
 
-    public Score(int attemptCount, DailyMap dailyMap) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
+
+    public Score(int attemptCount, DailyMap dailyMap, User user) {
         this.attemptCount = attemptCount;
         this.dailyMap = dailyMap;
+        this.user = user;
     }
 }

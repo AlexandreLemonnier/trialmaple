@@ -6,10 +6,13 @@ import com.trialmaple.exception.NoDailyMapFoundException;
 import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
+import com.trialmaple.model.entities.User;
 import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.enums.GameMode;
+import com.trialmaple.security.annotation.CurrentUser;
 import com.trialmaple.service.dailymap.DailyMapService;
 import com.trialmaple.service.guess.GuessService;
+import com.trialmaple.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,22 +24,24 @@ public class GuessController {
 
     private final DailyMapService dailyMapService;
     private final GuessService guessService;
+    private final UserService userService;
 
-    public GuessController(GuessService guessService, DailyMapService dailyMapService) {
+    public GuessController(GuessService guessService, DailyMapService dailyMapService, UserService userService) {
         this.guessService = guessService;
         this.dailyMapService = dailyMapService;
+        this.userService = userService;
     }
 
     /**
      * Make a guess for the given game mode
      */
     @PostMapping("")
-    public GuessDto guess(@RequestBody GuessRequestDto request, @RequestParam String gameMode)
+    public GuessDto guess(@RequestBody GuessRequestDto request, @RequestParam String gameMode, @CurrentUser User user)
             throws NoDailyMapFoundException, InvalidMapException {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             DailyMap dailyMap = dailyMapService.getCurrentDailyMap(gameModeValue);
-            return guessService.checkGuess(dailyMap, request);
+            return guessService.checkGuess(dailyMap, request, user);
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

@@ -4,8 +4,9 @@ import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
-import com.trialmaple.model.entities.dailymap.BlurDailyMap;
 import com.trialmaple.model.entities.Score;
+import com.trialmaple.model.entities.User;
+import com.trialmaple.model.entities.dailymap.BlurDailyMap;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.service.guess.IGuessGameModeService;
 
@@ -18,14 +19,14 @@ public abstract class AbstractBlurGuessService implements IGuessGameModeService<
     }
 
     @Override
-    public GuessDto checkGuess(BlurDailyMap dailyMap, GuessRequestDto request) throws InvalidMapException {
+    public GuessDto checkGuess(BlurDailyMap dailyMap, GuessRequestDto request, User user) throws InvalidMapException {
         String dailyMapName = dailyMap.getMapName();
         String guessMapName = request.guessedMapName();
 
         boolean success = dailyMapName.equals(guessMapName);
         // Save score if success
         if (success) {
-            Score score = new Score(request.guessNumber(), dailyMap);
+            Score score = new Score(request.guessNumber(), dailyMap, user);
             scoreRepository.save(score);
         }
         return new GuessDto(true, success);

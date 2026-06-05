@@ -4,6 +4,7 @@ import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
+import com.trialmaple.model.entities.User;
 import com.trialmaple.model.entities.dailymap.DailyMap;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +20,14 @@ public class GuessService {
     /**
      * Check if a guess is correct and give hints or correct elements
      */
-    public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request) throws InvalidMapException {
+    public GuessDto checkGuess(DailyMap dailyMap, GuessRequestDto request, User user) throws InvalidMapException {
         boolean isValidMap = dailyMap.getUuid().toString().equals(request.dailyMapUuid());
         if (!isValidMap) {
             // Client must refresh his page to play with the new daily map
             return new GuessDto(false);
         }
         IGuessGameModeService<DailyMap> guessService = provider.getGuessService(dailyMap.getGameMode());
-        return guessService.checkGuess(dailyMap, request);
+        return guessService.checkGuess(dailyMap, request, user);
     }
 
     /**

@@ -6,6 +6,7 @@ import com.trialmaple.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,12 @@ public class UserService {
     public User findUser(String discordId) throws UserNotFoundException {
         return userRepository.findByDiscordId(Long.valueOf(discordId))
                 .orElseThrow(() -> new UserNotFoundException(discordId));
+    }
+
+    public User getUserFromPrincipal(Principal principal) throws UserNotFoundException {
+        if (principal == null) {
+            return null;
+        }
+        return findUser(principal.getName());
     }
 }

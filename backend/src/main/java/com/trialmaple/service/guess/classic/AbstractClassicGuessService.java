@@ -2,6 +2,7 @@ package com.trialmaple.service.guess.classic;
 
 import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.*;
+import com.trialmaple.model.entities.User;
 import com.trialmaple.model.entities.dailymap.ClassicDailyMap;
 import com.trialmaple.model.entities.Score;
 import com.trialmaple.model.entities.TmMap;
@@ -29,7 +30,7 @@ public abstract class AbstractClassicGuessService implements IGuessGameModeServi
     protected abstract GuessDto computeGuess(boolean success, TmMap mapOfTheDay, TmMap guessMap);
 
     @Override
-    public GuessDto checkGuess(ClassicDailyMap dailyMap, GuessRequestDto request) {
+    public GuessDto checkGuess(ClassicDailyMap dailyMap, GuessRequestDto request, User user) {
         TmMap mapOfTheDay = dailyMap.getMap();
         TmMap guessMap = tmMapRepository
                 .findByUuid(UUID.fromString(request.guessedMapUuid()))
@@ -38,7 +39,7 @@ public abstract class AbstractClassicGuessService implements IGuessGameModeServi
         boolean success = mapOfTheDay.getUuid().equals(guessMap.getUuid());
         // Save score if success
         if (success) {
-            Score score = new Score(request.guessNumber(), dailyMap);
+            Score score = new Score(request.guessNumber(), dailyMap, user);
             scoreRepository.save(score);
         }
         return computeGuess(success, mapOfTheDay, guessMap);
