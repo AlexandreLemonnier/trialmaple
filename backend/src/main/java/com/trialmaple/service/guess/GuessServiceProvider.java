@@ -12,21 +12,21 @@ import java.util.stream.Collectors;
 @Service
 public class GuessServiceProvider {
     
-    private final Map<GameMode, IGuessGameModeService<? extends DailyMap>> services;
+    private final Map<GameMode, AbstractGuessGameModeService<? extends DailyMap>> services;
 
-    public GuessServiceProvider(List<IGuessGameModeService<? extends DailyMap>> services) {
-        this.services = services.stream().collect(Collectors.toMap(IGuessGameModeService::getGameMode, Function.identity()));
+    public GuessServiceProvider(List<AbstractGuessGameModeService<? extends DailyMap>> services) {
+        this.services = services.stream().collect(Collectors.toMap(AbstractGuessGameModeService::getGameMode, Function.identity()));
     }
 
     /**
      * Provides the correct GuessGameModeService for the given game mode
      */
     @SuppressWarnings("unchecked")
-    public <T extends DailyMap> IGuessGameModeService<T> getGuessService(GameMode gameMode) {
-        IGuessGameModeService<? extends DailyMap> service = services.get(gameMode);
+    public <T extends DailyMap> AbstractGuessGameModeService<T> getGuessService(GameMode gameMode) {
+        AbstractGuessGameModeService<? extends DailyMap> service = services.get(gameMode);
         if (service == null) {
             throw new IllegalArgumentException("No GuessService found for game mode: " + gameMode);
         }
-        return (IGuessGameModeService<T>) service;
+        return (AbstractGuessGameModeService<T>) service;
     }
 }

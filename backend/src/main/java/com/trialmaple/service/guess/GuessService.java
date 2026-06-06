@@ -26,7 +26,7 @@ public class GuessService {
             // Client must refresh his page to play with the new daily map
             return new GuessDto(false);
         }
-        IGuessGameModeService<DailyMap> guessService = provider.getGuessService(dailyMap.getGameMode());
+        AbstractGuessGameModeService<DailyMap> guessService = provider.getGuessService(dailyMap.getGameMode());
         return guessService.checkGuess(dailyMap, request, user);
     }
 
@@ -34,7 +34,7 @@ public class GuessService {
      * Give up. Give the mapName and the correct guess details.
      */
     public AnswerDto giveUp(DailyMap dailyMap) {
-        IGuessGameModeService<DailyMap> guessService = provider.getGuessService(dailyMap.getGameMode());
+        AbstractGuessGameModeService<DailyMap> guessService = provider.getGuessService(dailyMap.getGameMode());
         return guessService.getAnswer(dailyMap);
     }
 }

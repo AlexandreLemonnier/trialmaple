@@ -2,47 +2,42 @@ package com.trialmaple.service.guess.classic;
 
 import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.model.dto.*;
-import com.trialmaple.model.entities.User;
-import com.trialmaple.model.entities.dailymap.ClassicDailyMap;
-import com.trialmaple.model.entities.Score;
 import com.trialmaple.model.entities.TmMap;
+import com.trialmaple.model.entities.dailymap.ClassicDailyMap;
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
-import com.trialmaple.service.guess.IGuessGameModeService;
+import com.trialmaple.service.guess.AbstractGuessGameModeService;
+import com.trialmaple.service.guess.GuessResult;
 import com.trialmaple.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class AbstractClassicGuessService implements IGuessGameModeService<ClassicDailyMap> {
+public abstract class AbstractClassicGuessService extends AbstractGuessGameModeService<ClassicDailyMap> {
 
     private final TmMapRepository tmMapRepository;
-    private final ScoreRepository scoreRepository;
 
     protected AbstractClassicGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
+        super(scoreRepository);
         this.tmMapRepository = tmMapRepository;
-        this.scoreRepository = scoreRepository;
     }
 
     protected abstract GuessDto computeGuess(boolean success, TmMap mapOfTheDay, TmMap guessMap);
 
     @Override
-    public GuessDto checkGuess(ClassicDailyMap dailyMap, GuessRequestDto request, User user) {
+    protected GuessResult checkGuessInternal(ClassicDailyMap dailyMap, GuessRequestDto request) {
         TmMap mapOfTheDay = dailyMap.getMap();
         TmMap guessMap = tmMapRepository
                 .findByUuid(UUID.fromString(request.guessedMapUuid()))
                 .orElseThrow(() -> new InvalidMapException(request.guessedMapUuid()));
 
         boolean success = mapOfTheDay.getUuid().equals(guessMap.getUuid());
-        // Save score if success
-        if (success) {
-            Score score = new Score(request.guessNumber(), dailyMap, user);
-            scoreRepository.save(score);
-        }
-        return computeGuess(success, mapOfTheDay, guessMap);
+        GuessDto guess = computeGuess(success, dailyMap.getMap(), guessMap);
+
+        return new GuessResult(success, guess);
     }
 
     @Override
