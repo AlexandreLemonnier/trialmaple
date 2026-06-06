@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky flex justify-between items-center px-2 lg:px-5 w-full h-10 lg:h-14 bg-header-background tracking-wide">
+    <header class="sticky top-0 z-40 flex justify-between items-center px-2 lg:px-5 w-full h-10 lg:h-14 bg-header-background border-b border-app-border/20 tracking-wide">
         <div class="flex items-center gap-2 select-none cursor-pointer" @click="router.push({ name: Route.HOME })">
             <TrackManiaLogo aria-label="TrialMaple logo" class="w-auto h-[clamp(2.5rem,4vw,4rem)]" />
             <h1 class="flex font-bold">
@@ -32,9 +32,9 @@
 import TrackManiaLogo from '#/assets/TrackMania-Logo.svg?component';
 import Button from '#/components/Button.vue';
 import Icon from '#/components/Icon.vue';
-import Avatar from '#/components/layout/Avatar.vue';
-import LoginButton from '#/components/layout/LoginButton.vue';
-import ThemeToggle from '#/components/layout/ThemeToggle.vue';
+import Avatar from '#/components/layout/header/Avatar.vue';
+import LoginButton from '#/components/layout/header/LoginButton.vue';
+import ThemeToggle from '#/components/layout/header/ThemeToggle.vue';
 import DiscordModal from '#/components/modal/DiscordModal.vue';
 import InfoModal from '#/components/modal/InfoModal.vue';
 import { Route } from '#/router/Route';

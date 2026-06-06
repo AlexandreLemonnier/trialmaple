@@ -15,4 +15,6 @@ export type IconName =
     | 'house'
     | 'flag'
     | 'focus'
-    | 'search';
+    | 'search'
+    | 'login'
+    | 'logout';

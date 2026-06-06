@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute top-0 left-0 flex min-h-screen overflow-x-hidden w-full text-app-text">
+    <div class="absolute top-0 left-0 flex min-h-screen overflow-clip w-full text-app-text">
         <OldDomainWarningModal v-model="isFromOldDomainName" />
         <Gutter />
         <div class="flex flex-col w-full md:w-3/5 bg-app-background min-h-screen">
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import Button from '#/components/Button.vue';
 import Gutter from '#/components/layout/Gutter.vue';
-import Header from '#/components/layout/Header.vue';
+import Header from '#/components/layout/header/Header.vue';
 import OldDomainWarningModal from '#/components/modal/OldDomainWarningModal.vue';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';

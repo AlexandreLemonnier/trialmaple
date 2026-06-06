@@ -32,6 +32,9 @@
   --color-guess-button: #2dc426;
   --color-giveup-button: #d61815;
 
+  --color-login-button: #2dc426;
+  --color-logout-button: #d61815;
+
   --color-discord: #5865F2;
 
   --breakpoint-xs: 380px;
@@ -70,6 +73,9 @@
     --color-button: #2a2a2a;
     --color-guess-button: #117c0d;
     --color-giveup-button: #800e0e;
+
+    --color-login-button: #117c0d;
+    --color-logout-button: #800e0e;
   }
 
   ::-webkit-scrollbar {
@@ -123,6 +129,7 @@
   opacity: 0;
 }
 
+/* MODAL */
 .modal-enter-from,
 .modal-leave-to {
     opacity: 0;
@@ -142,4 +149,18 @@
 .modal-enter-active > div,
 .modal-leave-active > div {
     transition: all 0.15s ease;
+}
+
+/* MENU */ 
+.menu-enter-active {
+  transition: all 0.1s ease-out;
+}
+.menu-leave-active {
+  transition: all 0.075s ease-in;
+}
+
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
 }

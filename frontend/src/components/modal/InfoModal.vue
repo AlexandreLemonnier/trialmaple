@@ -33,16 +33,15 @@ const isOpen = defineModel<boolean>();
 
 const route = useRoute();
 
-const GAME_MODE_CONFIG: Record<Route, {
+type GameModeConfig = {
     mode: 'CLASSIC' | 'GEOGUESSR' | 'BLUR' | 'ZOOM' | 'NONE';
     excludeUnfinished?: boolean;
     autoUpdate?: boolean;
     mapRepeatDelayDays?: number;
     isMapPickWeighted?: boolean;
-}> = {
-    [Route.HOME]: {
-        mode: 'NONE'
-    },
+};
+
+const GAME_MODE_CONFIG: Partial<Record<Route, GameModeConfig>> = {
     [Route.TMNF_TRIAL_CLASSIC_MODE]: {
         mode: 'CLASSIC',
         excludeUnfinished: true,
@@ -93,8 +92,8 @@ const GAME_MODE_CONFIG: Record<Route, {
     }
 };
 
-const gameModeInfo = computed(() =>
-    GAME_MODE_CONFIG[route.name as Route]
+const gameModeInfo = computed<GameModeConfig>(() =>
+    GAME_MODE_CONFIG[route.name as Route] ?? { mode: 'NONE' }
 );
 
 </script>

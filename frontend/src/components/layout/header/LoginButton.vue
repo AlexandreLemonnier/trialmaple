@@ -1,7 +1,8 @@
 <template>
-    <Button class="bg-discord/80 text-primary-white"
+    <Button class="bg-login-button"
             label="Sign in"
-            icon-size="md"
+            icon-name="login"
+            icon-size="sm"
             @click="loginWithDiscord" />
 </template>
 
@@ -12,8 +13,8 @@ import { Route } from '#/router/Route';
 const discordClientId = '1511852531100160010';
 const redirectUri = encodeURIComponent(`${globalThis.location.origin}${Route.AUTH_CALLBACK}`);
 
-const loginWithDiscord = () => {
+function loginWithDiscord() {
     const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${discordClientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify`;
     globalThis.location.href = discordAuthUrl;
-};
+}
 </script>
