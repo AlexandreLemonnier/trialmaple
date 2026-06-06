@@ -1,5 +1,6 @@
 package com.trialmaple.service;
 
+import com.trialmaple.config.CacheName;
 import com.trialmaple.model.dto.DailyStatsDto;
 import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.entities.Score;
@@ -7,6 +8,7 @@ import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.repository.DailyMapRepository;
 import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.service.dailymap.DailyMapService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,7 @@ public class StatisticsService {
     /**
      * Get daily stats and daily map number
      */
+    @Cacheable(value = CacheName.DAILY_STATS, key = "#gameMode")
     public DailyStatsDto getDailyStats(GameMode gameMode) {
         DailyMap currentDailyMap = dailyMapService.getCurrentDailyMap(gameMode);
 

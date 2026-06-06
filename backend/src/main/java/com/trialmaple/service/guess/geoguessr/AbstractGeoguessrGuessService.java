@@ -4,14 +4,14 @@ import com.trialmaple.model.dto.AnswerDto;
 import com.trialmaple.model.dto.GuessDto;
 import com.trialmaple.model.dto.GuessRequestDto;
 import com.trialmaple.model.entities.dailymap.GeoguessrDailyMap;
-import com.trialmaple.repository.ScoreRepository;
+import com.trialmaple.service.ScoreService;
 import com.trialmaple.service.guess.AbstractGuessGameModeService;
 import com.trialmaple.service.guess.GuessResult;
 
 public abstract class AbstractGeoguessrGuessService extends AbstractGuessGameModeService<GeoguessrDailyMap> {
 
-    protected AbstractGeoguessrGuessService(ScoreRepository scoreRepository) {
-        super(scoreRepository);
+    protected AbstractGeoguessrGuessService(ScoreService scoreService) {
+        super(scoreService);
     }
 
     @Override

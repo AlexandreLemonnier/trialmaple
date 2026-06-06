@@ -6,8 +6,8 @@ import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.entities.dailymap.ClassicDailyMap;
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.DifficultyCategory;
-import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
+import com.trialmaple.service.ScoreService;
 import com.trialmaple.service.guess.AbstractGuessGameModeService;
 import com.trialmaple.service.guess.GuessResult;
 import com.trialmaple.utils.TimeUtils;
@@ -20,8 +20,8 @@ public abstract class AbstractClassicGuessService extends AbstractGuessGameModeS
 
     private final TmMapRepository tmMapRepository;
 
-    protected AbstractClassicGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
-        super(scoreRepository);
+    protected AbstractClassicGuessService(TmMapRepository tmMapRepository, ScoreService scoreService) {
+        super(scoreService);
         this.tmMapRepository = tmMapRepository;
     }
 

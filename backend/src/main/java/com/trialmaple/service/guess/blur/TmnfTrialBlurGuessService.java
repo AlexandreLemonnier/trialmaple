@@ -1,14 +1,14 @@
 package com.trialmaple.service.guess.blur;
 
 import com.trialmaple.model.enums.GameMode;
-import com.trialmaple.repository.ScoreRepository;
+import com.trialmaple.service.ScoreService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TmnfTrialBlurGuessService extends AbstractBlurGuessService {
 
-    public TmnfTrialBlurGuessService(ScoreRepository scoreRepository) {
-        super(scoreRepository);
+    public TmnfTrialBlurGuessService(ScoreService scoreService) {
+        super(scoreService);
     }
 
     @Override

@@ -1,14 +1,14 @@
 package com.trialmaple.service.guess.zoom;
 
 import com.trialmaple.model.enums.GameMode;
-import com.trialmaple.repository.ScoreRepository;
+import com.trialmaple.service.ScoreService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TmnfTrialZoomGuessService extends AbstractZoomGuessService {
 
-    public TmnfTrialZoomGuessService(ScoreRepository scoreRepository) {
-        super(scoreRepository);
+    public TmnfTrialZoomGuessService(ScoreService scoreService) {
+        super(scoreService);
     }
 
     @Override

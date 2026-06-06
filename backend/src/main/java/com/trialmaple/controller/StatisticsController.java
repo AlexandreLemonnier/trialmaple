@@ -29,7 +29,7 @@ public class StatisticsController {
      * Get daily stats and daily map number
      */
     @GetMapping("/daily-stats")
-    public DailyStatsDto getDaiyStats(@RequestParam String gameMode) {
+    public DailyStatsDto getDailyStats(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             return statisticsService.getDailyStats(gameModeValue);

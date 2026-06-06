@@ -6,8 +6,8 @@ import com.trialmaple.model.dto.WrHolderDto;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.DeltaHint;
 import com.trialmaple.model.enums.GameMode;
-import com.trialmaple.repository.ScoreRepository;
 import com.trialmaple.repository.TmMapRepository;
+import com.trialmaple.service.ScoreService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.List;
 @Service
 public class Tm2020RpgClassicGuessService extends AbstractClassicGuessService {
 
-    public Tm2020RpgClassicGuessService(TmMapRepository tmMapRepository, ScoreRepository scoreRepository) {
-        super(tmMapRepository, scoreRepository);
+    public Tm2020RpgClassicGuessService(TmMapRepository tmMapRepository, ScoreService scoreService) {
+        super(tmMapRepository, scoreService);
     }
 
     @Override
