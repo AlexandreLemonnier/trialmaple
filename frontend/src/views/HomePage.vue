@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-8 lg:gap-12 items-center mt-2 lg:mt-4">
         <h1 class="text-3xl lg:text-4xl font-bold">- Trackmania Maple -</h1>
         <h2 class="text-lg lg:text-2xl">Choose a game mode and find today's map!</h2>
-        <div class="flex flex-col lg:flex-wrap xl:flex-row xl:flex-nowrap gap-4 items-center">
+        <div class="flex flex-col xl:flex-row gap-4 items-center">
             <!-- Game Card -->
             <div v-for="(game) in games"
                  :key="game.title"

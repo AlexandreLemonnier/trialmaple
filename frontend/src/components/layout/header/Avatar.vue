@@ -10,6 +10,7 @@
 
         <Transition name="menu">
             <div v-if="isMenuOpen" class="absolute right-0 top-full mt-2 flex flex-col min-w-38 p-2 text-nowrap bg-app-background rounded-md shadow-lg border border-app-border/30 z-50">
+                <div class="absolute -top-1.5 right-1.5 md:right-3.5 w-3 h-3 rotate-45 bg-app-background border-t border-l border-app-border/30"></div>
                 <span class="font-bold truncate px-2 py-1.5">
                     {{ user.username }}
                 </span>
