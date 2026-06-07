@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -22,7 +23,10 @@ public class UserService {
         log.info("Create user {}", user.getUsername());
         Long discordId = user.getDiscordId();
         Optional<User> userBase = userRepository.findByDiscordId(discordId);
-        return userBase.orElseGet(() -> userRepository.save(user));
+        return userBase.orElseGet(() -> {
+            user.setCreationDate(LocalDate.now());
+            return userRepository.save(user);
+        });
     }
 
     public User findUser(String discordId) throws UserNotFoundException {
