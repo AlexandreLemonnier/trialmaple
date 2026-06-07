@@ -16,7 +16,7 @@ export function createGameStore(storeId: string, storageKey: string) {
         const playersAverageScore = ref<number>();
 
         function isInHistory(mapId: string) {
-            return Object.keys(history).includes(mapId);
+            return Object.keys(history.value).includes(mapId);
         }
 
         function historyContainsSuccess() {
