@@ -27,4 +27,6 @@ public interface DailyMapRepository extends JpaRepository<DailyMap, Long> {
 
     @Query("SELECT new com.trialmaple.model.dto.projection.MapPickCount(dailyMap.map.id, COUNT(dailyMap)) FROM DailyMap dailyMap WHERE dailyMap.map.id IN :mapPoolIds AND dailyMap.day >= :startDate GROUP BY dailyMap.map.id")
     List<MapPickCount> countDailyMapsByMapAndStartDate(@Param("mapPoolIds") List<Long> mapPoolIds, @Param("startDate") LocalDate startDate);
+
+    int countByGameModeAndDayGreaterThanEqual(GameMode gameMode, LocalDate day);
 }

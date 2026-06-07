@@ -8,6 +8,7 @@ import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.repository.ScoreRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +20,10 @@ public class ScoreService {
         this.scoreRepository = scoreRepository;
     }
 
-    @CacheEvict(value = CacheName.DAILY_STATS, key = "#dailyMap.gameMode")
+    @Caching(evict = {
+            @CacheEvict(value = CacheName.DAILY_STATS, key = "#dailyMap.gameMode"),
+            @CacheEvict(value = CacheName.USER_STATS, key = "{#user.id, #dailyMap.gameMode}")
+    })
     public void saveScore(DailyMap dailyMap, int attemptCount, User user) {
         if (user != null && scoreRepository.findByDailyMapAndUser(dailyMap, user).isPresent()) {
             // A player can only have 1 score for each daily map

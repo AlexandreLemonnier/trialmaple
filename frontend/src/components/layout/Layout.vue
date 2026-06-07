@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute top-0 left-0 flex min-h-screen overflow-clip w-full text-app-text">
+    <div class="absolute top-0 left-0 flex min-h-screen overflow-clip w-full text-app-text-primary">
         <OldDomainWarningModal v-model="isFromOldDomainName" />
         <Gutter />
         <div class="flex flex-col w-full md:w-3/5 bg-app-background min-h-screen">

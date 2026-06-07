@@ -50,7 +50,7 @@ public class AuthController {
         User user = discordUserMapper.externalToService(discordUser);
 
         // Save user if not existing yet
-        userService.createUser(user);
+        userService.createUserIfAbsent(user);
 
         // Generate JWT
         UserDto userDto = userMapper.serviceToDto(user);

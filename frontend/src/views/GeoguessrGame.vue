@@ -39,9 +39,9 @@
                              :storage-key />
             </template>
         </ResultScreen>
-        <div v-if="gameEnded" class="flex items-center justify-center gap-2 text-sm text-app-text/70 bg-discord/10 py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
+        <div v-if="gameEnded" class="flex items-center justify-center gap-2 text-sm text-app-text-secondary bg-discord/10 py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
             <span>💡</span>
-            <p>Want to help improve the game? Send me map screenshots (new or existing maps) on Discord!</p>
+            <p>Want to help improve the game? Send me map screenshots on Discord!</p>
         </div>
         <div class="flex flex-wrap gap-2 lg:gap-4">
             <GuessChip v-for="([mapName, guess]) in Object.entries(history)"
@@ -72,10 +72,10 @@ import ResetCountdown from '#/components/ResetCountdown.vue';
 import ResultScreen from '#/components/ResultScreen.vue';
 import ShareButton from '#/components/ShareButton.vue';
 import { useDailyMapApi } from '#/composables/api/useDailyMapApi';
-import { useDailyStatsApi } from '#/composables/api/useDailyStatsApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
 import { usePictureApi } from '#/composables/api/usePictureApi';
+import { useStatsApi } from '#/composables/api/useStatsApi';
 import { useConfetti } from '#/composables/useConfetti';
 import { useShare } from '#/composables/useShare';
 import { createGameStore } from '#/stores/gameStore';
@@ -132,7 +132,7 @@ watchEffect(() => {
 
 /** Game core */
 const guessApi = useGuessApi();
-const dailyStatsApi = useDailyStatsApi();
+const statsApi = useStatsApi();
 const mapsApi = useMapsApi();
 const dailyMapApi = useDailyMapApi();
 const pictureApi = usePictureApi();
@@ -177,7 +177,7 @@ function handleGiveUp(_answer: Answer) {
 
 async function fetchDailyStats() {
     try {
-        const dailyStats: DailyStats = await dailyStatsApi.getDailyStats(gameMode);
+        const dailyStats: DailyStats = await statsApi.getDailyStats(gameMode);
         dailyMapNumber.value = dailyStats.mapNumber;
         todayWinnerCount.value = dailyStats.winnersCount;
         playersAverageScore.value = dailyStats.averageTries;

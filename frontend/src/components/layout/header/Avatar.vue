@@ -15,8 +15,10 @@
                     {{ user.username }}
                 </span>
                 <div class="w-full border-b border-app-border/20 my-1"></div>
-                <span class="w-full rounded-md px-2 py-1.5 cursor-pointer hover:bg-selection-background">My profile</span>
-                <span class="w-full rounded-md px-2 py-1.5 cursor-pointer hover:bg-selection-background">My stats</span>
+                <span class="w-full rounded-md px-2 py-1.5 cursor-pointer hover:bg-selection-background" @click="() => {
+                    closeMenu();
+                    router.push({ name: Route.USER_STATS });
+                }">My stats</span>
                 <div class="w-full border-b border-app-border/20 mt-1 mb-2"></div>
                 <LogoutButton />
             </div>
@@ -26,19 +28,26 @@
 
 <script setup lang="ts">
 import LogoutButton from '#/components/layout/header/LogoutButton.vue';
+import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore.js';
 import { getDiscordAvatarUrl } from '#/utils/discord';
 import { onClickOutside } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const { user } = storeToRefs(useAppStore());
+const router = useRouter();
 
 const isMenuOpen = ref(false);
 const menuRef = ref<HTMLDivElement | null>(null);
 
-onClickOutside(menuRef, () => {
+function closeMenu() {
     isMenuOpen.value = false;
+}
+
+onClickOutside(menuRef, () => {
+    closeMenu();
 });
 
 </script>

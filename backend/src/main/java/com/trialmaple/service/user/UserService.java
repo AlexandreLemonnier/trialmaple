@@ -19,14 +19,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
-        log.info("Create user {}", user.getUsername());
+    public void createUserIfAbsent(User user) {
         Long discordId = user.getDiscordId();
         Optional<User> userBase = userRepository.findByDiscordId(discordId);
-        return userBase.orElseGet(() -> {
-            user.setCreationDate(LocalDate.now());
-            return userRepository.save(user);
-        });
+        if (userBase.isEmpty()) {
+            createUser(user);
+        }
+    }
+
+    private void createUser(User user) {
+        log.info("Create user {}", user.getUsername());
+        user.setCreationDate(LocalDate.now());
+        userRepository.save(user);
     }
 
     public User findUser(String discordId) throws UserNotFoundException {

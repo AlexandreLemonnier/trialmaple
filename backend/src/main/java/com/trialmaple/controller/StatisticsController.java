@@ -1,17 +1,17 @@
 package com.trialmaple.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.dto.DailyStatsDto;
+import com.trialmaple.model.dto.UserStatsDto;
+import com.trialmaple.model.entities.User;
 import com.trialmaple.model.enums.GameMode;
+import com.trialmaple.security.annotation.CurrentUser;
 import com.trialmaple.service.StatisticsService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -37,5 +37,15 @@ public class StatisticsController {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);
         }
+    }
+
+    /**
+     * Get user stats
+     */
+    @GetMapping("/user-stats")
+    public List<UserStatsDto> getUserStats(@CurrentUser User user) {
+        return Arrays.stream(GameMode.values())
+                .map(gameMode -> statisticsService.getUserStats(user, gameMode))
+                .toList();
     }
 }

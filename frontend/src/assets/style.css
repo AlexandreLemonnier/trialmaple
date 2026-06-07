@@ -13,13 +13,15 @@
   --color-error: #e91816;
 
   --color-app-background: #ffffff;
-  --color-app-text: #000000;
+  --color-app-text-primary: #000000;
+  --color-app-text-secondary: #878e9b;
   --color-app-border: #7c7c7c;
 
   --color-modal-background: #e7e7e7;
 
   --color-header-background: #f8f4f4;
   --color-card-background: #f8f4f4;
+  --color-subcard-background: #ebe8e8;
   --color-selection-background: #f0f0f0;
 
   --color-theme-toggle-background: #e4e4e4;
@@ -36,6 +38,9 @@
   --color-logout-button: #d61815;
 
   --color-discord: #5865F2;
+
+  --color-progression-start: #02B97C;
+  --color-progression-end: #6160FF;
 
   --breakpoint-xs: 380px;
   --breakpoint-sm: 500px;
@@ -55,13 +60,14 @@
     --color-error: #911313;
 
     --color-app-background: #202020;
-    --color-app-text: #d8d8d8;
-    --color-app-border: #4b4b4b;
+    --color-app-text-primary: #d8d8d8;
+    --color-app-border: #364153;
 
     --color-modal-background: #111111;
 
     --color-header-background: #2a2a2a;
     --color-card-background: #2a2a2a;
+    --color-subcard-background: #1D2129;
     --color-selection-background: #333333;
 
     --color-theme-toggle-background: #1d1d1d;
@@ -163,4 +169,20 @@
 .menu-leave-to {
   opacity: 0;
   transform: scale(0.95);
+}
+
+/* LIST */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.4s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.list-leave-active {
+  position: absolute;
 }

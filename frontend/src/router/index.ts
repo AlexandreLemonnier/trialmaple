@@ -11,6 +11,7 @@ import TmnfRpgClassicGame from '#/views/TmnfRpgClassicGame.vue';
 import TmnfTrialBlurGame from '#/views/TmnfTrialBlurGame.vue';
 import TmnfTrialClassicGame from '#/views/TmnfTrialClassicGame.vue';
 import TmnfTrialZoomGame from '#/views/TmnfTrialZoomGame.vue';
+import UserStats from '#/views/user/UserStats.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -108,6 +109,15 @@ const router = createRouter({
             component: AuthCallback,
             meta: {
                 titleKey: 'Auth Callback'
+            }
+
+        },
+        {
+            name: Route.USER_STATS,
+            path: Route.USER_STATS,
+            component: UserStats,
+            meta: {
+                titleKey: 'User Stats'
             }
 
         },
