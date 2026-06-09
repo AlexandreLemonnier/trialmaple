@@ -1,5 +1,6 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.config.RouteKey;
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.dto.BlurMapDto;
 import com.trialmaple.model.dto.GeoguessrMapDto;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/maps")
+@RequestMapping(RouteKey.MAPS_PREFIX)
 public class MapController {
 
     private final TmMapService tmMapService;
@@ -38,7 +39,7 @@ public class MapController {
     /**
      * List maps for a specific game mode
      */
-    @GetMapping("/list")
+    @GetMapping(RouteKey.MAPS_LIST)
     public List<TmMapDto> getActiveMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -52,7 +53,7 @@ public class MapController {
     /**
      * List maps name for geoguessr game mode
      */
-    @GetMapping("/geoguessr")
+    @GetMapping(RouteKey.GEOGUESSR_MAPS)
     public List<GeoguessrMapDto> getGeoguessrMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -66,7 +67,7 @@ public class MapController {
     /**
      * List maps name for blur game mode
      */
-    @GetMapping("/blur")
+    @GetMapping(RouteKey.BLUR_MAPS)
     public List<BlurMapDto> getBlurMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -80,7 +81,7 @@ public class MapController {
     /**
      * List maps name for zoom game mode
      */
-    @GetMapping("/zoom")
+    @GetMapping(RouteKey.ZOOM_MAPS)
     public List<ZoomMapDto> getZoomMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);

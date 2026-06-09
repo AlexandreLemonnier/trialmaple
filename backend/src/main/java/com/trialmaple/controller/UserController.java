@@ -1,5 +1,6 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.config.RouteKey;
 import com.trialmaple.controller.mappers.UserMapper;
 import com.trialmaple.model.dto.UserDto;
 import com.trialmaple.model.entities.User;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(RouteKey.USERS_PREFIX)
 @CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
@@ -23,7 +24,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping("/me")
+    @GetMapping(RouteKey.CURRENT_USER)
     public UserDto getCurrentUser(Principal principal) {
         String discordId = principal.getName();
         User user = userService.findUser(discordId);

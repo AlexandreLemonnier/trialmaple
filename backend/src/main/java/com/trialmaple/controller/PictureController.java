@@ -1,6 +1,7 @@
 package com.trialmaple.controller;
 
 import com.trialmaple.TmMapleConstant;
+import com.trialmaple.config.RouteKey;
 import com.trialmaple.exception.InvalidAttemptException;
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.entities.dailymap.BlurDailyMap;
@@ -26,7 +27,7 @@ import java.nio.file.Path;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping(RouteKey.BASE_API)
 @CrossOrigin(origins = "*")
 public class PictureController {
 
@@ -45,7 +46,7 @@ public class PictureController {
     /**
      * Get specific picture for given Geoguessr game mode
      */
-    @GetMapping("/geoguessr-picture/{attempt}")
+    @GetMapping(RouteKey.GEOGUESSR_PICTURE)
     public ResponseEntity<Resource> getGeoguessrPicture(@RequestParam String gameMode, @PathVariable String attempt) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -68,7 +69,7 @@ public class PictureController {
     /**
      * Get specific picture for given Blur game mode
      */
-    @GetMapping("/blur-picture")
+    @GetMapping(RouteKey.BLUR_PICTURE)
     public ResponseEntity<Resource> getBlurPicture(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -85,7 +86,7 @@ public class PictureController {
     /**
      * Get specific picture for given Zoom game mode
      */
-    @GetMapping("/zoom-picture")
+    @GetMapping(RouteKey.ZOOM_PICTURE)
     public ResponseEntity<Resource> getZoomPicture(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);

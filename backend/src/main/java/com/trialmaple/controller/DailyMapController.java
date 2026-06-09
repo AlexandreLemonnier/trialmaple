@@ -1,5 +1,6 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.config.RouteKey;
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.exception.NoDailyMapFoundException;
 import com.trialmaple.model.entities.dailymap.DailyMap;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/daily-map")
+@RequestMapping(RouteKey.DAILY_MAP_PREFIX)
 @CrossOrigin(origins = "*")
 public class DailyMapController {
 
@@ -23,7 +24,7 @@ public class DailyMapController {
     /**
      * Get current daily map uuid for the given game mode
      */
-    @GetMapping("/uuid")
+    @GetMapping(RouteKey.DAILY_MAP_UUID)
     public String getDailyMapUuid(@RequestParam String gameMode) throws NoDailyMapFoundException {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);

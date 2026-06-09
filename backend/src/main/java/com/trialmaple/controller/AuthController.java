@@ -1,5 +1,6 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.config.RouteKey;
 import com.trialmaple.controller.mappers.UserMapper;
 import com.trialmaple.controller.mappers.external.DiscordUserMapper;
 import com.trialmaple.exception.DiscordAuthenticationException;
@@ -15,7 +16,7 @@ import com.trialmaple.utils.JwtUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(RouteKey.AUTH_PREFIX)
 @CrossOrigin(origins = "*")
 public class AuthController {
     private final DiscordAuthService discordAuthService;
@@ -38,7 +39,7 @@ public class AuthController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/discord")
+    @PostMapping(RouteKey.DISCORD_AUTH)
     public LoginResponseDto loginWithDiscord(@RequestBody DiscordLoginRequestDto request) {
         String code = request.code();
 

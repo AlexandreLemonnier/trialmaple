@@ -1,5 +1,6 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.config.RouteKey;
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.exception.InvalidMapException;
 import com.trialmaple.exception.NoDailyMapFoundException;
@@ -12,24 +13,21 @@ import com.trialmaple.model.enums.GameMode;
 import com.trialmaple.security.annotation.CurrentUser;
 import com.trialmaple.service.dailymap.DailyMapService;
 import com.trialmaple.service.guess.GuessService;
-import com.trialmaple.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/guess")
+@RequestMapping(RouteKey.GUESS_PREFIX)
 @CrossOrigin(origins = "*")
 public class GuessController {
 
     private final DailyMapService dailyMapService;
     private final GuessService guessService;
-    private final UserService userService;
 
-    public GuessController(GuessService guessService, DailyMapService dailyMapService, UserService userService) {
+    public GuessController(GuessService guessService, DailyMapService dailyMapService) {
         this.guessService = guessService;
         this.dailyMapService = dailyMapService;
-        this.userService = userService;
     }
 
     /**
@@ -51,7 +49,7 @@ public class GuessController {
     /**
      * Give up on finding daily map
      */
-    @PostMapping("/giveup")
+    @PostMapping(RouteKey.GIVE_UP)
     public AnswerDto giveUp(@RequestParam String gameMode) throws NoDailyMapFoundException {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);

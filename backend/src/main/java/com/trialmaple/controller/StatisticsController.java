@@ -1,5 +1,6 @@
 package com.trialmaple.controller;
 
+import com.trialmaple.config.RouteKey;
 import com.trialmaple.exception.InvalidGameModeException;
 import com.trialmaple.model.dto.DailyStatsDto;
 import com.trialmaple.model.dto.UserStatsDto;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping(RouteKey.BASE_API)
 @CrossOrigin(origins = "*")
 public class StatisticsController {
 
@@ -28,7 +29,7 @@ public class StatisticsController {
     /**
      * Get daily stats and daily map number
      */
-    @GetMapping("/daily-stats")
+    @GetMapping(RouteKey.DAILY_STATS)
     public DailyStatsDto getDailyStats(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
@@ -42,7 +43,7 @@ public class StatisticsController {
     /**
      * Get user stats
      */
-    @GetMapping("/user-stats")
+    @GetMapping(RouteKey.USER_STATS)
     public List<UserStatsDto> getUserStats(@CurrentUser User user) {
         return Arrays.stream(GameMode.values())
                 .map(gameMode -> statisticsService.getUserStats(user, gameMode))
