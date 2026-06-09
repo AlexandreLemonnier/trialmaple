@@ -95,13 +95,14 @@ import Loader from '#/components/Loader.vue';
 import { useStatsApi } from '#/composables/api/useStatsApi';
 import type { UserStats } from '#/types/api/userStats';
 import { TM_CATEGORIES, TM_GAMES, type TmCategory, type TmGame } from '#/types/Game';
+import { useStorage } from '@vueuse/core';
 import { computed, onMounted, ref } from 'vue';
 
 const stats = ref<UserStats[]>([]);
 const isLoading = ref(true);
 
-const selectedGames = ref<Set<TmGame>>(new Set(TM_GAMES));
-const selectedCategories = ref<Set<TmCategory>>(new Set(TM_CATEGORIES));
+const selectedGames = useStorage<Set<TmGame>>('statsFiltersSelectedGames', new Set(TM_GAMES));
+const selectedCategories = useStorage<Set<TmCategory>>('statsFiltersSelectedCategories', new Set(TM_CATEGORIES));
 
 const statsApi = useStatsApi();
 
