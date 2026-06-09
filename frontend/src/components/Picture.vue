@@ -19,10 +19,7 @@
                 <img v-show="!isLoading"
                      class="absolute inset-0 w-full h-full cursor-zoom-in select-none transition-all duration-500 ease-in-out"
                      :class="showFull ? 'object-contain' : 'object-cover'"
-                     :style="{
-                         filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none',
-                         transform: zoomLevel ? `scale(${zoomLevel})` : 'scale(1)'
-                     }"
+                     :style="imageStyle"
                      :src
                      :alt="`Hint n°${number}`"
                      @load="onLoad"
@@ -38,10 +35,7 @@
                  style="container-type: inline-size">
                 <img class="absolute inset-0 w-full h-full cursor-zoom-out select-none"
                      :class="showFull ? 'object-contain' : 'object-cover'"
-                     :style="{
-                         filter: blurLevel ? `blur(${blurLevel}cqw)` : 'none',
-                         transform: zoomLevel ? `scale(${zoomLevel})` : 'scale(1)'
-                     }"
+                     :style="imageStyle"
                      :src="src"
                      :alt="`Hint n°${number}`"
                      @click="isZoomOpen = false"
@@ -56,7 +50,7 @@
 import Icon from '#/components/Icon.vue';
 import Loader from '#/components/Loader.vue';
 import Modal from '#/components/modal/Modal.vue';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps<{
     src: string;
@@ -84,6 +78,19 @@ function openModal() {
         isZoomOpen.value = true;
     }
 }
+
+const imageStyle = computed(() => {
+    const baseScale = props.zoomLevel || 1;
+
+    // Add zoom if blurred to avoid blurred borders (with background)
+    const antiBlurMultiplier = props.blurLevel ? 1 + props.blurLevel * 0.02 : 1;
+    const finalScale = baseScale * antiBlurMultiplier;
+
+    return {
+        filter: props.blurLevel ? `blur(${props.blurLevel}cqw)` : 'none',
+        transform: `scale(${finalScale})`
+    };
+});
 
 function triggerLockAnimation() {
     isUnlocking.value = true;
