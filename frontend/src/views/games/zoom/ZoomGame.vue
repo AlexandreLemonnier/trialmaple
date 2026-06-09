@@ -3,7 +3,7 @@
         <ResetCountdown class="self-end" />
         <div class="text-md lg:text-lg pt-4 text-center">
             <span v-if="todayWinnerCount !== undefined">
-                <strong>{{ todayWinnerCount }} players </strong> have solved {{ gameModeDisplayName }} #{{ dailyMapNumber }}
+                <strong>{{ todayWinnerCount }} players </strong> have solved {{ GAME_MODE_DISPLAY_NAMES[gameMode] }} #{{ dailyMapNumber }}
             </span>
         </div>
         <div v-if="!gameEnded" class="flex flex-col gap-1 w-full lg:w-3/5 max-w-150">
@@ -30,12 +30,10 @@
                       :has-won
                       :answer
                       :game-mode
-                      :game-mode-display-name
                       :storage-key>
             <template #shareButton>
                 <ShareButton :format-result="formatResult"
                              :game-mode
-                             :game-mode-display-name
                              :storage-key />
             </template>
         </ResultScreen>
@@ -77,7 +75,7 @@ import { useShare } from '#/composables/useShare';
 import { createGameStore } from '#/stores/gameStore';
 import type { Answer } from '#/types/api/answer';
 import type { DailyStats } from '#/types/api/dailyStats';
-import type { ZoomGameMode } from '#/types/api/gameMode';
+import { GAME_MODE_DISPLAY_NAMES, type ZoomGameMode } from '#/types/api/gameMode';
 import type { Guess } from '#/types/api/guess';
 import type { ZoomMap } from '#/types/api/zoomMap';
 import { storeToRefs } from 'pinia';
@@ -85,7 +83,6 @@ import { computed, onMounted, ref, watchEffect } from 'vue';
 
 const { gameMode, storageKey } = defineProps<{
     gameMode: ZoomGameMode;
-    gameModeDisplayName: string;
     storageKey: string;
 }>();
 

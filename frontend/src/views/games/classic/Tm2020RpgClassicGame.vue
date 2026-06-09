@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TM2020_RPG"
-                 game-mode-display-name="TM2020 RPG Maple"
                  storage-key="tm2020RpgClassic"
                  :hints-to-display
                  :show-login="false" />

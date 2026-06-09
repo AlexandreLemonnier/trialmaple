@@ -1,5 +1,6 @@
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
+import { GAME_MODE_DISPLAY_NAMES } from '#/types/api/gameMode';
 import AuthCallback from '#/views/AuthCallback.vue';
 import TmnfTrialBlurGame from '#/views/games/blur/TmnfTrialBlurGame.vue';
 import Tm2020RpgClassicGame from '#/views/games/classic/Tm2020RpgClassicGame.vue';
@@ -30,7 +31,7 @@ const router = createRouter({
             path: Route.TMNF_TRIAL_CLASSIC_MODE,
             component: TmnfTrialClassicGame,
             meta: {
-                titleKey: 'TMNF Trial'
+                titleKey: GAME_MODE_DISPLAY_NAMES['CLASSIC_TMNF_TRIAL']
             }
         },
         {
@@ -38,7 +39,7 @@ const router = createRouter({
             path: Route.TMNF_RPG_CLASSIC_MODE,
             component: TmnfRpgClassicGame,
             meta: {
-                titleKey: 'TMNF RPG'
+                titleKey: GAME_MODE_DISPLAY_NAMES['CLASSIC_TMNF_RPG']
             }
         },
         {
@@ -46,7 +47,7 @@ const router = createRouter({
             path: Route.TM2_TRIAL_CLASSIC_MODE,
             component: Tm2TrialClassicGame,
             meta: {
-                titleKey: 'TM2 Trial'
+                titleKey: GAME_MODE_DISPLAY_NAMES['CLASSIC_TM2_TRIAL']
             }
         },
         {
@@ -54,7 +55,7 @@ const router = createRouter({
             path: Route.TM2_RPG_CLASSIC_MODE,
             component: Tm2RpgClassicGame,
             meta: {
-                titleKey: 'TM2 RPG'
+                titleKey: GAME_MODE_DISPLAY_NAMES['CLASSIC_TM2_RPG']
             }
 
         },
@@ -63,7 +64,7 @@ const router = createRouter({
             path: Route.TM2020_TRIAL_CLASSIC_MODE,
             component: Tm2020TrialClassicGame,
             meta: {
-                titleKey: 'TM2020 Trial'
+                titleKey: GAME_MODE_DISPLAY_NAMES['CLASSIC_TM2020_TRIAL']
             }
 
         },
@@ -72,7 +73,7 @@ const router = createRouter({
             path: Route.TM2020_RPG_CLASSIC_MODE,
             component: Tm2020RpgClassicGame,
             meta: {
-                titleKey: 'TM2020 RPG'
+                titleKey: GAME_MODE_DISPLAY_NAMES['CLASSIC_TM2020_RPG']
             }
 
         },
@@ -81,7 +82,7 @@ const router = createRouter({
             path: Route.TM2020_RPG_GEOGUESSR_MODE,
             component: Tm2020RpgGeoguessrGame,
             meta: {
-                titleKey: 'TM2020 RPG Geoguessr'
+                titleKey: GAME_MODE_DISPLAY_NAMES['GEOGUESSR_TM2020_RPG']
             }
 
         },
@@ -90,7 +91,7 @@ const router = createRouter({
             path: Route.TMNF_TRIAL_BLUR_MODE,
             component: TmnfTrialBlurGame,
             meta: {
-                titleKey: 'TMNF Trial Blurred'
+                titleKey: GAME_MODE_DISPLAY_NAMES['BLUR_TMNF_TRIAL']
             }
 
         },
@@ -99,7 +100,7 @@ const router = createRouter({
             path: Route.TMNF_TRIAL_ZOOM_MODE,
             component: TmnfTrialZoomGame,
             meta: {
-                titleKey: 'TMNF Trial Zoomed'
+                titleKey: GAME_MODE_DISPLAY_NAMES['ZOOM_TMNF_TRIAL']
             }
 
         },
@@ -134,6 +135,12 @@ router.beforeEach((to) => {
     setIsFromOldDomainName(isFromOldDomainName);
 
     return true;
+});
+
+router.afterEach((to) => {
+    document.title = to.meta.titleKey
+        ? `TMMaple - ${to.meta.titleKey as string}`
+        : 'TMMaple';
 });
 
 export default router;

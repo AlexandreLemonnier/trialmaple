@@ -7,15 +7,14 @@
 <script setup lang="ts">
 import Button from '#/components/Button.vue';
 import { createGameStore } from '#/stores/gameStore';
-import type { GameMode } from '#/types/api/gameMode';
+import { GAME_MODE_DISPLAY_NAMES, type GameMode } from '#/types/api/gameMode';
 import { copyToClipboard } from '#/utils/copyToClipboard';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
-const { formatResult, gameMode, gameModeDisplayName, storageKey } = defineProps<{
+const { formatResult, gameMode, storageKey } = defineProps<{
     formatResult(): string;
     gameMode: GameMode;
-    gameModeDisplayName: string;
     storageKey: string;
 }>();
 
@@ -41,7 +40,7 @@ const resultCopyClass: Record<CopyStatus, string> = {
 
 function getTitle(guessesCount: number, hasWon: boolean) {
     if (dailyMapNumber.value) {
-        return `${gameModeDisplayName} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} ${hasWon ? '😼👍' : '😿❌'}`;
+        return `${GAME_MODE_DISPLAY_NAMES[gameMode]} #${dailyMapNumber.value} - ${guessesCount} ${guessesCount <= 1 ? 'guess' : 'guesses'} ${hasWon ? '😼👍' : '😿❌'}`;
     }
     return '';
 }

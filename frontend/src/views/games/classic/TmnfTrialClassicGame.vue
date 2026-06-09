@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TMNF_TRIAL"
-                 game-mode-display-name="TMNF Trial Maple"
                  storage-key="tmnfTrialClassic"
                  :hints-to-display
                  :show-login="false" />

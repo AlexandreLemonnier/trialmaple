@@ -24,15 +24,14 @@ import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
 import { createGameStore } from '#/stores/gameStore';
 import type { Answer } from '#/types/api/answer';
-import type { GameMode } from '#/types/api/gameMode';
+import { GAME_MODE_DISPLAY_NAMES, type GameMode } from '#/types/api/gameMode';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
 
-const { hasWon, answer, gameMode, gameModeDisplayName, storageKey } = defineProps<{
+const { hasWon, answer, gameMode, storageKey } = defineProps<{
     hasWon: boolean;
     answer: Answer | null;
     gameMode: GameMode;
-    gameModeDisplayName: string;
     storageKey: string;
 }>();
 
@@ -42,7 +41,7 @@ const { history, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
 const resultMessage = computed(() => {
     let message = '';
     if (hasWon) {
-        message += `You solved ${gameModeDisplayName} #${dailyMapNumber.value} in <strong>${Object.keys(history.value).length}</strong> guesses! 🎉`;
+        message += `You solved ${GAME_MODE_DISPLAY_NAMES[gameMode]} #${dailyMapNumber.value} in <strong>${Object.keys(history.value).length}</strong> guesses! 🎉`;
     } else if (answer) {
         message += `The correct answer was <strong>${answer.mapName}</strong>.`;
     }

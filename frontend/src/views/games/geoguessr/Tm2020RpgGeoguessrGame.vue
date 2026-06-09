@@ -1,6 +1,5 @@
 <template>
     <GeoguessrGame game-mode="GEOGUESSR_TM2020_RPG"
-                   game-mode-display-name="TM2020 RPG Geoguessr"
                    storage-key="tm2020RpgGeoguessr" />
 </template>
 

@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TMNF_RPG"
-                 game-mode-display-name="TMNF RPG Maple"
                  storage-key="tmnfRpgClassic"
                  :hints-to-display />
 </template>

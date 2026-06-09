@@ -47,7 +47,7 @@
                     <div class="flex justify-between items-start mb-6">
                         <div>
                             <h2 class="text-xl font-bold mb-1 group-hover:text-progression-end/80 transition-colors">
-                                {{ stat.gameMode }}
+                                {{ GAME_MODE_DISPLAY_NAMES[stat.gameMode] }}
                             </h2>
                             <div class="flex gap-2">
                                 <span class="text-xs text-app-text-secondary font-semibold bg-subcard-background px-2 py-0.5 rounded-md">{{ stat.tmGame }}</span>
@@ -93,6 +93,7 @@
 import Button from '#/components/Button.vue';
 import Loader from '#/components/Loader.vue';
 import { useStatsApi } from '#/composables/api/useStatsApi';
+import { GAME_MODE_DISPLAY_NAMES } from '#/types/api/gameMode';
 import type { UserStats } from '#/types/api/userStats';
 import { TM_CATEGORIES, TM_GAMES, type TmCategory, type TmGame } from '#/types/Game';
 import { useStorage } from '@vueuse/core';
