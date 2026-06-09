@@ -8,13 +8,14 @@
             </div>
 
             <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-medium">
-                <RouterLink :to="{ name: Route.PRIVACY_POLICY }" class="hover:text-app-text-primary transition-colors">Privacy Policy</RouterLink>
-                <RouterLink :to="{ name: Route.TERMS_OF_SERVICE }" class="hover:text-app-text-primary transition-colors">Terms of Service</RouterLink>
+                <RouterLink :to="{ name: Route.PRIVACY_POLICY }" class="hover:text-app-text-primary">Privacy Policy</RouterLink>
+                <RouterLink :to="{ name: Route.TERMS_OF_SERVICE }" class="hover:text-app-text-primary">Terms of Service</RouterLink>
                 <span class="text-gray-600">|</span>
-                <RouterLink :to="{ name: Route.HOME }" class="hover:text-app-text-primary transition-colors">Home</RouterLink>
+                <RouterLink :to="{ name: Route.HOME }" class="hover:text-app-text-primary">Home</RouterLink>
             </div>
 
-            <Button class="bg-discord/70 text-primary-white"
+            <span class="block md:hidden text-sm font-semibold hover:text-app-text-primary underline cursor-pointer" @click="isDiscordModalOpen = true">Discord</span>
+            <Button class="hidden md:flex bg-discord/70 text-primary-white"
                     label="Discord"
                     icon-name="discord"
                     icon-size="md"
