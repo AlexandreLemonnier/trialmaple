@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import BlurGame from '#/views/BlurGame.vue';
+import BlurGame from '#/views/games/blur/BlurGame.vue';
 </script>

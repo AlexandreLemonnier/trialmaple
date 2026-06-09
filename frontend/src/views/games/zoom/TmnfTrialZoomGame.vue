@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import ZoomGame from '#/views/ZoomGame.vue';
+import ZoomGame from '#/views/games/zoom/ZoomGame.vue';
 </script>

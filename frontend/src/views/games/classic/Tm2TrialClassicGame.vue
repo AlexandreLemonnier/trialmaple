@@ -1,22 +1,18 @@
 <template>
-    <ClassicGame game-mode="CLASSIC_TMNF_TRIAL"
-                 game-mode-display-name="TMNF Trial Maple"
-                 storage-key="tmnfTrialClassic"
-                 :hints-to-display
-                 :show-login="false" />
+    <ClassicGame game-mode="CLASSIC_TM2_TRIAL"
+                 game-mode-display-name="TM2 Trial Maple"
+                 storage-key="tm2TrialClassic"
+                 :hints-to-display />
 </template>
 
 <script setup lang="ts">
 import type { HintInformation } from '#/types/HintInformation';
-import ClassicGame from '#/views/ClassicGame.vue';
+import ClassicGame from '#/views/games/classic/ClassicGame.vue';
 
 const hintsToDisplay: HintInformation[] = [
     {
-        label: 'Difficulty',
-        guessProp: 'difficulty'
-    },
-    {
-        label: 'Points',
+        label: 'Stars',
+        tooltip: 'Difficulty rating',
         guessProp: 'points'
     },
     {
@@ -30,6 +26,10 @@ const hintsToDisplay: HintInformation[] = [
     {
         label: 'WR Holder',
         guessProp: 'wrHolder'
+    },
+    {
+        label: 'WR Year',
+        guessProp: 'wrYear'
     },
     {
         label: 'Author(s)',

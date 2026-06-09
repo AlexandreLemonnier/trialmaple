@@ -1,28 +1,23 @@
 <template>
-    <ClassicGame game-mode="CLASSIC_TM2020_RPG"
-                 game-mode-display-name="TM2020 RPG Maple"
-                 storage-key="tm2020RpgClassic"
-                 :hints-to-display
-                 :show-login="false" />
+    <ClassicGame game-mode="CLASSIC_TMNF_RPG"
+                 game-mode-display-name="TMNF RPG Maple"
+                 storage-key="tmnfRpgClassic"
+                 :hints-to-display />
 </template>
 
 <script setup lang="ts">
 import type { HintInformation } from '#/types/HintInformation';
-import ClassicGame from '#/views/ClassicGame.vue';
+import ClassicGame from '#/views/games/classic/ClassicGame.vue';
 
 const hintsToDisplay: HintInformation[] = [
     {
         label: 'Stars',
-        tooltip: 'From 3 to 7, how competitive is the map',
+        tooltip: 'From 1 to 7, how competitive is the map',
         guessProp: 'points'
     },
     {
         label: 'Checkpoints',
         guessProp: 'checkpoints'
-    },
-    {
-        label: 'Finishers',
-        guessProp: 'finisherCount'
     },
     {
         label: 'WR Time',

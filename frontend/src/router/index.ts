@@ -1,16 +1,16 @@
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
 import AuthCallback from '#/views/AuthCallback.vue';
+import TmnfTrialBlurGame from '#/views/games/blur/TmnfTrialBlurGame.vue';
+import Tm2020RpgClassicGame from '#/views/games/classic/Tm2020RpgClassicGame.vue';
+import Tm2020TrialClassicGame from '#/views/games/classic/Tm2020TrialClassicGame.vue';
+import Tm2RpgClassicGame from '#/views/games/classic/Tm2RpgClassicGame.vue';
+import Tm2TrialClassicGame from '#/views/games/classic/Tm2TrialClassicGame.vue';
+import TmnfRpgClassicGame from '#/views/games/classic/TmnfRpgClassicGame.vue';
+import TmnfTrialClassicGame from '#/views/games/classic/TmnfTrialClassicGame.vue';
+import Tm2020RpgGeoguessrGame from '#/views/games/geoguessr/Tm2020RpgGeoguessrGame.vue';
+import TmnfTrialZoomGame from '#/views/games/zoom/TmnfTrialZoomGame.vue';
 import HomePage from '#/views/HomePage.vue';
-import Tm2020RpgClassicGame from '#/views/Tm2020RpgClassicGame.vue';
-import Tm2020RpgGeoguessrGame from '#/views/Tm2020RpgGeoguessrGame.vue';
-import Tm2020TrialClassicGame from '#/views/Tm2020TrialClassicGame.vue';
-import Tm2RpgClassicGame from '#/views/Tm2RpgClassicGame.vue';
-import Tm2TrialClassicGame from '#/views/Tm2TrialClassicGame.vue';
-import TmnfRpgClassicGame from '#/views/TmnfRpgClassicGame.vue';
-import TmnfTrialBlurGame from '#/views/TmnfTrialBlurGame.vue';
-import TmnfTrialClassicGame from '#/views/TmnfTrialClassicGame.vue';
-import TmnfTrialZoomGame from '#/views/TmnfTrialZoomGame.vue';
 import UserStats from '#/views/user/UserStats.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 

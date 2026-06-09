@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import type { HintInformation } from '#/types/HintInformation';
-import ClassicGame from '#/views/ClassicGame.vue';
+import ClassicGame from '#/views/games/classic/ClassicGame.vue';
 
 const hintsToDisplay: HintInformation[] = [
     {
