@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-app-background p-4 md:p-8">
-        <h1 class="max-w-7xl mx-auto mb-10 text-center md:text-left text-4xl md:text-5xl font-extrabold bg-linear-to-r from-progression-end to-progression-start bg-clip-text text-transparent inline-block">
+        <h1 class="max-w-7xl mx-auto mb-10 text-center md:text-left text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-indigo to-primary-emerald bg-clip-text text-transparent inline-block">
             My statistics 🏆
         </h1>
         <Loader v-if="isLoading" />
@@ -13,7 +13,7 @@
                                 :key="tmGame"
                                 class="font-bold border-2"
                                 :class="selectedGames.has(tmGame)
-                                    ? 'bg-progression-start/20 border-progression-start text-progression-start'
+                                    ? 'bg-primary-emerald/20 border-primary-emerald text-primary-emerald'
                                     : 'bg-transparent text-app-text-secondary'"
                                 :label="tmGame"
                                 @click="selectedGames = toggleFilter(selectedGames, tmGame)">
@@ -29,7 +29,7 @@
                                 :key="tmCategory"
                                 class="font-bold border-2"
                                 :class="selectedCategories.has(tmCategory)
-                                    ? 'bg-progression-end/20 border-progression-end text-progression-end'
+                                    ? 'bg-primary-indigo/20 border-primary-indigo text-primary-indigo'
                                     : 'bg-transparent text-app-text-secondary'"
                                 :label="tmCategory"
                                 @click="selectedCategories = toggleFilter(selectedCategories, tmCategory)">
@@ -43,10 +43,10 @@
                     <p class="text-app-text-secondary text-xl">No statistics match these filters.</p>
                 </div>
                 <div v-for="stat in filteredStats" :key="stat.gameMode"
-                     class="flex flex-col bg-card-background rounded-3xl p-6 border border-app-border hover:border-progression-end hover:shadow-2xl transition-transform duration-300 transform hover:-translate-y-1 group">
+                     class="flex flex-col bg-card-background rounded-3xl p-6 border border-app-border hover:border-primary-indigo hover:shadow-2xl transition-transform duration-300 transform hover:-translate-y-1 group">
                     <div class="flex justify-between items-start mb-6">
                         <div>
-                            <h2 class="text-xl font-bold mb-1 group-hover:text-progression-end/80 transition-colors">
+                            <h2 class="text-xl font-bold mb-1 group-hover:text-primary-indigo/80 transition-colors">
                                 {{ GAME_MODE_DISPLAY_NAMES[stat.gameMode] }}
                             </h2>
                             <div class="flex gap-2">
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="h-3 w-full bg-subcard-background rounded-full overflow-hidden">
-                                <div class="h-full rounded-full bg-linear-to-r from-progression-start to-progression-end"
+                                <div class="h-full rounded-full bg-linear-to-r from-primary-emerald to-primary-indigo"
                                      :style="{ width: `${getWinRate(stat.winsCount, stat.dailyMapsCount)}%` }">
                                 </div>
                             </div>

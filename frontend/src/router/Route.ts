@@ -13,5 +13,7 @@ export enum Route {
     // User pages
     USER_STATS = '/user/stats',
     // Other pages
-    AUTH_CALLBACK = '/auth/callback'
+    AUTH_CALLBACK = '/auth/callback',
+    PRIVACY_POLICY = '/privacy-policy',
+    TERMS_OF_SERVICE = '/terms-of-service'
 }

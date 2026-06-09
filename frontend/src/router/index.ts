@@ -12,6 +12,8 @@ import TmnfTrialClassicGame from '#/views/games/classic/TmnfTrialClassicGame.vue
 import Tm2020RpgGeoguessrGame from '#/views/games/geoguessr/Tm2020RpgGeoguessrGame.vue';
 import TmnfTrialZoomGame from '#/views/games/zoom/TmnfTrialZoomGame.vue';
 import HomePage from '#/views/HomePage.vue';
+import PrivacyPolicy from '#/views/PrivacyPolicy.vue';
+import TermsOfService from '#/views/TermsOfService.vue';
 import UserStats from '#/views/user/UserStats.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -105,6 +107,15 @@ const router = createRouter({
 
         },
         {
+            name: Route.USER_STATS,
+            path: Route.USER_STATS,
+            component: UserStats,
+            meta: {
+                titleKey: 'User Stats'
+            }
+
+        },
+        {
             name: Route.AUTH_CALLBACK,
             path: Route.AUTH_CALLBACK,
             component: AuthCallback,
@@ -114,13 +125,21 @@ const router = createRouter({
 
         },
         {
-            name: Route.USER_STATS,
-            path: Route.USER_STATS,
-            component: UserStats,
+            name: Route.PRIVACY_POLICY,
+            path: Route.PRIVACY_POLICY,
+            component: PrivacyPolicy,
             meta: {
-                titleKey: 'User Stats'
+                titleKey: 'Privacy Policy'
             }
 
+        },
+        {
+            name: Route.TERMS_OF_SERVICE,
+            path: Route.TERMS_OF_SERVICE,
+            component: TermsOfService,
+            meta: {
+                titleKey: 'Terms of Service'
+            }
         },
         {
             path: '/:pathMatch(.*)', redirect: '/'

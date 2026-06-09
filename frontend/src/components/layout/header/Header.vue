@@ -13,29 +13,19 @@
         <div class="flex gap-3 lg:gap-6 items-center">
             <ThemeToggle />
             <Icon class="cursor-pointer" name="circle-info" size="md" @click="isInfoModalOpen = true" />
-            <Button class="hidden lg:flex bg-discord/80 text-primary-white"
-                    label="Discord"
-                    icon-name="discord"
-                    icon-size="md"
-                    icon-position="right"
-                    @click="isDiscordModalOpen = true" />
-            <Icon class="block lg:hidden text-discord cursor-pointer" name="discord" size="md" @click="isDiscordModalOpen = true" />
             <Avatar v-if="isConnected" />
             <LoginButton v-else />
         </div>
     </header>
     <InfoModal v-model="isInfoModalOpen" />
-    <DiscordModal v-model="isDiscordModalOpen" />
 </template>
 
 <script setup lang="ts">
 import TrackManiaLogo from '#/assets/TrackMania-Logo.svg?component';
-import Button from '#/components/Button.vue';
 import Icon from '#/components/Icon.vue';
 import Avatar from '#/components/layout/header/Avatar.vue';
 import LoginButton from '#/components/layout/header/LoginButton.vue';
 import ThemeToggle from '#/components/layout/header/ThemeToggle.vue';
-import DiscordModal from '#/components/modal/DiscordModal.vue';
 import InfoModal from '#/components/modal/InfoModal.vue';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore.js';
@@ -47,5 +37,4 @@ const router = useRouter();
 const { isConnected } = storeToRefs(useAppStore());
 
 const isInfoModalOpen = ref(false);
-const isDiscordModalOpen = ref(false);
 </script>

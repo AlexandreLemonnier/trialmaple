@@ -20,6 +20,7 @@
   --color-modal-background: #e7e7e7;
 
   --color-header-background: #f8f4f4;
+  --color-footer-background: #f8f4f4;
   --color-card-background: #f8f4f4;
   --color-subcard-background: #ebe8e8;
   --color-selection-background: #f0f0f0;
@@ -39,8 +40,8 @@
 
   --color-discord: #5865F2;
 
-  --color-progression-start: #02B97C;
-  --color-progression-end: #6160FF;
+  --color-primary-emerald: #02B97C;
+  --color-primary-indigo: #6160FF;
 
   --breakpoint-xs: 380px;
   --breakpoint-sm: 500px;
@@ -66,6 +67,7 @@
     --color-modal-background: #111111;
 
     --color-header-background: #2a2a2a;
+    --color-footer-background: #2a2a2a;
     --color-card-background: #2a2a2a;
     --color-subcard-background: #1D2129;
     --color-selection-background: #333333;
