@@ -22,7 +22,7 @@ public class ScoreService {
 
     @Caching(evict = {
             @CacheEvict(value = CacheName.DAILY_STATS, key = "#dailyMap.gameMode"),
-            @CacheEvict(value = CacheName.USER_STATS, key = "{#user.id, #dailyMap.gameMode}")
+            @CacheEvict(value = CacheName.USER_STATS, key = "{#user.id, #dailyMap.gameMode}", condition = "#user != null")
     })
     public void saveScore(DailyMap dailyMap, int attemptCount, User user) {
         if (user != null && scoreRepository.findByDailyMapAndUser(dailyMap, user).isPresent()) {
