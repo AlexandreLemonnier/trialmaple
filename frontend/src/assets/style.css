@@ -25,9 +25,6 @@
   --color-subcard-background: #ebe8e8;
   --color-selection-background: #f0f0f0;
 
-  --color-theme-toggle-background: #e4e4e4;
-  --color-theme-toggle-knob: #ffffff;
-
   --color-confirmation-text: #089101;
   --color-win-background: #26a520;
   --color-lose-background: #a50f0d;
@@ -71,9 +68,6 @@
     --color-card-background: #2a2a2a;
     --color-subcard-background: #1D2129;
     --color-selection-background: #333333;
-
-    --color-theme-toggle-background: #1d1d1d;
-    --color-theme-toggle-knob: #000000;
 
     --color-confirmation-text: #22911c;
     --color-win-background: #006400;

@@ -11,7 +11,7 @@
             </h1>
         </div>
         <div class="flex gap-3 lg:gap-6 items-center">
-            <ThemeToggle />
+            <Icon class="cursor-pointer" :name="isDarkTheme ? 'moon' : 'sun'" size="md" @click="toggleTheme" />
             <Icon class="cursor-pointer" name="circle-info" size="md" @click="isInfoModalOpen = true" />
             <Avatar v-if="isConnected" />
             <LoginButton v-else />
@@ -25,16 +25,20 @@ import TrackManiaLogo from '#/assets/TrackMania-Logo.svg?component';
 import Icon from '#/components/Icon.vue';
 import Avatar from '#/components/layout/header/Avatar.vue';
 import LoginButton from '#/components/layout/header/LoginButton.vue';
-import ThemeToggle from '#/components/layout/header/ThemeToggle.vue';
 import InfoModal from '#/components/modal/InfoModal.vue';
+import { useTheme } from '#/composables/useTheme';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore.js';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const { isConnected } = storeToRefs(useAppStore());
 
 const isInfoModalOpen = ref(false);
+
+const { theme, toggleTheme } = useTheme();
+
+const isDarkTheme = computed(() => theme.value === 'dark');
 </script>
