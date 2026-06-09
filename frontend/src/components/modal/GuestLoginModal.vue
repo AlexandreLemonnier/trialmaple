@@ -3,7 +3,7 @@
         <div class="flex flex-col gap-4 text-sm">
             <p>You are currently playing as guest. Sign in with Discord to save your daily scores and unlock your personal statistics dashboard!</p>
             <div class="flex justify-between">
-                <Button label="Play as Guest" @click="isOpen = false" />
+                <Button label="Play as Guest" scale @click="isOpen = false" />
                 <LoginButton />
             </div>
         </div>

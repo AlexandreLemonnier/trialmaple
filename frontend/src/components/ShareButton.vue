@@ -1,6 +1,9 @@
 <template>
     <div class="flex gap-2 items-center">
-        <Button :label="resultCopyMessage[resultCopyStatus]" :class="resultCopyClass[resultCopyStatus]" @click="copyHistoryResult" />
+        <Button :label="resultCopyMessage[resultCopyStatus]"
+                scale
+                :class="resultCopyClass[resultCopyStatus]"
+                @click="copyHistoryResult" />
     </div>
 </template>
 

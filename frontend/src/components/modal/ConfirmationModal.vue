@@ -2,8 +2,8 @@
     <Modal title="Confirmation" v-model="isOpen">
         <slot></slot>
         <div class="flex justify-between mt-2">
-            <Button label="No" icon-name="x" @click="onNoClick" />
-            <Button label="Yes" icon-name="check" @click="onYesClick" />
+            <Button label="No" icon-name="x" scale @click="onNoClick" />
+            <Button label="Yes" icon-name="check" scale @click="onYesClick" />
         </div>
     </Modal>
 </template>

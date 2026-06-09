@@ -1,5 +1,6 @@
 <template>
     <Button class="bg-login-button"
+            scale
             label="Sign in"
             icon-name="login"
             icon-size="sm"

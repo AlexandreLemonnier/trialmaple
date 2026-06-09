@@ -17,6 +17,8 @@
                                 :class="selectedGames.has(tmGame)
                                     ? 'bg-primary-emerald/20 border-primary-emerald text-primary-emerald'
                                     : 'bg-transparent text-app-text-secondary'"
+                                pill
+                                scale
                                 :label="tmGame"
                                 @click="selectedGames = toggleFilter(selectedGames, tmGame)">
                             {{ tmGame }}
@@ -33,6 +35,8 @@
                                 :class="selectedCategories.has(tmCategory)
                                     ? 'bg-primary-indigo/20 border-primary-indigo text-primary-indigo'
                                     : 'bg-transparent text-app-text-secondary'"
+                                pill
+                                scale
                                 :label="tmCategory"
                                 @click="selectedCategories = toggleFilter(selectedCategories, tmCategory)">
                             {{ tmCategory }}

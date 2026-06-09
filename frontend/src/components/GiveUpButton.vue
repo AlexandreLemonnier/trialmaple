@@ -2,7 +2,12 @@
     <ConfirmationModal v-model="isConfirmationOpen" :yes-action="giveUp">
         <p>Are you sure you want to give up? Your current progress will be lost.</p>
     </ConfirmationModal>
-    <Button class="bg-giveup-button text-primary-white" label="Give Up" icon-name="flag" @click="confirmGiveUp" />
+    <Button class="bg-giveup-button text-primary-white"
+            pill
+            scale
+            label="Give Up"
+            icon-name="flag"
+            @click="confirmGiveUp" />
 </template>
 
 <script setup lang="ts">

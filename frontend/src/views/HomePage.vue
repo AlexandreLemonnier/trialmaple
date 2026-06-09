@@ -21,10 +21,12 @@
                         <div class="flex flex-col gap-2 lg:gap-3">
                             <Button v-for="gameMode in style.gameModes"
                                     :key="gameMode.title"
-                                    @click="navigateToRoute(gameMode.routeName)"
+                                    pill
+                                    scale
                                     :label="gameMode.title"
                                     :icon-name="gameMode.icon"
-                                    icon-class="text-error" />
+                                    icon-class="text-error"
+                                    @click="navigateToRoute(gameMode.routeName)" />
                         </div>
                     </div>
                 </div>
