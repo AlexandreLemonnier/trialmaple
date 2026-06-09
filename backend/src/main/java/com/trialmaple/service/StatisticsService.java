@@ -54,7 +54,7 @@ public class StatisticsService {
     /**
      * Get a user overall stats
      */
-    @Cacheable(value = CacheName.USER_STATS, key = "{#user.id, #gameMode}")
+    @Cacheable(value = CacheName.USER_STATS, key = "{#user.id, #gameMode}", condition = "#user != null")
     public UserStatsDto getUserStats(User user, GameMode gameMode) {
         int dailyMapsCount = dailyMapRepository.countByGameModeAndDayGreaterThanEqual(gameMode, STATS_START_DATE);
         int winsCount = scoreRepository.countByUserAndDailyMap_GameModeAndDailyMap_DayGreaterThanEqual(user, gameMode, STATS_START_DATE);
