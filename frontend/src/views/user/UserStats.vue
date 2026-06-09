@@ -1,9 +1,11 @@
 <template>
-    <div class="min-h-screen bg-app-background p-4 md:p-8">
+    <div class="h-full bg-app-background p-4 md:p-8">
         <h1 class="max-w-7xl mx-auto mb-10 text-center md:text-left text-4xl md:text-5xl font-extrabold bg-linear-to-r from-primary-indigo to-primary-emerald bg-clip-text text-transparent inline-block">
             My statistics 🏆
         </h1>
-        <Loader v-if="isLoading" />
+        <div v-if="isLoading" class="flex items-center justify-center h-full">
+            <Loader />
+        </div>
         <div v-else class="max-w-7xl mx-auto space-y-8">
             <div class="bg-card-background p-4 md:p-6 rounded-2xl border border-app-border/50 shadow-lg flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
                 <div class="flex flex-col gap-2 w-full md:w-auto">
