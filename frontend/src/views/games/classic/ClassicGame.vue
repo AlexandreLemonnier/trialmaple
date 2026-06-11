@@ -13,13 +13,11 @@
                              :picked-maps
                              name-prop="name"
                              unique-id="uuid" />
-                <button class="text-lg lg:text-xl xl:text-2xl rounded-full border-2 border-app-border py-2 px-4 bg-guess-button cursor-pointer hover:scale-105 transition-transform"
-                        type="button"
-                        :inert="!maps.length || !selectedMap || isGuessCardAnimating"
-                        @click="handleGuess">
-                    <span v-if="!isGuessLoading">Guess</span>
-                    <Loader v-else />
-                </button>
+                <GuessButton :maps
+                             :selected-map="selectedMap"
+                             :inert="isGuessCardAnimating"
+                             :is-loading="isGuessLoading"
+                             @click="handleGuess" />
             </div>
             <span v-if="hasMapAlreadyBeenPicked" class="text-sm italic text-red-600 pl-4">You already picked this map.</span>
         </div>
@@ -56,6 +54,7 @@
 <script setup lang="ts">
 import ExternalMapsListNote from '#/components/ExternalMapsListNote.vue';
 import GiveUpButton from '#/components/GiveUpButton.vue';
+import GuessButton from '#/components/GuessButton.vue';
 import GuessCard from '#/components/GuessCard.vue';
 import Loader from '#/components/Loader.vue';
 import MapCombobox from '#/components/MapCombobox.vue';

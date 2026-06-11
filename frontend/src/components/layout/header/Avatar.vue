@@ -5,7 +5,7 @@
                 @click="isMenuOpen = !isMenuOpen">
             <img :src="getDiscordAvatarUrl(user.discordId, user.avatar, user.discriminator)"
                  :alt="`${user.username} avatar`"
-                 class="w-6 h-6 md:w-10 md:h-10 rounded-full border-2 border-discord object-cover shadow-sm cursor-pointer" />
+                 class="w-6 h-6 md:w-10 md:h-10 rounded-full border-2 border-discord object-cover shadow-sm cursor-pointer dark:brightness-[0.9]" />
         </button>
 
         <Transition name="menu">

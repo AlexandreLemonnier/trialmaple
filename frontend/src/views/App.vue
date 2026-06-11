@@ -1,8 +1,8 @@
 <template>
     <Layout>
+        <GuestLoginModal v-model="isGuestLoginOpen" />
         <RouterView />
     </Layout>
-    <GuestLoginModal v-model="isGuestLoginOpen" />
 </template>
 
 <script setup lang="ts">

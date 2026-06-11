@@ -1,14 +1,18 @@
 <template>
     <div class="flex flex-wrap items-center gap-2 font-semibold text-sm md:text-base">
-        <span :title="tooltip" :class="tooltip ? 'cursor-help' : ''">{{ label }}</span>
+        <span :title="tooltip"
+              :class="tooltip ? 'cursor-help' : ''"
+              class="text-text-muted">
+            {{ label }}
+        </span>
         <div v-for="hintElement in hints"
              :key="getKey(hintElement.value)"
              class="flex items-center gap-2 rounded-full border border-app-border px-2.5 py-0.5"
              :class="{
-                 'bg-error': hintElement.hint === 'LESS' || hintElement.hint === 'MORE' || hintElement.hint === false,
-                 'bg-success': hintElement.hint === 'EQUAL' || hintElement.hint === true
+                 'bg-error/20 text-error': hintElement.hint === 'LESS' || hintElement.hint === 'MORE' || hintElement.hint === false,
+                 'bg-success/20 text-success': hintElement.hint === 'EQUAL' || hintElement.hint === true
              }">
-            <div v-if="isWrHolder(hintElement.value)" v-html="displayWrHolderHtml(hintElement.value)"></div>
+            <div v-if="isWrHolder(hintElement.value)" v-html="displayWrHolderHtml(hintElement.value)" class="dark:brightness-[0.8]"></div>
             <span v-else-if="typeof hintElement.value === 'boolean'">{{ displayBoolean(hintElement.value) }}</span>
             <span v-else>{{ hintElement.value }}</span>
             <Icon v-if="hintElement.hint === 'LESS'" name="chevron-down" size="sm" />

@@ -1,7 +1,11 @@
 <template>
     <div class="flex flex-col gap-8 lg:gap-12 items-center mt-2 lg:mt-4">
-        <h1 class="text-3xl lg:text-4xl font-bold">- Trackmania Maple -</h1>
-        <h2 class="text-lg lg:text-2xl">Choose a game mode and find today's map!</h2>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-linear-to-r from-primary-emerald to-primary-indigo pb-1">
+            Trackmania Maple
+        </h1>
+        <h2 class="text-lg lg:text-2xl text-text-muted font-medium">
+            Choose a game mode and find today's map!
+        </h2>
         <div class="flex flex-col xl:flex-row gap-4 items-center">
             <!-- Game Card -->
             <div v-for="(game) in games"
@@ -25,7 +29,7 @@
                                     scale
                                     :label="gameMode.title"
                                     :icon-name="gameMode.icon"
-                                    icon-class="text-error"
+                                    icon-class="text-primary-turquoise/80"
                                     @click="navigateToRoute(gameMode.routeName)" />
                         </div>
                     </div>
@@ -42,7 +46,7 @@
             <div class="flex flex-wrap gap-6 md:gap-12 text-nowrap">
                 <div v-for="description in gameDescriptions" :key="description.title" class="flex-1 flex flex-col items-center gap-1">
                     <span class="font-semibold flex items-center gap-2">
-                        <Icon class="text-error" :name="description.icon" size="sm" />
+                        <Icon class="text-primary-turquoise/80" :name="description.icon" size="sm" />
                         <span>{{ description.title }}</span>
                     </span>
                     <p class="text-sm lg:text-base opacity-75">

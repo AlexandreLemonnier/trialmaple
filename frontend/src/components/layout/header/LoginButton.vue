@@ -1,5 +1,5 @@
 <template>
-    <Button class="bg-login-button"
+    <Button class="bg-login-button text-primary-white"
             scale
             label="Sign in"
             icon-name="login"

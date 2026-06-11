@@ -1,5 +1,5 @@
 <template>
-    <div class="hidden md:block w-1/5 bg-size-[100%_auto] bg-repeat-y bg-top opacity-70 grayscale-20 brightness-[0.9] dark:brightness-[0.8]"
+    <div class="hidden md:block w-1/5 bg-app-background bg-size-[100%_auto] bg-repeat-y bg-top opacity-70 grayscale-20 brightness-[0.9] dark:brightness-[0.5]"
          :style="gutterStyle"></div>
 </template>
 

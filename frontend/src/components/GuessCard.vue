@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full gap-4 bg-card-background rounded-xl p-4 shadow-lg">
         <component :is="externalMapUrl ? 'a' : 'span'"
-                   class="w-fit text-2xl font-semibold drop-shadow-lg"
+                   class="w-fit text-2xl font-semibold drop-shadow-lg dark:brightness-[0.8]"
                    :class="externalMapUrl && 'cursor-pointer hover:underline'"
                    v-bind="externalMapUrl ? { href: externalMapUrl, target: '_blank', rel: 'noopener noreferrer' } : {}"
                    v-html="displayMapNameHtml()">

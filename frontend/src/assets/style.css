@@ -8,37 +8,48 @@
 
   --width-sidebar: 25vw;
 
-  --color-primary-white: #eeeeee;
-  --color-success: #2dc426;
-  --color-error: #e91816;
+  /* --- Texts --- */
+  --color-primary-white: #ffffff;      /* Utilisé pour le texte sur les boutons foncés (ex: Sign In) */
+  --color-app-text-primary: #0f172a;   /* Bleu-gris très sombre (Slate 900) au lieu du noir pur : beaucoup plus doux */
+  --color-text-muted: #64748b;         /* Gris intermédiaire (Slate 500) parfait pour les petits labels */
 
-  --color-app-background: #ffffff;
-  --color-app-text-primary: #000000;
-  --color-app-text-secondary: #878e9b;
-  --color-app-border: #7c7c7c;
+  /* --- Backgrounds --- */
+  --color-app-background: #f8fafc;     /* Fond de page légèrement bleuté (Slate 50), très reposant */
+  --color-header-background: #ffffff;  /* Blanc pur pour détacher proprement le header du fond */
+  --color-footer-background: #ffffff;
+  --color-card-background: #ffffff;    /* Les cartes en blanc pur vont magnifiquement ressortir */
+  --color-subcard-background: #f1f5f9; /* Les sous-sections (Slate 100) créent une belle profondeur */
+  --color-modal-background: #ffffff;
+  --color-selection-background: #e2e8f0;
 
-  --color-modal-background: #e7e7e7;
+  /* --- Borders --- */
+  --color-app-border: #e2e8f0;         /* Bordure ultra subtile (Slate 200). Finis les gros traits gris ! */
 
-  --color-header-background: #f8f4f4;
-  --color-footer-background: #f8f4f4;
-  --color-card-background: #f8f4f4;
-  --color-subcard-background: #ebe8e8;
-  --color-selection-background: #f0f0f0;
+  /* --- Accents --- */
+  --color-success: #059669;            /* Vert émeraude riche, lisible sur fond blanc */
+  --color-error: #dc2626;              /* Rouge vif équilibré */
 
-  --color-confirmation-text: #089101;
-  --color-win-background: #26a520;
-  --color-lose-background: #a50f0d;
-  --color-button: #f8f4f4;
-  --color-guess-button: #2dc426;
-  --color-giveup-button: #d61815;
+  /* --- Buttons --- */
+  --color-button: #f1f5f9;
+  --color-guess-button: #10b981;
+  
+  /* Le bouton Give Up s'offre un look premium : fond pastel doux + texte foncé */
+  --color-giveup-button: #fee2e2;      /* Fond rouge très clair (Red 100) */
+  --color-giveup-text: #991b1b;        /* Texte bordeaux (Red 800) pour un contraste parfait */
 
-  --color-login-button: #2dc426;
-  --color-logout-button: #d61815;
+  --color-login-button: #5865F2 ;   /* Un bel indigo (Indigo 600) moderne */
+  --color-logout-button: #dc2626;
+
+  /* --- États de fin de partie --- */
+  --color-confirmation-text: #059669;
+  --color-win-background: #10b981;     /* Vert vibrant si le bloc est plein avec texte blanc */
+  --color-lose-background: #e03535;    /* Rouge vibrant si le bloc est plein avec texte blanc */
 
   --color-discord: #5865F2;
 
   --color-primary-emerald: #02B97C;
   --color-primary-indigo: #6160FF;
+  --color-primary-turquoise: #328DBE;
 
   --breakpoint-xs: 380px;
   --breakpoint-sm: 500px;
@@ -53,31 +64,39 @@
   }
 
   .dark {
-    --color-primary-white: #d8d8d8;
-    --color-success: #117c0d;
-    --color-error: #911313;
+    /* --- Texts --- */
+    --color-primary-white: #cbd5e1;
+    --color-app-text-primary: #cbd5e1;
+    --color-text-muted: #64748b;
 
-    --color-app-background: #202020;
-    --color-app-text-primary: #d8d8d8;
-    --color-app-border: #364153;
+    /* --- Backgrounds --- */
+    --color-app-background: #0f172a;
+    --color-header-background: #0f172a;
+    --color-footer-background: #0f172a;
+    --color-card-background: #1e293b;
+    --color-subcard-background: #334155;
+    --color-modal-background: #0f172a;
+    --color-selection-background: #334155;
 
-    --color-modal-background: #111111;
+    /* --- Borders --- */
+    --color-app-border: #334155;
 
-    --color-header-background: #2a2a2a;
-    --color-footer-background: #2a2a2a;
-    --color-card-background: #2a2a2a;
-    --color-subcard-background: #1D2129;
-    --color-selection-background: #333333;
+    /* --- Accents --- */
+    --color-success: #10b981;
+    --color-error: #ef4444;
 
-    --color-confirmation-text: #22911c;
-    --color-win-background: #006400;
-    --color-lose-background: #680e0e;
-    --color-button: #2a2a2a;
-    --color-guess-button: #117c0d;
-    --color-giveup-button: #800e0e;
+    /* --- Buttons --- */
+    --color-button: #1e293b;
+    --color-guess-button: #10b981;
+    --color-giveup-button: #7f1d1d;
+    --color-giveup-text: #fca5a5;
 
-    --color-login-button: #117c0d;
-    --color-logout-button: #800e0e;
+    --color-login-button: #5865F2;
+    --color-logout-button: #7f1d1d;
+
+    --color-confirmation-text: #34d399;
+    --color-win-background: #064e3b;
+    --color-lose-background: #450a0a;
   }
 
   ::-webkit-scrollbar {
