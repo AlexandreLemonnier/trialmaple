@@ -25,6 +25,7 @@ type GutterImage = typeof IMAGES[number];
 const gutterImage = computed<GutterImage>(() => {
     switch (route.name as Route) {
         case Route.TMNF_TRIAL_CLASSIC_MODE:
+        case Route.TMNF_TRIAL_GEOGUESSR_MODE:
         case Route.TMNF_TRIAL_BLUR_MODE:
         case Route.TMNF_TRIAL_ZOOM_MODE:
             return 'tmnf-trial.jpg';

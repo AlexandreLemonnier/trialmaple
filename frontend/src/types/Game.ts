@@ -112,6 +112,11 @@ export const games: Game[] = [
                         routeName: Route.TMNF_TRIAL_CLASSIC_MODE
                     },
                     {
+                        title: 'Geoguessr',
+                        icon: 'image',
+                        routeName: Route.TMNF_TRIAL_GEOGUESSR_MODE
+                    },
+                    {
                         title: 'Blurred',
                         icon: 'focus',
                         routeName: Route.TMNF_TRIAL_BLUR_MODE

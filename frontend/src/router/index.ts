@@ -10,6 +10,7 @@ import Tm2TrialClassicGame from '#/views/games/classic/Tm2TrialClassicGame.vue';
 import TmnfRpgClassicGame from '#/views/games/classic/TmnfRpgClassicGame.vue';
 import TmnfTrialClassicGame from '#/views/games/classic/TmnfTrialClassicGame.vue';
 import Tm2020RpgGeoguessrGame from '#/views/games/geoguessr/Tm2020RpgGeoguessrGame.vue';
+import TmnfTrialGeoguessrGame from '#/views/games/geoguessr/TmnfTrialGeoguessrGame.vue';
 import TmnfTrialZoomGame from '#/views/games/zoom/TmnfTrialZoomGame.vue';
 import HomePage from '#/views/HomePage.vue';
 import PrivacyPolicy from '#/views/PrivacyPolicy.vue';
@@ -85,6 +86,15 @@ const router = createRouter({
             component: Tm2020RpgGeoguessrGame,
             meta: {
                 titleKey: GAME_MODE_DISPLAY_NAMES['GEOGUESSR_TM2020_RPG']
+            }
+
+        },
+        {
+            name: Route.TMNF_TRIAL_GEOGUESSR_MODE,
+            path: Route.TMNF_TRIAL_GEOGUESSR_MODE,
+            component: TmnfTrialGeoguessrGame,
+            meta: {
+                titleKey: GAME_MODE_DISPLAY_NAMES['GEOGUESSR_TMNF_TRIAL']
             }
 
         },

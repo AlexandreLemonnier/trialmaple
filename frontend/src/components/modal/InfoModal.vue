@@ -82,6 +82,10 @@ const GAME_MODE_CONFIG: Partial<Record<Route, GameModeConfig>> = {
         mode: 'GEOGUESSR',
         mapRepeatDelayDays: 10
     },
+    [Route.TMNF_TRIAL_GEOGUESSR_MODE]: {
+        mode: 'GEOGUESSR',
+        mapRepeatDelayDays: 10
+    },
     [Route.TMNF_TRIAL_BLUR_MODE]: {
         mode: 'BLUR',
         mapRepeatDelayDays: 60

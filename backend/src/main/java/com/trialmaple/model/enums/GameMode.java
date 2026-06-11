@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public enum GameMode {
     CLASSIC_TMNF_TRIAL(TmGame.TMNF, TmCategory.TRIAL, null),
+    GEOGUESSR_TMNF_TRIAL(TmGame.TMNF, TmCategory.TRIAL, "TMNF_TRIAL"),
     BLUR_TMNF_TRIAL(TmGame.TMNF, TmCategory.TRIAL, "TMNF_TRIAL"),
     ZOOM_TMNF_TRIAL(TmGame.TMNF, TmCategory.TRIAL, "TMNF_TRIAL"),
     CLASSIC_TMNF_RPG(TmGame.TMNF, TmCategory.RPG, null),
