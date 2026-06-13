@@ -12,6 +12,7 @@
                 <RouterLink :to="{ name: Route.TERMS_OF_SERVICE }" class="hover:text-app-text-primary">Terms of Service</RouterLink>
                 <span class="text-gray-600">|</span>
                 <RouterLink :to="{ name: Route.HOME }" class="hover:text-app-text-primary">Home</RouterLink>
+                <RouterLink v-if="isConnected" :to="{ name: Route.USER_STATS }" class="hover:text-app-text-primary">My Stats</RouterLink>
             </div>
 
             <span class="block md:hidden text-sm font-semibold hover:text-app-text-primary underline cursor-pointer" @click="isDiscordModalOpen = true">Discord</span>
@@ -30,10 +31,10 @@
 import Button from '#/components/Button.vue';
 import DiscordModal from '#/components/modal/DiscordModal.vue';
 import { Route } from '#/router/Route';
+import { useAppStore } from '#/stores/appStore';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
+const { isConnected } = useAppStore();
 const isDiscordModalOpen = ref(false);
 
 </script>
