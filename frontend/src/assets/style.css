@@ -9,41 +9,40 @@
   --width-sidebar: 25vw;
 
   /* --- Texts --- */
-  --color-primary-white: #ffffff;      /* Utilisé pour le texte sur les boutons foncés (ex: Sign In) */
-  --color-app-text-primary: #0f172a;   /* Bleu-gris très sombre (Slate 900) au lieu du noir pur : beaucoup plus doux */
-  --color-text-muted: #64748b;         /* Gris intermédiaire (Slate 500) parfait pour les petits labels */
+  --color-primary-white: #ffffff;
+  --color-app-text-primary: #0f172a;
+  --color-text-muted: #64748b;
 
   /* --- Backgrounds --- */
-  --color-app-background: #f8fafc;     /* Fond de page légèrement bleuté (Slate 50), très reposant */
-  --color-header-background: #ffffff;  /* Blanc pur pour détacher proprement le header du fond */
+  --color-app-background: #f8fafc;
+  --color-header-background: #ffffff;
   --color-footer-background: #ffffff;
-  --color-card-background: #ffffff;    /* Les cartes en blanc pur vont magnifiquement ressortir */
-  --color-subcard-background: #f1f5f9; /* Les sous-sections (Slate 100) créent une belle profondeur */
+  --color-card-background: #ffffff;
+  --color-subcard-background: #f1f5f9;
   --color-modal-background: #ffffff;
   --color-selection-background: #e2e8f0;
 
   /* --- Borders --- */
-  --color-app-border: #e2e8f0;         /* Bordure ultra subtile (Slate 200). Finis les gros traits gris ! */
+  --color-app-border: #e2e8f0;
 
   /* --- Accents --- */
-  --color-success: #059669;            /* Vert émeraude riche, lisible sur fond blanc */
-  --color-error: #dc2626;              /* Rouge vif équilibré */
+  --color-success: #059669;
+  --color-error: #dc2626;
 
   /* --- Buttons --- */
   --color-button: #f1f5f9;
   --color-guess-button: #0eb41c;
   
-  /* Le bouton Give Up s'offre un look premium : fond pastel doux + texte foncé */
-  --color-giveup-button: #fee2e2;      /* Fond rouge très clair (Red 100) */
-  --color-giveup-text: #991b1b;        /* Texte bordeaux (Red 800) pour un contraste parfait */
+  --color-giveup-button: #fee2e2;
+  --color-giveup-text: #991b1b;
 
-  --color-login-button: #5865F2 ;   /* Un bel indigo (Indigo 600) moderne */
+  --color-login-button: #5865F2 ;
   --color-logout-button: #dc2626;
 
-  /* --- États de fin de partie --- */
+  /* --- Game end --- */
   --color-confirmation-text: #059669;
-  --color-win-background: #10b981;     /* Vert vibrant si le bloc est plein avec texte blanc */
-  --color-lose-background: #e03535;    /* Rouge vibrant si le bloc est plein avec texte blanc */
+  --color-win-background: #10b981;
+  --color-lose-background: #e03535;
 
   --color-discord: #5865F2;
 
