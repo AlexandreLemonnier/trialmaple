@@ -1,6 +1,7 @@
 package com.trialmaple.repository;
 
 import com.trialmaple.model.dto.projection.MapPickCount;
+import com.trialmaple.model.dto.projection.PictureUseCount;
 import com.trialmaple.model.entities.dailymap.DailyMap;
 import com.trialmaple.model.entities.TmMap;
 import com.trialmaple.model.enums.GameMode;
@@ -29,4 +30,11 @@ public interface DailyMapRepository extends JpaRepository<DailyMap, Long> {
     List<MapPickCount> countDailyMapsByMapAndStartDate(@Param("mapPoolIds") List<Long> mapPoolIds, @Param("startDate") LocalDate startDate);
 
     int countByGameModeAndDayGreaterThanEqual(GameMode gameMode, LocalDate day);
+
+    @Query("SELECT picture, COUNT(dailyMap) FROM DailyMap dailyMap " +
+            "JOIN dailyMap.dailyPictures dailyPictures " +
+            "JOIN dailyPictures.picturesName picture " +
+            "WHERE dailyMap.gameMode = :gameMode " +
+            "GROUP BY picture")
+    List<PictureUseCount> countPicturesUsageByGameMode(@Param("gameMode") GameMode gameMode);
 }

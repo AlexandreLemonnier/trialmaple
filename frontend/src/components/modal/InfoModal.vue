@@ -17,6 +17,7 @@
                     <p v-if="gameModeInfo.mapRepeatDelayDays">A map that has been picked cannot be picked again in the next {{ gameModeInfo.mapRepeatDelayDays }} days.</p>
                     <p v-if="gameModeInfo.isMapPickWeighted">Maps are picked with a weighted probability equal to 1/(N+1) where N is the number of times the map has been picked in the past 60 days.</p>
                     <p v-if="gameModeInfo.mode === 'GEOGUESSR'">Each map has multiple pictures for each level.</p>
+                    <p v-if="gameModeInfo.mode === 'GEOGUESSR'">Less picked pictures are chosen first.</p>
                 </template>
             </template>
         </div>
@@ -79,12 +80,10 @@ const GAME_MODE_CONFIG: Partial<Record<Route, GameModeConfig>> = {
         isMapPickWeighted: true
     },
     [Route.TM2020_RPG_GEOGUESSR_MODE]: {
-        mode: 'GEOGUESSR',
-        mapRepeatDelayDays: 10
+        mode: 'GEOGUESSR'
     },
     [Route.TMNF_TRIAL_GEOGUESSR_MODE]: {
-        mode: 'GEOGUESSR',
-        mapRepeatDelayDays: 10
+        mode: 'GEOGUESSR'
     },
     [Route.TMNF_TRIAL_BLUR_MODE]: {
         mode: 'BLUR',

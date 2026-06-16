@@ -1,6 +1,6 @@
 package com.trialmaple.service.picture;
 
-import com.trialmaple.TmMapleConstant;
+import com.trialmaple.model.dto.projection.PictureUseCount;
 import com.trialmaple.model.entities.DailyPictures;
 import com.trialmaple.model.entities.dailymap.GeoguessrDailyMap;
 import com.trialmaple.model.enums.GameMode;
@@ -16,7 +16,6 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -102,43 +101,80 @@ public class GeoguessrPictureService {
         }
     }
 
+    /**
+     * Pick a random map and its pictures for the given game mode
+     */
     public DailyPictures getRandomMap(String picturesFolder, GameMode gameMode) {
         Map<String, Map<Integer, List<String>>> gameMaps = index.get(picturesFolder);
-        if (gameMaps.isEmpty()) {
-            log.error("No maps folder found for game mode {}", picturesFolder);
+        if (gameMaps == null || gameMaps.isEmpty()) {
+            log.error("No maps folder '{}' found for game mode {}", picturesFolder, gameMode);
             return null;
         }
 
-        List<String> maps = new ArrayList<>(gameMaps.keySet());
-
-        // Remove recently picked maps from map pool to avoid repeats
-        LocalDate startDate = LocalDate.now().minusDays(10);
-        Set<String> recentlyPickedMaps = new HashSet<>(dailyMapRepository.findGeoguessrMapNameByGameModeAndStartDate(gameMode, startDate));
-        if (recentlyPickedMaps.size() < maps.size()) {
-            maps = maps.stream()
-                    .filter(map -> !recentlyPickedMaps.contains(map))
-                    .toList();
+        // Get usage history of each picture from DB
+        Map<String, Integer> pictureUsageCounts = new HashMap<>();
+        List<PictureUseCount> usageCounts = dailyMapRepository.countPicturesUsageByGameMode(gameMode);
+        for (PictureUseCount usageCount : usageCounts) {
+            pictureUsageCounts.put(usageCount.pictureName(), usageCount.count().intValue());
         }
 
-        String selectedMap = maps.get(random.nextInt(maps.size()));
-        Map<Integer, List<String>> subFolders = gameMaps.get(selectedMap);
+        record TrioCandidate(String mapName, String picture1, String picture2, String picture3, int totalSelections) {
+        }
 
-        List<String> pictures = new ArrayList<>();
-        for (int i = 1; i <= TmMapleConstant.GEOGUESSR_PICTURES_COUNT; i++) {
-            String picture = pickRandom(subFolders.get(i));
-            if (picture == null) {
-                log.error("No picture found for subfolder {} for map {} for game {}", i, selectedMap, picturesFolder);
-                return null;
+        List<TrioCandidate> allCandidates = new ArrayList<>();
+
+        // Generate all possible trios combinations for every map
+        for (Map.Entry<String, Map<Integer, List<String>>> mapEntry : gameMaps.entrySet()) {
+            String mapName = mapEntry.getKey();
+            Map<Integer, List<String>> subFolders = mapEntry.getValue();
+
+            List<String> list1 = subFolders.get(1);
+            List<String> list2 = subFolders.get(2);
+            List<String> list3 = subFolders.get(3);
+
+            // Security if a difficulty folder is empty or missing
+            if (list1 == null || list2 == null || list3 == null || list1.isEmpty() || list2.isEmpty() || list3.isEmpty()) {
+                log.error("Map {} skipped: missing images in one of the difficulty folders", mapName);
+                continue;
             }
-            pictures.add(picture);
+
+            // Triple loop to link each possible picture 1, 2 and 3
+            for (String picture1 : list1) {
+                int count1 = pictureUsageCounts.getOrDefault(picture1, 0);
+                for (String picture2 : list2) {
+                    int count2 = pictureUsageCounts.getOrDefault(picture2, 0);
+                    for (String picture3 : list3) {
+                        int count3 = pictureUsageCounts.getOrDefault(picture3, 0);
+                        TrioCandidate candidate = new TrioCandidate(mapName, picture1, picture2, picture3, count1 + count2 + count3);
+                        allCandidates.add(candidate);
+                    }
+                }
+            }
         }
 
-        return new DailyPictures(selectedMap, pictures);
-    }
+        if (allCandidates.isEmpty()) {
+            log.error("No valid picture combinations found for game mode {}", gameMode);
+            return null;
+        }
 
-    private String pickRandom(List<String> list) {
-        if (list == null || list.isEmpty()) return null;
-        return list.get(random.nextInt(list.size()));
+        // Find minimal score (total selection) among all combinations
+        int minSelections = allCandidates.stream()
+                .mapToInt(TrioCandidate::totalSelections)
+                .min()
+                .orElse(0);
+
+        // Filter to keep only trios with minimal score
+        List<TrioCandidate> bestCandidates = allCandidates.stream()
+                .filter(c -> c.totalSelections == minSelections)
+                .toList();
+
+        // Randomly pick one
+        TrioCandidate chosenCandidate = bestCandidates.get(random.nextInt(bestCandidates.size()));
+
+        return new DailyPictures(
+                chosenCandidate.mapName,
+                List.of(chosenCandidate.picture1, chosenCandidate.picture2, chosenCandidate.picture3)
+        );
     }
 
     /**
