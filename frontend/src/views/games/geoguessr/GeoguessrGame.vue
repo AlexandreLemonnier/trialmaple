@@ -44,6 +44,15 @@
                        :name="mapName"
                        :success="guess.success" />
         </div>
+        <div v-if="nextPictureAttempt && !hasWon" class="text-sm text-text-muted">
+            <span>
+                Next picture in
+                <strong class="text-app-text-primary font-semibold">
+                    {{ attemptsUntilNextPicture }}
+                </strong>
+                {{ attemptsUntilNextPicture > 1 ? 'attempts' : 'attempt' }}
+            </span>
+        </div>
         <div class="flex flex-col w-full gap-2 lg:gap-4 items-center">
             <Picture v-for="n in reversedPicturesRange"
                      :key="n"
@@ -83,12 +92,11 @@ import type { Guess } from '#/types/api/guess';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 
-const { gameMode, storageKey } = defineProps<{
+const { gameMode, storageKey, picturesThresholds = [1, 3, 5] } = defineProps<{
     gameMode: GeoguessrGameMode;
     storageKey: string;
+    picturesThresholds?: number[];
 }>();
-
-const MAX_PICTURES_NUMBER = 3;
 
 const gameStore = createGameStore(gameMode, storageKey)();
 const { isInHistory, historyContainsSuccess } = gameStore;
@@ -111,12 +119,28 @@ const gameEnded = computed(() => hasWon.value || hasLost.value);
 
 const isGuessLoading = ref(false);
 
-const picturesCount = computed(() => {
-    return Math.min(MAX_PICTURES_NUMBER, Object.keys(history.value).length - (hasWon.value ? 1 : 0) + 1);
+/** Pictures and attemps logic */
+// Current attempt number
+const currentAttempt = computed(() => {
+    return Object.keys(history.value).length + (hasWon.value ? 0 : 1);
 });
+// Number of unlocked pictures
+const picturesCount = computed(() => {
+    return picturesThresholds.filter((threshold) => currentAttempt.value >= threshold).length;
+});
+// Array for the loop (so that the most recent picture is shown on top)
 const reversedPicturesRange = computed(() =>
     Array.from({ length: picturesCount.value }, (_, i) => picturesCount.value - i)
 );
+// Next attempt that will unlock a new picture
+const nextPictureAttempt = computed(() => {
+    return picturesThresholds.find((threshold) => threshold > currentAttempt.value) || null;
+});
+// Number of attemps left before unlocking next picture
+const attemptsUntilNextPicture = computed(() => {
+    if (!nextPictureAttempt.value) return 0;
+    return nextPictureAttempt.value - currentAttempt.value;
+});
 
 /** Animations */
 watchEffect(() => {
@@ -132,8 +156,8 @@ const mapsApi = useMapsApi();
 const dailyMapApi = useDailyMapApi();
 const pictureApi = usePictureApi();
 
-function getPictureUrl(attempt: number) {
-    return pictureApi.getGeoguessrPictureUrl(gameMode, attempt);
+function getPictureUrl(pictureNumber: number) {
+    return pictureApi.getGeoguessrPictureUrl(gameMode, pictureNumber);
 }
 
 async function handleGuess() {

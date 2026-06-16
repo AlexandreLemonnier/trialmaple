@@ -5,8 +5,8 @@ export function usePictureApi() {
     const env = useEnv();
 
     return {
-        getGeoguessrPictureUrl(gameMode: GeoguessrGameMode, attempt: number) {
-            return `${env.PROXIED_API_URL_PREFIX}/geoguessr-picture/${attempt}?gameMode=${gameMode}`;
+        getGeoguessrPictureUrl(gameMode: GeoguessrGameMode, pictureNumber: number) {
+            return `${env.PROXIED_API_URL_PREFIX}/geoguessr-picture/${pictureNumber}?gameMode=${gameMode}`;
         },
         getBlurPictureUrl(gameMode: BlurGameMode) {
             return `${env.PROXIED_API_URL_PREFIX}/blur-picture?gameMode=${gameMode}`;

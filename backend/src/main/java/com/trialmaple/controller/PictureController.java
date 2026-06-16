@@ -47,19 +47,19 @@ public class PictureController {
      * Get specific picture for given Geoguessr game mode
      */
     @GetMapping(RouteKey.GEOGUESSR_PICTURE)
-    public ResponseEntity<Resource> getGeoguessrPicture(@RequestParam String gameMode, @PathVariable String attempt) {
+    public ResponseEntity<Resource> getGeoguessrPicture(@RequestParam String gameMode, @PathVariable String pictureNumberParam) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             GeoguessrDailyMap dailyMap = (GeoguessrDailyMap) dailyMapService.getCurrentDailyMap(gameModeValue);
-            int attemptValue = Integer.parseInt(attempt);
-            if (attemptValue <= 0 || attemptValue > TmMapleConstant.GEOGUESSR_PICTURES_COUNT) {
-                throw new InvalidAttemptException(attempt);
+            int pictureNumber = Integer.parseInt(pictureNumberParam);
+            if (pictureNumber <= 0 || pictureNumber > TmMapleConstant.GEOGUESSR_PICTURES_COUNT) {
+                throw new InvalidAttemptException(pictureNumberParam);
             }
-            Path picturePath = geoguessrPictureService.getTodayPicturePath(gameModeValue, dailyMap, attemptValue);
+            Path picturePath = geoguessrPictureService.getTodayPicturePath(gameModeValue, dailyMap, pictureNumber);
             return sendResponse(picturePath);
         } catch (NumberFormatException e) {
             log.error("Invalid attempt.", e);
-            throw new InvalidAttemptException(attempt);
+            throw new InvalidAttemptException(pictureNumberParam);
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);
