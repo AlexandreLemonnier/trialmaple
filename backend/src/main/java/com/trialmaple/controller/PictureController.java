@@ -47,7 +47,7 @@ public class PictureController {
      * Get specific picture for given Geoguessr game mode
      */
     @GetMapping(RouteKey.GEOGUESSR_PICTURE)
-    public ResponseEntity<Resource> getGeoguessrPicture(@RequestParam String gameMode, @PathVariable String pictureNumberParam) {
+    public ResponseEntity<Resource> getGeoguessrPicture(@RequestParam String gameMode, @PathVariable("pictureNumber") String pictureNumberParam) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
             GeoguessrDailyMap dailyMap = (GeoguessrDailyMap) dailyMapService.getCurrentDailyMap(gameModeValue);

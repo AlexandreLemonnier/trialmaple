@@ -21,7 +21,7 @@ public final class RouteKey {
     public static final String DAILY_MAP_UUID = "/uuid";
 
     // PICTURES
-    public static final String GEOGUESSR_PICTURE = "/geoguessr-picture/{attempt}";
+    public static final String GEOGUESSR_PICTURE = "/geoguessr-picture/{pictureNumber}";
     public static final String BLUR_PICTURE = "/blur-picture";
     public static final String ZOOM_PICTURE = "/zoom-picture";
 
