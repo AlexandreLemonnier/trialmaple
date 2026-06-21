@@ -115,7 +115,8 @@ public class GeoguessrPictureService {
         Map<String, Integer> pictureUsageCounts = new HashMap<>();
         List<PictureUseCount> usageCounts = dailyMapRepository.countPicturesUsageByGameMode(gameMode);
         for (PictureUseCount usageCount : usageCounts) {
-            pictureUsageCounts.put(usageCount.pictureName(), usageCount.count().intValue());
+            String uniqueKey = buildPictureUniqueKey(usageCount.mapName(), usageCount.pictureIndex() + 1, usageCount.pictureName());
+            pictureUsageCounts.put(uniqueKey, usageCount.count().intValue());
         }
 
         record TrioCandidate(String mapName, String picture1, String picture2, String picture3, int totalSelections) {
@@ -140,11 +141,11 @@ public class GeoguessrPictureService {
 
             // Triple loop to link each possible picture 1, 2 and 3
             for (String picture1 : list1) {
-                int count1 = pictureUsageCounts.getOrDefault(picture1, 0);
+                int count1 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, 1, picture1), 0);
                 for (String picture2 : list2) {
-                    int count2 = pictureUsageCounts.getOrDefault(picture2, 0);
+                    int count2 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, 2, picture2), 0);
                     for (String picture3 : list3) {
-                        int count3 = pictureUsageCounts.getOrDefault(picture3, 0);
+                        int count3 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, 3, picture3), 0);
                         TrioCandidate candidate = new TrioCandidate(mapName, picture1, picture2, picture3, count1 + count2 + count3);
                         allCandidates.add(candidate);
                     }
@@ -175,6 +176,10 @@ public class GeoguessrPictureService {
                 chosenCandidate.mapName,
                 List.of(chosenCandidate.picture1, chosenCandidate.picture2, chosenCandidate.picture3)
         );
+    }
+
+    private String buildPictureUniqueKey(String mapName, int folder, String pictureName) {
+        return mapName + "#" + folder + "/" + pictureName;
     }
 
     /**

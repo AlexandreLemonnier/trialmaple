@@ -17,6 +17,7 @@ public class DailyPictures {
     private String mapName;
 
     @ElementCollection
+    @OrderColumn(name = "picture_order")
     private List<String> picturesName;
 
     public DailyPictures(String mapName, List<String> picturesName) {
