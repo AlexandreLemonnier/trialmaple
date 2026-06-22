@@ -31,7 +31,7 @@ public interface DailyMapRepository extends JpaRepository<DailyMap, Long> {
 
     int countByGameModeAndDayGreaterThanEqual(GameMode gameMode, LocalDate day);
 
-    @Query("SELECT dailyPictures.mapName, INDEX(picture), picture, COUNT(dailyMap) " +
+    @Query("SELECT dailyPictures.mapName, picture, COUNT(dailyMap) " +
             "FROM DailyMap dailyMap " +
             "JOIN dailyMap.dailyPictures dailyPictures " +
             "JOIN dailyPictures.picturesName picture " +

@@ -115,7 +115,7 @@ public class GeoguessrPictureService {
         Map<String, Integer> pictureUsageCounts = new HashMap<>();
         List<PictureUseCount> usageCounts = dailyMapRepository.countPicturesUsageByGameMode(gameMode);
         for (PictureUseCount usageCount : usageCounts) {
-            String uniqueKey = buildPictureUniqueKey(usageCount.mapName(), usageCount.pictureIndex() + 1, usageCount.pictureName());
+            String uniqueKey = buildPictureUniqueKey(usageCount.mapName(), usageCount.pictureName());
             pictureUsageCounts.put(uniqueKey, usageCount.count().intValue());
         }
 
@@ -141,12 +141,15 @@ public class GeoguessrPictureService {
 
             // Triple loop to link each possible picture 1, 2 and 3
             for (String picture1 : list1) {
-                int count1 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, 1, picture1), 0);
+                String pictureName1 = "1/" + picture1;
+                int count1 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, pictureName1), 0);
                 for (String picture2 : list2) {
-                    int count2 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, 2, picture2), 0);
+                    String pictureName2 = "2/" + picture2;
+                    int count2 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, pictureName2), 0);
                     for (String picture3 : list3) {
-                        int count3 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, 3, picture3), 0);
-                        TrioCandidate candidate = new TrioCandidate(mapName, picture1, picture2, picture3, count1 + count2 + count3);
+                        String pictureName3 = "3/" + picture3;
+                        int count3 = pictureUsageCounts.getOrDefault(buildPictureUniqueKey(mapName, pictureName3), 0);
+                        TrioCandidate candidate = new TrioCandidate(mapName, pictureName1, pictureName2, pictureName3, count1 + count2 + count3);
                         allCandidates.add(candidate);
                     }
                 }
@@ -178,8 +181,8 @@ public class GeoguessrPictureService {
         );
     }
 
-    private String buildPictureUniqueKey(String mapName, int folder, String pictureName) {
-        return mapName + "#" + folder + "/" + pictureName;
+    private String buildPictureUniqueKey(String mapName, String pictureName) {
+        return mapName + "#" + pictureName;
     }
 
     /**
@@ -192,11 +195,11 @@ public class GeoguessrPictureService {
         String dailyMapName = dailyPictures.getMapName();
         String pictureName = dailyPictures.getPicturesName().get(attempt - 1);
 
-        return getPicturePath(gameFolder, dailyMapName, attempt, pictureName);
+        return getPicturePath(gameFolder, dailyMapName, pictureName);
     }
 
-    private Path getPicturePath(String game, String mapName, int attempt, String pictureName) {
-        return Paths.get(rootPathName, GAME_MODE_PATH_NAME, game, mapName, String.valueOf(attempt), pictureName);
+    private Path getPicturePath(String game, String mapName, String pictureName) {
+        return Paths.get(rootPathName, GAME_MODE_PATH_NAME, game, mapName, pictureName);
     }
 
     /**
