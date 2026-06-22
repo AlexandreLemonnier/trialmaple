@@ -50,18 +50,13 @@
                 </div>
                 <div v-for="stat in filteredStats" :key="stat.gameMode"
                      class="flex flex-col bg-card-background rounded-3xl p-6 border border-app-border hover:border-primary-indigo hover:shadow-2xl transition-transform duration-300 transform hover:-translate-y-1 group">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h2 class="text-xl font-bold mb-1 group-hover:text-primary-indigo/80 transition-colors">
-                                {{ GAME_MODE_DISPLAY_NAMES[stat.gameMode] }}
-                            </h2>
-                            <div class="flex gap-2">
-                                <span class="text-xs text-app-text-muted font-semibold bg-subcard-background px-2 py-0.5 rounded-md">{{ stat.tmGame }}</span>
-                                <span class="text-xs text-app-text-muted font-semibold bg-subcard-background px-2 py-0.5 rounded-md">{{ stat.tmCategory }}</span>
-                            </div>
-                        </div>
-                        <div class="text-3xl">
-                            {{ getWinRateEmoji(getWinRate(stat.winsCount, stat.dailyMapsCount)) }}
+                    <div class="items-start mb-6">
+                        <h2 class="text-xl font-bold mb-1 group-hover:text-primary-indigo/80 transition-colors">
+                            {{ GAME_MODE_DISPLAY_NAMES[stat.gameMode] }}
+                        </h2>
+                        <div class="flex gap-2">
+                            <span class="text-xs text-app-text-muted font-semibold bg-subcard-background px-2 py-0.5 rounded-md">{{ stat.tmGame }}</span>
+                            <span class="text-xs text-app-text-muted font-semibold bg-subcard-background px-2 py-0.5 rounded-md">{{ stat.tmCategory }}</span>
                         </div>
                     </div>
                     <div class="grow space-y-6">
@@ -148,9 +143,4 @@ const getWinRate = (wins: number, total: number) => {
     return Math.round(wins / total * 100);
 };
 
-function getWinRateEmoji(winRate: number) {
-    if (winRate < 20) return '🥶';
-    if (winRate < 70) return '🎯';
-    return '🔥';
-}
 </script>
