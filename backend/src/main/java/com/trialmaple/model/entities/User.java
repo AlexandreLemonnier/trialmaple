@@ -22,15 +22,18 @@ public class User {
 
     private String username;
 
+    private String globalName;
+
     private String avatar;
 
     private String discriminator;
 
     private LocalDate creationDate;
 
-    public User(Long discordId, String username, String avatar, String discriminator) {
+    public User(Long discordId, String username, String globalName, String avatar, String discriminator) {
         this.discordId = discordId;
         this.username = username;
+        this.globalName = globalName;
         this.avatar = avatar;
         this.discriminator = discriminator;
     }

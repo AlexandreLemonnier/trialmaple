@@ -24,6 +24,9 @@ public class UserService {
         Optional<User> userBase = userRepository.findByDiscordId(discordId);
         if (userBase.isEmpty()) {
             createUser(user);
+        } else {
+            // Can be removed later
+            updateUser(userBase.get(), user);
         }
     }
 
@@ -31,6 +34,13 @@ public class UserService {
         log.info("Create user {}", user.getUsername());
         user.setCreationDate(LocalDate.now());
         userRepository.save(user);
+    }
+
+    private void updateUser(User existingUser, User updatedUser) {
+        log.info("Update user {} ({})", updatedUser.getUsername(), updatedUser.getGlobalName());
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setGlobalName(updatedUser.getGlobalName());
+        userRepository.save(existingUser);
     }
 
     public User findUser(String discordId) throws UserNotFoundException {

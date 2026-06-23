@@ -9,7 +9,7 @@ public class UserMapper {
     public UserDto serviceToDto(User user) {
         return new UserDto(
                user.getDiscordId().toString(),
-               user.getUsername(),
+               user.getGlobalName() != null ? user.getGlobalName(): user.getUsername(),
                user.getAvatar(),
                user.getDiscriminator()
         );
