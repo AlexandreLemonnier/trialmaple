@@ -14,5 +14,6 @@ export NVM_DIR="$HOME/.nvm"
 cd /home/dev/trialmaple/frontend
 nvm i
 nvm use
+npm i
 npm run build
 sudo cp -r dist/* /var/www/trialmaple
