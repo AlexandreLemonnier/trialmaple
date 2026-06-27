@@ -1,4 +1,4 @@
-import type { Guess } from './api/guess';
+import type { Guess } from '#/types/api/guess';
 
 export type HintInformation = {
     label: string;
