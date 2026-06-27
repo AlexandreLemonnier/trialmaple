@@ -12,7 +12,15 @@
                 </template>
             </div>
             <span v-html="resultMessage"></span>
-            <slot name="shareButton"></slot>
+            <div class="flex gap-2 lg:gap-4 items-center">
+                <slot name="shareButton"></slot>
+                <Button v-if="currentGameInfo.nextGameMode"
+                        label="Next mode"
+                        scale
+                        :icon-name="gamesInfo[currentGameInfo.nextGameMode].icon"
+                        icon-position="right"
+                        @click="navigateToRoute(gamesInfo[currentGameInfo.nextGameMode].routeName)" />
+            </div>
         </div>
     </Transition>
 </template>
@@ -22,11 +30,15 @@ import crycat from '#/assets/crycat.png';
 import smilecat from '#/assets/smilecat.png';
 import smirkcat from '#/assets/smirkcat.png';
 import thumbsup from '#/assets/thumbsup.png';
+import Button from '#/components/Button.vue';
+import type { Route } from '#/router/Route';
 import { createGameStore } from '#/stores/gameStore';
 import type { Answer } from '#/types/api/answer';
 import { GAME_MODE_DISPLAY_NAMES, type GameMode } from '#/types/api/gameMode';
+import { gamesInfo } from '#/types/GameInfo';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const { hasWon, answer, gameMode, storageKey } = defineProps<{
     hasWon: boolean;
@@ -37,6 +49,8 @@ const { hasWon, answer, gameMode, storageKey } = defineProps<{
 
 const gameStore = createGameStore(gameMode, storageKey)();
 const { history, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
+
+const currentGameInfo = computed(() => gamesInfo[gameMode]);
 
 const resultMessage = computed(() => {
     let message = '';
@@ -69,6 +83,11 @@ onMounted(async () => {
     await Promise.all(imgs.map(waitForImage));
     imagesLoaded.value = true;
 });
+
+const router = useRouter();
+async function navigateToRoute(routeName: Route) {
+    await router.push({ name: routeName });
+}
 
 /** Easter egg */
 const clickCount = ref(0);

@@ -1,8 +1,7 @@
 import tm2Icon from '#/assets/tm2.png';
 import tm2020Icon from '#/assets/tm2020.jpg';
 import tmnfIcon from '#/assets/tmnf.jpg';
-import { Route } from '#/router/Route';
-import type { IconName } from '#/types/IconName';
+import { gamesInfo, type GameInfo } from '#/types/GameInfo';
 
 export const TM_GAMES = ['TMNF', 'TM2', 'TM2020'] as const;
 
@@ -21,11 +20,7 @@ export type Game = {
     };
     categories: {
         title: TmCategory;
-        gameModes: {
-            title: string;
-            icon: IconName;
-            routeName: Route;
-        }[]
+        gameModes: GameInfo[]
     }[]
 };
 
@@ -41,26 +36,14 @@ export const games: Game[] = [
             {
                 title: 'Trial',
                 gameModes: [
-                    {
-                        title: 'Classic',
-                        icon: 'triangle',
-                        routeName: Route.TM2020_TRIAL_CLASSIC_MODE
-                    }
+                    gamesInfo['CLASSIC_TM2020_TRIAL']
                 ]
             },
             {
                 title: 'RPG',
                 gameModes: [
-                    {
-                        title: 'Classic',
-                        icon: 'triangle',
-                        routeName: Route.TM2020_RPG_CLASSIC_MODE
-                    },
-                    {
-                        title: 'Geoguessr',
-                        icon: 'image',
-                        routeName: Route.TM2020_RPG_GEOGUESSR_MODE
-                    }
+                    gamesInfo['CLASSIC_TM2020_RPG'],
+                    gamesInfo['GEOGUESSR_TM2020_RPG']
                 ]
             }
         ]
@@ -76,21 +59,13 @@ export const games: Game[] = [
             {
                 title: 'Trial',
                 gameModes: [
-                    {
-                        title: 'Classic',
-                        icon: 'triangle',
-                        routeName: Route.TM2_TRIAL_CLASSIC_MODE
-                    }
+                    gamesInfo['CLASSIC_TM2_TRIAL']
                 ]
             },
             {
                 title: 'RPG',
                 gameModes: [
-                    {
-                        title: 'Classic',
-                        icon: 'triangle',
-                        routeName: Route.TM2_RPG_CLASSIC_MODE
-                    }
+                    gamesInfo['CLASSIC_TM2_RPG']
                 ]
             }
         ]
@@ -106,36 +81,16 @@ export const games: Game[] = [
             {
                 title: 'Trial',
                 gameModes: [
-                    {
-                        title: 'Classic',
-                        icon: 'triangle',
-                        routeName: Route.TMNF_TRIAL_CLASSIC_MODE
-                    },
-                    {
-                        title: 'Geoguessr',
-                        icon: 'image',
-                        routeName: Route.TMNF_TRIAL_GEOGUESSR_MODE
-                    },
-                    {
-                        title: 'Blurred',
-                        icon: 'focus',
-                        routeName: Route.TMNF_TRIAL_BLUR_MODE
-                    },
-                    {
-                        title: 'Zoomed',
-                        icon: 'search',
-                        routeName: Route.TMNF_TRIAL_ZOOM_MODE
-                    }
+                    gamesInfo['CLASSIC_TMNF_TRIAL'],
+                    gamesInfo['GEOGUESSR_TMNF_TRIAL'],
+                    gamesInfo['BLUR_TMNF_TRIAL'],
+                    gamesInfo['ZOOM_TMNF_TRIAL']
                 ]
             },
             {
                 title: 'RPG',
                 gameModes: [
-                    {
-                        title: 'Classic',
-                        icon: 'triangle',
-                        routeName: Route.TMNF_RPG_CLASSIC_MODE
-                    }
+                    gamesInfo['CLASSIC_TMNF_RPG']
                 ]
             }
         ]
