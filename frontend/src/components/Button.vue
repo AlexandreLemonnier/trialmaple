@@ -1,6 +1,6 @@
 <template>
     <button type="button"
-            class="flex items-center gap-1.5 lg:gap-2 text-sm lg:text-base border border-app-border py-1 px-3 bg-button cursor-pointer"
+            class="flex items-center gap-1.5 lg:gap-2 w-fit text-sm lg:text-base border border-app-border py-1 px-3 bg-button cursor-pointer"
             :class="[pill ? 'rounded-full' : 'rounded-lg', scale && 'hover:scale-105 transition-transform will-change-transform']">
         <Icon v-if="iconName && iconPosition === 'left'" :class="iconClass" :name="iconName" :size="iconSize" />
         <span v-if="label">{{ label }}</span>

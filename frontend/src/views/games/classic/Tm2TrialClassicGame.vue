@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TM2_TRIAL"
-                 storage-key="tm2TrialClassic"
                  :hints-to-display />
 </template>
 

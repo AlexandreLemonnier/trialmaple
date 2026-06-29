@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TM2020_RPG"
-                 storage-key="tm2020RpgClassic"
                  :hints-to-display
                  :show-login="false" />
 </template>

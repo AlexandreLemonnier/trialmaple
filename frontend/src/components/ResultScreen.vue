@@ -12,8 +12,15 @@
                 </template>
             </div>
             <span v-html="resultMessage"></span>
-            <div class="flex gap-2 lg:gap-4 items-center">
-                <slot name="shareButton"></slot>
+            <div class="flex flex-col items-center gap-2 lg:gap-4">
+                <div class="flex gap-2 lg:gap-4 items-center">
+                    <ShareButton :format-result="formatResult"
+                                 :game-mode />
+                    <ShareButton v-if="currentGameInfo.nextGameMode"
+                                 :format-result="formatResult"
+                                 :game-mode
+                                 share-all />
+                </div>
                 <Button v-if="currentGameInfo.nextGameMode"
                         label="Next mode"
                         scale
@@ -39,15 +46,16 @@ import { gamesInfo } from '#/types/GameInfo';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import ShareButton from './ShareButton.vue';
 
-const { hasWon, answer, gameMode, storageKey } = defineProps<{
+const { hasWon, answer, gameMode } = defineProps<{
     hasWon: boolean;
     answer: Answer | null;
     gameMode: GameMode;
-    storageKey: string;
+    formatResult(): string;
 }>();
 
-const gameStore = createGameStore(gameMode, storageKey)();
+const gameStore = createGameStore(gameMode)();
 const { history, dailyMapNumber, playersAverageScore } = storeToRefs(gameStore);
 
 const currentGameInfo = computed(() => gamesInfo[gameMode]);

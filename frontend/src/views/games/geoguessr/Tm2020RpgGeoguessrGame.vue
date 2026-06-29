@@ -1,6 +1,5 @@
 <template>
-    <GeoguessrGame game-mode="GEOGUESSR_TM2020_RPG"
-                   storage-key="tm2020RpgGeoguessr" />
+    <GeoguessrGame game-mode="GEOGUESSR_TM2020_RPG" />
 </template>
 
 <script setup lang="ts">

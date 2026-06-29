@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TM2020_TRIAL"
-                 storage-key="tm2020TrialClassic"
                  :hints-to-display
                  :show-login="false" />
 </template>

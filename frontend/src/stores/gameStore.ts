@@ -1,11 +1,13 @@
+import type { GameMode } from '#/types/api/gameMode';
 import type { GameData } from '#/types/GameData';
+import { gamesInfo } from '#/types/GameInfo';
 import { useStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref, toRefs } from 'vue';
 
-export function createGameStore(storeId: string, storageKey: string) {
-    return defineStore(storeId, () => {
-        const gameData = useStorage<GameData>(storageKey, {
+export function createGameStore(gameMode: GameMode) {
+    return defineStore(gameMode, () => {
+        const gameData = useStorage<GameData>(gamesInfo[gameMode].storageKey, {
             history: {},
             dailyMapUuid: '',
             answer: null

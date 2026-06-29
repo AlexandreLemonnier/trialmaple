@@ -1,6 +1,5 @@
 <template>
-    <GeoguessrGame game-mode="GEOGUESSR_TMNF_TRIAL"
-                   storage-key="tmnfTrialGeoguessr" />
+    <GeoguessrGame game-mode="GEOGUESSR_TMNF_TRIAL" />
 </template>
 
 <script setup lang="ts">

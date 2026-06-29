@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TMNF_TRIAL"
-                 storage-key="tmnfTrialClassic"
                  :hints-to-display
                  :show-login="false" />
 </template>

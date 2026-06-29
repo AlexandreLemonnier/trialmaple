@@ -1,6 +1,5 @@
 <template>
-    <ZoomGame game-mode="ZOOM_TMNF_TRIAL"
-              storage-key="tmnfTrialZoom" />
+    <ZoomGame game-mode="ZOOM_TMNF_TRIAL" />
 </template>
 
 <script setup lang="ts">

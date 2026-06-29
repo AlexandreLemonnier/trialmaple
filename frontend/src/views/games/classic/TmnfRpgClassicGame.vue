@@ -1,6 +1,5 @@
 <template>
     <ClassicGame game-mode="CLASSIC_TMNF_RPG"
-                 storage-key="tmnfRpgClassic"
                  :hints-to-display />
 </template>
 

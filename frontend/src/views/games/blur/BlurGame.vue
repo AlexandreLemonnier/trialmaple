@@ -27,12 +27,7 @@
                       :has-won
                       :answer
                       :game-mode
-                      :storage-key>
-            <template #shareButton>
-                <ShareButton :format-result="formatResult"
-                             :game-mode
-                             :storage-key />
-            </template>
+                      :format-result="formatResult">
         </ResultScreen>
         <div class="flex flex-wrap gap-2 lg:gap-4">
             <GuessChip v-for="([mapName, guess]) in Object.entries(history)"
@@ -62,7 +57,6 @@ import MapCombobox from '#/components/MapCombobox.vue';
 import Picture from '#/components/Picture.vue';
 import ResetCountdown from '#/components/ResetCountdown.vue';
 import ResultScreen from '#/components/ResultScreen.vue';
-import ShareButton from '#/components/ShareButton.vue';
 import { useDailyMapApi } from '#/composables/api/useDailyMapApi';
 import { useGuessApi } from '#/composables/api/useGuessApi';
 import { useMapsApi } from '#/composables/api/useMapsApi';
@@ -71,6 +65,7 @@ import { useStatsApi } from '#/composables/api/useStatsApi';
 import { useConfetti } from '#/composables/useConfetti';
 import { useShare } from '#/composables/useShare';
 import { createGameStore } from '#/stores/gameStore';
+import { useShareStore } from '#/stores/shareStore';
 import type { Answer } from '#/types/api/answer';
 import type { BlurMap } from '#/types/api/blurMap';
 import type { DailyStats } from '#/types/api/dailyStats';
@@ -79,12 +74,11 @@ import type { Guess } from '#/types/api/guess';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted, ref, watchEffect } from 'vue';
 
-const { gameMode, storageKey } = defineProps<{
+const { gameMode } = defineProps<{
     gameMode: BlurGameMode;
-    storageKey: string;
 }>();
 
-const gameStore = createGameStore(gameMode, storageKey)();
+const gameStore = createGameStore(gameMode)();
 const { isInHistory, historyContainsSuccess } = gameStore;
 const { history, dailyMapUuid, dailyMapNumber, playersAverageScore, answer } = storeToRefs(gameStore);
 const { triggerConfetti } = useConfetti();
@@ -154,8 +148,16 @@ async function handleGuess() {
 }
 
 function formatResult() {
-    return `\n${Object.values(history.value).map((guess) => hintToEmoji(guess.success)).join('')}`;
+    return Object.keys(history.value).length ? `\n${Object.values(history.value).map((guess) => hintToEmoji(guess.success)).join('')}` : '';
 }
+
+const shareStore = useShareStore();
+
+watchEffect(() => {
+    if (gameEnded.value && isReady.value) {
+        shareStore.setFormattedShareString(gameMode, formatResult());
+    }
+});
 
 function handleGiveUp(_answer: Answer) {
     answer.value = _answer;
