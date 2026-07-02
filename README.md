@@ -1,5 +1,5 @@
 # TM-Maple
-<img src="assets/home.png" alt="Home" width="400">
+<img src="assets/home.png" alt="Home" width="800">
 
 **TM-Maple is a daily guessing game** based on some Trackmania map lists such as [**TMNF Hardest Trials List**](https://tmrpgtrial.com/list/cm7z509dr0f91mph5e47sftz0) or [**TMNF Classic RPG List**](https://tmrpg.com/maps?game=tmnf&mode=classic).
 Each day at 00:00 Franch time, a new map is selected for each game mode.  
@@ -22,28 +22,28 @@ Receive hints such as:
    - Which authors match  
    - And more…  
 
-<img src="assets/classic.png" alt="Classic mode" width="400">
+<img src="assets/classic.png" alt="Classic mode" width="800">
 
 ### Geoguessr mode
 Get up to 3 screenshots taken somewhere in the map...
 
-<img src="assets/geoguessr.png" alt="Geoguessr mode" width="400">
+<img src="assets/geoguessr.png" alt="Geoguessr mode" width="800">
 
 ### Blurred mode
 Get a blurred picture that gets sharper with every guess.
 
-<img src="assets/blur.png" alt="Blurred mode" width="400">
+<img src="assets/blur.png" alt="Blurred mode" width="800">
 
 ### Zoomed mode
 Get a zoomed-in picture that zooms out with every guess.
 
-<img src="assets/zoom.png" alt="Zoomed mode" width="400">
+<img src="assets/zoom.png" alt="Zoomed mode" width="800">
 
 ---
 ### Login
 You can sign in with Discord to track your personal stats!
 
-<img src="assets/stats.png" alt="Stats" width="400">
+<img src="assets/stats.png" alt="Stats" width="800">
 
 ---
 
