@@ -1,7 +1,7 @@
 package com.trialmaple.security.annotation;
 
-import com.trialmaple.model.entities.User;
-import com.trialmaple.service.user.UserService;
+import com.trialmaple.user.User;
+import com.trialmaple.user.UserService;
 import org.jspecify.annotations.NonNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;

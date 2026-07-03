@@ -1,0 +1,46 @@
+package com.trialmaple.guess.dto;
+
+import com.trialmaple.guess.DeltaHint;
+import com.trialmaple.tmmap.dto.WrHolderDto;
+import com.trialmaple.tmmap.DifficultyCategory;
+
+import java.util.Collections;
+import java.util.List;
+
+public record GuessDto(
+        boolean isValidDay,
+        boolean success,
+        HintPairDto<DifficultyCategory, Boolean> difficulty,
+        HintPairDto<Integer, DeltaHint> points,
+        HintPairDto<Integer, DeltaHint> checkpoints,
+        HintPairDto<Integer, DeltaHint> finisherCount,
+        HintPairDto<String, DeltaHint> wrTime,
+        HintPairDto<WrHolderDto, Boolean> wrHolder,
+        HintPairDto<Integer, DeltaHint> wrYear,
+        List<HintPairDto<String, Boolean>> authors,
+        HintPairDto<Integer, DeltaHint> releaseYear,
+        HintPairDto<Boolean, Boolean> classic
+) {
+        public GuessDto(boolean isValidDay) {
+                this(isValidDay, false);
+        }
+
+        public GuessDto(boolean isValidDay, boolean success) {
+                this(isValidDay, success, null, null, null, null, null, Collections.emptyList(), null, null);
+        }
+
+        public GuessDto(
+                boolean isValidDay,
+                boolean success,
+                HintPairDto<DifficultyCategory, Boolean> difficulty,
+                HintPairDto<Integer, DeltaHint> points,
+                HintPairDto<Integer, DeltaHint> checkpoints,
+                HintPairDto<Integer, DeltaHint> finisherCount,
+                HintPairDto<String, DeltaHint> wrTime,
+                List<HintPairDto<String, Boolean>> authors,
+                HintPairDto<Integer, DeltaHint> releaseYear,
+                HintPairDto<Boolean, Boolean> classic
+        ) {
+                this(isValidDay, success, difficulty, points, checkpoints, finisherCount, wrTime, null, null, authors, releaseYear, classic);
+        }
+}

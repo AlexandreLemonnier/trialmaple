@@ -1,6 +1,6 @@
 package com.trialmaple.security.config;
 
-import com.trialmaple.utils.JwtUtils;
+import com.trialmaple.security.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
