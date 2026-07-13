@@ -4,15 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "shared:build": "tsc --build ../shared",
+    "dev": "npm run shared:build && vite",
+    "build": "npm run shared:build && run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "build-only": "vite build",
+    "build-only": "npm run shared:build && vite build",
     "type-check": "vue-tsc --build",
-    "lint": "eslint",
-    "lint:fix": "eslint . --fix"
+    "lint": "npm run shared:build && eslint",
+    "lint:fix": "npm run shared:build && eslint . --fix"
   },
   "dependencies": {
+    "@tm-trialmaple/shared": "file:../shared",
     "@tailwindcss/vite": "^4.1.17",
     "@vueuse/core": "^14.1.0",
     "canvas-confetti": "^1.9.4",

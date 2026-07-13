@@ -16,5 +16,9 @@ export default createVueEslintConfig({
     eslintPluginVue,
     globals,
     vueESLintParser,
-    tsconfigRootDir: new URL('.', import.meta.url).pathname
+    tsconfigRootDir: new URL('.', import.meta.url).pathname,
+    project: [
+        './tsconfig.app.json',
+        './tsconfig.node.json'
+    ]
 });

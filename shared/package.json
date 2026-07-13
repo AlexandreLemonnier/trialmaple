@@ -1,0 +1,32 @@
+{
+  "name": "@tm-trialmaple/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./classes/RequestError": {
+      "types": "./dist/classes/RequestError.d.ts",
+      "import": "./dist/classes/RequestError.js"
+    },
+    "./composables/useApi": {
+      "types": "./dist/composables/useApi.d.ts",
+      "import": "./dist/composables/useApi.js"
+    },
+    "./composables/useEnv": {
+      "types": "./dist/composables/useEnv.d.ts",
+      "import": "./dist/composables/useEnv.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build"
+  }
+}
