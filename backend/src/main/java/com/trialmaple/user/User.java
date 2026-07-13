@@ -30,6 +30,10 @@ public class User {
 
     private LocalDate creationDate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(20) default 'USER'")
+    private UserType userType = UserType.USER;
+
     public User(Long discordId, String username, String globalName, String avatar, String discriminator) {
         this.discordId = discordId;
         this.username = username;

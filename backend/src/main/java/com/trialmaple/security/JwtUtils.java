@@ -1,5 +1,7 @@
 package com.trialmaple.security;
 
+import com.trialmaple.user.UserType;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -25,12 +27,17 @@ public class JwtUtils {
     }
 
     public String generateToken(String discordId, String username) {
+        return generateToken(discordId, username, UserType.USER);
+    }
+
+    public String generateToken(String discordId, String username, UserType userType) {
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
                 .subject(discordId)
                 .claim("username", username)
+                .claim("userType", userType.name())
                 .issuedAt(now)
                 .expiration(expirationDate)
                 .signWith(getSigningKey())
@@ -41,12 +48,21 @@ public class JwtUtils {
      * Extract discordId from token subject
      */
     public String getDiscordIdFromToken(String token) {
-        return Jwts.parser()
-                .verifyWith(getSigningKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .getSubject();
+        return getClaims(token).getSubject();
+    }
+
+    public UserType getUserTypeFromToken(String token) {
+        String userType = getClaims(token).get("userType", String.class);
+
+        if (userType == null) {
+            return UserType.USER;
+        }
+
+        try {
+            return UserType.valueOf(userType);
+        } catch (IllegalArgumentException e) {
+            return UserType.USER;
+        }
     }
 
     /**
@@ -54,14 +70,19 @@ public class JwtUtils {
      */
     public boolean validateToken(String token) {
         try {
-            Jwts.parser()
-                    .verifyWith(getSigningKey())
-                    .build()
-                    .parseSignedClaims(token);
+            getClaims(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             log.error("Invalid token", e);
             return false;
         }
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 }

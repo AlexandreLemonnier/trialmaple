@@ -5,6 +5,9 @@ public final class RouteKey {
 
     public static final String BASE_API = "/api";
 
+    // BACKOFFICE
+    public static final String BACKOFFICE_PREFIX = BASE_API + "/backoffice";
+
     // MAPS
     public static final String MAPS_PREFIX = BASE_API + "/maps";
     public static final String MAPS_LIST = "/list";
@@ -35,5 +38,6 @@ public final class RouteKey {
 
     // AUTH
     public static final String AUTH_PREFIX = BASE_API + "/auth";
+    public static final String BACKOFFICE_AUTH_PREFIX = "/backoffice";
     public static final String DISCORD_AUTH = "/discord";
 }

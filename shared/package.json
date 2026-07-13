@@ -14,13 +14,13 @@
       "types": "./dist/classes/RequestError.d.ts",
       "import": "./dist/classes/RequestError.js"
     },
-    "./composables/useApi": {
-      "types": "./dist/composables/useApi.d.ts",
-      "import": "./dist/composables/useApi.js"
+    "./composables/*": {
+      "types": "./dist/composables/*.d.ts",
+      "import": "./dist/composables/*.js"
     },
-    "./composables/useEnv": {
-      "types": "./dist/composables/useEnv.d.ts",
-      "import": "./dist/composables/useEnv.js"
+    "./types/*": {
+      "types": "./dist/types/*.d.ts",
+      "import": "./dist/types/*.js"
     }
   },
   "files": [

@@ -6,6 +6,7 @@ type QueryValue = string | number | boolean | string[] | undefined;
 type RequestOptions = Omit<RequestInit, 'body'> & {
     body?: Record<string, unknown> | unknown[];
     query?: Record<string, QueryValue>;
+    authTokenStorageKey?: string;
 };
 
 async function waitMinimumTime(start: number) {
@@ -46,20 +47,20 @@ export function useApi(routePrefix: string) {
         const start = performance.now();
 
         try {
-            const { query, body, ...baseOptions } = options;
+            const { query, body, authTokenStorageKey = 'auth_token', ...baseOptions } = options;
             const path = new URL(globalThis.location.origin + env.PROXIED_API_URL_PREFIX + routePrefix + url);
 
             if (query) {
                 path.search = objectToURLSearchParams(query).toString();
             }
 
-            const token = localStorage.getItem('auth_token');
+            const token = localStorage.getItem(authTokenStorageKey);
 
             const response = await fetch(path.href, {
                 body: body === undefined ? undefined : JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json',
-                    ...token ? { Authorization: `Bearer ${token}` } : {}
+                    ...(token ? { Authorization: `Bearer ${token}` } : {})
                 },
                 ...baseOptions
             });
