@@ -9,12 +9,17 @@
     "paths": {
       "#/*": [
         "./src/*"
-      ],
-      "@shared/*": [
-        "../shared/src/*"
       ]
     }
   },
+  "references": [
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../configs"
+    }
+  ],
   "exclude": [
     "build/**",
     ".output/**",
@@ -25,8 +30,6 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.vue",
-    "../shared/src/**/*.ts",
-    "../configs/vite/**/*.ts",
     "vite.config.ts",
     "*.d.ts"
   ]

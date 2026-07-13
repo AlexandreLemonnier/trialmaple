@@ -5,22 +5,24 @@
     "lib": [
       "ESNext"
     ],
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "moduleDetection": "force",
     "noEmit": true,
-
-    /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
+  "references": [
+    {
+      "path": "../configs"
+    }
+  ],
   "include": [
-    "vite.config.ts",
-    "../configs/vite/**/*.ts"
+    "vite.config.ts"
   ]
 }

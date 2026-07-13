@@ -1,0 +1,18 @@
+{
+  "extends": "./typescript/tsconfig.vue.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": ".",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "types": [],
+    "declaration": true,
+    "declarationMap": true
+  },
+  "include": [
+    "env.d.ts",
+    "vite/**/*.ts"
+  ]
+}

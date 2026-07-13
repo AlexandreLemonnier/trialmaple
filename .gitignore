@@ -33,3 +33,7 @@ backend/src/main/resources/application.properties
 .env
 .idea/
 .vscode/
+
+# === Shared frontend packages ===
+/shared/dist/
+/configs/dist/
