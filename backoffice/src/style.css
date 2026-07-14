@@ -1,3 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-primary: #234238;
+  --color-discord: #5865F2;
+
+  /* --- Texts --- */
+  --color-primary-white: #ffffff;
+  --color-app-text-primary: #0f172a;
+  --color-text-muted: #64748b;
+  --color-text-error: #9b3522;
+
+  /* --- Backgrounds --- */
+  --color-app-background: #eef4ee;
+  --color-login-background: #ffffff;
+  --color-panel-background: #ffffff;
+  --color-card-background: #ffffff;
+  --color-error-background: #fff1ee;
+  --color-button-background: #234238;
+
+  /* --- Borders --- */
+  --color-app-border: #dfe7dc;
+}
+
+
+
 :root {
     color: #17211b;
     background: #f4f6f2;
@@ -34,15 +62,6 @@ a {
 
 .backoffice-shell {
     min-height: 100vh;
-}
-
-.auth-screen {
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    box-sizing: border-box;
 }
 
 .auth-panel {

@@ -15,7 +15,10 @@
   },
   "dependencies": {
     "@tm-trialmaple/shared": "file:../shared",
-    "vue": "^3.5.39"
+    "@tailwindcss/vite": "^4.1.17",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.39",
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "5.6.1",
@@ -29,6 +32,7 @@
     "globals": "^14.0.0",
     "jiti": "^2.6.1",
     "npm-run-all2": "^8.0.4",
+    "tailwindcss": "^4.1.17",
     "typescript": "~6.0.2",
     "vite": "^8.1.1",
     "vue-tsc": "^3.3.5"
