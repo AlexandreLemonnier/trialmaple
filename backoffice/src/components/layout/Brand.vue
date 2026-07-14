@@ -5,13 +5,14 @@
               :class="compact ? 'w-9 h-9 text-sm' : 'h-11 w-11'">TM</span>
         <div>
             <p class="text-xs font-bold uppercase text-text-muted">TM-Maple</p>
-            <h1 class="font-bold"
-                :class="compact ? 'text-lg' : 'text-3xl'">Backoffice</h1>
+            <H1 :compact>Backoffice</H1>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import H1 from '#/components/H1.vue';
+
 defineProps<{
     compact?: boolean;
 }>();

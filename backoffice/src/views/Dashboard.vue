@@ -3,7 +3,7 @@
         <header class="workspace-header">
             <div>
                 <p class="eyebrow">Admin session</p>
-                <h1>Dashboard</h1>
+                <H1>Dashboard</H1>
             </div>
         </header>
 
@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts" setup>
+import H1 from '#/components/H1.vue';
 import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';

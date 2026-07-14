@@ -29,7 +29,7 @@ const { authState } = storeToRefs(useAppStore());
 
 const navItems: { label: string; route: Route }[] = [
     {
-        label: 'Dashboard',
+        label: 'Fake Dashboard',
         route: Route.DASHBOARD
     }
 ];
