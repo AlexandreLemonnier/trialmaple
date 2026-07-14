@@ -1,7 +1,7 @@
 <template>
     <aside class="box-border flex flex-col border-b border-app-border bg-sidebar-background px-4.5 py-6 md:border-b-0 md:border-r">
         <Brand compact />
-        <div class="mt-8 flex flex-1 flex-col justify-between">
+        <div class="mt-8 flex flex-1 flex-col justify-between gap-4">
             <nav class="flex flex-col gap-2" aria-label="Backoffice navigation">
                 <RouterLink v-for="item in navItems"
                             :key="item.route"
@@ -31,6 +31,10 @@ const navItems: { label: string; route: Route }[] = [
     {
         label: 'Fake Dashboard',
         route: Route.DASHBOARD
+    },
+    {
+        label: 'Users',
+        route: Route.USERS
     }
 ];
 

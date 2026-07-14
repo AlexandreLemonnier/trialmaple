@@ -14,17 +14,20 @@
     "lint:fix": "npm run shared:build && eslint . --fix"
   },
   "dependencies": {
-    "@tm-trialmaple/shared": "file:../shared",
+    "@primeuix/themes": "^2.0.3",
     "@tailwindcss/vite": "^4.1.17",
+    "@tm-trialmaple/shared": "file:../shared",
     "pinia": "^3.0.4",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.5.5",
     "vue": "^3.5.39",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "5.6.1",
+    "@types/node": "^24.13.2",
     "@typescript-eslint/eslint-plugin": "8.59.2",
     "@typescript-eslint/parser": "8.59.2",
-    "@types/node": "^24.13.2",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/tsconfig": "^0.9.1",
     "eslint": "^9.39.1",

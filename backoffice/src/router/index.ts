@@ -1,6 +1,7 @@
 import { Route } from '#/router/Route';
 import Dashboard from '#/views/Dashboard.vue';
 import Login from '#/views/Login.vue';
+import UsersList from '#/views/UsersList.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -20,6 +21,14 @@ const router = createRouter({
             component: Dashboard,
             meta: {
                 titleKey: 'Dashboard'
+            }
+        },
+        {
+            name: Route.USERS,
+            path: Route.USERS,
+            component: UsersList,
+            meta: {
+                titleKey: 'Users'
             }
         },
         {

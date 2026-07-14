@@ -1,4 +1,5 @@
-export type UserType = 'USER' | 'ADMIN';
+export const USER_TYPES = ['USER', 'ADMIN'] as const;
+export type UserType = typeof USER_TYPES[number];
 
 export type User = {
     discordId: string;
