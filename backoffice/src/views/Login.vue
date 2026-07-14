@@ -1,15 +1,7 @@
 <template>
     <div class="min-h-screen flex items-center justify-center p-6 box-border">
         <div class="w-full max-w-105 box-border rounded-lg border border-app-border bg-login-background p-7 shadow-[0_24px_70px_rgb(23_33_27/10%)]">
-            <div class="flex items-center gap-3.5">
-                <span class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-brand-primary font-extrabold text-primary-white">
-                    TM
-                </span>
-                <div>
-                    <p class="text-xs font-bold uppercase text-text-muted">TM-Maple</p>
-                    <h1>Backoffice</h1>
-                </div>
-            </div>
+            <Brand />
 
             <div class="mt-7 px-3.5 py-3 rounded-lg bg-app-background text-brand-primary font-bold"
                  :class="authState === 'denied' && 'bg-error-background text-text-error'"
@@ -31,6 +23,7 @@
 <script lang="ts" setup>
 import { RequestError } from '#/classes/RequestError';
 import Button from '#/components/Button.vue';
+import Brand from '#/components/layout/Brand.vue';
 import { BACKOFFICE_AUTH_TOKEN_STORAGE_KEY, useBackofficeAuthApi } from '#/composables/api/useBackofficeAuthApi';
 import { useEnv } from '#/composables/useEnv';
 import { Route } from '#/router/Route';

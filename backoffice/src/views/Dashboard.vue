@@ -5,8 +5,6 @@
                 <p class="eyebrow">Admin session</p>
                 <h1>Dashboard</h1>
             </div>
-
-            <button class="secondary-action" type="button" @click="logout">Sign out</button>
         </header>
 
         <div class="overview-grid">
@@ -56,20 +54,10 @@ import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
-const { authState, user } = storeToRefs(useAppStore());
-
+const { user } = storeToRefs(useAppStore());
 
 const userInitial = computed(() => {
     return user.value?.username.slice(0, 1).toUpperCase() ?? 'A';
 });
-
-function clearCallbackUrl() {
-    globalThis.history.replaceState({}, document.title, '/');
-}
-
-function logout() {
-    authState.value = 'signed-out';
-    clearCallbackUrl();
-}
 
 </script>
