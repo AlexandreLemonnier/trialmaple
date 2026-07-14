@@ -1,14 +1,13 @@
 package com.trialmaple.user;
 
-import java.security.Principal;
-import java.time.LocalDate;
-import java.util.Optional;
-
+import com.trialmaple.core.exception.UserNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import com.trialmaple.core.exception.UserNotFoundException;
-
-import lombok.extern.slf4j.Slf4j;
+import java.security.Principal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -47,6 +46,10 @@ public class UserService {
     public User findUser(String discordId) throws UserNotFoundException {
         return userRepository.findByDiscordId(Long.valueOf(discordId))
                 .orElseThrow(() -> new UserNotFoundException(discordId));
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     public User getUserFromPrincipal(Principal principal) throws UserNotFoundException {

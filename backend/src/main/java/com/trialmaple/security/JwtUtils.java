@@ -26,10 +26,6 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
-    public String generateToken(String discordId, String username) {
-        return generateToken(discordId, username, UserType.USER);
-    }
-
     public String generateToken(String discordId, String username, UserType userType) {
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + jwtExpirationMs);

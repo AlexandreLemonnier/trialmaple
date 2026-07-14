@@ -5,8 +5,8 @@ public final class RouteKey {
 
     public static final String BASE_API = "/api";
 
-    // BACKOFFICE
-    public static final String BACKOFFICE_PREFIX = BASE_API + "/backoffice";
+    // ADMIN
+    public static final String ADMIN_PREFIX = BASE_API + "/admin";
 
     // MAPS
     public static final String MAPS_PREFIX = BASE_API + "/maps";
