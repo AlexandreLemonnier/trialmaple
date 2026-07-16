@@ -101,7 +101,7 @@ async function finishDiscordLogin(code: string) {
         adminUser.value = response.user;
         authState.value = 'signed-in';
 
-        router.push({ name: Route.DASHBOARD });
+        router.push({ name: Route.USERS });
 
         clearCallbackUrl();
     } catch (err) {

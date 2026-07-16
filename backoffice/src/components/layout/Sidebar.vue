@@ -8,7 +8,10 @@
                             :to="item.route"
                             class="p-3 rounded-lg text-sidebar-nav-item font-extrabold"
                             :class="isActive(item.route) && 'bg-app-background text-brand-primary'">
-                    {{ item.label }}
+                    <div class="flex gap-2 items-center">
+                        <Icon :name="item.icon" size="md" />
+                        {{ item.label }}
+                    </div>
                 </RouterLink>
             </nav>
             <Button class="w-full" label="Sign out" @click="logout" />
@@ -21,19 +24,22 @@ import Button from '#/components/Button.vue';
 import Brand from '#/components/layout/Brand.vue';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
+import type { IconName } from '#/types/IconName';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
+import Icon from '../Icon.vue';
 
 const route = useRoute();
 const { authState } = storeToRefs(useAppStore());
 
-const navItems: { label: string; route: Route }[] = [
-    {
-        label: 'Fake Dashboard',
-        route: Route.DASHBOARD
-    },
+const navItems: {
+    label: string;
+    icon: IconName;
+    route: Route
+}[] = [
     {
         label: 'Users',
+        icon: 'user',
         route: Route.USERS
     }
 ];

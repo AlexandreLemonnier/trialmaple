@@ -66,7 +66,7 @@ router.beforeEach(async (to, _, next) => {
     if (authState.value !== 'signed-in' && to.name !== Route.LOGIN) {
         next({ name: Route.LOGIN });
     } else if (authState.value === 'signed-in' && to.name === Route.LOGIN) {
-        next({ name: Route.DASHBOARD });
+        next({ name: Route.USERS });
     } else {
         next();
     }

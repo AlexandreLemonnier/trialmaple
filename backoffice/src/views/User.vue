@@ -1,7 +1,11 @@
 <template>
     <div class="p-6 md:p-8 bg-app-background min-h-screen">
 
-        <div v-if="user" class="max-w-7xl mx-auto space-y-8">
+        <div v-if="isLoading" class="grow flex flex-col items-center justify-center gap-4">
+            <Loader loading-reason="Loading user data..." />
+        </div>
+
+        <div v-else-if="user" class="max-w-7xl mx-auto space-y-8">
 
             <!-- Player information -->
             <div class="bg-card-background p-6 rounded-3xl border border-app-border shadow-lg flex items-center gap-6">
@@ -102,12 +106,16 @@
             </div>
 
         </div>
+        <div v-else class="grow flex items-center justify-center gap-4">
+            <p class="text-app-text-muted text-xl font-medium">User not found.</p>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import Button from '#/components/Button.vue';
 import H1 from '#/components/H1.vue';
+import Loader from '#/components/Loader.vue';
 import RolePill from '#/components/RolePill.vue';
 import SubCard from '#/components/SubCard.vue';
 import { useAdminStatsApi } from '#/composables/api/useAdminStatsApi';

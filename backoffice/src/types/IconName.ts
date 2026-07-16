@@ -1,2 +1,3 @@
 export type IconName =
-    'discord';
+    'discord'
+    | 'user';
