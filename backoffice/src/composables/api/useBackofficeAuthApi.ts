@@ -1,8 +1,7 @@
+import { BACKOFFICE_AUTH_TOKEN_STORAGE_KEY } from '#/composables/api/useAdminApi';
 import { useApi } from '#/composables/useApi';
 import type { LoginResponse } from '#/types/api/loginResponse';
 import type { User } from '#/types/api/user';
-
-export const BACKOFFICE_AUTH_TOKEN_STORAGE_KEY = 'backoffice_auth_token';
 
 export function useBackofficeAuthApi() {
     const { request } = useApi('/auth/backoffice');

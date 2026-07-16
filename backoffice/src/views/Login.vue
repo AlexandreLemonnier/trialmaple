@@ -24,17 +24,19 @@
 import { RequestError } from '#/classes/RequestError';
 import Button from '#/components/Button.vue';
 import Brand from '#/components/layout/Brand.vue';
-import { BACKOFFICE_AUTH_TOKEN_STORAGE_KEY, useBackofficeAuthApi } from '#/composables/api/useBackofficeAuthApi';
+import { BACKOFFICE_AUTH_TOKEN_STORAGE_KEY } from '#/composables/api/useAdminApi';
+import { useBackofficeAuthApi } from '#/composables/api/useBackofficeAuthApi';
 import { useEnv } from '#/composables/useEnv';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
 import { computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const { DISCORD_CLIENT_ID } = useEnv();
 const { authState, error, user } = storeToRefs(useAppStore());
 const route = useRoute();
+const router = useRouter();
 
 const authApi = useBackofficeAuthApi();
 
@@ -98,6 +100,9 @@ async function finishDiscordLogin(code: string) {
         localStorage.setItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY, response.token);
         user.value = response.user;
         authState.value = 'signed-in';
+
+        router.push({ name: Route.DASHBOARD });
+
         clearCallbackUrl();
     } catch (err) {
         localStorage.removeItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY);
@@ -141,8 +146,6 @@ onMounted(async () => {
 
     if (code) {
         await finishDiscordLogin(code);
-    } else {
-        await restoreSession();
     }
 });
 </script>

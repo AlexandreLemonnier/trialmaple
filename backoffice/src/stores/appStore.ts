@@ -1,4 +1,4 @@
-import { BACKOFFICE_AUTH_TOKEN_STORAGE_KEY } from '#/composables/api/useBackofficeAuthApi';
+import { BACKOFFICE_AUTH_TOKEN_STORAGE_KEY } from '#/composables/api/useAdminApi';
 import type { User } from '#/types/api/user';
 import type { AuthState } from '#/types/AuthState';
 import { defineStore } from 'pinia';
