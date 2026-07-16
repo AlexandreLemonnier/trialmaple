@@ -11,7 +11,7 @@
 
             <p v-if="error" class="mt-4 leading-[1.45]">{{ error }}</p>
 
-            <Button class="w-full bg-discord text-primary-white font-bold py-2 mt-5"
+            <Button class="w-full bg-discord hover:bg-discord/60 border-discord text-primary-white font-bold py-2 mt-5"
                     :label="isBusy ? 'Connecting...' : 'Sign in with Discord'"
                     icon-name="discord"
                     :disabled="isBusy"
@@ -34,7 +34,7 @@ import { computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const { DISCORD_CLIENT_ID } = useEnv();
-const { authState, error, user } = storeToRefs(useAppStore());
+const { authState, error, adminUser } = storeToRefs(useAppStore());
 const route = useRoute();
 const router = useRouter();
 
@@ -98,7 +98,7 @@ async function finishDiscordLogin(code: string) {
         }
 
         localStorage.setItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY, response.token);
-        user.value = response.user;
+        adminUser.value = response.user;
         authState.value = 'signed-in';
 
         router.push({ name: Route.DASHBOARD });
@@ -106,38 +106,10 @@ async function finishDiscordLogin(code: string) {
         clearCallbackUrl();
     } catch (err) {
         localStorage.removeItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY);
-        user.value = null;
+        adminUser.value = null;
         authState.value = 'denied';
         error.value = getAuthErrorMessage(err);
         clearCallbackUrl();
-    }
-}
-
-async function restoreSession() {
-    const token = localStorage.getItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY);
-
-    if (!token) {
-        authState.value = 'signed-out';
-        return;
-    }
-
-    authState.value = 'checking';
-    error.value = null;
-
-    try {
-        const currentUser = await authApi.getCurrentUser();
-
-        if (currentUser.userType !== 'ADMIN') {
-            throw new RequestError('BACKOFFICE_ACCESS_DENIED', 403);
-        }
-
-        user.value = currentUser;
-        authState.value = 'signed-in';
-    } catch (err) {
-        localStorage.removeItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY);
-        user.value = null;
-        authState.value = err instanceof RequestError && err.statusCode === 401 ? 'signed-out' : 'denied';
-        error.value = getAuthErrorMessage(err);
     }
 }
 

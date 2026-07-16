@@ -42,13 +42,7 @@
             <Column field="userType" header="Role" :show-filter-match-modes="false">
                 <template #body="{ data }">
                     <Skeleton v-if="isLoading" width="60px" height="1.5rem" border-radius="9999px" />
-                    <span v-else class="px-2.5 py-1 text-xs font-semibold rounded-full"
-                          :class="{
-                              'bg-blue-100 text-blue-700': data.userType === 'USER',
-                              'bg-purple-100 text-purple-700': data.userType === 'ADMIN'
-                          }">
-                        {{ data.userType }}
-                    </span>
+                    <RolePill v-else :user-type="data.userType" />
                 </template>
 
                 <template #filter="{ filterModel, filterCallback }">
@@ -71,8 +65,10 @@
 
 <script setup lang="ts">
 import H1 from '#/components/H1.vue';
+import RolePill from '#/components/RolePill.vue';
 import { useAdminUserApi } from '#/composables/api/useAdminUserApi';
 import { Route } from '#/router/Route';
+import { useAppStore } from '#/stores/appStore';
 import type { User } from '#/types/api/user';
 import { FilterMatchMode } from '@primevue/core/api';
 import { USER_TYPES } from '@tm-trialmaple/shared/types/api/user';
@@ -85,6 +81,7 @@ import Skeleton from 'primevue/skeleton';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const appStore = useAppStore();
 const router = useRouter();
 const users = ref<User[]>([]);
 const isLoading = ref(true);
@@ -109,6 +106,7 @@ onMounted(async () => {
 
 const onRowClick = (event: DataTableRowSelectEvent) => {
     const selectedUser: User = event.data;
+    appStore.currentSelectedUser = selectedUser;
     router.push({
         name: Route.USER_DETAIL,
         params: { userId: selectedUser.discordId }

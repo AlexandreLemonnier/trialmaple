@@ -16,7 +16,7 @@ import { useRouter } from 'vue-router';
 import { useBackofficeAuthApi } from './composables/api/useBackofficeAuthApi';
 
 const appStore = useAppStore();
-const { authState, user } = storeToRefs(appStore);
+const { authState, adminUser } = storeToRefs(appStore);
 const { logout } = appStore;
 
 const router = useRouter();
@@ -41,7 +41,7 @@ async function initializeAuth(to: RouteLocationNormalizedGeneric) {
         try {
             const currentUser = await authApi.getCurrentUser();
             if (currentUser.userType === 'ADMIN') {
-                user.value = currentUser;
+                adminUser.value = currentUser;
                 authState.value = 'signed-in';
             } else {
                 authState.value = 'denied';
@@ -49,7 +49,7 @@ async function initializeAuth(to: RouteLocationNormalizedGeneric) {
         } catch (err) {
             console.error('Error restoring session:', err);
             localStorage.removeItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY);
-            user.value = null;
+            adminUser.value = null;
             authState.value = 'signed-out';
         }
     } else if (!hasDiscordCode) {

@@ -43,7 +43,7 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public User findUser(String discordId) throws UserNotFoundException {
+    public User findUserByDiscordId(String discordId) throws UserNotFoundException {
         return userRepository.findByDiscordId(Long.valueOf(discordId))
                 .orElseThrow(() -> new UserNotFoundException(discordId));
     }
@@ -56,6 +56,6 @@ public class UserService {
         if (principal == null) {
             return null;
         }
-        return findUser(principal.getName());
+        return findUserByDiscordId(principal.getName());
     }
 }

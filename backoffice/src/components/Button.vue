@@ -1,6 +1,6 @@
 <template>
     <button type="button"
-            class="flex items-center justify-center gap-1.5 lg:gap-2 w-fit text-sm lg:text-base text-brand-primary border border-app-border py-1 px-3 bg-button-background rounded-lg cursor-pointer"
+            class="flex items-center justify-center gap-1.5 lg:gap-2 w-fit text-sm lg:text-base text-brand-primary border border-button-border py-1 px-3 bg-button-background hover:bg-button-background/40 rounded-lg cursor-pointer"
             :disabled>
         <Icon v-if="iconName && iconPosition === 'left'" :class="iconClass" :name="iconName" :size="iconSize" />
         <span v-if="label" class="font-extrabold">{{ label }}</span>

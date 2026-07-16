@@ -29,7 +29,8 @@ public final class RouteKey {
     public static final String ZOOM_PICTURE = "/zoom-picture";
 
     // USER
-    public static final String USERS_PREFIX = BASE_API + "/users";
+    public static final String USERS = "/users";
+    public static final String USERS_PREFIX = BASE_API + USERS;
     public static final String CURRENT_USER = "/me";
 
     // STATS

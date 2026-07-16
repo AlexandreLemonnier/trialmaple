@@ -14,15 +14,17 @@
   --color-sidebar-nav-item: #536057;
 
   /* --- Backgrounds --- */
-  --color-app-background: #eef4ee;
+  --color-app-background: #e8f0e8;
   --color-login-background: #ffffff;
   --color-sidebar-background: #ffffff;
   --color-card-background: #ffffff;
+  --color-subcard-background: #e8f0e8;
   --color-error-background: #fff1ee;
-  --color-button-background: #eef4ee;
+  --color-button-background: #e8f0e8;
 
   /* --- Borders --- */
   --color-app-border: #dfe7dc;
+  --color-button-border: #73a369;
   --color-ring-focus: #4C93FD;
 }
 

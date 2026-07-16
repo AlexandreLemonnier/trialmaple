@@ -5,15 +5,17 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useAppStore = defineStore('app', () => {
-    const user = ref<User | null>(null);
+    const adminUser = ref<User | null>(null);
     const authState = ref<AuthState>('checking');
     const error = ref<string | null>(null);
 
+    const currentSelectedUser = ref<User | null>(null);
+
     function logout() {
         localStorage.removeItem(BACKOFFICE_AUTH_TOKEN_STORAGE_KEY);
-        user.value = null;
+        adminUser.value = null;
         error.value = null;
     }
 
-    return { user, authState, error, logout };
+    return { adminUser, authState, error, currentSelectedUser, logout };
 });

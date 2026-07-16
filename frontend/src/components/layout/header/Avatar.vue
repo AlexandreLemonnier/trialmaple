@@ -30,7 +30,7 @@
 import LogoutButton from '#/components/layout/header/LogoutButton.vue';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore.js';
-import { getDiscordAvatarUrl } from '#/utils/discord';
+import { getDiscordAvatarUrl } from '#/utils/getDiscordAvatarUrl';
 import { onClickOutside } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';

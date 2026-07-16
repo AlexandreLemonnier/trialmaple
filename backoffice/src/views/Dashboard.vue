@@ -10,7 +10,7 @@
         <div class="overview-grid">
             <article class="metric-card">
                 <span>Role</span>
-                <strong>{{ user?.userType }}</strong>
+                <strong>{{ adminUser?.userType }}</strong>
             </article>
             <article class="metric-card">
                 <span>API</span>
@@ -22,27 +22,27 @@
             </article>
         </div>
 
-        <section v-if="user" class="details-panel">
+        <section v-if="adminUser" class="details-panel">
             <div class="user-chip">
                 <span class="avatar-fallback">{{ userInitial }}</span>
                 <div>
-                    <strong>{{ user.username }}</strong>
-                    <span>{{ user.discordId }}</span>
+                    <strong>{{ adminUser.username }}</strong>
+                    <span>{{ adminUser.discordId }}</span>
                 </div>
             </div>
 
             <dl class="details-list">
                 <div>
                     <dt>Discord ID</dt>
-                    <dd>{{ user.discordId }}</dd>
+                    <dd>{{ adminUser.discordId }}</dd>
                 </div>
                 <div>
                     <dt>Username</dt>
-                    <dd>{{ user.username }}</dd>
+                    <dd>{{ adminUser.username }}</dd>
                 </div>
                 <div>
                     <dt>Access</dt>
-                    <dd>{{ user.userType }}</dd>
+                    <dd>{{ adminUser.userType }}</dd>
                 </div>
             </dl>
         </section>
@@ -55,10 +55,10 @@ import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
-const { user } = storeToRefs(useAppStore());
+const { adminUser } = storeToRefs(useAppStore());
 
 const userInitial = computed(() => {
-    return user.value?.username.slice(0, 1).toUpperCase() ?? 'A';
+    return adminUser.value?.username.slice(0, 1).toUpperCase() ?? 'A';
 });
 
 </script>
