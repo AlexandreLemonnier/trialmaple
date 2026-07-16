@@ -28,5 +28,5 @@ nvm i
 nvm use
 npm i
 npm run build
-sudo rm -rf /var/www/admin_trialmaple/*
-sudo cp -r dist/* /var/www/admin_trialmaple
+sudo rm -rf /var/www/admin_tmmaple/*
+sudo cp -r dist/* /var/www/admin_tmmaple
