@@ -23,7 +23,7 @@ public class UserController {
     @GetMapping(RouteKey.CURRENT_USER)
     public UserDto getCurrentUser(Principal principal) {
         String discordId = principal.getName();
-        User user = userService.findUser(discordId);
+        User user = userService.findUserByDiscordId(discordId);
         return userMapper.serviceToDto(user);
     }
 }

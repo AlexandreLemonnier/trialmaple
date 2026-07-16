@@ -55,6 +55,15 @@ public class GlobalExceptionHandler {
                         ex.getMessage()));
     }
 
+    @ExceptionHandler(BackofficeAccessDeniedException.class)
+    public ResponseEntity<ErrorResponseDto> handleBackofficeAccessDenied(BackofficeAccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ErrorResponseDto(
+                        Instant.now(),
+                        ex.getCode().name(),
+                        ex.getMessage()));
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleUserNotFound(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)

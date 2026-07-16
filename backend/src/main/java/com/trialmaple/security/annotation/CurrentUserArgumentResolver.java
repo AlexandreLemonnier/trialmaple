@@ -43,6 +43,6 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
         }
 
         String discordId = authentication.getName();
-        return userService.findUser(discordId);
+        return userService.findUserByDiscordId(discordId);
     }
 }

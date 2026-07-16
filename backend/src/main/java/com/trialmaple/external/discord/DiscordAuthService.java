@@ -27,7 +27,11 @@ public class DiscordAuthService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public DiscordUserDto authenticateWithDiscord(String code) {
-        String accessToken = getDiscordToken(code);
+        return authenticateWithDiscord(code, redirectUri);
+    }
+
+    public DiscordUserDto authenticateWithDiscord(String code, String redirectUri) {
+        String accessToken = getDiscordToken(code, redirectUri);
         return getUserInfo(accessToken);
     }
 
@@ -35,7 +39,7 @@ public class DiscordAuthService {
      * Exchange code to a Discord token
      * @param code the authorization code grant
      */
-    private String getDiscordToken(String code) {
+    private String getDiscordToken(String code, String redirectUri) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 

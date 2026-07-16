@@ -20,10 +20,6 @@ import Header from '#/components/layout/header/Header.vue';
 import OldDomainWarningModal from '#/components/modal/OldDomainWarningModal.vue';
 import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
-import { useRoute, useRouter } from 'vue-router';
-
-const router = useRouter();
-const route = useRoute();
 
 const { isFromOldDomainName } = storeToRefs(useAppStore());
 

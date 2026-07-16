@@ -19,6 +19,13 @@ backend/src/main/resources/application.properties
 /frontend/.vitepress
 /frontend/.output
 
+# === Backoffice (Vue + Node) ===
+/backoffice/node_modules/
+/backoffice/dist/
+/backoffice/.env
+/backoffice/.env.local
+/backoffice/.output
+
 # === General ===
 .DS_Store
 *.log
@@ -26,3 +33,7 @@ backend/src/main/resources/application.properties
 .env
 .idea/
 .vscode/
+
+# === Shared frontend packages ===
+/shared/dist/
+/configs/dist/

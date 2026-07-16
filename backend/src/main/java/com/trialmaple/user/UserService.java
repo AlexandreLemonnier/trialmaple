@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,39 +18,44 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void createUserIfAbsent(User user) {
+    public User createUserIfAbsent(User user) {
         Long discordId = user.getDiscordId();
         Optional<User> userBase = userRepository.findByDiscordId(discordId);
         if (userBase.isEmpty()) {
-            createUser(user);
-        } else {
-            // Can be removed later
-            updateUser(userBase.get(), user);
+            return createUser(user);
         }
+
+        return updateUser(userBase.get(), user);
     }
 
-    private void createUser(User user) {
+    private User createUser(User user) {
         log.info("Create user {}", user.getUsername());
         user.setCreationDate(LocalDate.now());
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
-    private void updateUser(User existingUser, User updatedUser) {
+    private User updateUser(User existingUser, User updatedUser) {
         log.info("Update user {} ({})", updatedUser.getUsername(), updatedUser.getGlobalName());
         existingUser.setUsername(updatedUser.getUsername());
         existingUser.setGlobalName(updatedUser.getGlobalName());
-        userRepository.save(existingUser);
+        existingUser.setAvatar(updatedUser.getAvatar());
+        existingUser.setDiscriminator(updatedUser.getDiscriminator());
+        return userRepository.save(existingUser);
     }
 
-    public User findUser(String discordId) throws UserNotFoundException {
+    public User findUserByDiscordId(String discordId) throws UserNotFoundException {
         return userRepository.findByDiscordId(Long.valueOf(discordId))
                 .orElseThrow(() -> new UserNotFoundException(discordId));
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     public User getUserFromPrincipal(Principal principal) throws UserNotFoundException {
         if (principal == null) {
             return null;
         }
-        return findUser(principal.getName());
+        return findUserByDiscordId(principal.getName());
     }
 }

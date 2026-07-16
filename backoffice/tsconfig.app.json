@@ -1,0 +1,29 @@
+{
+  "extends": "../configs/typescript/tsconfig.vue.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "allowArbitraryExtensions": true,
+    "paths": {
+      "#/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "*.d.ts"
+  ],
+  "exclude": [
+    "dist/**",
+    ".output/**",
+    "node_modules/**",
+    "public/**"
+  ]
+}

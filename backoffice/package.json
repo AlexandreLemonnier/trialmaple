@@ -1,0 +1,43 @@
+{
+  "name": "backoffice",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "shared:build": "tsc --build ../shared",
+    "dev": "npm run shared:build && vite",
+    "build": "npm run shared:build && run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "npm run shared:build && vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "npm run shared:build && eslint",
+    "lint:fix": "npm run shared:build && eslint . --fix"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^2.0.3",
+    "@tailwindcss/vite": "^4.1.17",
+    "@tm-trialmaple/shared": "file:../shared",
+    "pinia": "^3.0.4",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.5.5",
+    "vue": "^3.5.39",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "5.6.1",
+    "@types/node": "^24.13.2",
+    "@typescript-eslint/eslint-plugin": "8.59.2",
+    "@typescript-eslint/parser": "8.59.2",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/tsconfig": "^0.9.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-vue": "10.6.2",
+    "globals": "^14.0.0",
+    "jiti": "^2.6.1",
+    "npm-run-all2": "^8.0.4",
+    "tailwindcss": "^4.1.17",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1",
+    "vue-tsc": "^3.3.5"
+  }
+}

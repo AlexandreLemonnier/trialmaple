@@ -6,8 +6,6 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --width-sidebar: 25vw;
-
   /* --- Texts --- */
   --color-primary-white: #ffffff;
   --color-app-text-primary: #0f172a;
