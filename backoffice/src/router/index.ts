@@ -1,6 +1,7 @@
 import { Route } from '#/router/Route';
 import Dashboard from '#/views/Dashboard.vue';
 import Login from '#/views/Login.vue';
+import User from '#/views/User.vue';
 import UsersList from '#/views/UsersList.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -29,6 +30,15 @@ const router = createRouter({
             component: UsersList,
             meta: {
                 titleKey: 'Users'
+            }
+        },
+        {
+            name: Route.USER_DETAIL,
+            path: Route.USER_DETAIL,
+            component: User,
+            props: true,
+            meta: {
+                titleKey: 'User'
             }
         },
         {

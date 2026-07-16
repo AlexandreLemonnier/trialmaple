@@ -72,6 +72,7 @@
 <script setup lang="ts">
 import H1 from '#/components/H1.vue';
 import { useAdminUserApi } from '#/composables/api/useAdminUserApi';
+import { Route } from '#/router/Route';
 import type { User } from '#/types/api/user';
 import { FilterMatchMode } from '@primevue/core/api';
 import { USER_TYPES } from '@tm-trialmaple/shared/types/api/user';
@@ -108,6 +109,9 @@ onMounted(async () => {
 
 const onRowClick = (event: DataTableRowSelectEvent) => {
     const selectedUser: User = event.data;
-    router.push(`/admin/users/${selectedUser.discordId}`);
+    router.push({
+        name: Route.USER_DETAIL,
+        params: { userId: selectedUser.discordId }
+    });
 };
 </script>

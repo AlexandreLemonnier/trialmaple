@@ -96,7 +96,8 @@ import Loader from '#/components/Loader.vue';
 import { useStatsApi } from '#/composables/api/useStatsApi';
 import { GAME_MODE_DISPLAY_NAMES } from '#/types/api/gameMode';
 import type { UserStats } from '#/types/api/userStats';
-import { TM_CATEGORIES, TM_GAMES, type TmCategory, type TmGame } from '#/types/Game';
+import { TM_CATEGORIES, type TmCategory } from '#/types/tmCategory';
+import { TM_GAMES, type TmGame } from '#/types/tmGame';
 import { useStorage } from '@vueuse/core';
 import { computed, onMounted, ref } from 'vue';
 
@@ -126,7 +127,6 @@ const filteredStats = computed(() => {
 });
 
 const toggleFilter = <T>(set: Set<T>, value: T): Set<T> => {
-    // TODO Save filters in localStorage
     const newSet = new Set(set);
 
     if (newSet.has(value)) {

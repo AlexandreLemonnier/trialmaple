@@ -2,14 +2,8 @@ import tm2Icon from '#/assets/tm2.png';
 import tm2020Icon from '#/assets/tm2020.jpg';
 import tmnfIcon from '#/assets/tmnf.jpg';
 import { gamesInfo, type GameInfo } from '#/types/GameInfo';
-
-export const TM_GAMES = ['TMNF', 'TM2', 'TM2020'] as const;
-
-export type TmGame = typeof TM_GAMES[number];
-
-export const TM_CATEGORIES = ['Trial', 'RPG'] as const;
-
-export type TmCategory = typeof TM_CATEGORIES[number];
+import type { TmCategory } from '#/types/tmCategory';
+import type { TmGame } from '#/types/tmGame';
 
 export type Game = {
     title: TmGame;
