@@ -8,7 +8,7 @@
         <div v-else-if="user" class="max-w-7xl mx-auto space-y-8">
 
             <!-- Player information -->
-            <div class="bg-card-background p-6 rounded-3xl border border-app-border shadow-lg flex items-center gap-6">
+            <Card class="shadow-lg flex items-center gap-6">
                 <div class="w-24 h-24 rounded-full border-2 border-app-border flex items-center justify-center overflow-hidden shrink-0">
                     <img :src="getDiscordAvatarUrl(user.discordId, user.avatar, user.discriminator)" alt="Avatar" class="w-full h-full object-cover" />
                 </div>
@@ -20,10 +20,10 @@
                         <SubCard class="text-sm font-mono px-2 py-1">Discord ID: {{ user.discordId }}</SubCard>
                     </div>
                 </div>
-            </div>
+            </Card>
 
             <!-- Stats Filters -->
-            <div class="bg-card-background p-4 md:p-6 rounded-2xl border border-app-border/50 shadow-sm flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
+            <Card class="shadow-sm flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
                 <div class="flex flex-col gap-2 w-full md:w-auto">
                     <span class="text-sm font-semibold uppercase tracking-wider text-app-text-muted">Games</span>
                     <div class="flex flex-wrap gap-2">
@@ -51,18 +51,18 @@
                         </Button>
                     </div>
                 </div>
-            </div>
+            </Card>
 
             <!-- Stats Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 <!-- Empty State -->
-                <div v-if="filteredStats.length === 0" class="col-span-full text-center py-12 bg-card-background rounded-3xl border border-app-border border-dashed">
+                <Card v-if="filteredStats.length === 0" class="col-span-full text-center border-dashed">
                     <i class="pi pi-chart-pie text-4xl text-app-text-muted mb-3 block"></i>
                     <p class="text-app-text-muted text-lg">No statistics match these filters.</p>
-                </div>
+                </Card>
 
                 <!-- Stats Cards -->
-                <div v-for="(stat) in filteredStats" :key="stat.gameMode" class="flex flex-col bg-card-background rounded-3xl p-6 border border-app-border">
+                <Card v-for="(stat) in filteredStats" :key="stat.gameMode" class="flex flex-col">
 
                     <div class="items-start mb-6">
                         <h2 class="text-xl font-bold mb-2">{{ GAME_MODE_DISPLAY_NAMES[stat.gameMode] }}</h2>
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </Card>
             </div>
 
         </div>
@@ -114,6 +114,7 @@
 
 <script setup lang="ts">
 import Button from '#/components/Button.vue';
+import Card from '#/components/Card.vue';
 import H1 from '#/components/H1.vue';
 import Loader from '#/components/Loader.vue';
 import RolePill from '#/components/RolePill.vue';
