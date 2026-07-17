@@ -67,10 +67,8 @@
                     <div class="items-start mb-6">
                         <h2 class="text-xl font-bold mb-2">{{ GAME_MODE_DISPLAY_NAMES[stat.gameMode] }}</h2>
                         <div class="flex gap-2">
-                            <Tag severity="secondary" :value="stat.tmGame" />
-                            <Tag class="text-text-muted" severity="secondary" :value="stat.tmCategory" />
-                            <SubCard class="text-xs font-semibold text-text-muted px-2.5 py-1">{{ stat.tmGame }}</SubCard>
-                            <SubCard class="text-xs font-semibold text-text-muted px-2.5 py-1">{{ stat.tmCategory }}</SubCard>
+                            <Tag class="text-xs text-text-muted" severity="secondary" :value="stat.tmGame" />
+                            <Tag class="text-xs text-text-muted" severity="secondary" :value="stat.tmCategory" />
                         </div>
                     </div>
 
