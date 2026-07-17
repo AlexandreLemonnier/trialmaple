@@ -45,7 +45,7 @@ const navItems: {
 ];
 
 function isActive(_route: Route) {
-    return _route === route.name;
+    return route.name?.toString().includes(_route);
 }
 
 function clearCallbackUrl() {
