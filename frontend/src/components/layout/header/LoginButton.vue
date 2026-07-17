@@ -14,12 +14,14 @@ import { Route } from '#/router/Route';
 
 const { DISCORD_CLIENT_ID } = useEnv();
 
-const redirectUri = encodeURIComponent(`${globalThis.location.origin}${Route.AUTH_CALLBACK}`);
+function getCallbackUrl() {
+    return new URL(Route.AUTH_CALLBACK, globalThis.location.origin).href;
+}
 
 function loginWithDiscord() {
     const params = new URLSearchParams({
         client_id: DISCORD_CLIENT_ID,
-        redirect_uri: redirectUri,
+        redirect_uri: getCallbackUrl(),
         response_type: 'code',
         scope: 'identify'
     });
