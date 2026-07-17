@@ -1,5 +1,6 @@
 import { Route } from '#/router/Route';
 import Login from '#/views/Login.vue';
+import TmnfTrialMapsList from '#/views/TmnfTrialMapsList.vue';
 import User from '#/views/User.vue';
 import UsersList from '#/views/UsersList.vue';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -30,6 +31,14 @@ const router = createRouter({
             props: true,
             meta: {
                 titleKey: 'User'
+            }
+        },
+        {
+            name: Route.TMNF_TRIAL_MAPS,
+            path: Route.TMNF_TRIAL_MAPS,
+            component: TmnfTrialMapsList,
+            meta: {
+                titleKey: 'TMNF Trial Maps'
             }
         },
         {

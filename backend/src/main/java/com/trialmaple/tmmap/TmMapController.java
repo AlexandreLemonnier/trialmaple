@@ -21,14 +21,14 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(RouteKey.MAPS_PREFIX)
-public class MapController {
+public class TmMapController {
 
     private final TmMapService tmMapService;
     private final GeoguessrPictureService geoguessrPictureService;
     private final BlurPictureService blurPictureService;
     private final ZoomPictureService zoomPictureService;
 
-    public MapController(TmMapService tmMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService, ZoomPictureService zoomPictureService) {
+    public TmMapController(TmMapService tmMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService, ZoomPictureService zoomPictureService) {
         this.tmMapService = tmMapService;
         this.geoguessrPictureService = geoguessrPictureService;
         this.blurPictureService = blurPictureService;

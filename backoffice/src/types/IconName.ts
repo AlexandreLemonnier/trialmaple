@@ -1,3 +1,4 @@
 export type IconName =
     'discord'
-    | 'user';
+    | 'user'
+    | 'track';

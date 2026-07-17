@@ -15,6 +15,8 @@
                    :loading="isLoading"
                    paginator
                    :rows="10"
+                   :rows-per-page-options="[10, 20, 50, 100]"
+                   removable-sort
                    data-key="discordId"
                    v-model:filters="filters"
                    filter-display="menu"

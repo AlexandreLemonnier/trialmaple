@@ -3,16 +3,31 @@
         <Brand compact />
         <div class="mt-8 flex flex-1 flex-col justify-between gap-4">
             <nav class="flex flex-col gap-2" aria-label="Backoffice navigation">
-                <RouterLink v-for="item in navItems"
-                            :key="item.route"
-                            :to="item.route"
-                            class="p-3 rounded-lg text-sidebar-nav-item font-extrabold"
-                            :class="isActive(item.route) && 'bg-app-background text-brand-primary'">
-                    <div class="flex gap-2 items-center">
+                <div v-for="item in navItems" :key="item.label">
+                    <RouterLink v-if="'route' in item"
+                                :to="item.route"
+                                class="flex items-center gap-2 p-3 rounded-lg text-sidebar-nav-item font-extrabold"
+                                :class="isActive(item.route) && 'bg-app-background text-brand-primary'">
                         <Icon :name="item.icon" size="md" />
                         {{ item.label }}
+                    </RouterLink>
+                    <div v-else>
+                        <div class="flex items-center gap-2 p-3 rounded-lg text-sidebar-nav-item font-extrabold">
+                            <Icon :name="item.icon" size="md" />
+                            {{ item.label }}
+                        </div>
+
+                        <div class="ml-14 flex flex-col gap-1">
+                            <RouterLink v-for="subItem in item.subItems"
+                                        :key="subItem.route"
+                                        :to="subItem.route"
+                                        class="p-2 rounded-lg text-sidebar-nav-item font-bold"
+                                        :class="isActive(subItem.route) && 'bg-app-background text-brand-primary'">
+                                {{ subItem.label }}
+                            </RouterLink>
+                        </div>
                     </div>
-                </RouterLink>
+                </div>
             </nav>
             <Button class="w-full" label="Sign out" @click="logout" />
         </div>
@@ -21,26 +36,47 @@
 
 <script setup lang="ts">
 import Button from '#/components/Button.vue';
+import Icon from '#/components/Icon.vue';
 import Brand from '#/components/layout/Brand.vue';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
 import type { IconName } from '#/types/IconName';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
-import Icon from '../Icon.vue';
 
 const route = useRoute();
 const { authState } = storeToRefs(useAppStore());
 
-const navItems: {
-    label: string;
-    icon: IconName;
-    route: Route
-}[] = [
+type NavItem =
+  {
+      label: string;
+      icon: IconName;
+  } & (
+    {
+        route: Route;
+    } | {
+        subItems: {
+            label: string;
+            route: Route;
+        }[];
+    }
+  );
+
+const navItems: NavItem[] = [
     {
         label: 'Users',
         icon: 'user',
         route: Route.USERS
+    },
+    {
+        label: 'TM Maps',
+        icon: 'track',
+        subItems: [
+            {
+                label: 'TMNF Trial',
+                route: Route.TMNF_TRIAL_MAPS
+            }
+        ]
     }
 ];
 
