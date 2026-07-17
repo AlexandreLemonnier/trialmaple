@@ -8,7 +8,7 @@
 
   /* --- Texts --- */
   --color-primary-white: #ffffff;
-  --color-app-text-primary: #0f172a;
+  --color-text-primary: #0f172a;
   --color-text-muted: #64748b;
 
   /* --- Backgrounds --- */
@@ -63,7 +63,7 @@
   .dark {
     /* --- Texts --- */
     --color-primary-white: #cbd5e1;
-    --color-app-text-primary: #cbd5e1;
+    --color-text-primary: #cbd5e1;
     --color-text-muted: #64748b;
 
     /* --- Backgrounds --- */

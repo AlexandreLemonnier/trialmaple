@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen" :class="isSignedIn ? 'grid min-h-screen grid-cols-1 md:grid-cols-[248px_minmax(0,1fr)]' : 'bg-app-background'">
+    <div class="min-h-screen text-text-primary" :class="isSignedIn ? 'grid min-h-screen grid-cols-1 md:grid-cols-[248px_minmax(0,1fr)]' : 'bg-app-background'">
         <Sidebar v-if="isSignedIn" />
         <slot></slot>
     </div>

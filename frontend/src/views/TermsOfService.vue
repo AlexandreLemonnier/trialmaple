@@ -7,7 +7,7 @@
                 <h1 class="text-3xl md:text-4xl w-fit font-black bg-linear-to-r from-primary-indigo to-primary-emerald bg-clip-text text-transparent mb-2">
                     Terms of Service
                 </h1>
-                <p class="text-xs text-app-text-muted font-medium">Effective Date: June 2026</p>
+                <p class="text-xs text-text-muted font-medium">Effective Date: June 2026</p>
             </div>
 
             <!-- Introduction -->
@@ -73,7 +73,7 @@
                 <h2 class="text-xl font-bold flex items-center gap-2">
                     <span class="text-primary-emerald">5. Limitation of Liability</span>
                 </h2>
-                <p class="text-sm leading-relaxed text-app-text-muted italic bg-subcard-background p-4 rounded-xl border border-app-border/20">
+                <p class="text-sm leading-relaxed text-text-muted italic bg-subcard-background p-4 rounded-xl border border-app-border/20">
                     The Website and its contents are provided on an "as is" and "as available" basis. We do not guarantee that the service will be uninterrupted, secure, or error-free. We are not liable for any loss of gameplay data, statistics, or scores resulting from server maintenance, bugs, database resets, or project closure.
                 </p>
             </section>

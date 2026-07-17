@@ -7,7 +7,7 @@
                 <h1 class="text-3xl md:text-4xl w-fit font-black bg-linear-to-r from-primary-indigo to-primary-emerald bg-clip-text text-transparent mb-2">
                     Privacy Policy
                 </h1>
-                <p class="text-xs text-app-text-muted font-medium">Effective Date: June 2026</p>
+                <p class="text-xs text-text-muted font-medium">Effective Date: June 2026</p>
             </div>
 
             <!-- Introduction -->
@@ -30,7 +30,7 @@
                     <p class="text-sm leading-relaxed">
                         If you play as a guest, we do not store any personal data on our backend servers. However, to provide a consistent user experience, we store the following technical data locally in your browser's <span class="font-semibold">LocalStorage</span>:
                     </p>
-                    <ul class="list-disc list-inside text-xs text-app-text-muted space-y-1 pl-2">
+                    <ul class="list-disc list-inside text-xs text-text-muted space-y-1 pl-2">
                         <li><strong>Gameplay data:</strong> Your daily map attempts for each game mode.</li>
                         <li><strong>User preferences:</strong> Your chosen theme (e.g., Dark Mode) and statistics filter preferences.</li>
                     </ul>
@@ -42,7 +42,7 @@
                     <p class="text-sm leading-relaxed">
                         When you choose to sign in using your Discord account, we collect specific information provided via Discord OAuth2 to create and maintain your profile:
                     </p>
-                    <ul class="list-disc list-inside text-xs text-app-text-muted space-y-1 pl-2">
+                    <ul class="list-disc list-inside text-xs text-text-muted space-y-1 pl-2">
                         <li><strong>Account Identifiers:</strong> Your unique Discord ID, Username, and Avatar hash/URL.</li>
                         <li><strong>Authentication Data:</strong> A secure JWT (JSON Web Token) is stored in your browser's LocalStorage to keep you securely logged in.</li>
                         <li><strong>Gameplay and Progress:</strong> Your scores are saved in our database to generate your personal statistics dashboard.</li>
@@ -89,7 +89,7 @@
             <!-- Section 5 -->
             <section class="space-y-3 border-t border-app-border/80 pt-6 text-center">
                 <h2 class="text-lg font-bold">Changes to This Policy</h2>
-                <p class="text-xs text-app-text-muted max-w-xl mx-auto">
+                <p class="text-xs text-text-muted max-w-xl mx-auto">
                     We reserve the right to modify this Privacy Policy at any time. Any updates will be posted on this page with an updated effective date.
                 </p>
             </section>

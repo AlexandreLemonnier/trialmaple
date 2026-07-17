@@ -3,7 +3,7 @@
         <output class="size-10 block rounded-full border-4 border-app-border border-t-brand-primary animate-spin"
                 aria-label="Loading"></output>
 
-        <span v-if="loadingReason" class="text-app-text-muted font-medium">
+        <span v-if="loadingReason" class="text-text-muted font-medium">
             {{ loadingReason }}
         </span>
     </div>

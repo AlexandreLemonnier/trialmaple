@@ -25,7 +25,7 @@
             <!-- Stats Filters -->
             <Card class="shadow-sm flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
                 <div class="flex flex-col gap-2 w-full md:w-auto">
-                    <span class="text-sm font-semibold uppercase tracking-wider text-app-text-muted">Games</span>
+                    <span class="text-sm font-semibold uppercase tracking-wider text-text-muted">Games</span>
                     <div class="flex flex-wrap gap-2">
                         <Button v-for="tmGame in TM_GAMES"
                                 :key="tmGame"
@@ -40,7 +40,7 @@
                 <div class="hidden md:block w-px h-12 border border-app-border"></div>
 
                 <div class="flex flex-col gap-2 w-full md:w-auto">
-                    <span class="text-sm font-semibold uppercase tracking-wider text-app-text-muted">Categories</span>
+                    <span class="text-sm font-semibold uppercase tracking-wider text-text-muted">Categories</span>
                     <div class="flex flex-wrap gap-2">
                         <Button v-for="tmCategory in TM_CATEGORIES"
                                 :key="tmCategory"
@@ -57,8 +57,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 <!-- Empty State -->
                 <Card v-if="filteredStats.length === 0" class="col-span-full text-center border-dashed">
-                    <i class="pi pi-chart-pie text-4xl text-app-text-muted mb-3 block"></i>
-                    <p class="text-app-text-muted text-lg">No statistics match these filters.</p>
+                    <i class="pi pi-chart-pie text-4xl text-text-muted mb-3 block"></i>
+                    <p class="text-text-muted text-lg">No statistics match these filters.</p>
                 </Card>
 
                 <!-- Stats Cards -->
@@ -67,8 +67,10 @@
                     <div class="items-start mb-6">
                         <h2 class="text-xl font-bold mb-2">{{ GAME_MODE_DISPLAY_NAMES[stat.gameMode] }}</h2>
                         <div class="flex gap-2">
-                            <SubCard class="text-xs font-semibold text-app-text-muted px-2.5 py-1">{{ stat.tmGame }}</SubCard>
-                            <SubCard class="text-xs font-semibold text-app-text-muted px-2.5 py-1">{{ stat.tmCategory }}</SubCard>
+                            <Tag severity="secondary" :value="stat.tmGame" />
+                            <Tag class="text-text-muted" severity="secondary" :value="stat.tmCategory" />
+                            <SubCard class="text-xs font-semibold text-text-muted px-2.5 py-1">{{ stat.tmGame }}</SubCard>
+                            <SubCard class="text-xs font-semibold text-text-muted px-2.5 py-1">{{ stat.tmCategory }}</SubCard>
                         </div>
                     </div>
 
@@ -76,10 +78,10 @@
                         <!-- Average Tries -->
                         <SubCard class="rounded-2xl">
                             <div class="flex items-center justify-between p-4">
-                                <span class="font-medium text-app-text-muted">Average tries</span>
+                                <span class="font-medium text-text-muted">Average tries</span>
                                 <div class="flex items-baseline gap-1">
                                     <span class="text-3xl font-black">{{ stat.averageTries.toFixed(1) }}</span>
-                                    <span class="text-sm text-app-text-muted">/map</span>
+                                    <span class="text-sm text-text-muted">/map</span>
                                 </div>
                             </div>
                         </SubCard>
@@ -87,7 +89,7 @@
                         <!-- Win Rate & ProgressBar -->
                         <div>
                             <div class="flex justify-between items-end mb-2">
-                                <span class="font-medium text-app-text-muted">Win Rate</span>
+                                <span class="font-medium text-text-muted">Win Rate</span>
                                 <div class="text-right">
                                     <span class="text-2xl font-bold">{{ getWinRate(stat.winsCount, stat.dailyMapsCount) }}%</span>
                                 </div>
@@ -98,7 +100,7 @@
                                 </div>
                             </SubCard>
                             <div class="text-right mt-1.5">
-                                <span class="text-xs text-app-text-muted font-medium">{{ stat.winsCount }} wins out of {{ stat.dailyMapsCount }} maps</span>
+                                <span class="text-xs text-text-muted font-medium">{{ stat.winsCount }} wins out of {{ stat.dailyMapsCount }} maps</span>
                             </div>
                         </div>
                     </div>
@@ -107,7 +109,7 @@
 
         </div>
         <div v-else class="grow flex items-center justify-center gap-4">
-            <p class="text-app-text-muted text-xl font-medium">User not found.</p>
+            <p class="text-text-muted text-xl font-medium">User not found.</p>
         </div>
     </div>
 </template>
@@ -128,6 +130,7 @@ import type { UserStats } from '#/types/api/userStats';
 import { TM_CATEGORIES, type TmCategory } from '#/types/tmCategory';
 import { TM_GAMES, type TmGame } from '#/types/tmGame';
 import { getDiscordAvatarUrl } from '#/utils/getDiscordAvatarUrl';
+import Tag from 'primevue/tag';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 

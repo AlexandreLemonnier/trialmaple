@@ -29,7 +29,7 @@
                       :game-mode
                       :format-result="formatResult">
         </ResultScreen>
-        <div v-if="gameEnded" class="flex items-center justify-center gap-2 text-sm text-app-text-muted bg-subcard-background shadow-sm py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
+        <div v-if="gameEnded" class="flex items-center justify-center gap-2 text-sm text-text-muted bg-subcard-background shadow-sm py-2 px-2 lg:px-4 rounded-lg w-fit mx-auto">
             <span>💡</span>
             <p>Want to help improve the game? Send me map screenshots on Discord!</p>
         </div>
@@ -42,7 +42,7 @@
         <div v-if="nextPictureAttempt && !hasWon" class="text-sm text-text-muted">
             <span>
                 Next picture in
-                <strong class="text-app-text-primary font-semibold">
+                <strong class="text-text-primary font-semibold">
                     {{ attemptsUntilNextPicture }}
                 </strong>
                 {{ attemptsUntilNextPicture > 1 ? 'attempts' : 'attempt' }}
