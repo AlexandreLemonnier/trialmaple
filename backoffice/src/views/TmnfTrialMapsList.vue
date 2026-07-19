@@ -20,6 +20,7 @@
                        :rows-per-page-options="[15, 30, 60, 100]"
                        removable-sort
                        sort-mode="multiple"
+                       :multi-sort-meta="defaultSort"
                        class="p-datatable-sm">
 
                 <Column field="active" header="Active">
@@ -105,7 +106,7 @@ import type { TmUser } from '#/types/api/tmUser';
 import AutoComplete from 'primevue/autocomplete';
 import Checkbox from 'primevue/checkbox';
 import Column from 'primevue/column';
-import DataTable, { type DataTableCellEditCompleteEvent } from 'primevue/datatable';
+import DataTable, { type DataTableCellEditCompleteEvent, type DataTableSortMeta } from 'primevue/datatable';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
@@ -117,6 +118,10 @@ const isSaving = ref(false);
 const maps = ref<TmnfTrialMap[]>([]);
 const tmUsers = ref<TmUser[]>([]);
 const filteredTmUsers = ref<TmUser[]>([]);
+const defaultSort: DataTableSortMeta[] = [
+    { field: 'points', order: 1 },
+    { field: 'name', order: 1 }
+];
 
 // Set to track the modified maps (key: uuid, value: modified mapo)
 const modifiedMaps = ref<Map<string, TmnfTrialMap>>(new Map());
