@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, RouteKey.AUTH_PREFIX + RouteKey.BACKOFFICE_AUTH_PREFIX + RouteKey.DISCORD_AUTH).permitAll()
                         .requestMatchers(RouteKey.AUTH_PREFIX + RouteKey.BACKOFFICE_AUTH_PREFIX + RouteKey.CURRENT_USER).hasRole(UserType.ADMIN.name())
                         .requestMatchers(RouteKey.ADMIN_PREFIX + "/**").hasRole(UserType.ADMIN.name())
-                        .requestMatchers(RouteKey.USERS_PREFIX + RouteKey.CURRENT_USER).authenticated()
+                        .requestMatchers(RouteKey.USERS + RouteKey.CURRENT_USER).authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

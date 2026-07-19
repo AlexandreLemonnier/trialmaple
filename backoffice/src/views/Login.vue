@@ -11,11 +11,11 @@
 
             <p v-if="error" class="mt-4 leading-[1.45]">{{ error }}</p>
 
-            <Button class="w-full bg-discord hover:bg-discord/60 border-discord text-primary-white font-bold py-2 mt-5"
+            <Button class="w-full bg-discord hover:bg-discord/60 border-discord py-2 mt-5"
                     :label="isBusy ? 'Connecting...' : 'Sign in with Discord'"
-                    icon-name="discord"
+                    icon="pi pi-discord"
                     :disabled="isBusy"
-                    @click="startDiscordLogin" />
+                    :action="startDiscordLogin" />
         </div>
     </div>
 </template>

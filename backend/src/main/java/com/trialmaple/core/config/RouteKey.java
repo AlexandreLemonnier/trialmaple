@@ -9,7 +9,8 @@ public final class RouteKey {
     public static final String ADMIN_PREFIX = BASE_API + "/admin";
 
     // MAPS
-    public static final String MAPS_PREFIX = BASE_API + "/maps";
+    public static final String MAPS_PREFIX = "/maps";
+    public static final String MAPS = BASE_API + MAPS_PREFIX;
     public static final String MAPS_LIST = "/list";
     public static final String GEOGUESSR_MAPS = "/geoguessr";
     public static final String BLUR_MAPS = "/blur";
@@ -29,8 +30,8 @@ public final class RouteKey {
     public static final String ZOOM_PICTURE = "/zoom-picture";
 
     // USER
-    public static final String USERS = "/users";
-    public static final String USERS_PREFIX = BASE_API + USERS;
+    public static final String USERS_PREFIX = "/users";
+    public static final String USERS = BASE_API + USERS_PREFIX;
     public static final String CURRENT_USER = "/me";
 
     // STATS

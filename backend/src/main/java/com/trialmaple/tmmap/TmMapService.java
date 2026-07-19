@@ -1,35 +1,38 @@
 package com.trialmaple.tmmap;
 
-import java.util.List;
-
-import com.trialmaple.tmmap.dto.TmMapDto;
-import org.springframework.stereotype.Service;
-
-import com.trialmaple.dailymap.DailyMap;
 import com.trialmaple.core.GameMode;
+import com.trialmaple.dailymap.DailyMap;
 import com.trialmaple.dailymap.DailyMapServiceProvider;
 import com.trialmaple.dailymap.IDailyMapPickerStrategy;
 import com.trialmaple.tmmap.update.IMapUpdateStrategy;
+import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class TmMapService {
     private final List<IMapUpdateStrategy> updateStrategies;
     private final DailyMapServiceProvider provider;
-    private final TmMapDtoMapper tmMapDtoMapper;
+    private final TmMapRepository tmMapRepository;
 
-    public TmMapService(List<IMapUpdateStrategy> updateStrategies, DailyMapServiceProvider provider, TmMapDtoMapper tmMapDtoMapper) {
+    public TmMapService(List<IMapUpdateStrategy> updateStrategies, DailyMapServiceProvider provider, TmMapRepository tmMapRepository) {
         this.updateStrategies = updateStrategies;
         this.provider = provider;
-        this.tmMapDtoMapper = tmMapDtoMapper;
+        this.tmMapRepository = tmMapRepository;
     }
 
     /**
      * Get the maps for the given game mode
      */
-    public List<TmMapDto> getAllMaps(GameMode gameMode) {
+    public List<TmMap> getMapPool(GameMode gameMode) {
         IDailyMapPickerStrategy<? extends DailyMap> dailyMapService = provider.getDailyMapService(gameMode);
-        List<TmMap> maps = dailyMapService.getMapPool();
-        return maps.stream().map(tmMapDtoMapper::serviceToDto).toList();
+        return dailyMapService.getMapPool();
+    }
+
+    public List<TmMap> getFullMaps(GameMode gameMode) {
+        MapList mapList = gameMode.getMapList();
+        return mapList == null ? Collections.emptyList() : tmMapRepository.findByWrTimeIsNotNullAndMapList(mapList);
     }
 
     /**

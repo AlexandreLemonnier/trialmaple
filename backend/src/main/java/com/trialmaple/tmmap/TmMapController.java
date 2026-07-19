@@ -20,16 +20,18 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(RouteKey.MAPS_PREFIX)
+@RequestMapping(RouteKey.MAPS)
 public class TmMapController {
 
     private final TmMapService tmMapService;
+    private final TmMapDtoMapper tmMapDtoMapper;
     private final GeoguessrPictureService geoguessrPictureService;
     private final BlurPictureService blurPictureService;
     private final ZoomPictureService zoomPictureService;
 
-    public TmMapController(TmMapService tmMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService, ZoomPictureService zoomPictureService) {
+    public TmMapController(TmMapService tmMapService, TmMapDtoMapper tmMapDtoMapper, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService, ZoomPictureService zoomPictureService) {
         this.tmMapService = tmMapService;
+        this.tmMapDtoMapper = tmMapDtoMapper;
         this.geoguessrPictureService = geoguessrPictureService;
         this.blurPictureService = blurPictureService;
         this.zoomPictureService = zoomPictureService;
@@ -42,7 +44,8 @@ public class TmMapController {
     public List<TmMapDto> getActiveMaps(@RequestParam String gameMode) {
         try {
             GameMode gameModeValue = GameMode.valueOf(gameMode);
-            return tmMapService.getAllMaps(gameModeValue);
+            List<TmMap> maps = tmMapService.getMapPool(gameModeValue);
+            return maps.stream().map(tmMapDtoMapper::serviceToDto).toList();
         } catch (IllegalArgumentException e) {
             log.error("Invalid game mode.", e);
             throw new InvalidGameModeException(gameMode);

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(RouteKey.ADMIN_PREFIX + RouteKey.USERS)
+@RequestMapping(RouteKey.ADMIN_PREFIX + RouteKey.USERS_PREFIX)
 @CrossOrigin(origins = "*")
 public class AdminUserController {
 

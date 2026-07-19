@@ -1,4 +1,4 @@
-package com.trialmaple.tmmap.admin;
+package com.trialmaple.tmmap.tmuser;
 
 import com.trialmaple.core.TmGame;
 

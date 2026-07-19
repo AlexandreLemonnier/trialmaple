@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(RouteKey.USERS_PREFIX)
+@RequestMapping(RouteKey.USERS)
 @CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;

@@ -1,8 +1,8 @@
 package com.trialmaple.tmmap.admin;
 
 import com.trialmaple.tmmap.DifficultyCategory;
+import com.trialmaple.tmmap.tmuser.TmUserDto;
 
-import java.time.Duration;
 import java.util.List;
 
 public record AdminTmMapDto(
@@ -15,7 +15,7 @@ public record AdminTmMapDto(
         int checkpointCount,
         DifficultyCategory difficulty,
         int points,
-        Duration wrTime,
+        String wrTime,
         Integer wrYear,
         TmUserDto wrHolder,
         int finisherCount,

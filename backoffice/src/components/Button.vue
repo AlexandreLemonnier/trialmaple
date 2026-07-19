@@ -1,24 +1,20 @@
 <template>
-    <button type="button"
-            class="flex items-center justify-center gap-1.5 lg:gap-2 w-fit text-sm lg:text-base text-brand-primary border border-button-border py-1 px-3 bg-button-background hover:bg-button-background/40 rounded-lg cursor-pointer"
-            :disabled>
-        <Icon v-if="iconName && iconPosition === 'left'" :class="iconClass" :name="iconName" :size="iconSize" />
-        <span v-if="label" class="font-extrabold">{{ label }}</span>
-        <Icon v-if="iconName && iconPosition === 'right'" :class="iconClass" :name="iconName" :size="iconSize" />
-    </button>
+    <Button :label
+            :icon
+            :disabled
+            :loading
+            @click="action"
+            class="bg-brand-primary hover:bg-button-background/60 text-button-text font-bold border-button-border" />
 </template>
 
 <script setup lang="ts">
-import Icon from '#/components/Icon.vue';
-import type { IconName } from '#/types/IconName';
-import type { Size } from '#/types/Size';
-const { iconSize = 'sm', iconPosition = 'left' } = defineProps<{
+import Button from 'primevue/button';
+defineProps<{
     label?: string;
-    iconName?: IconName;
-    iconSize?: Size;
-    iconPosition?: 'left' | 'right';
-    iconClass?: string;
+    icon?: string;
     disabled?: boolean;
+    loading?: boolean;
+    action(): void;
 }>();
 
 </script>

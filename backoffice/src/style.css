@@ -12,6 +12,7 @@
   --color-text-muted: #64748b;
   --color-text-error: #9b3522;
   --color-sidebar-nav-item: #536057;
+  --color-button-text: #ffffff;
 
   /* --- Backgrounds --- */
   --color-app-background: #e8f0e8;
@@ -20,7 +21,7 @@
   --color-card-background: #ffffff;
   --color-subcard-background: #e8f0e8;
   --color-error-background: #fff1ee;
-  --color-button-background: #e8f0e8;
+  --color-button-background: #234238;
 
   /* --- Borders --- */
   --color-app-border: #dfe7dc;

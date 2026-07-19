@@ -29,9 +29,9 @@
                     <div class="flex flex-wrap gap-2">
                         <Button v-for="tmGame in TM_GAMES"
                                 :key="tmGame"
-                                :class="!selectedGames.has(tmGame) && 'bg-transparent'"
+                                :class="!selectedGames.has(tmGame) && 'bg-transparent text-text-primary'"
                                 :label="tmGame"
-                                @click="selectedGames = toggleFilter(selectedGames, tmGame)">
+                                :action="() => selectedGames = toggleFilter(selectedGames, tmGame)">
                             {{ tmGame }}
                         </Button>
                     </div>
@@ -44,9 +44,9 @@
                     <div class="flex flex-wrap gap-2">
                         <Button v-for="tmCategory in TM_CATEGORIES"
                                 :key="tmCategory"
-                                :class="!selectedCategories.has(tmCategory) && 'bg-transparent'"
+                                :class="!selectedCategories.has(tmCategory) && 'bg-transparent text-text-primary'"
                                 :label="tmCategory"
-                                @click="selectedCategories = toggleFilter(selectedCategories, tmCategory)">
+                                :action="() => selectedCategories = toggleFilter(selectedCategories, tmCategory)">
                             {{ tmCategory }}
                         </Button>
                     </div>

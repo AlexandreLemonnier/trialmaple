@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </nav>
-            <Button class="w-full" label="Sign out" @click="logout" />
+            <Button class="w-full" label="Sign out" icon="pi pi-sign-out" :action="logout" />
         </div>
     </aside>
 </template>
@@ -69,7 +69,7 @@ const navItems: NavItem[] = [
         route: Route.USERS
     },
     {
-        label: 'TM Maps',
+        label: 'Maps',
         icon: 'track',
         subItems: [
             {
