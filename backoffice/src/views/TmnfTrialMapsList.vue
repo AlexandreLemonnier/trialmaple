@@ -224,7 +224,7 @@ const onCellEditComplete = (event: DataTableCellEditCompleteEvent) => {
 const adminMapsApi = useAdminMapsApi();
 const fetchMaps = async () => {
     try {
-        maps.value = await adminMapsApi.getTmnfTrialMaps();
+        maps.value = await adminMapsApi.getMaps<TmnfTrialMap>('CLASSIC_TMNF_TRIAL');
         tmUsers.value = [...new Map(maps.value.map((map) => [map.wrHolder.login, map.wrHolder])).values()];
     } catch (e) {
         console.error(e);
@@ -242,7 +242,7 @@ const saveChanges = async () => {
         });
 
         console.log('Payload', payload);
-        await adminMapsApi.updateTmnfTrialMaps(payload);
+        await adminMapsApi.updateMaps<TmnfTrialMap>(payload);
 
         modifiedMaps.value.clear();
         await fetchMaps();
