@@ -13,6 +13,12 @@ export function useAdminMapsApi() {
                     gameMode: 'CLASSIC_TMNF_TRIAL' satisfies GameMode
                 }
             });
+        },
+        async updateTmnfTrialMaps(maps: TmnfTrialMap[]) {
+            return await adminRequest('', {
+                method: 'PUT',
+                body: maps
+            });
         }
     };
 }

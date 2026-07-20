@@ -12,7 +12,6 @@
         </div>
 
         <DataTable :value="isLoading ? skeletonUsers : users"
-                   :loading="isLoading"
                    paginator
                    :rows="10"
                    :rows-per-page-options="[10, 20, 50, 100]"
@@ -87,7 +86,7 @@ const appStore = useAppStore();
 const router = useRouter();
 const users = ref<User[]>([]);
 const isLoading = ref(true);
-const skeletonUsers = ref<unknown[]>(new Array(5).fill({}));
+const skeletonUsers = ref<unknown[]>(new Array(10).fill({}));
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },

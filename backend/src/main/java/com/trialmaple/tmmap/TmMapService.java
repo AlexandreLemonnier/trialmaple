@@ -7,7 +7,6 @@ import com.trialmaple.dailymap.IDailyMapPickerStrategy;
 import com.trialmaple.tmmap.update.IMapUpdateStrategy;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,11 +27,6 @@ public class TmMapService {
     public List<TmMap> getMapPool(GameMode gameMode) {
         IDailyMapPickerStrategy<? extends DailyMap> dailyMapService = provider.getDailyMapService(gameMode);
         return dailyMapService.getMapPool();
-    }
-
-    public List<TmMap> getFullMaps(GameMode gameMode) {
-        MapList mapList = gameMode.getMapList();
-        return mapList == null ? Collections.emptyList() : tmMapRepository.findByWrTimeIsNotNullAndMapList(mapList);
     }
 
     /**

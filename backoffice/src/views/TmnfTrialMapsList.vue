@@ -3,21 +3,33 @@
 
         <div class="flex justify-between items-end">
             <H1>TMNF Trial Maps</H1>
-            <Button label="Save Changes"
-                    icon="pi pi-save"
-                    :disabled="modifiedMaps.size === 0 || isSaving"
-                    :loading="isSaving"
-                    :action="saveChanges" />
+            <div class="flex gap-4">
+                <Button label="Save Changes"
+                        icon="pi pi-save"
+                        :disabled="modifiedMaps.size === 0 || isSaving"
+                        :loading="isSaving"
+                        :action="saveChanges" />
+                <!-- Search bar -->
+                <span class="relative">
+                    <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+                    <InputText v-model="filters['global'].value"
+                               placeholder="Search a map..."
+                               class="pl-10 py-2 border border-app-border rounded-lg focus:ring-2 focus:ring-ring-focus" />
+                </span>
+            </div>
         </div>
 
         <div class="rounded-2xl border border-app-border shadow-lg overflow-hidden">
             <DataTable :value="maps"
+                       data-key="uuid"
                        :loading="isLoading"
                        edit-mode="cell"
                        @cellEditComplete="onCellEditComplete"
                        paginator
-                       :rows="100"
+                       :rows="50"
                        :rows-per-page-options="[15, 30, 60, 100]"
+                       v-model:filters="filters"
+                       :global-filter-fields="['name']"
                        removable-sort
                        sort-mode="multiple"
                        :multi-sort-meta="defaultSort"
@@ -103,6 +115,7 @@ import H1 from '#/components/H1.vue';
 import { DIFFICULTY_CATEGORIES } from '#/types/api/difficultyCategory';
 import type { TmnfTrialMap } from '#/types/api/tmmap/tmnfTrialMap';
 import type { TmUser } from '#/types/api/tmUser';
+import { FilterMatchMode } from '@primevue/core/api';
 import AutoComplete from 'primevue/autocomplete';
 import Checkbox from 'primevue/checkbox';
 import Column from 'primevue/column';
@@ -122,6 +135,10 @@ const defaultSort: DataTableSortMeta[] = [
     { field: 'points', order: 1 },
     { field: 'name', order: 1 }
 ];
+
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+});
 
 // Set to track the modified maps (key: uuid, value: modified mapo)
 const modifiedMaps = ref<Map<string, TmnfTrialMap>>(new Map());
@@ -194,15 +211,12 @@ const onCellEditComplete = (event: DataTableCellEditCompleteEvent) => {
                 game: 'TMNF'
             } satisfies TmUser;
         }
-
-        data[field] = newValue;
-
-        markAsModified(data);
-        return;
     }
 
-    data[field] = newValue;
-    markAsModified(data);
+    if (data[field] !== newValue) {
+        data[field] = newValue;
+        markAsModified(data);
+    }
 };
 
 
@@ -220,27 +234,20 @@ const fetchMaps = async () => {
 const saveChanges = async () => {
     isSaving.value = true;
     try {
-        // On prépare le payload final à envoyer au backend
         const payload = Array.from(modifiedMaps.value.values()).map((map) => {
             return {
                 ...map,
-                // On s'assure d'envoyer le wrTime en millisecondes
-                wrTime: map.wrTime ? formatTimeToMs(map.wrTime).toString() : null
+                wrTime: formatTimeToMs(map.wrTime).toString()
             };
         });
 
-        console.log('Données envoyées à l\'API :', payload);
+        console.log('Payload', payload);
+        await adminMapsApi.updateTmnfTrialMaps(payload);
 
-        // TODO: Remplacer par ton appel fetch (ex: PUT /api/maps/batch)
-        // await api.updateMaps(payload);
-
-        // Succès ! On vide le cache des modifications
         modifiedMaps.value.clear();
-
-        // Optionnel: Recharger les données depuis l'API pour être sûr
-        // await fetchMaps();
+        await fetchMaps();
     } catch (error) {
-        console.error('Erreur lors de la sauvegarde :', error);
+        console.error('Error while saving maps.', error);
     } finally {
         isSaving.value = false;
     }

@@ -4,7 +4,8 @@
             :disabled
             :loading
             @click="action"
-            class="bg-brand-primary hover:bg-button-background/60 text-button-text font-bold border-button-border" />
+            class="bg-brand-primary text-button-text font-bold border-button-border"
+            :class="[!disabled && 'hover:bg-button-background/60', disabled && 'cursor-not-allowed']" />
 </template>
 
 <script setup lang="ts">
