@@ -4,6 +4,10 @@
         <div class="flex justify-between items-end">
             <H1>TMNF Trial Maps</H1>
             <div class="flex gap-4">
+                <Button label="New Map"
+                        icon="pi pi-plus"
+                        severity="secondary"
+                        :action="() => isAddModalVisible = true" />
                 <Button label="Save Changes"
                         icon="pi pi-save"
                         :disabled="modifiedMaps.size === 0 || isSaving"
@@ -106,6 +110,11 @@
                 </Column>
             </DataTable>
         </div>
+        <MapAdditionDialog v-model:is-visible="isAddModalVisible"
+                           :is-loading="isCreating"
+                           :filtered-tm-users="filteredTmUsers"
+                           @searchUsers="searchUsers"
+                           @submit="handleCreateMap" />
     </div>
 </template>
 
@@ -116,9 +125,12 @@ import H1 from '#/components/H1.vue';
 import { useAdminMapsApi } from '#/composables/api/useAdminMapsApi';
 import { useToast } from '#/composables/useToast';
 import { DIFFICULTY_CATEGORIES } from '#/types/api/difficultyCategory';
-import type { TmnfTrialMap } from '#/types/api/tmmap/tmnfTrialMap';
+import type { CreateTmnfTrialMap, TmnfTrialMap } from '#/types/api/tmmap/tmnfTrialMap';
 import type { TmUser } from '#/types/api/tmUser';
+import { formatTimeToMs } from '#/utils/formatTimeToMs';
+import { isValidTimeFormat } from '#/utils/isValidTimeFormat';
 import { FilterMatchMode } from '@primevue/core/api';
+import type { AutoCompleteCompleteEvent } from 'primevue/autocomplete';
 import AutoComplete from 'primevue/autocomplete';
 import Checkbox from 'primevue/checkbox';
 import Column from 'primevue/column';
@@ -127,11 +139,16 @@ import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
 import { onMounted, ref } from 'vue';
+import MapAdditionDialog from './modals/MapAdditionDialog.vue';
 
 const toast = useToast();
 
+const isAddModalVisible = ref(false);
+
 const isLoading = ref(true);
+const isCreating = ref(false);
 const isSaving = ref(false);
+
 const maps = ref<TmnfTrialMap[]>([]);
 const tmUsers = ref<TmUser[]>([]);
 const filteredTmUsers = ref<TmUser[]>([]);
@@ -147,41 +164,13 @@ const filters = ref({
 // Set to track the modified maps (key: uuid, value: modified mapo)
 const modifiedMaps = ref<Map<string, TmnfTrialMap>>(new Map());
 
-// Time validation regex : HH:MM:SS.ms or MM:SS.ms
-const TIME_REGEX = /^(?:(?:(\d{1,2}):)?([0-5]?\d):)?([0-5]?\d)\.\d{2,3}$/;
-
-const isValidTimeFormat = (timeStr: string) => {
-    if (!timeStr) return false;
-    return TIME_REGEX.test(timeStr);
-};
-
-// Convert human readable time to milliseconds time for backend
-const formatTimeToMs = (timeStr: string): number => {
-    if (!timeStr) return 0;
-    const parts = timeStr.split(':');
-    let ms = 0;
-
-    if (parts.length === 3) {
-        // HH:MM:SS.ms
-        ms += Number.parseInt(parts[0]!) * 3600000;
-        ms += Number.parseInt(parts[1]!) * 60000;
-        ms += Number.parseFloat(parts[2]!) * 1000;
-    } else if (parts.length === 2) {
-        // MM:SS.ms
-        ms += Number.parseInt(parts[0]!) * 60000;
-        ms += Number.parseFloat(parts[1]!) * 1000;
-    }
-
-    return Math.round(ms);
-};
-
 const markAsModified = (map: TmnfTrialMap) => {
     modifiedMaps.value.set(map.uuid, map);
 };
 
-// Handle AutoComplete serach
-const searchUsers = ({ query }: { query: string }) => {
-    const q = query.trim().toLowerCase();
+// Handle AutoComplete search
+const searchUsers = (event: AutoCompleteCompleteEvent) => {
+    const q = event.query.trim().toLowerCase();
 
     filteredTmUsers.value = !q
         ? [...tmUsers.value]
@@ -259,6 +248,21 @@ const saveChanges = async () => {
         toast.add({ severity: 'error', summary: 'Error while saving maps', error });
     } finally {
         isSaving.value = false;
+    }
+};
+
+const handleCreateMap = async (newMapPayload: CreateTmnfTrialMap) => {
+    isCreating.value = true;
+    try {
+        await adminMapsApi.createMap(newMapPayload, 'CLASSIC_TMNF_TRIAL');
+
+        toast.add({ severity: 'success', summary: 'Success', detail: 'New map created successfully!' });
+        isAddModalVisible.value = false;
+        await fetchMaps();
+    } catch (error) {
+        toast.add({ severity: 'error', summary: 'Creation failed', error });
+    } finally {
+        isCreating.value = false;
     }
 };
 

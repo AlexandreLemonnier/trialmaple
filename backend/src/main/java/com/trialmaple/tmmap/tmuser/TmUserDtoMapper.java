@@ -11,4 +11,12 @@ public class TmUserDtoMapper {
                 tmUser.getGame()
         );
     }
+
+    public TmUser dtoToService(TmUserDto tmUserDto) {
+        return tmUserDto == null ? null : new TmUser(
+                tmUserDto.login(),
+                tmUserDto.displayName(),
+                tmUserDto.game()
+        );
+    }
 }

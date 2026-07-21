@@ -47,4 +47,23 @@ public class AdminTmMapController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping
+    public ResponseEntity<AdminTmMapDto> createMap(@RequestBody AdminTmMapDto request, @RequestParam String gameMode) {
+        if (request == null || request.name() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            GameMode gameModeValue = GameMode.valueOf(gameMode);
+            TmMap createdMap = adminTmMapService.createMap(request, gameModeValue);
+            return ResponseEntity.ok(adminTmMapDtoMapper.serviceToDto(createdMap));
+        }  catch (IllegalArgumentException e) {
+            log.error("Invalid game mode.", e);
+            throw new InvalidGameModeException(gameMode);
+        } catch (Exception e) {
+            log.error("Error creating map {}", request.name(), e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

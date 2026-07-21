@@ -1,9 +1,12 @@
 package com.trialmaple.tmmap.admin;
 
 import com.trialmaple.core.utils.TimeUtils;
+import com.trialmaple.tmmap.MapList;
 import com.trialmaple.tmmap.TmMap;
 import com.trialmaple.tmmap.tmuser.TmUserDtoMapper;
 import org.springframework.stereotype.Component;
+
+import java.time.Duration;
 
 @Component
 public class AdminTmMapDtoMapper {
@@ -32,5 +35,28 @@ public class AdminTmMapDtoMapper {
                 tmMap.getReleaseYear(),
                 tmMap.isClassic()
         );
+    }
+
+    public TmMap dtoToService(AdminTmMapDto tmMapDto, MapList mapList) {
+        if (tmMapDto == null) {
+            return null;
+        }
+        TmMap map = new TmMap(
+                tmMapDto.tmxId(),
+                tmMapDto.name(),
+                tmMapDto.displayName(),
+                tmMapDto.authors(),
+                tmMapDto.checkpointCount(),
+                tmMapDto.points(),
+                Duration.ofMillis(Long.parseLong(tmMapDto.wrTime())),
+                tmMapDto.wrYear(),
+                tmUserDtoMapper.dtoToService(tmMapDto.wrHolder()),
+                tmMapDto.finisherCount(),
+                tmMapDto.releaseYear(),
+                mapList,
+                tmMapDto.classic()
+        );
+        map.setDifficulty(tmMapDto.difficulty());
+        return map;
     }
 }

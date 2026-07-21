@@ -9,6 +9,7 @@ import com.trialmaple.tmmap.tmuser.TmUserDto;
 import com.trialmaple.tmmap.tmuser.TmUserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +20,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AdminTmMapService {
 
     private final TmMapRepository tmMapRepository;
     private final TmUserRepository tmUserRepository;
+    private final AdminTmMapDtoMapper adminTmMapDtoMapper;
 
     public List<TmMap> getFullMaps(GameMode gameMode) {
         MapList mapList = gameMode.getMapList();
@@ -69,5 +72,32 @@ public class AdminTmMapService {
                 map.setWrHolder(null);
             }
         }
+    }
+
+    @Transactional
+    public TmMap createMap(AdminTmMapDto dto, GameMode gameMode) {
+
+        // Find or create WR Holder
+        TmUser wrHolder = null;
+        TmUserDto wrUserDto = dto.wrHolder();
+
+        if (wrUserDto != null && wrUserDto.login() != null) {
+            String login = wrUserDto.login();
+
+            // Search existing WR holder, create it if missing
+            wrHolder = tmUserRepository.findByLoginAndGame(login, wrUserDto.game())
+                    .orElseGet(() -> {
+                        TmUser newUser = new TmUser(login, wrUserDto.displayName(), wrUserDto.game());
+                        return tmUserRepository.save(newUser);
+                    });
+        }
+
+        // Create map
+        TmMap newMap = adminTmMapDtoMapper.dtoToService(dto, gameMode.getMapList());
+        newMap.setWrHolder(wrHolder);
+
+        // Save
+        log.info("New map created \"{}\" for game {}", newMap.getName(), gameMode.name());
+        return tmMapRepository.save(newMap);
     }
 }

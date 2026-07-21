@@ -16,3 +16,15 @@ export type TmMap = {
     releaseYear: number,
     // classic: boolean
 };
+
+export type CreateTmMap = {
+    active: boolean,
+    name: string,
+    authors: string[],
+    checkpointCount: number,
+    points: number,
+    wrTime: string,
+    wrHolder: TmUser
+    finisherCount: number,
+    releaseYear: number
+};

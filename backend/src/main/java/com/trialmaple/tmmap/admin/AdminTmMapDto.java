@@ -8,17 +8,25 @@ import java.util.List;
 public record AdminTmMapDto(
         String uuid,
         Long tmxId,
-        boolean active,
+        Boolean active,
         String name,
         String displayName,
         List<String> authors,
-        int checkpointCount,
+        Integer checkpointCount,
         DifficultyCategory difficulty,
-        int points,
+        Integer points,
         String wrTime,
         Integer wrYear,
         TmUserDto wrHolder,
-        int finisherCount,
-        int releaseYear,
-        boolean classic
-        ) {}
+        Integer finisherCount,
+        Integer releaseYear,
+        Boolean classic
+        ) {
+        public AdminTmMapDto {
+                if (active == null) active = false;
+                if (classic == null) classic = false;
+                if (checkpointCount == null) checkpointCount = 0;
+                if (points == null) points = 0;
+                if (finisherCount == null) finisherCount = 0;
+        }
+}
