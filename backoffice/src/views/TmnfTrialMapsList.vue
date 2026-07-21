@@ -110,8 +110,11 @@
 </template>
 
 <script setup lang="ts">
+import { RequestError } from '#/classes/RequestError';
 import Button from '#/components/Button.vue';
 import H1 from '#/components/H1.vue';
+import { useAdminMapsApi } from '#/composables/api/useAdminMapsApi';
+import { useToast } from '#/composables/useToast';
 import { DIFFICULTY_CATEGORIES } from '#/types/api/difficultyCategory';
 import type { TmnfTrialMap } from '#/types/api/tmmap/tmnfTrialMap';
 import type { TmUser } from '#/types/api/tmUser';
@@ -124,7 +127,8 @@ import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
 import { onMounted, ref } from 'vue';
-import { useAdminMapsApi } from '../composables/api/useAdminMapsApi';
+
+const toast = useToast();
 
 const isLoading = ref(true);
 const isSaving = ref(false);
@@ -226,8 +230,8 @@ const fetchMaps = async () => {
     try {
         maps.value = await adminMapsApi.getMaps<TmnfTrialMap>('CLASSIC_TMNF_TRIAL');
         tmUsers.value = [...new Map(maps.value.map((map) => [map.wrHolder.login, map.wrHolder])).values()];
-    } catch (e) {
-        console.error(e);
+    } catch (error) {
+        toast.add({ severity: 'error', summary: 'Error while fetching maps', error });
     }
 };
 
@@ -241,13 +245,18 @@ const saveChanges = async () => {
             };
         });
 
-        console.log('Payload', payload);
         await adminMapsApi.updateMaps<TmnfTrialMap>(payload);
+        toast.add({ severity: 'success', summary: 'Successful update!', detail: 'The maps have been updated.' });
 
         modifiedMaps.value.clear();
         await fetchMaps();
     } catch (error) {
-        console.error('Error while saving maps.', error);
+        if (error instanceof RequestError) {
+            console.log(error);
+            console.log(error.statusCode);
+            console.log(error.message);
+        }
+        toast.add({ severity: 'error', summary: 'Error while saving maps', error });
     } finally {
         isSaving.value = false;
     }

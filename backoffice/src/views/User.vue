@@ -121,6 +121,7 @@ import RolePill from '#/components/RolePill.vue';
 import SubCard from '#/components/SubCard.vue';
 import { useAdminStatsApi } from '#/composables/api/useAdminStatsApi';
 import { useAdminUserApi } from '#/composables/api/useAdminUserApi';
+import { useToast } from '#/composables/useToast';
 import { useAppStore } from '#/stores/appStore';
 import { GAME_MODE_DISPLAY_NAMES } from '#/types/api/gameMode';
 import type { User } from '#/types/api/user';
@@ -133,6 +134,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const { currentSelectedUser } = useAppStore();
+const toast = useToast();
 const route = useRoute();
 const isLoading = ref(true);
 
@@ -152,8 +154,8 @@ async function loadUser() {
         // Fallback if user data is missing (refresh, direct link, etc)
         try {
             user.value = await adminUserApi.getUserById(userId);
-        } catch (e) {
-            console.error('Error while fetching user', e);
+        } catch (error) {
+            toast.add({ severity: 'error', summary: `Error while fetching user ${userId}`, error });
         }
     }
 }
@@ -161,11 +163,12 @@ async function loadUser() {
 const adminStatsApi = useAdminStatsApi();
 async function loadStats() {
     if (!user.value) return;
+    const userId = user.value.discordId;
     try {
-        const result = await adminStatsApi.getUserStats(user.value.discordId);
+        const result = await adminStatsApi.getUserStats(userId);
         stats.value = result.filter((stat) => stat.winsCount > 0);
-    } catch (e) {
-        console.error('Error while fetching user stats', e);
+    } catch (error) {
+        toast.add({ severity: 'error', summary: `Error while fetching user stats ${userId}`, error });
     }
 }
 

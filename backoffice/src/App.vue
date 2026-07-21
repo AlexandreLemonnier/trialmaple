@@ -1,4 +1,5 @@
 <template>
+    <Toast />
     <Layout>
         <RouterView />
     </Layout>
@@ -10,6 +11,7 @@ import { BACKOFFICE_AUTH_TOKEN_STORAGE_KEY } from '#/composables/api/useAdminApi
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
+import { Toast } from 'primevue';
 import { watch } from 'vue';
 import type { RouteLocationNormalizedGeneric } from 'vue-router';
 import { useRouter } from 'vue-router';

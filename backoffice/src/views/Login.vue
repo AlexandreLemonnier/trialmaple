@@ -80,7 +80,7 @@ function getAuthErrorMessage(err: unknown) {
     if (err instanceof RequestError) {
         if (err.statusCode === 401) return 'Session expired. Please sign in again.';
         if (err.statusCode === 403) return 'This account is not allowed to access the backoffice.';
-        return err.errorCode;
+        return err.errorMessage;
     }
 
     return 'Authentication failed.';

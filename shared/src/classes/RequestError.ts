@@ -1,11 +1,11 @@
 export class RequestError extends Error {
-    public errorCode: string;
+    public errorMessage: string;
     public statusCode: number;
 
-    public constructor(errorCode: string, statusCode: number) {
+    public constructor(message: string, statusCode: number) {
         super();
         Object.setPrototypeOf(this, RequestError.prototype);
-        this.errorCode = errorCode;
+        this.errorMessage = message;
         this.statusCode = statusCode;
     }
 }

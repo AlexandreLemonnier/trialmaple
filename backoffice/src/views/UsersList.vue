@@ -68,6 +68,7 @@
 import H1 from '#/components/H1.vue';
 import RolePill from '#/components/RolePill.vue';
 import { useAdminUserApi } from '#/composables/api/useAdminUserApi';
+import { useToast } from '#/composables/useToast';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
 import type { User } from '#/types/api/user';
@@ -82,6 +83,7 @@ import Skeleton from 'primevue/skeleton';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const toast = useToast();
 const appStore = useAppStore();
 const router = useRouter();
 const users = ref<User[]>([]);
@@ -99,7 +101,7 @@ onMounted(async () => {
     try {
         users.value = await adminUserApi.getAllUsers();
     } catch (error) {
-        console.error('Error fetching users:', error);
+        toast.add({ severity: 'error', summary: 'Error while fetching users', error });
     } finally {
         isLoading.value = false;
     }

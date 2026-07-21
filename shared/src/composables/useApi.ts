@@ -69,7 +69,7 @@ export function useApi(routePrefix: string) {
 
             if (!response.ok) {
                 throw new RequestError(
-                    dataText ? JSON.parse(dataText)?.message ?? 'unknown' : 'unknown',
+                    JSON.parse(dataText)?.message ?? 'unknown',
                     response.status
                 );
             }
