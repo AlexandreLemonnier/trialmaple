@@ -7,7 +7,7 @@
                     <RouterLink v-if="'route' in item"
                                 :to="item.route"
                                 class="flex items-center gap-2 p-3 rounded-lg text-sidebar-nav-item font-extrabold"
-                                :class="isActive(item.route) && 'bg-app-background text-brand-primary'">
+                                :class="isActive(item.route) ? 'bg-app-background text-brand-primary' : 'hover:bg-app-background/30'">
                         <Icon :name="item.icon" size="md" />
                         {{ item.label }}
                     </RouterLink>
@@ -22,7 +22,7 @@
                                         :key="subItem.route"
                                         :to="subItem.route"
                                         class="p-2 rounded-lg text-sidebar-nav-item font-bold"
-                                        :class="isActive(subItem.route) && 'bg-app-background text-brand-primary'">
+                                        :class="isActive(subItem.route) ? 'bg-app-background text-brand-primary' : 'hover:bg-app-background/30'">
                                 {{ subItem.label }}
                             </RouterLink>
                         </div>
