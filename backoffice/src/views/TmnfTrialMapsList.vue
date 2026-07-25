@@ -1,7 +1,7 @@
 <template>
-    <div class="p-6 bg-app-background min-h-screen flex flex-col gap-6">
+    <div class="p-6 bg-app-background h-screen flex flex-col gap-6">
 
-        <div class="flex justify-between items-end">
+        <div class="flex justify-between items-end shrink-0">
             <H1>TMNF Trial Maps</H1>
             <div class="flex gap-4">
                 <Button label="New Map"
@@ -23,15 +23,14 @@
             </div>
         </div>
 
-        <div class="rounded-2xl border border-app-border shadow-lg overflow-hidden">
+        <div class="flex-1 flex flex-col min-h-0 rounded-2xl border border-app-border shadow-lg overflow-hidden">
             <DataTable :value="maps"
                        data-key="uuid"
                        :loading="isLoading"
                        edit-mode="cell"
                        @cellEditComplete="onCellEditComplete"
-                       paginator
-                       :rows="50"
-                       :rows-per-page-options="[15, 30, 60, 100]"
+                       scrollable
+                       scroll-height="flex"
                        v-model:filters="filters"
                        :global-filter-fields="['name']"
                        removable-sort

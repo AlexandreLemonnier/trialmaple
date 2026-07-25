@@ -1,6 +1,9 @@
 <template>
-    <div class="p-6 bg-app-background">
-        <div class="mb-4 flex justify-between items-center">
+    <!-- 1. h-screen, flex et flex-col sur le parent -->
+    <div class="p-6 bg-app-background h-screen flex flex-col">
+
+        <!-- 2. shrink-0 sur le header (et j'ai gardé votre mb-4) -->
+        <div class="mb-4 flex justify-between items-center shrink-0">
             <H1>Users</H1>
             <!-- Search bar -->
             <span class="relative">
@@ -11,56 +14,60 @@
             </span>
         </div>
 
-        <DataTable :value="isLoading ? skeletonUsers : users"
-                   paginator
-                   :rows="10"
-                   :rows-per-page-options="[10, 20, 50, 100]"
-                   removable-sort
-                   data-key="discordId"
-                   v-model:filters="filters"
-                   filter-display="menu"
-                   :global-filter-fields="['username']"
-                   selection-mode="single"
-                   @rowSelect="onRowClick"
-                   class="border border-app-border rounded-lg overflow-hidden"
-                   row-hover>
+        <!-- 3. Wrapper flex-1 et min-h-0 avec vos classes de style -->
+        <div class="flex-1 flex flex-col min-h-0 border border-app-border rounded-lg overflow-hidden">
 
-            <template #empty>No player found.</template>
+            <!-- 4. Ajout de scrollable, scroll-height="flex" et class="flex-1" -->
+            <DataTable :value="isLoading ? skeletonUsers : users"
+                       scrollable
+                       scroll-height="flex"
+                       removable-sort
+                       data-key="discordId"
+                       v-model:filters="filters"
+                       filter-display="menu"
+                       :global-filter-fields="['username']"
+                       selection-mode="single"
+                       @rowSelect="onRowClick"
+                       class="flex-1"
+                       row-hover>
 
-            <!-- Username column -->
-            <Column field="username" header="Player" sortable>
-                <template #body="{ data }">
-                    <div v-if="isLoading" class="flex items-center gap-2">
-                        <Skeleton width="150px" height="1.25rem" />
-                    </div>
-                    <span v-else class="font-medium">
-                        {{ data.username }}
-                    </span>
-                </template>
-            </Column>
+                <template #empty>No player found.</template>
 
-            <!-- UserType column with filter -->
-            <Column field="userType" header="Role" :show-filter-match-modes="false">
-                <template #body="{ data }">
-                    <Skeleton v-if="isLoading" width="60px" height="1.5rem" border-radius="9999px" />
-                    <RolePill v-else :user-type="data.userType" />
-                </template>
+                <!-- Username column -->
+                <Column field="username" header="Player" sortable>
+                    <template #body="{ data }">
+                        <div v-if="isLoading" class="flex items-center gap-2">
+                            <Skeleton width="150px" height="1.25rem" />
+                        </div>
+                        <span v-else class="font-medium">
+                            {{ data.username }}
+                        </span>
+                    </template>
+                </Column>
 
-                <template #filter="{ filterModel, filterCallback }">
-                    <div class="flex flex-col gap-1">
-                        <label for="user-role-filter" class="sr-only">Filter by role</label>
-                        <Select id="user-role-filter"
-                                input-id="user-role-filter"
-                                v-model="filterModel.value"
-                                @change="filterCallback()"
-                                :options="[...USER_TYPES]"
-                                placeholder="All roles"
-                                class="p-column-filter" />
-                    </div>
-                </template>
-            </Column>
+                <!-- UserType column with filter -->
+                <Column field="userType" header="Role" :show-filter-match-modes="false">
+                    <template #body="{ data }">
+                        <Skeleton v-if="isLoading" width="60px" height="1.5rem" border-radius="9999px" />
+                        <RolePill v-else :user-type="data.userType" />
+                    </template>
 
-        </DataTable>
+                    <template #filter="{ filterModel, filterCallback }">
+                        <div class="flex flex-col gap-1">
+                            <label for="user-role-filter" class="sr-only">Filter by role</label>
+                            <Select id="user-role-filter"
+                                    input-id="user-role-filter"
+                                    v-model="filterModel.value"
+                                    @change="filterCallback()"
+                                    :options="[...USER_TYPES]"
+                                    placeholder="All roles"
+                                    class="p-column-filter" />
+                        </div>
+                    </template>
+                </Column>
+
+            </DataTable>
+        </div>
     </div>
 </template>
 
