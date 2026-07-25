@@ -8,6 +8,7 @@ import com.trialmaple.core.GameMode;
 import com.trialmaple.dailymap.DailyMapRepository;
 import com.trialmaple.score.ScoreRepository;
 import com.trialmaple.dailymap.DailyMapService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class StatisticsService {
 
     private final ScoreRepository scoreRepository;
@@ -23,12 +25,6 @@ public class StatisticsService {
 
     // Starting date to consider for player statistics (where login feature got added)
     private static final LocalDate STATS_START_DATE = LocalDate.of(2026, 6, 23);
-
-    public StatisticsService(ScoreRepository scoreRepository, DailyMapRepository dailyMapRepository, DailyMapService dailyMapService) {
-        this.scoreRepository = scoreRepository;
-        this.dailyMapRepository = dailyMapRepository;
-        this.dailyMapService = dailyMapService;
-    }
 
     /**
      * Get daily stats and daily map number

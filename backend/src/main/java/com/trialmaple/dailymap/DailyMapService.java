@@ -2,6 +2,7 @@ package com.trialmaple.dailymap;
 
 import com.trialmaple.core.exception.NoDailyMapFoundException;
 import com.trialmaple.core.GameMode;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +11,11 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class DailyMapService {
     private final List<IDailyMapPickerStrategy<? extends DailyMap>> dailyMapPickerStrategies;
 
     private final DailyMapRepository dailyMapRepository;
-
-    public DailyMapService(List<IDailyMapPickerStrategy<? extends DailyMap>> dailyMapPickerStrategies, DailyMapRepository dailyMapRepository) {
-        this.dailyMapPickerStrategies = dailyMapPickerStrategies;
-        this.dailyMapRepository = dailyMapRepository;
-    }
 
     /**
      * Returns current daily map for given game mode

@@ -4,6 +4,7 @@ import com.trialmaple.core.config.RouteKey;
 import com.trialmaple.core.exception.InvalidGameModeException;
 import com.trialmaple.core.exception.NoDailyMapFoundException;
 import com.trialmaple.core.GameMode;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(RouteKey.DAILY_MAP_PREFIX)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class DailyMapController {
 
     private final DailyMapService dailyMapService;
-
-    public DailyMapController(DailyMapService dailyMapService) {
-        this.dailyMapService = dailyMapService;
-    }
 
     /**
      * Get current daily map uuid for the given game mode

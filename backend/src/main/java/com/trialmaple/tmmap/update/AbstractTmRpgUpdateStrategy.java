@@ -8,6 +8,7 @@ import com.trialmaple.tmmap.TmMap;
 import com.trialmaple.tmmap.tmuser.TmUser;
 import com.trialmaple.tmmap.TmMapRepository;
 import com.trialmaple.tmmap.tmuser.TmUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,19 +20,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public abstract class AbstractTmRpgUpdateStrategy implements IMapUpdateStrategy {
     protected final TmRpgService tmRpgService;
     protected final TmUserService tmUserService;
     protected final TmMapRepository tmMapRepository;
     protected final MapDtoMapper mapDtoMapper;
-
-    protected AbstractTmRpgUpdateStrategy(TmRpgService tmRpgService, TmUserService tmUserService, TmMapRepository tmMapRepository, MapDtoMapper mapDtoMapper) {
-        this.tmRpgService = tmRpgService;
-        this.tmUserService = tmUserService;
-        this.tmMapRepository = tmMapRepository;
-        this.mapDtoMapper = mapDtoMapper;
-    }
 
     abstract MapsResponseDto fetchMaps();
 

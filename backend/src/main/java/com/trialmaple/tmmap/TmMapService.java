@@ -5,21 +5,16 @@ import com.trialmaple.dailymap.DailyMap;
 import com.trialmaple.dailymap.DailyMapServiceProvider;
 import com.trialmaple.dailymap.IDailyMapPickerStrategy;
 import com.trialmaple.tmmap.update.IMapUpdateStrategy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TmMapService {
     private final List<IMapUpdateStrategy> updateStrategies;
     private final DailyMapServiceProvider provider;
-    private final TmMapRepository tmMapRepository;
-
-    public TmMapService(List<IMapUpdateStrategy> updateStrategies, DailyMapServiceProvider provider, TmMapRepository tmMapRepository) {
-        this.updateStrategies = updateStrategies;
-        this.provider = provider;
-        this.tmMapRepository = tmMapRepository;
-    }
 
     /**
      * Get the maps for the given game mode

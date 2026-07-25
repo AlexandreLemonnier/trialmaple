@@ -6,16 +6,14 @@ import com.trialmaple.guess.dto.GuessDto;
 import com.trialmaple.guess.dto.GuessRequestDto;
 import com.trialmaple.user.User;
 import com.trialmaple.dailymap.DailyMap;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class GuessService {
 
     private final GuessServiceProvider provider;
-
-    public GuessService(GuessServiceProvider provider) {
-        this.provider = provider;
-    }
 
     /**
      * Check if a guess is correct and give hints or correct elements

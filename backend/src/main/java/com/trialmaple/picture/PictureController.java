@@ -9,6 +9,7 @@ import com.trialmaple.dailymap.geoguessr.GeoguessrDailyMap;
 import com.trialmaple.dailymap.zoom.ZoomDailyMap;
 import com.trialmaple.core.GameMode;
 import com.trialmaple.dailymap.DailyMapService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -26,19 +27,13 @@ import java.nio.file.Path;
 @RestController
 @RequestMapping(RouteKey.BASE_API)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class PictureController {
 
     private final DailyMapService dailyMapService;
     private final GeoguessrPictureService geoguessrPictureService;
     private final BlurPictureService blurPictureService;
     private final ZoomPictureService zoomPictureService;
-
-    public PictureController(DailyMapService dailyMapService, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService, ZoomPictureService zoomPictureService) {
-        this.dailyMapService = dailyMapService;
-        this.geoguessrPictureService = geoguessrPictureService;
-        this.blurPictureService = blurPictureService;
-        this.zoomPictureService = zoomPictureService;
-    }
 
     /**
      * Get specific picture for given Geoguessr game mode

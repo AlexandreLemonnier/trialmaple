@@ -9,14 +9,13 @@ import com.trialmaple.user.User;
 import com.trialmaple.dailymap.DailyMap;
 import com.trialmaple.core.GameMode;
 import com.trialmaple.score.ScoreService;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public abstract class AbstractGuessGameModeService<T extends DailyMap> {
 
     protected final ScoreService scoreService;
 
-    protected AbstractGuessGameModeService(ScoreService scoreService) {
-        this.scoreService = scoreService;
-    }
     /**
      * The game mode where strategy applies
      */

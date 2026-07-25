@@ -5,6 +5,7 @@ import com.trialmaple.user.User;
 import com.trialmaple.user.UserDto;
 import com.trialmaple.user.UserMapper;
 import com.trialmaple.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,15 +13,11 @@ import java.util.List;
 @RestController
 @RequestMapping(RouteKey.ADMIN_PREFIX + RouteKey.USERS_PREFIX)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class AdminUserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
-
-    public AdminUserController(UserService userService, UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
 
     @GetMapping
     public List<UserDto> getAllUsers() {

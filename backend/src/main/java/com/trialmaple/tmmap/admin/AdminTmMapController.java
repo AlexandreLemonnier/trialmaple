@@ -4,6 +4,7 @@ import com.trialmaple.core.GameMode;
 import com.trialmaple.core.config.RouteKey;
 import com.trialmaple.core.exception.InvalidGameModeException;
 import com.trialmaple.tmmap.TmMap;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping(RouteKey.ADMIN_PREFIX + RouteKey.MAPS_PREFIX)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 @Slf4j
 public class AdminTmMapController {
 
     private final AdminTmMapService adminTmMapService;
     private final AdminTmMapDtoMapper adminTmMapDtoMapper;
-
-    public AdminTmMapController(AdminTmMapService adminTmMapService, AdminTmMapDtoMapper adminTmMapDtoMapper) {
-        this.adminTmMapService = adminTmMapService;
-        this.adminTmMapDtoMapper = adminTmMapDtoMapper;
-    }
 
     @GetMapping("")
     public List<AdminTmMapDto> getMaps(@RequestParam String gameMode) {

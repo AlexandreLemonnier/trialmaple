@@ -13,6 +13,7 @@ import com.trialmaple.external.discord.DiscordUserDto;
 import com.trialmaple.user.User;
 import com.trialmaple.user.UserService;
 import com.trialmaple.user.UserType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -20,26 +21,13 @@ import java.security.Principal;
 @RestController
 @RequestMapping(RouteKey.AUTH_PREFIX)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class AuthController {
     private final DiscordAuthService discordAuthService;
     private final JwtUtils jwtUtils;
     private final UserService userService;
     private final DiscordUserMapper discordUserMapper;
     private final UserMapper userMapper;
-
-    public AuthController(
-            DiscordAuthService discordAuthService,
-            JwtUtils jwtUtils,
-            UserService userService,
-            DiscordUserMapper discordUserMapper,
-            UserMapper userMapper
-    ) {
-        this.discordAuthService = discordAuthService;
-        this.jwtUtils = jwtUtils;
-        this.userService = userService;
-        this.discordUserMapper = discordUserMapper;
-        this.userMapper = userMapper;
-    }
 
     @PostMapping(RouteKey.DISCORD_AUTH)
     public LoginResponseDto loginWithDiscord(@RequestBody DiscordLoginRequestDto request) {

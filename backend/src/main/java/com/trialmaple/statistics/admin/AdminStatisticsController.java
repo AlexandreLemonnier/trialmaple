@@ -6,6 +6,7 @@ import com.trialmaple.statistics.StatisticsService;
 import com.trialmaple.statistics.UserStatsDto;
 import com.trialmaple.user.User;
 import com.trialmaple.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -14,15 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping(RouteKey.ADMIN_PREFIX + RouteKey.USER_STATS)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class AdminStatisticsController {
 
     private final UserService userService;
     private final StatisticsService statisticsService;
-
-    public AdminStatisticsController(UserService userService, StatisticsService statisticsService) {
-        this.userService = userService;
-        this.statisticsService = statisticsService;
-    }
 
     /**
      * Get user stats

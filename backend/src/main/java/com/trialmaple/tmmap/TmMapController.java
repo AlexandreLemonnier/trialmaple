@@ -10,6 +10,7 @@ import com.trialmaple.tmmap.dto.BlurMapDto;
 import com.trialmaple.tmmap.dto.GeoguessrMapDto;
 import com.trialmaple.tmmap.dto.TmMapDto;
 import com.trialmaple.tmmap.dto.ZoomMapDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(RouteKey.MAPS)
+@RequiredArgsConstructor
 public class TmMapController {
 
     private final TmMapService tmMapService;
@@ -28,14 +30,6 @@ public class TmMapController {
     private final GeoguessrPictureService geoguessrPictureService;
     private final BlurPictureService blurPictureService;
     private final ZoomPictureService zoomPictureService;
-
-    public TmMapController(TmMapService tmMapService, TmMapDtoMapper tmMapDtoMapper, GeoguessrPictureService geoguessrPictureService, BlurPictureService blurPictureService, ZoomPictureService zoomPictureService) {
-        this.tmMapService = tmMapService;
-        this.tmMapDtoMapper = tmMapDtoMapper;
-        this.geoguessrPictureService = geoguessrPictureService;
-        this.blurPictureService = blurPictureService;
-        this.zoomPictureService = zoomPictureService;
-    }
 
     /**
      * List maps for a specific game mode

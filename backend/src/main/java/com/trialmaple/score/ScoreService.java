@@ -4,6 +4,7 @@ package com.trialmaple.score;
 import com.trialmaple.core.config.CacheName;
 import com.trialmaple.user.User;
 import com.trialmaple.dailymap.DailyMap;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
@@ -11,12 +12,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ScoreService {
     protected final ScoreRepository scoreRepository;
-
-    public ScoreService(ScoreRepository scoreRepository) {
-        this.scoreRepository = scoreRepository;
-    }
 
     @Caching(evict = {
             @CacheEvict(value = CacheName.DAILY_STATS, key = "#dailyMap.gameMode"),

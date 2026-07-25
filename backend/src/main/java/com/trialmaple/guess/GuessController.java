@@ -12,6 +12,7 @@ import com.trialmaple.dailymap.DailyMap;
 import com.trialmaple.core.GameMode;
 import com.trialmaple.security.annotation.CurrentUser;
 import com.trialmaple.dailymap.DailyMapService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,15 +20,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(RouteKey.GUESS_PREFIX)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class GuessController {
 
     private final DailyMapService dailyMapService;
     private final GuessService guessService;
-
-    public GuessController(GuessService guessService, DailyMapService dailyMapService) {
-        this.guessService = guessService;
-        this.dailyMapService = dailyMapService;
-    }
 
     /**
      * Make a guess for the given game mode

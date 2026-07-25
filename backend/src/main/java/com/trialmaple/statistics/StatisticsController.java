@@ -5,6 +5,7 @@ import com.trialmaple.core.exception.InvalidGameModeException;
 import com.trialmaple.user.User;
 import com.trialmaple.core.GameMode;
 import com.trialmaple.security.annotation.CurrentUser;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping(RouteKey.BASE_API)
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class StatisticsController {
 
     private final StatisticsService statisticsService;
-
-    public StatisticsController(StatisticsService statisticsService) {
-        this.statisticsService = statisticsService;
-    }
 
     /**
      * Get daily stats and daily map number

@@ -4,18 +4,16 @@ import com.trialmaple.core.utils.TimeUtils;
 import com.trialmaple.tmmap.MapList;
 import com.trialmaple.tmmap.TmMap;
 import com.trialmaple.tmmap.tmuser.TmUserDtoMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
 @Component
+@RequiredArgsConstructor
 public class AdminTmMapDtoMapper {
 
     private final TmUserDtoMapper tmUserDtoMapper;
-
-    public AdminTmMapDtoMapper(TmUserDtoMapper tmUserDtoMapper) {
-        this.tmUserDtoMapper = tmUserDtoMapper;
-    }
 
     public AdminTmMapDto serviceToDto(TmMap tmMap) {
         return tmMap == null ? null : new AdminTmMapDto(

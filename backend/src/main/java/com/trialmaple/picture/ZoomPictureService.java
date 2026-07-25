@@ -4,6 +4,7 @@ import com.trialmaple.dailymap.zoom.ZoomDailyMap;
 import com.trialmaple.core.GameMode;
 import com.trialmaple.dailymap.DailyMapRepository;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.*;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ZoomPictureService {
 
     private final static String GAME_MODE_PATH_NAME = "ZOOM";
@@ -32,10 +34,6 @@ public class ZoomPictureService {
 
     // Game mode -> (map name -> pictures)
     private final Map<String, Map<String, List<String>>> index = new HashMap<>();
-
-    public ZoomPictureService(DailyMapRepository dailyMapRepository) {
-        this.dailyMapRepository = dailyMapRepository;
-    }
 
     /**
      * Initialize the structure containing all maps pictures for each game mode
