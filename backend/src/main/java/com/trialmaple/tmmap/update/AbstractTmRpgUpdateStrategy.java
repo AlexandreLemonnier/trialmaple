@@ -74,7 +74,7 @@ public abstract class AbstractTmRpgUpdateStrategy implements IMapUpdateStrategy 
                     toCreate.add(mapToAdd);
                 } else {
                     boolean updated = specificUpdate(existingMap, map);
-                    updated = updated || mapDtoMapper.update(existingMap, map, wrHolder, classic);
+                    updated = mapDtoMapper.update(existingMap, map, wrHolder, classic) || updated;
                     if (updated) {
                         log.info("Map updated: {}", existingMap.getName());
                         toUpdate.add(existingMap);
