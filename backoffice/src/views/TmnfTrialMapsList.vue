@@ -24,90 +24,28 @@
         </div>
 
         <div class="flex-1 flex flex-col min-h-0 rounded-2xl border border-app-border shadow-lg overflow-hidden">
-            <DataTable :value="maps"
-                       data-key="uuid"
-                       :loading="isLoading"
-                       edit-mode="cell"
-                       @cellEditComplete="onCellEditComplete"
-                       scrollable
-                       scroll-height="flex"
-                       v-model:filters="filters"
-                       :global-filter-fields="['name']"
-                       removable-sort
-                       sort-mode="multiple"
-                       :multi-sort-meta="defaultSort"
-                       class="p-datatable-sm">
-
-                <Column field="active" header="Active">
-                    <template #body="{ data }">
-                        <Checkbox v-model="data.active" :binary="true" @change="markAsModified(data)" />
-                    </template>
-                </Column>
-
-                <Column field="name" header="Name" sortable />
-
-                <Column field="difficulty" header="Difficulty" body-class="cursor-pointer hover:bg-black/5 transition-colors">
-                    <template #editor="{ data, field }">
-                        <label for="difficulty-values" class="sr-only">Difficulty values</label>
-                        <Select id="difficulty-values"
-                                v-model="data[field]"
-                                :options="[...DIFFICULTY_CATEGORIES]"
-                                autofocus
-                                append-to="body"
-                                class="w-full" />
-                    </template>
-                </Column>
-
-                <Column field="points" header="Points" sortable body-class="cursor-pointer hover:bg-black/5 transition-colors">
-                    <template #editor="{ data, field }">
-                        <InputNumber v-model="data[field]" autofocus :min="0" class="w-full" />
-                    </template>
-                </Column>
-
-                <Column field="checkpointCount" header="CPs" />
-
-                <Column field="authors" header="Author(s)">
-                    <template #body="{ data }">
-                        {{ data.authors.join(', ') }}
-                    </template>
-                </Column>
-
-                <Column field="releaseYear" header="Release Year" />
-
-                <Column field="finisherCount" header="Finishers" body-class="cursor-pointer hover:bg-black/5 transition-colors">
-                    <template #editor="{ data, field }">
-                        <InputNumber v-model="data[field]" autofocus :min="0" class="w-full" />
-                    </template>
-                </Column>
-
-                <Column field="wrTime" header="WR Time" body-class="cursor-pointer hover:bg-black/5 transition-colors">
-                    <template #editor="{ data, field }">
-                        <InputText v-model="data[field]"
-                                   autofocus
-                                   placeholder="00:00.000"
-                                   class="w-full"
-                                   :class="{ 'p-invalid': !isValidTimeFormat(data[field]) }" />
-                    </template>
-                </Column>
-
-                <Column field="wrHolder" header="WR Holder" sortable sort-field="wrHolder.login" body-class="cursor-pointer hover:bg-black/5 transition-colors">
-                    <template #body="{ data }">
-                        {{ data.wrHolder?.login || 'N/A' }}
-                    </template>
-                    <template #editor="{ data, field }">
-                        <AutoComplete v-model="data[field]"
-                                      :suggestions="filteredTmUsers"
-                                      @complete="searchUsers"
-                                      option-label="login"
-                                      :force-selection="false"
-                                      complete-on-focus
-                                      placeholder="Select or type new..."
-                                      autofocus
-                                      append-to="body"
-                                      class="w-full" />
-                    </template>
-                </Column>
-            </DataTable>
+            <AppTable :rows="maps"
+                      :cols="cols"
+                      unique-id="uuid"
+                      :is-loading="isLoading"
+                      v-model:filters="filters"
+                      :global-filter-fields="['name']"
+                      :default-sort="defaultSort"
+                      :cell-edit-complete-callback="onCellEditComplete"
+                      class="p-datatable-sm flex-1">
+                <template #editor-wrHolder="{ data, field }">
+                    <AutoComplete v-model="data[field]"
+                                  :suggestions="filteredTmUsers"
+                                  @complete="searchUsers"
+                                  option-label="login"
+                                  :force-selection="false"
+                                  complete-on-focus
+                                  placeholder="Select or type new..."
+                                  autofocus
+                                  append-to="body"
+                                  class="w-full" />
+                </template>
+            </AppTable>
         </div>
         <MapAdditionDialog v-model:is-visible="isAddModalVisible"
                            :is-loading="isCreating"
@@ -119,6 +57,7 @@
 
 <script setup lang="ts">
 import { RequestError } from '#/classes/RequestError';
+import AppTable from '#/components/AppTable.vue';
 import Button from '#/components/Button.vue';
 import H1 from '#/components/H1.vue';
 import { useAdminMapsApi } from '#/composables/api/useAdminMapsApi';
@@ -126,17 +65,14 @@ import { useToast } from '#/composables/useToast';
 import { DIFFICULTY_CATEGORIES } from '#/types/api/difficultyCategory';
 import type { CreateTmnfTrialMap, TmnfTrialMap } from '#/types/api/tmmap/tmnfTrialMap';
 import type { TmUser } from '#/types/api/tmUser';
+import type { TableColumn } from '#/types/TableColumn.js';
 import { formatTimeToMs } from '#/utils/formatTimeToMs';
 import { isValidTimeFormat } from '#/utils/isValidTimeFormat';
 import { FilterMatchMode } from '@primevue/core/api';
 import type { AutoCompleteCompleteEvent } from 'primevue/autocomplete';
 import AutoComplete from 'primevue/autocomplete';
-import Checkbox from 'primevue/checkbox';
-import Column from 'primevue/column';
-import DataTable, { type DataTableCellEditCompleteEvent, type DataTableSortMeta } from 'primevue/datatable';
-import InputNumber from 'primevue/inputnumber';
+import type { DataTableCellEditCompleteEvent, DataTableSortMeta } from 'primevue/datatable';
 import InputText from 'primevue/inputtext';
-import Select from 'primevue/select';
 import { onMounted, ref } from 'vue';
 import MapAdditionDialog from './modals/MapAdditionDialog.vue';
 
@@ -210,6 +146,70 @@ const onCellEditComplete = (event: DataTableCellEditCompleteEvent) => {
         markAsModified(data);
     }
 };
+
+const cols: TableColumn<TmnfTrialMap>[] = [
+    {
+        field: 'active',
+        name: 'Active',
+        editable: true,
+        type: 'boolean',
+        onValueChange: markAsModified
+    },
+    {
+        field: 'name',
+        name: 'Name',
+        sortable: true
+    },
+    {
+        field: 'difficulty',
+        name: 'Difficulty',
+        editable: true,
+        type: 'select',
+        options: [...DIFFICULTY_CATEGORIES]
+    },
+    {
+        field: 'points',
+        name: 'Points',
+        sortable: true,
+        editable: true,
+        type: 'number'
+    },
+    {
+        field: 'checkpointCount',
+        name: 'CPs'
+    },
+    {
+        field: 'authors',
+        name: 'Author(s)',
+        format: (val) => (val as string[]).join(', ')
+    },
+    {
+        field: 'releaseYear',
+        name: 'Release Year'
+    },
+    {
+        field: 'finisherCount',
+        name: 'Finishers',
+        editable: true,
+        type: 'number'
+    },
+    {
+        field: 'wrTime',
+        name: 'WR Time',
+        editable: true,
+        type: 'text',
+        placeHolder: '00:00.000',
+        validationRule: (val) => isValidTimeFormat(val as string)
+    },
+    {
+        field: 'wrHolder',
+        name: 'WR Holder',
+        sortable: true,
+        sortField: 'wrHolder.login',
+        editable: true,
+        format: (val) => (val as TmUser)?.login || 'N/A'
+    }
+];
 
 
 /* --- API --- */

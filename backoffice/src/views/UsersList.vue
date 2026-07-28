@@ -16,62 +16,52 @@
 
         <!-- 3. Wrapper flex-1 et min-h-0 avec vos classes de style -->
         <div class="flex-1 flex flex-col min-h-0 border border-app-border rounded-lg overflow-hidden">
+            <AppTable :rows="isLoading ? skeletonUsers : users"
+                      :cols
+                      unique-id="discordId"
+                      no-data-found-text="No player found."
+                      :is-loading
+                      v-model:filters="filters"
+                      :global-filter-fields="['username']"
+                      filter-display="menu"
+                      :on-row-selection="onRowClick"
+                      class="flex-1">
+                <!-- Personnalisation de la colonne Player (Skeletons + texte) -->
+                <template #body-username="{ data }">
+                    <div v-if="isLoading" class="flex items-center gap-2">
+                        <Skeleton width="150px" height="1.25rem" />
+                    </div>
+                    <span v-else class="font-medium">
+                        {{ data.username }}
+                    </span>
+                </template>
 
-            <!-- 4. Ajout de scrollable, scroll-height="flex" et class="flex-1" -->
-            <DataTable :value="isLoading ? skeletonUsers : users"
-                       scrollable
-                       scroll-height="flex"
-                       removable-sort
-                       data-key="discordId"
-                       v-model:filters="filters"
-                       filter-display="menu"
-                       :global-filter-fields="['username']"
-                       selection-mode="single"
-                       @rowSelect="onRowClick"
-                       class="flex-1"
-                       row-hover>
+                <!-- Personnalisation de la colonne Role (Skeletons + RolePill) -->
+                <template #body-userType="{ data }">
+                    <Skeleton v-if="isLoading" width="60px" height="1.5rem" border-radius="9999px" />
+                    <RolePill v-else :user-type="data.userType" />
+                </template>
 
-                <template #empty>No player found.</template>
-
-                <!-- Username column -->
-                <Column field="username" header="Player" sortable>
-                    <template #body="{ data }">
-                        <div v-if="isLoading" class="flex items-center gap-2">
-                            <Skeleton width="150px" height="1.25rem" />
-                        </div>
-                        <span v-else class="font-medium">
-                            {{ data.username }}
-                        </span>
-                    </template>
-                </Column>
-
-                <!-- UserType column with filter -->
-                <Column field="userType" header="Role" :show-filter-match-modes="false">
-                    <template #body="{ data }">
-                        <Skeleton v-if="isLoading" width="60px" height="1.5rem" border-radius="9999px" />
-                        <RolePill v-else :user-type="data.userType" />
-                    </template>
-
-                    <template #filter="{ filterModel, filterCallback }">
-                        <div class="flex flex-col gap-1">
-                            <label for="user-role-filter" class="sr-only">Filter by role</label>
-                            <Select id="user-role-filter"
-                                    input-id="user-role-filter"
-                                    v-model="filterModel.value"
-                                    @change="filterCallback()"
-                                    :options="[...USER_TYPES]"
-                                    placeholder="All roles"
-                                    class="p-column-filter" />
-                        </div>
-                    </template>
-                </Column>
-
-            </DataTable>
+                <!-- ATTENTION : Voir la note plus bas concernant le filtre -->
+                <template #filter-userType="{ filterModel, filterCallback }">
+                    <div class="flex flex-col gap-1">
+                        <label for="user-role-filter" class="sr-only">Filter by role</label>
+                        <Select id="user-role-filter"
+                                input-id="user-role-filter"
+                                v-model="filterModel.value"
+                                @change="filterCallback()"
+                                :options="[...USER_TYPES]"
+                                placeholder="All roles"
+                                class="p-column-filter" />
+                    </div>
+                </template>
+            </AppTable>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import AppTable from '#/components/AppTable.vue';
 import H1 from '#/components/H1.vue';
 import RolePill from '#/components/RolePill.vue';
 import { useAdminUserApi } from '#/composables/api/useAdminUserApi';
@@ -79,11 +69,10 @@ import { useToast } from '#/composables/useToast';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
 import type { User } from '#/types/api/user';
+import type { TableColumn } from '#/types/TableColumn';
 import { FilterMatchMode } from '@primevue/core/api';
 import { USER_TYPES } from '@tm-trialmaple/shared/types/api/user';
-import Column from 'primevue/column';
 import type { DataTableRowSelectEvent } from 'primevue/datatable';
-import DataTable from 'primevue/datatable';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
 import Skeleton from 'primevue/skeleton';
@@ -95,7 +84,20 @@ const appStore = useAppStore();
 const router = useRouter();
 const users = ref<User[]>([]);
 const isLoading = ref(true);
-const skeletonUsers = ref<unknown[]>(new Array(10).fill({}));
+const skeletonUsers = ref<User[]>(new Array(10).fill({}));
+
+const cols: TableColumn<User>[] = [
+    {
+        field: 'username',
+        name: 'Player',
+        sortable: true
+    },
+    {
+        field: 'userType',
+        name: 'Role',
+        showFilterMatchModes: false
+    }
+];
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
