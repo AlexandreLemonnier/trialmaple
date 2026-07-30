@@ -1,20 +1,22 @@
+import type { DifficultyCategory } from '#/types/api/difficultyCategory';
 import type { TmUser } from '#/types/api/tmUser';
 
 export type TmMap = {
     uuid: string,
-    // tmxId: number,
+    tmxId: number,
     active: boolean,
     name: string,
-    // displayName: string,
+    displayName: string,
     authors: string[],
     checkpointCount: number,
     points: number,
+    difficulty: DifficultyCategory,
     wrTime: string,
-    // wrYear: number,
+    wrYear: number,
     wrHolder: TmUser,
     finisherCount: number,
     releaseYear: number,
-    // classic: boolean
+    classic: boolean
 };
 
 export type CreateTmMap = {

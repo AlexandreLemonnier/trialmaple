@@ -24,6 +24,7 @@
                 :header="col.name"
                 :sortable="col.sortable"
                 :sort-field="col.sortField"
+                :style="col.style"
                 :body-class="col.editable && 'cursor-pointer hover:bg-black/5 transition-colors'"
                 :show-filter-match-modes="col.showFilterMatchModes">
 

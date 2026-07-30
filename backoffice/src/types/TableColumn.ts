@@ -10,6 +10,7 @@ export type TableColumn<T> = {
     placeHolder?: string;
     showFilterMatchModes?: boolean;
     validationRule?(fieldValue: T[keyof T]): boolean;
+    style?: string | object;
 
     // Function if data needs to be formatted to be displayed
     format?(value: T[keyof T], row: T): string | number;

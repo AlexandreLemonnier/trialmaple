@@ -2,12 +2,8 @@
     <div class="p-6 bg-app-background h-screen flex flex-col gap-6">
 
         <div class="flex justify-between items-end shrink-0">
-            <H1>TMNF Trial Maps</H1>
+            <H1>TM2 Trial Maps</H1>
             <div class="flex gap-4">
-                <Button label="New Map"
-                        icon="pi pi-plus"
-                        severity="secondary"
-                        :action="() => isAddModalVisible = true" />
                 <Button label="Save Changes"
                         icon="pi pi-save"
                         :disabled="modifiedMaps.size === 0 || isSaving"
@@ -48,11 +44,6 @@
                 </template>
             </AppTable>
         </div>
-        <MapAdditionDialog v-model:is-visible="isAddModalVisible"
-                           :is-loading="isCreating"
-                           :filtered-tm-users="filteredTmUsers"
-                           @searchUsers="searchUsers"
-                           @submit="handleCreateMap" />
     </div>
 </template>
 
@@ -63,8 +54,7 @@ import Button from '#/components/Button.vue';
 import H1 from '#/components/H1.vue';
 import { useAdminMapsApi } from '#/composables/api/useAdminMapsApi';
 import { useToast } from '#/composables/useToast';
-import { DIFFICULTY_CATEGORIES } from '#/types/api/difficultyCategory';
-import type { CreateTmMap, TmMap } from '#/types/api/tmMap';
+import type { TmMap } from '#/types/api/tmMap';
 import type { TmUser } from '#/types/api/tmUser';
 import type { TableColumn } from '#/types/TableColumn';
 import { formatTimeToMs } from '#/utils/formatTimeToMs';
@@ -75,14 +65,10 @@ import AutoComplete from 'primevue/autocomplete';
 import type { DataTableCellEditCompleteEvent, DataTableSortMeta } from 'primevue/datatable';
 import InputText from 'primevue/inputtext';
 import { onMounted, ref } from 'vue';
-import MapAdditionDialog from './modals/MapAdditionDialog.vue';
 
 const toast = useToast();
 
-const isAddModalVisible = ref(false);
-
 const isLoading = ref(true);
-const isCreating = ref(false);
 const isSaving = ref(false);
 
 const maps = ref<TmMap[]>([]);
@@ -137,7 +123,7 @@ const onCellEditComplete = (event: DataTableCellEditCompleteEvent) => {
             newValue = {
                 login: newDisplayName,
                 displayName: newDisplayName,
-                game: 'TMNF'
+                game: 'TM2'
             } satisfies TmUser;
         }
     }
@@ -162,17 +148,9 @@ const cols: TableColumn<TmMap>[] = [
         sortable: true
     },
     {
-        field: 'difficulty',
-        name: 'Difficulty',
-        editable: true,
-        type: 'select',
-        options: [...DIFFICULTY_CATEGORIES]
-    },
-    {
         field: 'points',
-        name: 'Points',
+        name: 'Stars',
         sortable: true,
-        editable: true,
         type: 'number'
     },
     {
@@ -182,33 +160,31 @@ const cols: TableColumn<TmMap>[] = [
     {
         field: 'authors',
         name: 'Author(s)',
-        format: (val) => (val as string[]).join(', ')
+        sortable: true,
+        format: (val) => (val as string[]).join(', '),
+        style: 'width: 30%'
     },
     {
         field: 'releaseYear',
-        name: 'Release Year'
-    },
-    {
-        field: 'finisherCount',
-        name: 'Finishers',
+        name: 'Release Year',
         editable: true,
         type: 'number'
     },
     {
         field: 'wrTime',
-        name: 'WR Time',
-        editable: true,
-        type: 'text',
-        placeHolder: '00:00.000',
-        validationRule: (val) => isValidTimeFormat(val as string)
+        name: 'WR Time'
     },
     {
         field: 'wrHolder',
         name: 'WR Holder',
         sortable: true,
         sortField: 'wrHolder.login',
-        editable: true,
         format: (val) => (val as TmUser)?.login || 'N/A'
+    },
+    {
+        field: 'wrYear',
+        name: 'WR Year',
+        type: 'number'
     }
 ];
 
@@ -217,7 +193,7 @@ const cols: TableColumn<TmMap>[] = [
 const adminMapsApi = useAdminMapsApi();
 const fetchMaps = async () => {
     try {
-        maps.value = await adminMapsApi.getMaps('CLASSIC_TMNF_TRIAL');
+        maps.value = await adminMapsApi.getMaps('CLASSIC_TM2_TRIAL');
         tmUsers.value = [...new Map(maps.value.map((map) => [map.wrHolder.login, map.wrHolder])).values()];
     } catch (error) {
         toast.add({ severity: 'error', summary: 'Error while fetching maps', error });
@@ -248,21 +224,6 @@ const saveChanges = async () => {
         toast.add({ severity: 'error', summary: 'Error while saving maps', error });
     } finally {
         isSaving.value = false;
-    }
-};
-
-const handleCreateMap = async (newMapPayload: CreateTmMap) => {
-    isCreating.value = true;
-    try {
-        await adminMapsApi.createMap(newMapPayload, 'CLASSIC_TMNF_TRIAL');
-
-        toast.add({ severity: 'success', summary: 'Success', detail: 'New map created successfully!' });
-        isAddModalVisible.value = false;
-        await fetchMaps();
-    } catch (error) {
-        toast.add({ severity: 'error', summary: 'Creation failed', error });
-    } finally {
-        isCreating.value = false;
     }
 };
 

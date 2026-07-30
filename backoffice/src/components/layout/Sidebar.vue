@@ -17,7 +17,7 @@
                             {{ item.label }}
                         </div>
 
-                        <div class="ml-14 flex flex-col gap-1">
+                        <div class="ml-14 flex flex-col">
                             <RouterLink v-for="subItem in item.subItems"
                                         :key="subItem.route"
                                         :to="subItem.route"
@@ -75,6 +75,10 @@ const navItems: NavItem[] = [
             {
                 label: 'TMNF Trial',
                 route: Route.TMNF_TRIAL_MAPS
+            },
+            {
+                label: 'TM2 Trial',
+                route: Route.TM2_TRIAL_MAPS
             }
         ]
     }
