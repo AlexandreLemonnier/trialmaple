@@ -2,7 +2,7 @@
     <div class="p-6 bg-app-background h-screen flex flex-col gap-6">
 
         <div class="flex justify-between items-end shrink-0">
-            <H1>TM2 Trial Maps</H1>
+            <H1>TM2020 RPG Maps</H1>
             <div class="flex gap-4">
                 <Button label="Save Changes"
                         icon="pi pi-save"
@@ -57,7 +57,7 @@ const isSaving = ref(false);
 
 const maps = ref<TmMap[]>([]);
 const defaultSort: DataTableSortMeta[] = [
-    { field: 'points', order: 1 },
+    { field: 'points', order: -1 },
     { field: 'name', order: 1 }
 ];
 
@@ -110,13 +110,13 @@ const cols: TableColumn<TmMap>[] = [
         field: 'authors',
         name: 'Author(s)',
         sortable: true,
-        format: (val) => (val as string[]).join(', '),
-        style: 'width: 30%'
+        format: (val) => (val as string[]).join(', ')
     },
     {
         field: 'releaseYear',
         name: 'Release Year',
         editable: true,
+        sortable: true,
         type: 'number'
     },
     {
@@ -127,8 +127,8 @@ const cols: TableColumn<TmMap>[] = [
         field: 'wrHolder',
         name: 'WR Holder',
         sortable: true,
-        sortField: 'wrHolder.login',
-        format: (val) => (val as TmUser)?.login || 'N/A'
+        sortField: 'wrHolder.displayName',
+        format: (val) => (val as TmUser)?.displayName || 'N/A'
     },
     {
         field: 'wrYear',
@@ -142,7 +142,7 @@ const cols: TableColumn<TmMap>[] = [
 const adminMapsApi = useAdminMapsApi();
 const fetchMaps = async () => {
     try {
-        maps.value = await adminMapsApi.getMaps('CLASSIC_TM2_TRIAL');
+        maps.value = await adminMapsApi.getMaps('CLASSIC_TM2020_RPG');
     } catch (error) {
         toast.add({ severity: 'error', summary: 'Error while fetching maps', error });
     }

@@ -2,7 +2,7 @@
     <div class="p-6 bg-app-background h-screen flex flex-col gap-6">
 
         <div class="flex justify-between items-end shrink-0">
-            <H1>TMNF Trial Maps</H1>
+            <H1>TMNF Trial Maps (Hardest List)</H1>
             <div class="flex gap-4">
                 <Button label="New Map"
                         icon="pi pi-plus"

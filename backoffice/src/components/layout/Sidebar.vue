@@ -73,12 +73,28 @@ const navItems: NavItem[] = [
         icon: 'track',
         subItems: [
             {
-                label: 'TMNF Trial',
-                route: Route.TMNF_TRIAL_MAPS
+                label: 'TM2020 Trial',
+                route: Route.TM2020_TRIAL_MAPS
+            },
+            {
+                label: 'TM2020 RPG',
+                route: Route.TM2020_RPG_MAPS
             },
             {
                 label: 'TM2 Trial',
                 route: Route.TM2_TRIAL_MAPS
+            },
+            {
+                label: 'TM2 RPG',
+                route: Route.TM2_RPG_MAPS
+            },
+            {
+                label: 'TMNF Trial',
+                route: Route.TMNF_TRIAL_MAPS
+            },
+            {
+                label: 'TMNF RPG',
+                route: Route.TMNF_RPG_MAPS
             }
         ]
     }
