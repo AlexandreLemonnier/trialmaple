@@ -81,7 +81,7 @@
 <script lang="ts" setup>
 import { useToast } from '#/composables/useToast';
 import { DIFFICULTY_CATEGORIES } from '#/types/api/difficultyCategory';
-import type { CreateTmnfTrialMap } from '#/types/api/tmmap/tmnfTrialMap';
+import type { CreateTmMap } from '#/types/api/tmMap';
 import type { TmUser } from '#/types/api/tmUser';
 import { formatTimeToMs } from '#/utils/formatTimeToMs';
 import { isValidTimeFormat } from '#/utils/isValidTimeFormat';
@@ -95,7 +95,7 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: 'submit', payload: CreateTmnfTrialMap): void;
+    (e: 'submit', payload: CreateTmMap): void;
     (e: 'searchUsers', event: AutoCompleteCompleteEvent): void;
 }>();
 
@@ -106,7 +106,7 @@ const toast = useToast();
 const currentYear = new Date().getFullYear();
 
 // Type for creation form, since WR Holder can be a string if a new one is typed
-type NewMapFormState = Omit<CreateTmnfTrialMap, 'wrHolder'> & {
+type NewMapFormState = Omit<CreateTmMap, 'wrHolder'> & {
     wrHolder?: TmUser | string;
 };
 
@@ -188,7 +188,7 @@ const submit = () => {
     }
 
     // Build payload
-    const payload: CreateTmnfTrialMap = {
+    const payload: CreateTmMap = {
         ...newMap.value,
         wrTime: formatTimeToMs(newMap.value.wrTime).toString(),
         wrHolder: finalWrHolder

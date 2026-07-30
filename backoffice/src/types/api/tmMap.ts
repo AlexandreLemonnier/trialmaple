@@ -25,6 +25,7 @@ export type CreateTmMap = {
     authors: string[],
     checkpointCount: number,
     points: number,
+    difficulty: DifficultyCategory,
     wrTime: string,
     wrHolder: TmUser
     finisherCount: number,
