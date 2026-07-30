@@ -110,6 +110,9 @@ const cols: TableColumn<TmMap>[] = [
         field: 'authors',
         name: 'Author(s)',
         sortable: true,
+        editable: true,
+        type: 'chips',
+        onValueChange: markAsModified,
         format: (val) => (val as string[]).join(', ')
     },
     {

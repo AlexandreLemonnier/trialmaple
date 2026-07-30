@@ -1,1 +1,1 @@
-export type ColumnType = 'text' | 'number' | 'boolean' | 'select' | 'autocomplete';
+export type ColumnType = 'text' | 'number' | 'boolean' | 'select' | 'autocomplete' | 'chips';
