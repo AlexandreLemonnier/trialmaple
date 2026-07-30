@@ -29,7 +29,11 @@
                       :default-sort="defaultSort"
                       :cell-edit-complete-callback="onCellEditComplete"
                       no-data-found-text="No maps found."
-                      class="p-datatable-sm flex-1" />
+                      class="p-datatable-sm flex-1">
+                <template #actions="{ data }">
+                    <OpenMapLink v-if="data.tmxId" :url="`https://trackmania.exchange/mapshow/${data.tmxId}`" />
+                </template>
+            </AppTable>
         </div>
     </div>
 </template>
@@ -39,6 +43,7 @@ import { RequestError } from '#/classes/RequestError';
 import AppTable from '#/components/AppTable.vue';
 import Button from '#/components/Button.vue';
 import H1 from '#/components/H1.vue';
+import OpenMapLink from '#/components/OpenMapLink.vue';
 import { useAdminMapsApi } from '#/composables/api/useAdminMapsApi';
 import { useToast } from '#/composables/useToast';
 import type { TmMap } from '#/types/api/tmMap';

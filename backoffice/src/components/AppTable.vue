@@ -102,6 +102,13 @@
                 </slot>
             </template>
         </Column>
+        <Column v-if="$slots.actions" :exportable="false" style="width: 4rem">
+            <template #body="{ data }">
+                <div class="flex items-center justify-center gap-2">
+                    <slot name="actions" :data="asT(data)"></slot>
+                </div>
+            </template>
+        </Column>
     </DataTable>
 </template>
 
