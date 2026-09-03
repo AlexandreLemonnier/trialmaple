@@ -2,6 +2,7 @@ package com.trialmaple.security.annotation;
 
 import com.trialmaple.user.User;
 import com.trialmaple.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
@@ -13,13 +14,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
+@RequiredArgsConstructor
 public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final UserService userService;
-
-    public CurrentUserArgumentResolver(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
