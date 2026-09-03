@@ -18,6 +18,7 @@
                     <p v-if="gameModeInfo.isMapPickWeighted">Maps are picked with a weighted probability equal to 1/(N+1) where N is the number of times the map has been picked in the past 60 days.</p>
                     <p v-if="gameModeInfo.mode === 'GEOGUESSR'">Each map has multiple pictures for each level.</p>
                     <p v-if="gameModeInfo.mode === 'GEOGUESSR'">Less picked pictures are chosen first.</p>
+                    <p v-if="gameModeInfo.mode === 'GEOGUESSR' && gameModeInfo.game === 'TMNF'">Mod has been removed from the map when taking screenshots.</p>
                 </template>
             </template>
         </div>
@@ -27,6 +28,7 @@
 <script setup lang="ts">
 import Modal from '#/components/modal/Modal.vue';
 import { Route } from '#/router/Route';
+import type { TmGame } from '#/types/tmGame';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -36,6 +38,7 @@ const route = useRoute();
 
 type GameModeConfig = {
     mode: 'CLASSIC' | 'GEOGUESSR' | 'BLUR' | 'ZOOM' | 'NONE';
+    game: TmGame;
     excludeUnfinished?: boolean;
     autoUpdate?: boolean;
     mapRepeatDelayDays?: number;
@@ -45,58 +48,68 @@ type GameModeConfig = {
 const GAME_MODE_CONFIG: Partial<Record<Route, GameModeConfig>> = {
     [Route.TMNF_TRIAL_CLASSIC_MODE]: {
         mode: 'CLASSIC',
+        game: 'TMNF',
         excludeUnfinished: true,
         mapRepeatDelayDays: 10,
         isMapPickWeighted: true
     },
     [Route.TMNF_RPG_CLASSIC_MODE]: {
         mode: 'CLASSIC',
+        game: 'TMNF',
         autoUpdate: true,
         mapRepeatDelayDays: 10,
         isMapPickWeighted: true
     },
     [Route.TM2_TRIAL_CLASSIC_MODE]: {
         mode: 'CLASSIC',
+        game: 'TM2',
         autoUpdate: true,
         mapRepeatDelayDays: 10,
         isMapPickWeighted: true
     },
     [Route.TM2_RPG_CLASSIC_MODE]: {
         mode: 'CLASSIC',
+        game: 'TM2',
         autoUpdate: true,
         mapRepeatDelayDays: 10,
         isMapPickWeighted: true
     },
     [Route.TM2020_TRIAL_CLASSIC_MODE]: {
         mode: 'CLASSIC',
+        game: 'TM2020',
         autoUpdate: true,
         mapRepeatDelayDays: 10,
         isMapPickWeighted: true
     },
     [Route.TM2020_RPG_CLASSIC_MODE]: {
         mode: 'CLASSIC',
+        game: 'TM2020',
         autoUpdate: true,
         mapRepeatDelayDays: 10,
         isMapPickWeighted: true
     },
     [Route.TM2020_RPG_GEOGUESSR_MODE]: {
-        mode: 'GEOGUESSR'
+        mode: 'GEOGUESSR',
+        game: 'TM2020'
     },
     [Route.TMNF_TRIAL_GEOGUESSR_MODE]: {
-        mode: 'GEOGUESSR'
+        mode: 'GEOGUESSR',
+        game: 'TMNF'
     },
     [Route.TMNF_TRIAL_BLUR_MODE]: {
         mode: 'BLUR',
+        game: 'TMNF',
         mapRepeatDelayDays: 60
     },
     [Route.TMNF_TRIAL_ZOOM_MODE]: {
         mode: 'ZOOM',
+        game: 'TMNF',
         mapRepeatDelayDays: 60
     }
 };
 
 const gameModeInfo = computed<GameModeConfig>(() =>
-    GAME_MODE_CONFIG[route.name as Route] ?? { mode: 'NONE' }
+    GAME_MODE_CONFIG[route.name as Route] ?? { mode: 'NONE', game: 'TMNF' }
 );
 
 </script>
