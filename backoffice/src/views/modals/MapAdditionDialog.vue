@@ -19,7 +19,7 @@
 
             <div class="flex flex-col gap-2">
                 <label for="new-authors" class="font-semibold text-sm">Author(s)</label>
-                <InputChips id="new-authors" v-model="newMap.authors" placeholder="Type a name and press Enter" separator="," />
+                <InputTags id="new-authors" v-model="newMap.authors" placeholder="Type a name and press Enter" delimiter="," />
             </div>
 
             <div class="grid grid-cols-3 gap-4">
@@ -86,7 +86,7 @@ import type { TmUser } from '#/types/api/tmUser';
 import { formatTimeToMs } from '#/utils/formatTimeToMs';
 import { isValidTimeFormat } from '#/utils/isValidTimeFormat';
 import type { AutoCompleteCompleteEvent } from 'primevue';
-import { AutoComplete, Button, Checkbox, Dialog, InputChips, InputNumber, InputText, Select } from 'primevue';
+import { AutoComplete, Button, Checkbox, Dialog, InputNumber, InputTags, InputText, Select } from 'primevue';
 import { ref, watch } from 'vue';
 
 defineProps<{

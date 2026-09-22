@@ -78,13 +78,12 @@
                                   append-to="body"
                                   class="w-full" />
 
-                    <InputChips v-else-if="col.type === 'chips'"
-                                v-model="data[col.field]"
-                                separator=","
-                                :placeholder="col.placeHolder"
-                                autofocus
-                                class="w-full"
-                                @update:modelValue="col.onValueChange?.(data)" />
+                    <InputTags v-else-if="col.type === 'chips'"
+                               v-model="data[col.field]"
+                               delimiter=","
+                               :placeholder="col.placeHolder"
+                               class="w-full"
+                               @update:modelValue="col.onValueChange?.(data)" />
 
                     <InputText v-else
                                v-model="data[col.field]"
@@ -119,8 +118,8 @@ import Checkbox from 'primevue/checkbox';
 import Column from 'primevue/column';
 import type { DataTableCellEditCompleteEvent, DataTableFilterMeta, DataTableRowSelectEvent, DataTableSortMeta } from 'primevue/datatable';
 import DataTable from 'primevue/datatable';
-import InputChips from 'primevue/inputchips';
 import InputNumber from 'primevue/inputnumber';
+import InputTags from 'primevue/inputtags';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
 
