@@ -33,19 +33,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // Remove "Bearer "
             String token = authHeader.substring(7);
 
-            if (jwtUtils.validateToken(token)) {
-                String discordId = jwtUtils.getDiscordIdFromToken(token);
-                UserType userType = jwtUtils.getUserTypeFromToken(token);
-
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        discordId,
-                        null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + userType.name()))
-                );
-
-                // Inject user into the Spring security context
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            if (!jwtUtils.validateToken(token)) {
+                SecurityContextHolder.clearContext();
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired token");
+                return;
             }
+
+            String discordId = jwtUtils.getDiscordIdFromToken(token);
+            UserType userType = jwtUtils.getUserTypeFromToken(token);
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    discordId,
+                    null,
+                    List.of(new SimpleGrantedAuthority("ROLE_" + userType.name()))
+            );
+
+            // Inject user into the Spring security context
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         // Continue HTTP filters chain

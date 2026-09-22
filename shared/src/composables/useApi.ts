@@ -1,4 +1,9 @@
 import { RequestError } from '../classes/RequestError.js';
+import {
+    DEFAULT_AUTH_TOKEN_STORAGE_KEY,
+    getUsableAuthToken,
+    notifyAuthTokenInvalid
+} from './authToken.js';
 import { useEnv } from './useEnv.js';
 
 type QueryValue = string | number | boolean | string[] | undefined;
@@ -6,7 +11,7 @@ type QueryValue = string | number | boolean | string[] | undefined;
 type RequestOptions = Omit<RequestInit, 'body'> & {
     body?: Record<string, unknown> | unknown[];
     query?: Record<string, QueryValue>;
-    authTokenStorageKey?: string;
+    authTokenStorageKey?: string | null;
 };
 
 async function waitMinimumTime(start: number) {
@@ -47,14 +52,14 @@ export function useApi(routePrefix: string) {
         const start = performance.now();
 
         try {
-            const { query, body, authTokenStorageKey = 'auth_token', ...baseOptions } = options;
+            const { query, body, authTokenStorageKey = DEFAULT_AUTH_TOKEN_STORAGE_KEY, ...baseOptions } = options;
             const path = new URL(globalThis.location.origin + env.PROXIED_API_URL_PREFIX + routePrefix + url);
 
             if (query) {
                 path.search = objectToURLSearchParams(query).toString();
             }
 
-            const token = localStorage.getItem(authTokenStorageKey);
+            const token = authTokenStorageKey === null ? null : getUsableAuthToken(authTokenStorageKey);
 
             const response = await fetch(path.href, {
                 body: body === undefined ? undefined : JSON.stringify(body),
@@ -68,8 +73,20 @@ export function useApi(routePrefix: string) {
             const dataText = await response.text();
 
             if (!response.ok) {
+                if (response.status === 401 && token && authTokenStorageKey !== null) {
+                    localStorage.removeItem(authTokenStorageKey);
+                    notifyAuthTokenInvalid(authTokenStorageKey);
+                }
+
+                let errorMessage = 'unknown';
+                try {
+                    errorMessage = JSON.parse(dataText)?.message ?? errorMessage;
+                } catch {
+                    // Spring Security may return an empty or non-JSON 401 response.
+                }
+
                 throw new RequestError(
-                    JSON.parse(dataText)?.message ?? 'unknown',
+                    errorMessage,
                     response.status
                 );
             }

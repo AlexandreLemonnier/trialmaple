@@ -14,7 +14,8 @@ export function useBackofficeAuthApi() {
                     code,
                     redirectUri
                 },
-                authTokenStorageKey: BACKOFFICE_AUTH_TOKEN_STORAGE_KEY
+                // A stale session must not prevent a new Discord login.
+                authTokenStorageKey: null
             });
         },
 

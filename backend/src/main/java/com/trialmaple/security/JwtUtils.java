@@ -69,7 +69,7 @@ public class JwtUtils {
             getClaims(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            log.error("Invalid token", e);
+            log.debug("Rejected JWT: {}", e.getMessage());
             return false;
         }
     }

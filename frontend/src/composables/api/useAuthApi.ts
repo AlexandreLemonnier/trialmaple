@@ -10,7 +10,9 @@ export function useAuthApi() {
                 method: 'POST',
                 body: {
                     code
-                }
+                },
+                // A stale session must not prevent a new Discord login.
+                authTokenStorageKey: null
             });
         }
     };

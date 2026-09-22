@@ -8,13 +8,15 @@
 
 <script setup lang="ts">
 import Button from '#/components/Button.vue';
+import { useAuth } from '#/composables/useAuth';
 import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
 
 const { user } = storeToRefs(useAppStore());
+const { clearAuthToken } = useAuth();
 
 function logout() {
-    localStorage.removeItem('auth_token');
+    clearAuthToken(true);
     user.value = null;
 }
 </script>

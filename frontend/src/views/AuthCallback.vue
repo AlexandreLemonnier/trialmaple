@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import Loader from '#/components/Loader.vue';
 import { useAuthApi } from '#/composables/api/useAuthApi';
+import { useAuth } from '#/composables/useAuth';
 import { Route } from '#/router/Route';
 import { useAppStore } from '#/stores/appStore';
 import { storeToRefs } from 'pinia';
@@ -23,6 +24,7 @@ const error = ref<string | null>(null);
 
 const authApi = useAuthApi();
 const { user } = storeToRefs(useAppStore());
+const { storeAuthToken } = useAuth();
 
 onMounted(async () => {
     const code = route.query.code as string;
@@ -35,7 +37,7 @@ onMounted(async () => {
     try {
         const response = await authApi.loginWithDiscord(code);
 
-        localStorage.setItem('auth_token', response.token);
+        storeAuthToken(response.token);
         user.value = response.user;
 
         router.push({ name: Route.HOME });
