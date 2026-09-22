@@ -17,6 +17,7 @@ app.use(createPinia());
 app.use(ToastService);
 app.use(router);
 app.use(PrimeVue, {
+    license: import.meta.env.VITE_PRIMEUI_LICENSE,
     theme: {
         preset: Aura,
         options: {
