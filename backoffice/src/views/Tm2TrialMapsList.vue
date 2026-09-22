@@ -109,7 +109,8 @@ const cols: TableColumn<TmMap>[] = [
     },
     {
         field: 'checkpointCount',
-        name: 'CPs'
+        name: 'CPs',
+        sortable: true
     },
     {
         field: 'authors',
@@ -125,11 +126,13 @@ const cols: TableColumn<TmMap>[] = [
         field: 'releaseYear',
         name: 'Release Year',
         editable: true,
+        sortable: true,
         type: 'number'
     },
     {
         field: 'wrTime',
-        name: 'WR Time'
+        name: 'WR Time',
+        sortable: true
     },
     {
         field: 'wrHolder',
@@ -141,7 +144,8 @@ const cols: TableColumn<TmMap>[] = [
     {
         field: 'wrYear',
         name: 'WR Year',
-        type: 'number'
+        type: 'number',
+        sortable: true
     }
 ];
 

@@ -177,27 +177,32 @@ const cols: TableColumn<TmMap>[] = [
     },
     {
         field: 'checkpointCount',
-        name: 'CPs'
+        name: 'CPs',
+        sortable: true
     },
     {
         field: 'authors',
         name: 'Author(s)',
+        sortable: true,
         format: (val) => (val as string[]).join(', ')
     },
     {
         field: 'releaseYear',
-        name: 'Release Year'
+        name: 'Release Year',
+        sortable: true
     },
     {
         field: 'finisherCount',
         name: 'Finishers',
         editable: true,
+        sortable: true,
         type: 'number'
     },
     {
         field: 'wrTime',
         name: 'WR Time',
         editable: true,
+        sortable: true,
         type: 'text',
         placeHolder: '00:00.000',
         validationRule: (val) => isValidTimeFormat(val as string)
